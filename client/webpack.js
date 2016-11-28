@@ -3,8 +3,8 @@
  */
 'use strict';
 const path = require('path');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var projectRoot = path.resolve(__dirname, './src');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const projectRoot = path.resolve(__dirname, './src');
 
 let config = (function(){
   let config = {

@@ -3,20 +3,21 @@
  */
 'use strict';
 
-var config = require('./webpack');
-var webpack = require('webpack');
-var merge = require('webpack-merge');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var CleanPlugin = require('clean-webpack-plugin');
+const config = require('./webpack');
+const webpack = require('webpack');
+const merge = require('webpack-merge');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanPlugin = require('clean-webpack-plugin');
 
 
+let plugins;
 if (process.env.NODE_ENV == 'development'){
 
 // add hot-reload related code to entry chunks
   Object.keys(config.entry).forEach(function (name) {
     config.entry[name] = ['./client/dev-client'].concat(config.entry[name])
   });
-  var plugins = [
+  plugins = [
     new webpack.DefinePlugin({
       'process.env': `'${process.env}'`
     }),
@@ -74,10 +75,10 @@ module.exports = merge(config, {
 
 
 function styleLoaders (options) {
-  var output = [];
-  var loaders = config.cssLoaders(options);
-  for (var extension in loaders) {
-    var loader = loaders[extension];
+  const output = [];
+  const loaders = config.cssLoaders(options);
+  for (let extension in loaders) {
+    const loader = loaders[extension];
     output.push({
       test: new RegExp('\\.' + extension + '$'),
       loader: loader
