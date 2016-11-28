@@ -27,13 +27,14 @@ if (app.get('env') == 'development'){
   app.use(logger('combined'));
 }
 
+const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
 
 app.use(session({
   store: new RedisStore({
     prefix: 'authSession'
   }),
-  secret: '462fa48da315138ccac194c6d4cb5e05931b7d125acf8080bf4119439316dfce',
+  secret: 'iivrdWiKUpfIhb0OEQgmqTOrcroiHTJ0jF9FS48VrFo=',
   resave: false,
   saveUninitialized: false,
 }));
