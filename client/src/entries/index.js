@@ -5,12 +5,12 @@
 import Vue from 'vue';
 import Element from 'element-ui';
 import 'element-ui/lib/theme-default/index.css'
-import Login from '../pages/login.vue';
+import App from '../pages/index.vue';
 require('es6-promise').polyfill();
 
 Vue.use(Element);
 
 new Vue({
   el: 'app',
-  render: h=>h(Login)
+  render: h=>h(App)
 });

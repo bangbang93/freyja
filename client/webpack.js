@@ -29,8 +29,7 @@ let config = (function(){
 })();
 module.exports = Object.assign(config, {
   entry: {
-    login: path.resolve(__dirname, '../client/src/entries/login.js'),
-    register: path.resolve(__dirname, '../client/src/entries/register.js'),
+    index: path.resolve(__dirname, '../client/src/entries/index.js'),
   },
   output: {
     path: path.resolve(__dirname, '../public'),

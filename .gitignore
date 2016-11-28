@@ -83,3 +83,7 @@ jspm_packages
 # Optional REPL history
 .node_repl_history
 
+config/
+public/
+!public/.gitkeep
+client/dist
