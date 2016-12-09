@@ -35,7 +35,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', require('./route/index'));
 
-if (app.get('env') == 'deveopment'){
+if (app.get('env') == 'development'){
   let webpack = require('webpack');
   let webpackConfig = require('./client/webpack.conf');
   let compiler = webpack(webpackConfig);
