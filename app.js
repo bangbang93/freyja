@@ -10,19 +10,6 @@ const app = express();
 
 if (app.get('env') == 'development'){
   app.use(logger('dev'));
-  let webpack = require('webpack');
-  let webpackConfig = require('./client/webpack.conf');
-  let compiler = webpack(webpackConfig);
-  let devMiddleware = require('webpack-dev-middleware')(compiler, {
-    publicPath: webpackConfig.output.publicPath,
-    stats: {
-      colors: true,
-      chunks: false
-    }
-  });
-  let hotMiddleware = require('webpack-hot-middleware')(compiler);
-  app.use(devMiddleware);
-  app.use(hotMiddleware);
 } else {
   app.use(logger('combined'));
 }
@@ -48,6 +35,21 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', require('./route/index'));
 
+if (app.get('env') == 'deveopment'){
+  let webpack = require('webpack');
+  let webpackConfig = require('./client/webpack.conf');
+  let compiler = webpack(webpackConfig);
+  let devMiddleware = require('webpack-dev-middleware')(compiler, {
+    publicPath: webpackConfig.output.publicPath,
+    stats: {
+      colors: true,
+      chunks: false
+    }
+  });
+  let hotMiddleware = require('webpack-hot-middleware')(compiler);
+  app.use(devMiddleware);
+  app.use(hotMiddleware);
+}
 require('express-simple-route')(path.join(__dirname, 'route'), app);
 
 // catch 404 and forward to error handler

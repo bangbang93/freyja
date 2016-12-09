@@ -58,7 +58,7 @@ if (process.env.NODE_ENV != 'production'){
   entries.forEach((entry)=>{
     plugins.push(new HtmlWebpackPlugin({
       filename: `${entry}.html`,
-      template: `client/src/${entry}.html`,
+      template: `client/src/html/${entry}.html`,
       inject: true,
       chunks: [entry, 'vendor.js']
     }))
