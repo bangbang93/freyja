@@ -11,7 +11,7 @@ const CleanPlugin = require('clean-webpack-plugin');
 
 
 let plugins;
-if (process.env.NODE_ENV == 'development'){
+if (process.env.NODE_ENV != 'production'){
 
 // add hot-reload related code to entry chunks
   Object.keys(config.entry).forEach(function (name) {
