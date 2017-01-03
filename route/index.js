@@ -6,7 +6,8 @@ const history = require('connect-history-api-fallback');
 /* GET home page. */
 router.get('/', function(req, res) {
   res.json({
-    message: 'it works'
+    message: 'it works',
+    home: 'goto /home',
   })
 });
 

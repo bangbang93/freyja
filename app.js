@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
 const app = express();
+app.set('trust proxy', 'loopback');
 
 if (app.get('env') == 'development'){
   app.use(logger('dev'));
