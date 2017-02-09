@@ -25,6 +25,9 @@ server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 
+const processConfig = require('../process.json');
+process.title = processConfig.apps[0].name;
+
 /**
  * Normalize a port into a number, string, or false.
  */
