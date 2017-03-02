@@ -1,9 +1,16 @@
 'use strict';
-const express = require('express');
-const router = express.Router();
+const router = require('express-promise-router')();
 
-router.get('/', function(req, res) {
-  res.send('respond with a resource');
+router.get('/', async function(req, res) {
+  await new Promise(function (resolve, reject) {
+    setTimeout(()=>resolve(), 2000);
+  });
+  res.json({message: 'await'});
 });
+
+router.get('/error', async function (req, res) {
+  throw new Error('some thing happened');
+});
+
 
 module.exports = router;
