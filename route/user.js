@@ -9,7 +9,9 @@ router.get('/', async function(req, res) {
 });
 
 router.get('/error', async function (req, res) {
-  throw new Error('some thing happened');
+  let err = new Error('some thing happened');
+  err.req = req.url;
+  throw err;
 });
 
 
