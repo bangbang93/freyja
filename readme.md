@@ -21,3 +21,28 @@ haruhi是一个前后端混合快速开发种子项目，前端使用Vue.JS和El
 - lib/         不在npm上的第三方代码
 - config/      配置文件，gitignore。在一些需要自动部署的环境下，可以取消这个目录的gitignore并且通过环境变量控制config载入
 - config.d/    配置文件样例，在一些自动部署环境下，可以删除这个目录并且使用上面的config目录
+- app.js       express的初始化文件，设置了各类中间件和错误处理过程
+- model.js     数据库的初始化文件，设置了各种数据库的连接，比如mysql和redis，最后通过exports导出给其他文件调用
+
+## 命名约定
+
+- 变量名无特殊说明全部使用小驼峰(someVariable)
+- 文件名使用减号(-)分隔符的小写命名(filename-example.js)
+- 常量使用大写蛇形命名(SOME_CONSTANT_NAME)
+- require的npm模块按照以下规则命名
+  - 引入的是一个构造方法，需要new的，使用大驼峰命名`const MemoryStream = require('memorystream')`
+  - 引入的是一个普通方法，不需要new就可以使用的，使用小驼峰`const bunyan = require('bunyan')`
+  - 引入的是一个对象，下面挂着很多方法的，使用小驼峰
+- route 尽量遵守RESTful API风格，不在url内使用动词，注意是尽量，因为实际上太TM难了
+  - GET方法不能对数据进行修改，统计类除外，幂等
+  - POST方法是非幂等的，通常表示创建
+  - PUT方法是幂等的，通常表示替代
+  - PATCH方法是幂等的，通常表示修改局部
+  - 引用service时使用`const NameService = require('../service/name')`的大驼峰规则
+  - 必须且只能export出一个connect中间件路由对象
+- service 
+  - 引用model和modules时使用`const SomeModel = require('../model/some')`的大驼峰规则
+- model
+  - 对于mongoose,在各个collection对应的model文件内声明Schema和model
+  - 对于sequelize，在各个table对应的model文件内声明define，最后在model.js中统一进行关系映射
+  - 若无意外，不允许引用任何service层和module层代码，允许引用helper和lib
