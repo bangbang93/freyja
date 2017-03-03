@@ -21,6 +21,7 @@ haruhi是一个前后端混合快速开发种子项目，前端使用Vue.JS和El
 - lib/         不在npm上的第三方代码
 - config/      配置文件，gitignore。在一些需要自动部署的环境下，可以取消这个目录的gitignore并且通过环境变量控制config载入
 - config.d/    配置文件样例，在一些自动部署环境下，可以删除这个目录并且使用上面的config目录
+- script/      非服务的一些脚本文件，比如部署和编译
 - app.js       express的初始化文件，设置了各类中间件和错误处理过程
 - model.js     数据库的初始化文件，设置了各种数据库的连接，比如mysql和redis，最后通过exports导出给其他文件调用
 
@@ -46,3 +47,46 @@ haruhi是一个前后端混合快速开发种子项目，前端使用Vue.JS和El
   - 对于mongoose,在各个collection对应的model文件内声明Schema和model
   - 对于sequelize，在各个table对应的model文件内声明define，最后在model.js中统一进行关系映射
   - 若无意外，不允许引用任何service层和module层代码，允许引用helper和lib
+  
+## 格式约定
+
+- 两空格缩进，禁用tab
+- 对象最后一个属性后带逗号
+```javascript 
+{
+  foo: 'bar',
+  a: 'b',
+}
+```
+- 使用分号
+- 大括号不换行
+```javascript 
+function foo(){
+  return 'bar';
+}
+class far {
+  constrator() {
+    console.log('constrator');
+  }
+}
+if (1=1) {
+  next();
+} else {
+  door();
+}
+```
+- fail fast
+```javascript
+//good
+if (!ok){
+  throw new Error();
+}
+doSometing();
+
+//bad
+if (ok){
+  doSometing();
+} else {
+  throw new Error();
+}
+```
