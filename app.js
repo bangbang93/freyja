@@ -5,6 +5,7 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const history = require('connect-history-api-fallback');
 
 const app = express();
 app.set('trust proxy', 'loopback');
@@ -36,6 +37,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', require('./route/index'));
 
+require('express-simple-route')(path.join(__dirname, 'route'), app);
+
+app.use(history({
+  verbose: true
+}));
+
 if (app.get('env') == 'development'){
   let webpack = require('webpack');
   let webpackConfig = require('./client/webpack.conf');
@@ -51,7 +58,8 @@ if (app.get('env') == 'development'){
   app.use(devMiddleware);
   app.use(hotMiddleware);
 }
-require('express-simple-route')(path.join(__dirname, 'route'), app);
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

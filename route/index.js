@@ -1,7 +1,6 @@
 'use strict';
 const express = require('express');
 const router = express.Router();
-const history = require('connect-history-api-fallback');
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -10,10 +9,6 @@ router.get('/', function(req, res) {
     home: 'goto /home',
   })
 });
-
-router.all('/home', history({
-  index: '/index.html'
-}));
 
 
 module.exports = router;
