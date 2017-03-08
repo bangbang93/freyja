@@ -19,7 +19,9 @@ if (process.env.NODE_ENV != 'production'){
   });
   plugins = [
     new webpack.DefinePlugin({
-      'process.env': `'${process.env}'`
+      'process.env': {
+        NODE_ENV: `'${process.env.NODE_ENV}'`
+      }
     }),
     // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
     new webpack.optimize.OccurenceOrderPlugin(),
@@ -39,7 +41,9 @@ if (process.env.NODE_ENV != 'production'){
   console.log('production webpack');
   plugins = [
     new webpack.DefinePlugin({
-      'process.env': `'${process.env}'`
+      'process.env': {
+        NODE_ENV: `'${process.env.NODE_ENV}'`
+      }
     }),
     new webpack.optimize.UglifyJsPlugin({
       mangle: {
