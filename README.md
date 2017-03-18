@@ -1,5 +1,6 @@
 # HARUHI
 ![travis-ci](https://travis-ci.org/bangbang93/express-vue-seed.svg?branch=master)
+
 haruhi是一个前后端混合快速开发种子项目，前端使用Vue.JS和Element，后端Express，数据库层没有实现，可以任意
 
 ## 注意事项
