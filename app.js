@@ -38,9 +38,13 @@ app.use('/', require('./route/index'));
 
 require('express-simple-route')(path.join(__dirname, 'route'), app);
 
-app.use(history({
-  verbose: true
-}));
+if (app.get('env') == 'development'){
+  app.use(history({
+    verbose: true
+  }));
+} else {
+  app.use(history());
+}
 
 if (app.get('env') == 'development'){
   let webpack = require('webpack');
