@@ -9,7 +9,6 @@
     "start": "node bin/www",
     "pm2": "pm2 startOrReload process.json",
     "build": "NODE_ENV=production node script/build",
-    "postinstall": "npm run build",
     "update": "npm run build && npm run pm2"
   },
   "dependencies": {
@@ -24,7 +23,9 @@
     "express-promise-router": "^1.1.1",
     "express-session": "^1.15.3",
     "express-simple-route": "^1.4.2",
+    "ioredis": "^3.1.1",
     "moment": "^2.18.1",
+    "mongoose": "^4.10.7",
     "morgan": "^1.7.0",
     "redis": "^2.7.1",
     "serve-favicon": "^2.3.2"
