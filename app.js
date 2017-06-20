@@ -10,7 +10,7 @@ const history = require('connect-history-api-fallback');
 const app = express();
 app.set('trust proxy', 'loopback');
 
-if (app.get('env') == 'development'){
+if (app.get('env') === 'development'){
   app.use(logger('dev'));
 } else {
   app.use(logger('combined'));
@@ -38,7 +38,7 @@ app.use('/', require('./route/index'));
 
 require('express-simple-route')(path.join(__dirname, 'route'), app);
 
-if (app.get('env') == 'development'){
+if (app.get('env') === 'development'){
   app.use(history({
     verbose: true
   }));
@@ -46,7 +46,7 @@ if (app.get('env') == 'development'){
   app.use(history());
 }
 
-if (app.get('env') == 'development'){
+if (app.get('env') === 'development'){
   let webpack = require('webpack');
   let webpackConfig = require('./client/webpack.conf');
   let compiler = webpack(webpackConfig);
@@ -72,7 +72,7 @@ app.use(function(req, res, next) {
 });
 
 // error handler
-if (app.get('env') == 'development'){
+if (app.get('env') === 'development'){
   app.use(function (err, req, res, next) {
     console.error(err);
     if (res.headersSent) return;
