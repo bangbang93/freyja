@@ -20,14 +20,12 @@ const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
 
 app.use(cookieParser());
-app.use(session({
-  store: new RedisStore({
-    prefix: 'authSession'
-  }),
-  secret: 'iivrdWiKUpfIhb0OEQgmqTOrcroiHTJ0jF9FS48VrFo=',
-  resave: false,
-  saveUninitialized: false,
-}));
+app.use(session(Object.assign({
+    store: new RedisStore({
+      prefix: 'im:session:'
+    })
+  }, require('./config').session)
+));
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
