@@ -87,3 +87,5 @@ function onListening() {
     : 'port ' + addr.port;
   console.error('Listening on ' + bind);
 }
+
+require('loud-rejection')();

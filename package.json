@@ -24,6 +24,7 @@
     "express-session": "^1.15.3",
     "express-simple-route": "^1.4.2",
     "ioredis": "^3.1.1",
+    "loud-rejection": "^1.6.0",
     "moment": "^2.18.1",
     "mongoose": "^4.10.7",
     "morgan": "^1.7.0",
