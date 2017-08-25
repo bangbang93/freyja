@@ -7,39 +7,21 @@ import Element from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
 import App from '../pages/index.vue'
 import VueRouter from 'vue-router'
-import VueFetch from 'vue-fetch'
+// import VueFetch from 'vue-fetch'
+import {createRouter} from '../router/index'
 
-require('es6-promise').polyfill();
-
-import FirstPage from '../pages/home/first.vue'
-import SecondPage from '../pages/home/second.vue'
+// require('es6-promise').polyfill();
 
 Vue.use(Element);
 Vue.use(VueRouter);
-Vue.use(VueFetch);
+// Vue.use(VueFetch);
 
-const routes = [{
-  path: '/1',
-  component: FirstPage,
-  name: 'first',
-  alias: '/'
-}, {
-  path: '/2',
-  component: SecondPage,
-  name: 'second'
-},
-  {
-    path: '*',
-    redirect: '/profile'
-  }];
+const router = createRouter()
 
-const router = new VueRouter({
-  routes,
-  mode: 'history',
-  base: '/',
-});
-
-const app = new Vue({
-  router,
-  render: (h)=>h(App),
-}).$mount('app');
+export function createApp() {
+  const app = new Vue({
+    router,
+    render: (h)=>h(App),
+  })
+  return {app, router}
+}

@@ -1,6 +1,6 @@
 {
-  "name": "haruhi",
-  "version": "0.0.0",
+  "name": "freyja",
+  "version": "0.1.0",
   "private": true,
   "engines": {
     "node": ">=7.0.0"
@@ -25,13 +25,15 @@
     "express-simple-route": "^1.4.2",
     "ioredis": "^3.1.4",
     "loud-rejection": "^1.6.0",
+    "memory-fs": "^0.4.1",
     "moment": "^2.18.1",
     "mongoose": "^4.11.8",
     "morgan": "^1.7.0",
     "node-sass": "^4.5.3",
     "sass-loader": "^6.0.6",
     "serve-favicon": "^2.3.2",
-    "style-loader": "^0.18.2"
+    "style-loader": "^0.18.2",
+    "vue-server-renderer": "^2.4.2"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -46,7 +48,7 @@
     "clean-webpack-plugin": "^0.1.14",
     "css-loader": "^0.28.5",
     "element-ui": "^1.4.2",
-    "es6-promise": "^4.0.5",
+    "es6-promise": "^4.1.1",
     "eventsource-polyfill": "^0.9.6",
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^0.11.2",

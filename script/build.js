@@ -8,7 +8,7 @@ const shell = require('shelljs');
 process.env.NODE_ENV = 'production';
 
 const path = require('path');
-const config = require('../client/webpack');
+const config = require('../client/webpack.base.config');
 const ora = require('ora');
 const webpack = require('webpack');
 const webpackConfig = require('../client/webpack.conf');

@@ -1,6 +1,6 @@
 {
   "apps":[{
-    "name": "app",
+    "name": "freyja",
     "script": "bin/www",
     "env":{
       "PORT": 3000,

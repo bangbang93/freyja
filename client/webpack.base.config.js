@@ -15,15 +15,12 @@ let config = (function(){
       devtool: false,
     },
     dev: {
-      devtool: '#eval-source-map',
+      devtool: '#source-map',
     },
   };
   return config[IS_PRODUCTION? 'build' : 'dev']
 })();
 module.exports = Object.assign(config, {
-  entry: {
-    index: path.resolve(__dirname, '../client/src/entries/index.js'),
-  },
   output: {
     path: path.resolve(__dirname, '../public'),
     publicPath: '/',
@@ -55,7 +52,7 @@ module.exports = Object.assign(config, {
       },
       {
         test: /\.css$/,
-        loader: 'style-loader!css-loader'
+        loader: 'vue-style-loader!css-loader'
       },
       {
         test: /\.html$/,

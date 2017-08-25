@@ -3,14 +3,20 @@
  */
 'use strict';
 
-const config = require('./webpack');
+const config = require('./webpack.base.config');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const path = require('path');
+const VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production'
+
+const entry = {
+  index: path.resolve(__dirname, '../client/src/entries/entry-client.js'),
+}
 
 
 let plugins;
@@ -35,7 +41,7 @@ if (IS_PRODUCTION) {
     new webpack.optimize.CommonsChunkPlugin('vendor.js'),
     new ExtractTextPlugin('style.css'),
   ]
-  let entries = Object.keys(config.entry)
+  let entries = Object.keys(entry)
   entries.forEach((entry) => {
     plugins.push(new HtmlWebpackPlugin({
       filename: `${entry}.html`,
@@ -47,8 +53,8 @@ if (IS_PRODUCTION) {
 } else {
 
 // add hot-reload related code to entry chunks
-  Object.keys(config.entry).forEach(function (name) {
-    config.entry[name] = ['./client/dev-client'].concat(config.entry[name])
+  Object.keys(entry).forEach(function (name) {
+    entry[name] = ['./client/dev-client'].concat(entry[name])
   })
   plugins     = [
     new webpack.DefinePlugin({
@@ -57,8 +63,9 @@ if (IS_PRODUCTION) {
       }
     }),
     new webpack.HotModuleReplacementPlugin(),
+    new VueSSRClientPlugin(),
   ]
-  let entries = Object.keys(config.entry)
+  let entries = Object.keys(entry)
   entries.forEach((entry) => {
     plugins.push(new HtmlWebpackPlugin({
       filename: `${entry}.html`,
@@ -70,5 +77,6 @@ if (IS_PRODUCTION) {
 }
 
 module.exports = merge(config, {
+  entry,
   plugins
 });
