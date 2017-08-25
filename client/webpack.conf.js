@@ -40,6 +40,7 @@ if (IS_PRODUCTION) {
     }),
     new webpack.optimize.CommonsChunkPlugin('vendor.js'),
     new ExtractTextPlugin('style.css'),
+    new VueSSRClientPlugin(),
   ]
   let entries = Object.keys(entry)
   entries.forEach((entry) => {

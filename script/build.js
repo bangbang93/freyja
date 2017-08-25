@@ -11,7 +11,8 @@ const path = require('path');
 const config = require('../client/webpack.base.config');
 const ora = require('ora');
 const webpack = require('webpack');
-const webpackConfig = require('../client/webpack.conf');
+const webpackClientConfig = require('../client/webpack.conf');
+const webpackServerConfig = require('../client/webpack.server');
 
 console.log(
   '  Tip:\n' +
@@ -22,12 +23,12 @@ console.log(
 const spinner = ora('building for production...');
 spinner.start();
 
-const assetsPath = path.join(config.assetsRoot, config.assetsSubDirectory);
+const assetsPath = path.join(__dirname, '../public')
 shell.rm('-rf', assetsPath);
 shell.mkdir('-p', assetsPath);
-shell.cp('-R', 'client/static/', assetsPath);
+shell.cp('-R', path.join(__dirname, '../client/static/'), assetsPath);
 
-webpack(webpackConfig, function (err, stats) {
+webpack([webpackClientConfig, webpackServerConfig], function (err, stats) {
   spinner.stop();
   if (err) throw err;
   process.stdout.write(stats.toString({

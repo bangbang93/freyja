@@ -10,8 +10,6 @@ const IS_PRODUCTION = process.env.NODE_ENV === 'production'
 let config = (function(){
   let config = {
     build: {
-      index: path.resolve(__dirname, '../client/dist/index.html'),
-      assetsRoot: path.resolve(__dirname, '../client/dist'),
       devtool: false,
     },
     dev: {
@@ -22,7 +20,7 @@ let config = (function(){
 })();
 module.exports = Object.assign(config, {
   output: {
-    path: path.resolve(__dirname, '../public'),
+    path: path.resolve(__dirname, './dist'),
     publicPath: '/',
     filename: '[name].[hash].js'
   },

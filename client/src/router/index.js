@@ -16,7 +16,7 @@ export function createRouter () {
     name: 'second'
   }, {
     path: '*',
-    redirect: '/profile'
+    redirect: '/'
   }]
 
   return new VueRouter({
