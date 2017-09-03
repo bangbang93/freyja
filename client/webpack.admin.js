@@ -16,6 +16,7 @@ const IS_PRODUCTION = process.env.NODE_ENV === 'production'
 
 const entry = {
   index: path.resolve(__dirname, '../client/src/entries/entry-admin.js'),
+  login: path.resolve(__dirname, '../client/src/entries/entry-admin-login.js'),
 }
 
 
@@ -64,7 +65,7 @@ if (IS_PRODUCTION) {
   entries.forEach((entry) => {
     plugins.push(new HtmlWebpackPlugin({
       filename: `${entry}.html`,
-      template: `client/src/html/${entry}.html`,
+      template: `client/src/html/index.html`,
       inject  : true,
       chunks  : [entry]
     }))
