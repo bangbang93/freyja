@@ -5,7 +5,7 @@
 
 
 module.exports = function (renderer) {
-  return function render (req, res) {
+  return function render (req, res, next) {
     const s = Date.now()
 
     res.setHeader("Content-Type", "text/html")
@@ -14,7 +14,7 @@ module.exports = function (renderer) {
       if (err.url) {
         res.redirect(err.url)
       } else if(err.code === 404) {
-        res.status(404).end('404 | Page Not Found')
+        next()
       } else {
         // Render Error Page or Redirect
         res.status(500).end('500 | Internal Server Error')

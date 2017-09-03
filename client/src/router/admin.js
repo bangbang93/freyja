@@ -5,13 +5,9 @@
 import VueRouter from 'vue-router'
 
 const routes = [{
-  path: '/1',
-  component: require('../pages/home/first.vue').default,
-  name: 'first',
-}, {
-  path: '/2',
-  component: require('../pages/home/second.vue').default,
-  name: 'second'
+  path: '/login',
+  component: require('../pages/admin/login.vue').default,
+  name: 'login',
 }]
 
 export default new VueRouter({

@@ -68,20 +68,20 @@ if (app.get('env') === 'production') {
     clientManifest
   })
   renderer = require('./middleware/server-render')(renderer)
-  app.get('*', function (req, res) {
-    renderer(req, res)
+  app.get('*', function (req, res, next) {
+    renderer(req, res, next)
   })
 } else {
   renderPromise = require('./setup-dev-server')(app, (bundle, options) => {
     renderer = createRenderer(bundle, options)
     renderer = require('./middleware/server-render')(renderer)
   })
-  app.get('*', function (req, res) {
+  app.get('*', function (req, res, next) {
     if (renderPromise && renderPromise.isFulfilled) {
-      renderer(req, res)
+      renderer(req, res, next)
     } else {
       renderPromise.then(() => {
-        renderer(req, res)
+        renderer(req, res, next)
       })
     }
   })
