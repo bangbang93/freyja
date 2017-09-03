@@ -5,7 +5,6 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const history = require('connect-history-api-fallback');
 const { createBundleRenderer } = require('vue-server-renderer')
 const fs = require('fs')
 
@@ -24,7 +23,7 @@ const RedisStore = require('connect-redis')(session);
 app.use(cookieParser());
 app.use(session(Object.assign({
     store: new RedisStore({
-      prefix: 'im:session:'
+      prefix: 'freyja:session:'
     })
   }, require('./config').session)
 ));

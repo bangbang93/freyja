@@ -1,24 +1,7 @@
 {
   "mongodb": {
     "host"    : "localhost",
-    "database": "bmcd"
-  },
-  "mysql": {
-    "database": "chipcoo-im",
-    "opt": {
-      "username": "root",
-      "password": "",
-      "dialect": "mysql",
-      "host": "127.0.0.1",
-      "timezone": "+08:00",
-      "define": {
-        "charset": "utf8mb4",
-        "engine": "innodb"
-      },
-      "dialectOptions": {
-        "charset": "utf8mb4"
-      }
-    }
+    "database": "freyja"
   },
   "redis": {
     "host": "localhost",

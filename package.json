@@ -12,6 +12,7 @@
     "update": "npm run build && npm run pm2"
   },
   "dependencies": {
+    "bcrypt": "^1.0.3",
     "bluebird": "^3.5.0",
     "body-parser": "^1.15.2",
     "bunyan": "^1.8.10",
