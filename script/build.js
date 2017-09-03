@@ -13,6 +13,7 @@ const ora = require('ora');
 const webpack = require('webpack');
 const webpackClientConfig = require('../client/webpack.conf');
 const webpackServerConfig = require('../client/webpack.server');
+const webpackAdminConfig = require('../client/webpack.admin');
 
 console.log(
   '  Tip:\n' +
@@ -28,7 +29,7 @@ shell.rm('-rf', assetsPath);
 shell.mkdir('-p', assetsPath);
 shell.cp('-R', path.join(__dirname, '../client/static/'), assetsPath);
 
-webpack([webpackClientConfig, webpackServerConfig], function (err, stats) {
+webpack([webpackClientConfig, webpackServerConfig, webpackAdminConfig], function (err, stats) {
   spinner.stop();
   if (err) throw err;
   process.stdout.write(stats.toString({

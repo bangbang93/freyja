@@ -15,7 +15,7 @@ const VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
 const IS_PRODUCTION = process.env.NODE_ENV === 'production'
 
 const entry = {
-  index: path.resolve(__dirname, '../client/src/entries/entry-client.js'),
+  index: path.resolve(__dirname, '../client/src/entries/entry-admin.js'),
 }
 
 
@@ -34,13 +34,8 @@ if (IS_PRODUCTION) {
         sourceMap: true,
       }
     }),
-    new CleanPlugin(config.output.path, {
-      root   : require('path').resolve('..'),
-      exclude: ['.gitkeep']
-    }),
-    new webpack.optimize.CommonsChunkPlugin('vendor.js'),
+    new webpack.optimize.CommonsChunkPlugin('vendor'),
     new ExtractTextPlugin('style.css'),
-    new VueSSRClientPlugin(),
   ]
   let entries = Object.keys(entry)
   entries.forEach((entry) => {
@@ -48,14 +43,14 @@ if (IS_PRODUCTION) {
       filename: `${entry}.html`,
       template: `client/src/html/${entry}.html`,
       inject  : true,
-      chunks  : [entry, 'vendor.js']
+      chunks  : [entry, 'vendor']
     }))
   })
 } else {
 
 // add hot-reload related code to entry chunks
   Object.keys(entry).forEach(function (name) {
-    entry[name] = ['webpack-hot-middleware/client?name=freyja'].concat(entry[name])
+    entry[name] = ['webpack-hot-middleware/client?name=admin'].concat(entry[name])
   })
   plugins     = [
     new webpack.DefinePlugin({
@@ -64,13 +59,12 @@ if (IS_PRODUCTION) {
       }
     }),
     new webpack.HotModuleReplacementPlugin(),
-    new VueSSRClientPlugin(),
   ]
   let entries = Object.keys(entry)
   entries.forEach((entry) => {
     plugins.push(new HtmlWebpackPlugin({
-      filename: `index.html`,
-      template: `client/src/html/index.html`,
+      filename: `${entry}.html`,
+      template: `client/src/html/${entry}.html`,
       inject  : true,
       chunks  : [entry]
     }))
@@ -78,6 +72,12 @@ if (IS_PRODUCTION) {
 }
 
 module.exports = merge(config, {
+  name: 'admin',
   entry,
-  plugins
+  plugins,
+  output: {
+    path: path.resolve(__dirname, './dist/admin'),
+    publicPath: '/admin/',
+    filename: '[name].[hash].js'
+  },
 });

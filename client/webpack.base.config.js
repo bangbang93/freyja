@@ -19,6 +19,7 @@ let config = (function(){
   return config[IS_PRODUCTION? 'build' : 'dev']
 })();
 module.exports = Object.assign(config, {
+  name: 'freyja',
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/',

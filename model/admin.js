@@ -7,7 +7,7 @@ const mongoose = require('../model').mongoose
 const Schema = new mongoose.Schema({
   username: {
     type: String,
-    index: 'unique',
+    unique: true,
   },
   password: String,
   salt: String,

@@ -5,6 +5,7 @@
 const MFS = require('memory-fs')
 const webpack = require('webpack')
 const clientConfig = require('./client/webpack.conf')
+const adminConfig = require('./client/webpack.admin')
 const serverConfig = require('./client/webpack.server')
 const path = require('path')
 const Promise = require('bluebird')
@@ -22,13 +23,10 @@ module.exports = function (app, cb) {
     cb(...args)
   }
 
-  let clientCompiler = webpack(clientConfig);
+  let clientCompiler = webpack([clientConfig, adminConfig]);
   let devMiddleware = require('webpack-dev-middleware')(clientCompiler, {
     publicPath: clientConfig.output.publicPath,
-    stats: {
-      colors: true,
-      chunks: false
-    }
+    hot: true,
   });
   let hotMiddleware = require('webpack-hot-middleware')(clientCompiler);
   app.use(devMiddleware);

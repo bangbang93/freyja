@@ -36,7 +36,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/', require('./route/index'));
 
 require('express-simple-route')(path.join(__dirname, 'route'), app)
-app.use(express.static(path.join(__dirname, 'client/dist')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 const template = fs.readFileSync(path.join(__dirname, './client/src/html/index.html'), 'utf-8')
@@ -87,7 +87,8 @@ if (app.get('env') === 'production') {
   })
 }
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'client/dist')));
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

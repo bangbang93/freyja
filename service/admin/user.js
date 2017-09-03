@@ -18,11 +18,3 @@ exports.login = async function (username, password) {
     throw new Error('wrong password')
   }
 }
-
-bcrypt.hash('qegis&qegis', 10)
-  .then((hash) => {
-    return AdminModel.create({
-      username: 'bangbang93',
-      password: hash,
-    })
-  })

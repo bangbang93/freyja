@@ -14,9 +14,6 @@ export function createRouter () {
     path: '/2',
     component: require('../pages/home/second.vue').default,
     name: 'second'
-  }, {
-    path: '*',
-    redirect: '/'
   }]
 
   return new VueRouter({
