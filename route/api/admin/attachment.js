@@ -9,6 +9,8 @@ const uploader = multer({
   storage: multer.diskStorage({}),
 })
 const fs = require('fs-extra')
+const AdminAttachemntService = require('../../../service/admin/attachment')
+
 const uploadPath = path.join(__dirname, '../../../public/uploads')
 
 router.use(function (req, res, next) {
@@ -30,12 +32,29 @@ router.post('/', uploader.single('file'), async function (req, res) {
     ext = `.${file.mimetype.split('/')[1]}`
   }
   const filename = `${Date.now()}${ext}`
+  const savePath = path.join(uploadPath, datePath, filename);
 
-  await fs.copy(file.path, path.join(uploadPath, datePath, filename))
+  await fs.copy(file.path, savePath)
+
+  await AdminAttachemntService.create({
+    filename: file.originalname,
+    path: path.join('/uploads', datePath, filename),
+  })
 
   res.json({
     path: path.join('/uploads', datePath, filename)
   })
+})
+
+router.get('/:id(\w{24})', async function (req, res) {
+  const id = req.params.id
+
+  const attachment = await AdminAttachemntService.getById(id)
+
+  if (!attachment) return res.sendStatus(404)
+
+  res.redirect(attachment.url);
+
 })
 
 module.exports = router
