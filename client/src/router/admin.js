@@ -5,9 +5,9 @@
 import VueRouter from 'vue-router'
 
 const routes = [{
-  path: '/login',
-  component: require('../pages/admin/login.vue').default,
-  name: 'login',
+  path: '/home',
+  component: require('../pages/admin/dashboard.vue').default,
+  name: 'dashboard',
 }]
 
 export default new VueRouter({

@@ -5,7 +5,7 @@
 import Vue from 'vue'
 import Element from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
-import App from '../pages/index.vue'
+import App from '../pages/admin/index.vue'
 import VueRouter from 'vue-router'
 import VueFetch from 'vue-fetch'
 import router from '../router/admin'
