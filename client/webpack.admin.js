@@ -65,7 +65,7 @@ if (IS_PRODUCTION) {
   entries.forEach((entry) => {
     plugins.push(new HtmlWebpackPlugin({
       filename: `${entry}.html`,
-      template: `client/src/html/index.html`,
+      template: `client/src/html/admin.html`,
       inject  : true,
       chunks  : [entry]
     }))

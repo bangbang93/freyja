@@ -8,6 +8,10 @@ const routes = [{
   path: '/home',
   component: require('../pages/admin/dashboard.vue').default,
   name: 'dashboard',
+}, {
+  path: '/article/create',
+  component: require('../pages/admin/article/create.vue').default,
+  name: 'article.create',
 }]
 
 export default new VueRouter({

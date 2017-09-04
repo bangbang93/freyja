@@ -26,6 +26,7 @@
     "express-simple-route": "^1.4.2",
     "ioredis": "^3.1.4",
     "loud-rejection": "^1.6.0",
+    "mavon-editor": "^2.2.4",
     "memory-fs": "^0.4.1",
     "moment": "^2.18.1",
     "mongoose": "^4.11.8",

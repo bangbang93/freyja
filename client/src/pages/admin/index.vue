@@ -10,8 +10,9 @@
     </el-menu>
     <el-row class="page">
       <el-col :span="4" class="freyja-side-menu">
-        <el-menu mode="vertical" theme="light" class="freyja-side-menu">
-          <el-submenu index="article" title="文章">
+        <el-menu mode="vertical" theme="light" class="freyja-side-menu" :router="true">
+          <el-submenu index="article">
+            <template slot="title">文章</template>
             <el-menu-item index="newArticle" :route="{name: 'article.create'}" :disabled="false">新文章</el-menu-item>
           </el-submenu>
         </el-menu>
@@ -25,10 +26,7 @@
 </template>
 <script>
 
-  import ElMenuItem from '../../../../node_modules/element-ui/packages/menu/src/menu-item.vue'
-
   export default{
-    components: {ElMenuItem},
     data(){
       return{
         current: 'dashboard'
