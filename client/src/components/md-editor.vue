@@ -31,6 +31,7 @@
         const resp = await this.$fetch.post('/api/admin/attachment', formData)
         const body = await resp.json()
         this.$refs['editor'].$img2Url(filename, body.path)
+        this.$refs['editor'].$refs['toolbar_left'].$imgUpdateByFilename(filename, body.path)
       }
     }
   }
