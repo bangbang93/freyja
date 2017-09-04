@@ -1,6 +1,6 @@
 <template>
   <div class="freyja-md-editor">
-    <mavon-editor v-model="content" @change="onChange" @imgAdd="onImgAdd"></mavon-editor>
+    <mavon-editor v-model="content" @change="onChange" @imgAdd="onImgAdd" ref="editor"></mavon-editor>
   </div>
 </template>
 <script>
@@ -24,8 +24,13 @@
       onChange(val, render) {
         this.$emit('input', val, render)
       },
-      onImgAdd(filename, file) {
-        console.log(filename, file);
+      async onImgAdd(filename, file) {
+        const formData = new FormData();
+        formData.append('filename', filename)
+        formData.append('file', file)
+        const resp = await this.$fetch.post('/api/admin/attachment', formData)
+        const body = await resp.json()
+        this.$refs['editor'].$img2Url(filename, body.path)
       }
     }
   }
