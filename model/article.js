@@ -32,3 +32,17 @@ exports.getById = function (id) {
 exports.create = function (article) {
   return Model.create(article);
 }
+
+exports.list = function (lastId, limit = 20) {
+  let query;
+  if (!lastId) {
+    query = Model.find({})
+  } else {
+    query = Model.find({
+      _id: {
+        $gt: lastId
+      }
+    })
+  }
+  return query.sort({_id: -1}).limit(limit).exec()
+}

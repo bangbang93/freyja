@@ -12,6 +12,14 @@ const routes = [{
   path: '/article/create',
   component: require('../pages/admin/article/create.vue').default,
   name: 'article.create',
+}, {
+  path: '/articles',
+  component: require('../pages/admin/article/list.vue').default,
+  name: 'article.list',
+}, {
+  path: '/article/:id',
+  component: require('../pages/admin/article/create.vue').default,
+  name: 'article.edit',
 }]
 
 export default new VueRouter({

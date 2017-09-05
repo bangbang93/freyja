@@ -34,27 +34,46 @@
         },
         attachments: [],
         tags: [],
-        tagInput: ''
+        tagInput: '',
+        edit: {
+          id:'',
+        }
       }
     },
     mounted() {
       this.initData()
+      if (this.$route.name === 'article.edit') {
+        this.initEdit(this.$route.params)
+      }
     },
     methods: {
       async initData() {
-      let resp = await this.$fetch.get('/api/admin/tag')
+        let resp = await this.$fetch.get('/api/admin/tag')
         if (resp.status !== 200) {
           return this.$message({message: '获取tag失败', type: 'error'})
         }
         const body = await resp.json()
         this.tags = body.map((tag) => tag.title)
       },
+      async initEdit({id}) {
+        let resp = await this.$fetch.get(`/api/admin/article/${id}`)
+        let article = await resp.json()
+        article.tags = article.tags || []
+        this.article = article
+        this.edit.id = article._id
+      },
       async submit() {
         const data = Object.assign({}, this.article)
         data.attachments = this.attachments
-        let resp = await this.$fetch.post('/api/admin/article', data)
-        if (resp.status === 201) {
+        let resp
+        if (this.edit.id) {
+          resp = await this.$fetch.put(`/api/admin/article/${this.edit.id}`, data)
+        } else {
+          resp = await this.$fetch.post('/api/admin/article', data)
+        }
+        if (resp.status === 201 || resp.status === 200) {
           this.$alert('保存成功', 'Freyja')
+          this.$router.push({name: 'article.list'})
         } else {
           const body = await resp.json()
           this.$alert(body.msg, 'Freyja')

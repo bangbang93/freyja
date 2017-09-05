@@ -13,7 +13,8 @@
         <el-menu mode="vertical" theme="light" class="freyja-side-menu" :router="true">
           <el-submenu index="article">
             <template slot="title">文章</template>
-            <el-menu-item index="newArticle" :route="{name: 'article.create'}" :disabled="false">新文章</el-menu-item>
+            <el-menu-item index="articleCreate" :route="{name: 'article.create'}" :disabled="false">新文章</el-menu-item>
+            <el-menu-item index="articleList" :route="{name: 'article.list'}" :disabled="false">文章列表</el-menu-item>
           </el-submenu>
         </el-menu>
       </el-col>

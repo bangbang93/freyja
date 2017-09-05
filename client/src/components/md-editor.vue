@@ -20,6 +20,11 @@
         content: this.value,
       }
     },
+    watch: {
+      value() {
+        this.content = this.value
+      }
+    },
     methods: {
       onChange(val, render) {
         this.$emit('input', val, render)
@@ -32,7 +37,7 @@
         const body = await resp.json()
         this.$refs['editor'].$img2Url(filename, body.path)
         this.$refs['editor'].$refs['toolbar_left'].$imgUpdateByFilename(filename, body.path)
-        this.emit('attachAdd', {id, url: body.path, filename: file.name})
+        this.$emit('attachAdd', {id: body._id, url: body.path, filename: file.name})
       }
     }
   }
