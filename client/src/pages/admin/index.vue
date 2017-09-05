@@ -1,10 +1,10 @@
 <template>
   <div class="container">
-    <el-menu mode="horizontal" theme="dark">
+    <el-menu mode="horizontal" theme="dark" :router="true">
       <el-menu-item index="dashboard" :route="{name: 'dashboard'}">
         dashboard
       </el-menu-item>
-      <el-menu-item index="newArticle" :route="{name: 'article.create'}">
+      <el-menu-item index="articleCreate" :route="{name: 'article.create'}">
         新文章
       </el-menu-item>
     </el-menu>
@@ -24,7 +24,6 @@
         <router-view class="container"></router-view>
       </el-col>
     </el-row>
-
   </div>
 </template>
 <script>
