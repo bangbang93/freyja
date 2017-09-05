@@ -24,3 +24,7 @@ const Model = mongoose.model('article', Schema);
 exports.getById = function (id) {
   return Model.findById(id).exec()
 }
+
+exports.create = function (article) {
+  return Model.create(article);
+}

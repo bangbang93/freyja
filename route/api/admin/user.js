@@ -27,11 +27,6 @@ router.post('/login', async function (req, res) {
 
 router.get('/login', function (req, res) {
   const user = req.session.user;
-  if (!user) {
-    return res.status(403).json({
-      msg: 'need login'
-    });
-  }
 
   res.json(user);
 })
