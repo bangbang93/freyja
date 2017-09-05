@@ -22,9 +22,9 @@ router.post('/', async function (req, res) {
 })
 
 router.get('/', async function (req, res) {
-  const {lastId} = req.query
+  const {page} = req.query
 
-  const list = await AdminArticleService.list(lastId, 20)
+  const list = await AdminArticleService.listByPage(page, 20)
 
   res.json(list)
 })
@@ -57,6 +57,14 @@ router.delete('/:id(\\w{24})', async function (req, res) {
   await AdminArticleService.del(id)
 
   res.status(204).end()
+})
+
+router.get('/count', async function (req, res) {
+  const count = await AdminArticleService.count()
+
+  res.json({
+    count
+  })
 })
 
 module.exports = router

@@ -15,6 +15,14 @@ exports.list = async function (lastId, limit = 20) {
   return list
 }
 
+exports.listByPage = async function (page = 1, limit = 20) {
+  const skip = (page - 1) * 20
+  let list = await ArticleModel.listByPage({skip, limit})
+  let promises = list.map((article) => article.populate('author').execPopulate())
+  await Promise.all(promises)
+  return list
+}
+
 exports.getById = function (id) {
   return ArticleModel.getById(id)
 }
@@ -29,4 +37,8 @@ exports.update = async function (id, newArticle) {
 
 exports.del = async function (id) {
   return ArticleModel.del(id)
+}
+
+exports.count = function () {
+  return ArticleModel.count()
 }

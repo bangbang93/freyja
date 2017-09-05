@@ -11,13 +11,18 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-pagination :page-size="pageSize" :total="total" :current-page="currentPage"></el-pagination>
   </div>
 </template>
 <script>
+
   export default {
     data() {
       return {
         articles: [],
+        pageSize: 20,
+        total: 0,
+        currentPage: 1,
       }
     },
     mounted() {
@@ -25,12 +30,17 @@
     },
     methods: {
       async initData() {
-        let resp = await this.$fetch.get('/api/admin/article')
+        let resp = await this.$fetch.get('/api/admin/article', {
+          page: this.currentPage
+        })
         let body = await resp.json()
         body.forEach(function (article) {
           article.createdAt = new Date(article.createdAt).toLocaleString()
         })
         this.articles = body
+        resp = await this.$fetch.get('/api/admin/article/count')
+        body = await resp.json()
+        this.total = body.count
       },
       handleEdit($index, row) {
         this.$router.push({

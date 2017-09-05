@@ -47,6 +47,17 @@ exports.list = function (lastId, limit = 20) {
   return query.sort({_id: -1}).limit(limit).exec()
 }
 
+exports.listByPage = function ({skip, page = 1, limit = 20}) {
+  if (!skip) {
+    skip = (page - 1) * limit
+  }
+  return Model.find({}).skip(skip).limit(limit).exec()
+}
+
 exports.del = function (id) {
   return Model.remove({_id: id}).exec()
+}
+
+exports.count = function () {
+  return Model.count({}).exec()
 }
