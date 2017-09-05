@@ -39,12 +39,29 @@ router.post('/', uploader.single('file'), async function (req, res) {
   const attachment = await AdminAttachemntService.create({
     filename: file.originalname,
     path: path.join('/uploads', datePath, filename),
+    mimeType: file.mimetype
   })
 
   res.json({
     id: attachment._id,
     filename: attachment.filename,
     path: path.join('/uploads', datePath, filename)
+  })
+})
+
+router.get('/', async function (req, res) {
+  const {page} = req.query
+
+  const list = await AdminAttachemntService.listByPage(page, 20)
+
+  res.json(list)
+})
+
+router.get('/count', async function (req, res) {
+  const count = await AdminAttachemntService.count();
+
+  res.json({
+    count
   })
 })
 
@@ -56,7 +73,6 @@ router.get('/:id(\w{24})', async function (req, res) {
   if (!attachment) return res.sendStatus(404)
 
   res.redirect(attachment.url);
-
 })
 
 module.exports = router

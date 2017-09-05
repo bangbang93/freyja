@@ -20,6 +20,10 @@ const routes = [{
   path: '/article/:id',
   component: require('../pages/admin/article/create.vue').default,
   name: 'article.edit',
+}, {
+  path: '/attachment',
+  component: require('../pages/admin/attachment/list.vue').default,
+  name: 'attachment.list',
 }]
 
 export default new VueRouter({

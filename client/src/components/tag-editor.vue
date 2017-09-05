@@ -8,7 +8,7 @@
 </template>
 <script>
   export default {
-    name: 'TagEditor',
+    name: 'FreyjaTagEditor',
     props: {
       tags: {
         type: Array,

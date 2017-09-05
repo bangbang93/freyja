@@ -11,3 +11,12 @@ exports.create = function (attachment) {
 exports.getById = function (id) {
   return AttachmentModel.getById(id)
 }
+
+exports.listByPage = function (page = 1, limit = 20) {
+  const skip = (page - 1) * limit
+  return AttachmentModel.listByPage({skip, limit})
+}
+
+exports.count = function () {
+  return AttachmentModel.count()
+}

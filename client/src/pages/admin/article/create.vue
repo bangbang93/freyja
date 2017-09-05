@@ -8,7 +8,7 @@
         <freyja-md-editor v-model="article.content" @attachAdd="onAttachAdd"></freyja-md-editor>
       </el-form-item>
       <el-form-item label="标签">
-        <tag-editor :tags="this.tags" :selected-tags="article.tags" @tag-add="onTagAdd" @tag-close="onTagClose"></tag-editor>
+        <freyja-tag-editor :tags="this.tags" :selected-tags="article.tags" @tag-add="onTagAdd" @tag-close="onTagClose"></freyja-tag-editor>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submit">发布</el-button>
@@ -18,11 +18,11 @@
 </template>
 <script>
   import FreyjaMdEditor from '../../../components/md-editor.vue'
-  import TagEditor from '../../../components/tag-editor.vue'
+  import FreyjaTagEditor from '../../../components/tag-editor.vue'
 
   export default {
     components: {
-      TagEditor,
+      FreyjaTagEditor,
       FreyjaMdEditor
     },
     data() {
