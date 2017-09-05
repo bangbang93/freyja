@@ -7,10 +7,8 @@ const config = require('./webpack.base.config');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
-const VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production'
 
@@ -18,7 +16,7 @@ const entry = {
   index: path.resolve(__dirname, '../client/src/entries/entry-admin.js'),
   login: path.resolve(__dirname, '../client/src/entries/entry-admin-login.js'),
 }
-
+const entries = Object.keys(entry);
 
 let plugins;
 if (IS_PRODUCTION) {
@@ -38,7 +36,6 @@ if (IS_PRODUCTION) {
     new webpack.optimize.CommonsChunkPlugin('vendor'),
     new ExtractTextPlugin('style.css'),
   ]
-  let entries = Object.keys(entry)
   entries.forEach((entry) => {
     plugins.push(new HtmlWebpackPlugin({
       filename: `${entry}.html`,
@@ -50,7 +47,7 @@ if (IS_PRODUCTION) {
 } else {
 
 // add hot-reload related code to entry chunks
-  Object.keys(entry).forEach(function (name) {
+  entries.forEach(function (name) {
     entry[name] = ['webpack-hot-middleware/client?name=admin'].concat(entry[name])
   })
   plugins     = [
@@ -61,7 +58,6 @@ if (IS_PRODUCTION) {
     }),
     new webpack.HotModuleReplacementPlugin(),
   ]
-  let entries = Object.keys(entry)
   entries.forEach((entry) => {
     plugins.push(new HtmlWebpackPlugin({
       filename: `${entry}.html`,
@@ -79,6 +75,6 @@ module.exports = merge(config, {
   output: {
     path: path.resolve(__dirname, './dist/admin'),
     publicPath: '/admin/',
-    filename: '[name].[hash].js'
+    filename: 'js/[name].[hash].js'
   },
 });

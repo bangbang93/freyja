@@ -14,10 +14,15 @@ const VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production'
 
+const langs = require('highlight.js-async-webpack/src/file.lang.hljs.js');
 const entry = {
   index: path.resolve(__dirname, '../client/src/entries/entry-client.js'),
 }
+const entries = Object.keys(entry)
 
+for (const lang of langs) {
+  entry[`hljs/${lang}`] = [`mavon-editor/dist/js/${lang}.js`]
+}
 
 let plugins;
 if (IS_PRODUCTION) {
@@ -42,7 +47,6 @@ if (IS_PRODUCTION) {
     new ExtractTextPlugin('style.css'),
     new VueSSRClientPlugin(),
   ]
-  let entries = Object.keys(entry)
   entries.forEach((entry) => {
     plugins.push(new HtmlWebpackPlugin({
       filename: `${entry}.html`,
@@ -66,7 +70,6 @@ if (IS_PRODUCTION) {
     new webpack.HotModuleReplacementPlugin(),
     new VueSSRClientPlugin(),
   ]
-  let entries = Object.keys(entry)
   entries.forEach((entry) => {
     plugins.push(new HtmlWebpackPlugin({
       filename: `index.html`,

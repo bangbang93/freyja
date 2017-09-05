@@ -33,6 +33,8 @@ module.exports = function (app, cb) {
   app.use(hotMiddleware);
   clientCompiler.plugin('done', stats => {
     stats = stats.toJson()
+    console.log(stats)
+    app.set('bundleHash', stats.children[0].hash)
     stats.errors.forEach(err => console.error(err))
     stats.warnings.forEach(err => console.warn(err))
     if (stats.errors.length) return

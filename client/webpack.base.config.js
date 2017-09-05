@@ -23,7 +23,7 @@ module.exports = Object.assign(config, {
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/',
-    filename: '[name].[hash].js'
+    filename: 'js/[name].[hash].js'
   },
   resolve: {
     modules: [
@@ -47,7 +47,7 @@ module.exports = Object.assign(config, {
         test: /\.js$/,
         loader: 'babel-loader',
         include: projectRoot,
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
       {
         test: /\.css$/,
@@ -78,6 +78,6 @@ module.exports = Object.assign(config, {
 });
 
 function assetsPath (_path) {
-  var assetsSubDirectory = 'static';
-  return path.posix.join(assetsSubDirectory, _path)
+  const assetsSubDirectory = 'static';
+  return path.join(assetsSubDirectory, _path)
 }

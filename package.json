@@ -25,6 +25,7 @@
     "express-session": "^1.15.3",
     "express-simple-route": "^1.4.2",
     "fs-extra": "^4.0.1",
+    "highlight.js-async-webpack": "^1.0.4",
     "ioredis": "^3.1.4",
     "loud-rejection": "^1.6.0",
     "mavon-editor": "^2.2.4",

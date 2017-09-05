@@ -1,6 +1,6 @@
 <template>
   <div class="freyja-md-editor">
-    <mavon-editor v-model="content" @change="onChange" @imgAdd="onImgAdd" ref="editor"></mavon-editor>
+    <mavon-editor :ishljs="true" v-model="content" @change="onChange" @imgAdd="onImgAdd" ref="editor"></mavon-editor>
   </div>
 </template>
 <script>
