@@ -32,6 +32,7 @@
         const body = await resp.json()
         this.$refs['editor'].$img2Url(filename, body.path)
         this.$refs['editor'].$refs['toolbar_left'].$imgUpdateByFilename(filename, body.path)
+        this.emit('attachAdd', {id, url: body.path, filename: file.name})
       }
     }
   }

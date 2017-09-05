@@ -17,6 +17,10 @@ const Schema = new mongoose.Schema({
     ref: 'admin',
   },
   createdAt: Date,
+  attachments: {
+    type: [ObjectId],
+    ref: 'attachment',
+  }
 })
 
 const Model = mongoose.model('article', Schema);

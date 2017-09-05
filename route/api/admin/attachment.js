@@ -36,12 +36,14 @@ router.post('/', uploader.single('file'), async function (req, res) {
 
   await fs.copy(file.path, savePath)
 
-  await AdminAttachemntService.create({
+  const attachment = await AdminAttachemntService.create({
     filename: file.originalname,
     path: path.join('/uploads', datePath, filename),
   })
 
   res.json({
+    id: attachment._id,
+    filename: attachment.filename,
     path: path.join('/uploads', datePath, filename)
   })
 })
