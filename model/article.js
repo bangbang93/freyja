@@ -51,7 +51,7 @@ exports.listByPage = function ({skip, page = 1, limit = 20}) {
   if (!skip) {
     skip = (page - 1) * limit
   }
-  return Model.find({}).skip(skip).limit(limit).exec()
+  return Model.find({}).sort({_id: -1}).skip(skip).limit(limit).exec()
 }
 
 exports.del = function (id) {
