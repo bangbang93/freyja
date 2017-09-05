@@ -24,6 +24,10 @@ const routes = [{
   path: '/attachment',
   component: require('../pages/admin/attachment/list.vue').default,
   name: 'attachment.list',
+}, {
+  path: '/tag',
+  component: require('../pages/admin/tag/list.vue').default,
+  name: 'tag.list',
 }]
 
 export default new VueRouter({

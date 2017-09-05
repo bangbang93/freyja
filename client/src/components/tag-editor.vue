@@ -1,8 +1,10 @@
 <template>
   <div class="tag-container">
-    <el-tag :closable="true" :close-transition="true" v-for="tag in selectedTags" :key="tag" @close="onClose">{{tag}}</el-tag>
-    <el-autocomplete v-if="isInputVisible" v-model="tagInput" size="mini" :fetch-suggestions="searchTag" @select="onSelectTag"
-                     @keydown.native.enter="onSelectTag(tagInput)" class="input-new-tag" @blur.native="hideInput"></el-autocomplete>
+    <el-tag :closable="true" :close-transition="true" v-for="tag in selectedTags" :key="tag"
+            @close="onClose" class="tag">{{tag}}</el-tag>
+    <el-autocomplete v-if="isInputVisible" v-model="tagInput" size="mini" :fetch-suggestions="searchTag"
+                     @select="onSelectTag" @keydown.native.enter="onSelectTag(tagInput)" class="input-new-tag"
+                     @blur.native="hideInput"></el-autocomplete>
     <el-button v-if="!isInputVisible" size="small" class="button-new-tag" @click="showInput">+ New Tag</el-button>
   </div>
 </template>
@@ -47,3 +49,8 @@
     }
   }
 </script>
+<style scoped lang="scss">
+  .tag {
+    margin-left: 10px;
+  }
+</style>

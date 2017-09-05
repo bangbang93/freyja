@@ -17,6 +17,7 @@
             <el-menu-item index="articleList" :route="{name: 'article.list'}" :disabled="false">文章列表</el-menu-item>
           </el-submenu>
           <el-menu-item index="attachment" :route="{name: 'attachment.list'}">附件管理</el-menu-item>
+          <el-menu-item index="tag" :route="{name: 'tag.list'}">标签管理</el-menu-item>
         </el-menu>
       </el-col>
       <el-col :span="20">
