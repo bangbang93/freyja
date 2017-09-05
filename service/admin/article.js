@@ -26,3 +26,7 @@ exports.update = async function (id, newArticle) {
   }
   return article.update(newArticle)
 }
+
+exports.del = async function (id) {
+  return ArticleModel.del(id)
+}

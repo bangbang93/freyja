@@ -51,4 +51,12 @@ router.put('/:id(\\w{24})', async function (req, res) {
   res.json(article)
 })
 
+router.delete('/:id(\\w{24})', async function (req, res) {
+  const {id} = req.params;
+
+  await AdminArticleService.del(id)
+
+  res.status(204).end()
+})
+
 module.exports = router

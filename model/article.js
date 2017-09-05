@@ -46,3 +46,7 @@ exports.list = function (lastId, limit = 20) {
   }
   return query.sort({_id: -1}).limit(limit).exec()
 }
+
+exports.del = function (id) {
+  return Model.remove({_id: id}).exec()
+}

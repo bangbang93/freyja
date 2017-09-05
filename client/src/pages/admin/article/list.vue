@@ -7,7 +7,7 @@
       <el-table-column label="操作">
         <template scope="scope">
           <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-          <el-button size="small" type="danger" @click="handleDelete">删除</el-button>
+          <el-button size="small" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -40,8 +40,20 @@
           }
         })
       },
-      handleDelete() {
-
+      async handleDelete($index, row) {
+        try {
+          const result = await this.$confirm('确定删除', 'Freyja')
+          if (result === 'confirm') {
+            let resp = await this.$fetch.del(`/api/admin/article/${row._id}`)
+            if (resp.status === 204) {
+              await this.initData();
+            }
+          }
+        } catch (e) {
+          if (e !== 'cancel') {
+            throw e
+          }
+        }
       }
     }
   }
