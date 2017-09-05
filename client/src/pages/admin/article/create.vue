@@ -7,6 +7,9 @@
       <el-form-item class="editor-container">
         <freyja-md-editor v-model="article.content" @attachAdd="onAttachAdd"></freyja-md-editor>
       </el-form-item>
+      <el-form-item label="标签">
+        <tag-editor :tags="this.tags" :selected-tags="article.tags" @tag-add="onTagAdd" @tag-close="onTagClose"></tag-editor>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submit">发布</el-button>
       </el-form-item>
@@ -15,9 +18,13 @@
 </template>
 <script>
   import FreyjaMdEditor from '../../../components/md-editor.vue'
+  import TagEditor from '../../../components/tag-editor.vue'
 
   export default {
-    components: {FreyjaMdEditor},
+    components: {
+      TagEditor,
+      FreyjaMdEditor
+    },
     data() {
       return {
         article: {
@@ -26,9 +33,22 @@
           tags: [],
         },
         attachments: [],
+        tags: [],
+        tagInput: ''
       }
     },
+    mounted() {
+      this.initData()
+    },
     methods: {
+      async initData() {
+      let resp = await this.$fetch.get('/api/admin/tag')
+        if (resp.status !== 200) {
+          return this.$message({message: '获取tag失败', type: 'error'})
+        }
+        const body = await resp.json()
+        this.tags = body.map((tag) => tag.title)
+      },
       async submit() {
         const data = Object.assign({}, this.article)
         data.attachments = this.attachments
@@ -42,6 +62,17 @@
       },
       onAttachAdd({id}) {
         this.attachments.push(id)
+      },
+      onTagClose(tag) {
+        const index = this.article.tags.indexOf(tag)
+        this.article.tags.splice(index, 1)
+      },
+      async onTagAdd(value) {
+        let resp = await this.$fetch.put(`/api/admin/tag/${value}`)
+        if (resp.status !== 201 && resp.status !== 200) {
+          this.$message({message: '创建tag失败', type: 'error'})
+        }
+        this.article.tags.push(value)
       }
     }
   }
