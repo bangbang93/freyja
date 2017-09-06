@@ -11,7 +11,7 @@ const microCache = LRU({
 })
 
 const isCacheable = (req) => {
-  return true
+  return req.app.get('env') === 'production'
 }
 
 
