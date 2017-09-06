@@ -18,6 +18,11 @@ export default {
     }],
     page: 1
   },
+  getters: {
+    articleCount(state) {
+      return state.articles.length
+    }
+  },
   mutations: {
     setArticles(state, list) {
       state.articles.splice(0, state.articles.length)

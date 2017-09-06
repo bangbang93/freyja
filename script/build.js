@@ -24,10 +24,10 @@ console.log(
 const spinner = ora('building for production...');
 spinner.start();
 
-const assetsPath = path.join(__dirname, '../public')
-shell.rm('-rf', assetsPath);
-shell.mkdir('-p', assetsPath);
-shell.cp('-R', path.join(__dirname, '../client/static/'), assetsPath);
+// const assetsPath = path.join(__dirname, '../public')
+// shell.rm('-rf', assetsPath);
+// shell.mkdir('-p', assetsPath);
+// shell.cp('-R', path.join(__dirname, '../client/static/'), assetsPath);
 
 webpack([webpackClientConfig, webpackServerConfig, webpackAdminConfig], function (err, stats) {
   spinner.stop();

@@ -33,6 +33,12 @@ router.get('/article/js/hljs.:lang.js', function (req, res) {
   res.redirect(`/js/hljs/hljs.${lang}.${hash}.js`);
 })
 
-router.use(history())
+router.get('/', function (req, res) {
+  res.redirect('/admin/home')
+})
+
+router.use(history({
+  verbose: true,
+}))
 
 module.exports = router;

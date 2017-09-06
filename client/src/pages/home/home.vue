@@ -41,12 +41,12 @@
     asyncData ({store, route}) {
       return store.dispatch('home/getArticles', store.state.home.page)
     },
-    completed : {
+    computed : {
       canGoBackward() {
-        return this.$store.home.page > 1
+        return this.$store.state.home.page > 1
       },
       canGoForward() {
-        return this.$store.home.articles > 20
+        return this.$store.state.home.articleCount > 20
       }
     },
     data () {
