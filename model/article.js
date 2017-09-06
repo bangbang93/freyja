@@ -47,14 +47,21 @@ exports.list = function (lastId, limit = 20) {
       }
     })
   }
-  return query.sort({_id: -1}).limit(limit).exec()
+  return query.sort({_id: -1})
+    .limit(limit)
+    .exec()
 }
 
 exports.listByPage = function ({skip, page = 1, limit = 20}) {
   if (!skip) {
     skip = (page - 1) * limit
   }
-  return Model.find({}).sort({_id: -1}).skip(skip).limit(limit).exec()
+  return Model.find({})
+    .select({content: 0})
+    .sort({_id: -1})
+    .skip(skip)
+    .limit(limit)
+    .exec()
 }
 
 exports.del = function (id) {
