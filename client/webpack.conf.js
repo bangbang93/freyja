@@ -20,9 +20,9 @@ const entry = {
 }
 const entries = Object.keys(entry)
 
-for (const lang of langs) {
-  entry[`hljs/${lang}`] = [`mavon-editor/dist/js/${lang}.js`]
-}
+// for (const lang of langs) {
+//   entry[`hljs/${lang}`] = [`mavon-editor/dist/js/${lang}.js`]
+// }
 
 let plugins;
 if (IS_PRODUCTION) {

@@ -11,6 +11,9 @@ const Schema = new mongoose.Schema({
     type: String,
     index: 'text',
   },
+  summary: {
+    type: String,
+  },
   tags: [String],
   author: {
     type: ObjectId,

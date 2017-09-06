@@ -33,10 +33,12 @@ module.exports = function (renderer) {
     //     return res.end(hit)
     //   }
     // }
+    const origin = `http://localhost:${req.app.get('port')}`
 
     const context = {
       title: 'Vue HN 2.0', // default title
-      url: req.url
+      url: req.url,
+      origin,
     }
     renderer.renderToString(context, (err, html) => {
       if (err) {

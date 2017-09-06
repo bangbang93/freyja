@@ -16,6 +16,7 @@ export default (context) => {
       }
       Promise.all(matchedComponents.map((Component) => {
         if (Component.asyncData) {
+          store.state.origin = context.origin
           return Component.asyncData({
             store,
             route: router.currentRoute,

@@ -13,4 +13,12 @@ router.get('/:id(\\d+)', async function (req, res) {
   res.json(article)
 })
 
+router.get('/', async function (req, res) {
+  const {page} = req.query
+
+  const list = await ArticleService.list(page, 20)
+
+  res.json(list)
+})
+
 module.exports = router

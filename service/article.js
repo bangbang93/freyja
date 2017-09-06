@@ -7,3 +7,8 @@ const ArticleModel = require('../model/article');
 exports.getById = function (id) {
   return ArticleModel.getById(id)
 }
+
+exports.list = function (page, limit = 20) {
+  const skip = (page - 1) * limit
+  return ArticleModel.listByPage({skip, limit})
+}
