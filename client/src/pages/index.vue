@@ -1,8 +1,18 @@
 <template>
   <div class="container">
-    <h1>bangbang93.blog()</h1>
-    <freyja-navbar></freyja-navbar>
-    <router-view></router-view>
+    <div class="header">
+      <h1>bangbang93.blog()</h1>
+      <freyja-navbar></freyja-navbar>
+    </div>
+    <div class="view">
+      <router-view></router-view>
+    </div>
+    <div class="footer">
+      <hr>
+      <div>
+        Powered by freyja,written by bangbang93
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -24,5 +34,9 @@
   .container {
     width: 1000px;
     margin: auto;
+    padding-bottom: 50px;
+  }
+  .footer {
+    color: #ccc;
   }
 </style>

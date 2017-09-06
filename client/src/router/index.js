@@ -10,9 +10,9 @@ export function createRouter () {
     component: require('../pages/home/home.vue').default,
     name: 'home',
   }, {
-    path: '/2',
-    component: require('../pages/home/second.vue').default,
-    name: 'second'
+    path: '/article/:id',
+    component: require('../pages/home/article.vue').default,
+    name: 'article',
   }]
 
   return new VueRouter({
