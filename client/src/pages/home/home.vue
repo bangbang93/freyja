@@ -2,8 +2,18 @@
     <div>
         <div class="freyja-article-list">
             <article v-for="article in articles" :key="article._id">
-                <h3>{{article.title}}</h3>
-                <p>{{article.summary}}</p>
+                <h3>
+                    <a :href="'/article/' + article._id">
+                        {{article.title}}
+                    </a>
+                </h3>
+                <div class="freyja-article-time">
+                    <hr>
+                    <span><i class="el-icon-time"></i> {{article.createdAt | time}}</span>
+                </div>
+                <div class="freyja-article-summary">
+                    <pre>{{article.summary}}</pre>
+                </div>
                 <hr>
             </article>
         </div>
@@ -33,6 +43,11 @@
           page: 1
         }
       },
+      filters: {
+        time(time) {
+          return new Date(time).toLocaleString()
+        }
+      },
       methods: {
         onPager(page) {
           return this.$store.dispatch('home/doPager', page)
@@ -41,4 +56,15 @@
     }
 </script>
 <style lang="scss" scoped="">
+    .freyja-article-time {
+        font-size: small;
+        color: #666;
+        hr {
+            border: 0;
+            height: 1px;
+            background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+            width: 40%;
+            margin-left: 0;
+        }
+    }
 </style>
