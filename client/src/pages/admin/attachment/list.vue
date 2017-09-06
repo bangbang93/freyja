@@ -18,7 +18,7 @@
   </div>
 </template>
 <script>
-  import FreyjaAttachmentCard from '../../../components/attachment-card.vue'
+  import FreyjaAttachmentCard from '../../../components/admin/attachment-card.vue'
 
   export default {
     components: {FreyjaAttachmentCard},

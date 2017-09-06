@@ -17,8 +17,8 @@
   </div>
 </template>
 <script>
-  import FreyjaMdEditor from '../../../components/md-editor.vue'
-  import FreyjaTagEditor from '../../../components/tag-editor.vue'
+  import FreyjaMdEditor from '../../../components/admin/md-editor.vue'
+  import FreyjaTagEditor from '../../../components/admin/tag-editor.vue'
 
   export default {
     components: {
