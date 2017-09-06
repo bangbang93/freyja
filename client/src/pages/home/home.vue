@@ -21,7 +21,4 @@
     }
 </script>
 <style lang="scss" scoped="">
-    div {
-        background: white;
-    }
 </style>
