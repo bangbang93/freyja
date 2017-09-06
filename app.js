@@ -64,8 +64,12 @@ if (app.get('env') === 'production') {
   // to automatically infer preload/prefetch links and directly add <script>
   // tags for any async chunks used during render, avoiding waterfall requests.
   const clientManifest = require('./client/dist/vue-ssr-client-manifest.json')
+  const LRU = require('lru-cache')
   renderer = createRenderer(bundle, {
-    clientManifest
+    clientManifest,
+    cache: LRU({
+      max: 10000
+    })
   })
   renderer = require('./middleware/server-render')(renderer)
   app.get('*', function (req, res, next) {
