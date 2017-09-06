@@ -38,7 +38,6 @@ module.exports = function (renderer) {
       url: req.url,
       origin,
     }
-    console.log(context)
     renderer.renderToString(context, (err, html) => {
       if (err) {
         return handleError(err)

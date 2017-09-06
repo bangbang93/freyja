@@ -77,7 +77,6 @@ if (app.get('env') === 'production') {
     renderer = require('./middleware/server-render')(renderer)
   })
   app.get('*', function (req, res, next) {
-    console.log('server-render')
     if (renderPromise && renderPromise.isFulfilled) {
       renderer(req, res, next)
     } else {

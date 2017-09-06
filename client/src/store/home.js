@@ -20,7 +20,13 @@ export default {
   },
   mutations: {
     setArticles(state, list) {
-      state.articles = list
+      state.articles.splice(0, state.articles.length)
+      list.forEach((article) => {
+        state.articles.push(article)
+      })
+    },
+    addPage(state, page) {
+      state.page += page;
     }
   },
   actions: {
@@ -33,6 +39,10 @@ export default {
       const list = await resp.json()
       commit('setArticles', list)
       return list
+    },
+    doPager({commit, dispatch, state}, page) {
+      commit('addPage', page)
+      return dispatch('getArticles', state.page)
     }
   }
 }
