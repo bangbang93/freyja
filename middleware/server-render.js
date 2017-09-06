@@ -17,9 +17,7 @@ module.exports = function (renderer) {
         next()
       } else {
         // Render Error Page or Redirect
-        res.status(500).end('500 | Internal Server Error')
-        console.error(`error during render : ${req.url}`)
-        console.error(err.stack)
+        next(err)
       }
     }
 
@@ -40,6 +38,7 @@ module.exports = function (renderer) {
       url: req.url,
       origin,
     }
+    console.log(context)
     renderer.renderToString(context, (err, html) => {
       if (err) {
         return handleError(err)

@@ -6,10 +6,9 @@ import VueRouter from 'vue-router'
 
 export function createRouter () {
   const routes = [{
-    path: '/1',
-    component: require('../pages/home/first.vue').default,
-    name: 'first',
-    alias: '/'
+    path: '/',
+    component: require('../pages/home/home.vue').default,
+    name: 'home',
   }, {
     path: '/2',
     component: require('../pages/home/second.vue').default,

@@ -27,13 +27,14 @@ module.exports = function (app, cb) {
   let devMiddleware = require('webpack-dev-middleware')(clientCompiler, {
     publicPath: clientConfig.output.publicPath,
     hot: true,
+    serverSideRender: true,
+    index: false,
   });
   let hotMiddleware = require('webpack-hot-middleware')(clientCompiler);
   app.use(devMiddleware);
   app.use(hotMiddleware);
   clientCompiler.plugin('done', stats => {
     stats = stats.toJson()
-    console.log(stats)
     app.set('bundleHash', stats.children[0].hash)
     stats.errors.forEach(err => console.error(err))
     stats.warnings.forEach(err => console.warn(err))
