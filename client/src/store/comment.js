@@ -17,9 +17,13 @@ export default {
       state.comments = comments;
     }
   },
-  action: {
-    async create ({commit}, comment) {
-      let resp = await Fetch.post('/api/comment', comment)
+  actions: {
+    async create ({commit}, {content, articleId, publisher, reply}) {
+      let resp = await Fetch.post(`/api/comment/${articleId}`, {
+        content,
+        publisher,
+        reply,
+      })
       if (resp.status !== 201) {
         let err = new Error('add commit failed')
         err.status = resp.status
@@ -27,7 +31,7 @@ export default {
         throw err
       }
 
-      comment = await resp.json()
+      const comment = await resp.json()
 
       commit('create', comment)
       return comment

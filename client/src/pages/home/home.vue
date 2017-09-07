@@ -31,7 +31,7 @@
 <script>
   import 'element-ui/lib/theme-default/index.css'
   import { Icon, Button } from 'element-ui'
-  import FreyjaMarkdown from '../../components/home/markdown.vue'
+  import FreyjaMarkdown from '../../components/home/comment-editor.vue'
 
   export default {
     components: {
