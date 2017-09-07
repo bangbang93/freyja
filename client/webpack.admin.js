@@ -12,11 +12,17 @@ const path = require('path');
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production'
 
+const langs = require('highlight.js-async-webpack/src/file.lang.hljs.js');
+
 const entry = {
   index: path.resolve(__dirname, '../client/src/entries/entry-admin.js'),
   login: path.resolve(__dirname, '../client/src/entries/entry-admin-login.js'),
 }
 const entries = Object.keys(entry);
+
+for (const lang of langs) {
+  entry[`hljs/${lang}`] = [`mavon-editor/dist/js/${lang}.js`]
+}
 
 let plugins;
 if (IS_PRODUCTION) {

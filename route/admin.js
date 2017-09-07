@@ -30,7 +30,7 @@ router.get('/login', function (req, res) {
 router.get('/article/js/hljs.:lang.js', function (req, res) {
   const lang = req.params.lang
   const hash = req.app.get('bundleHash') || _hash
-  res.redirect(`/js/hljs/hljs.${lang}.${hash}.js`);
+  res.redirect(`/admin/js/hljs/hljs.${lang}.${hash}.js`);
 })
 
 router.get('/', function (req, res) {
