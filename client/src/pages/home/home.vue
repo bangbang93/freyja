@@ -12,7 +12,7 @@
           <span><i class="el-icon-time"></i> {{article.createdAt | time}}</span>
         </div>
         <div class="freyja-article-summary">
-          <vue-markdown>{{article.summary}}</vue-markdown>
+          <freyja-markdown>{{article.summary}}</freyja-markdown>>
         </div>
         <hr>
       </article>
@@ -31,12 +31,12 @@
 <script>
   import 'element-ui/lib/theme-default/index.css'
   import { Icon, Button } from 'element-ui'
-  import VueMarkdown from 'vue-markdown'
+  import FreyjaMarkdown from '../../components/home/markdown.vue'
 
   export default {
     components: {
+      FreyjaMarkdown,
       ElButton: Button,
-      VueMarkdown,
     },
     asyncData ({store, route}) {
       return store.dispatch('home/getArticles', store.state.home.page)
