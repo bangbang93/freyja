@@ -5,7 +5,7 @@
 const router = require('express-promise-router')()
 const ArticleService = require('../../service/article')
 
-router.get('/:id(\\d+)', async function (req, res) {
+router.get('/:id(\\w{24})', async function (req, res) {
   const id = req.params.id;
 
   const article = await ArticleService.getById(id)
