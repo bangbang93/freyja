@@ -1,7 +1,10 @@
 <template>
-  <div>
+  <div class="freyja-article-comment">
     <el-button size="small" @click="toggleEditor">发表评论</el-button>
-    <div v-for="comment in comments">{{comment.content}}</div>
+    <div v-for="comment in comments">
+      <img :src="`https://www.gravatar.com/avatar/${comment.publisher.hash}?s=50&d=retro`" class="freyja-comment-avatar">
+      {{comment.content}}
+    </div>
     <freyja-comment-editor v-if="showEditor" @close="onCloseEditor" @submit="onSubmitComment" :publisher="publisher"></freyja-comment-editor>
   </div>
 </template>
@@ -49,3 +52,12 @@
     }
   }
 </script>
+<style lang="scss">
+  .freyja-article-comment {
+    .freyja-comment-avatar {
+      border-radius: 50%;
+      height: 50px;
+      width: 50px;
+    }
+  }
+</style>
