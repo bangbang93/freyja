@@ -15,6 +15,12 @@ export function createRouter () {
     name: 'article',
   }]
 
+  routes.push({
+    path: '*',
+    meta: {status: 404},
+    component: require('../components/home/not-found.vue').default,
+  })
+
   return new VueRouter({
     routes,
     mode: 'history',

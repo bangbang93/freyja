@@ -53,6 +53,9 @@ module.exports = function (renderer) {
       if (err) {
         return handleError(err)
       }
+      if (context.status) {
+        res.status(context.status)
+      }
       res.end(html)
       if (cacheable) {
         microCache.set(req.url, html)

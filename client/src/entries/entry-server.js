@@ -15,6 +15,7 @@ export default (context) => {
         return reject({code: 404})
       }
       Promise.all(matchedComponents.map((Component) => {
+        if (!Component) return Promise.resolve()
         if (Component.asyncData) {
           store.state.origin = context.origin
           return Component.asyncData({
@@ -25,6 +26,9 @@ export default (context) => {
       }))
         .then(() => {
           context.state = store.state
+          if (router.currentRoute.meta.status) {
+            context.status = router.currentRoute.meta.status;
+          }
           resolve(app)
         })
     }, reject)
