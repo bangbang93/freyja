@@ -3,6 +3,7 @@
  */
 'use strict';
 const CommentModel = require('../model/comment')
+const crypto = require('crypto')
 
 exports.create = async function (comment, {article, reply}) {
   if (!article && !reply) {
@@ -11,6 +12,8 @@ exports.create = async function (comment, {article, reply}) {
   if (!article && reply) {
     article = await CommentModel.getById(reply)
   }
+  const email = comment.email.toLowerCase().trim()
+  comment.publisher.hash = crypto.createHash('md5').update(email).digest('hex')
   return CommentModel.create(comment, {article, reply})
 }
 

@@ -16,6 +16,7 @@ const Schema = new mongoose.Schema({
     email: String,
     name: String,
     website: String,
+    hash: String,
   },
   reply: {
     type: ObjectId,
