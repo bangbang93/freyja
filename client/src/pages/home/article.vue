@@ -60,11 +60,3 @@
     color: #666;
   }
 </style>
-<style lang="scss">
-  .freyja-article-content {
-    img {
-      max-width: 100%;
-      height: auto;
-    }
-  }
-</style>

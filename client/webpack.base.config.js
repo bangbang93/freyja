@@ -59,6 +59,13 @@ module.exports = Object.assign(config, {
         })
       },
       {
+        test: /\.s[ac]ss$/,
+        loader: ExtractTextPlugin.extract({
+          fallback: 'vue-style-loader',
+          use: 'css-loader!sass-loader',
+        })
+      },
+      {
         test: /\.html$/,
         loader: 'vue-html-loader'
       },

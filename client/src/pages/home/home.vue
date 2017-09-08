@@ -11,7 +11,7 @@
           <hr>
           <span><i class="el-icon-time"></i> {{article.createdAt | time}}</span>
         </div>
-        <div class="freyja-article-summary">
+        <div class="freyja-article-summary freyja-article-content">
           <div v-html="article.summary"></div>
         </div>
         <hr>
@@ -78,14 +78,6 @@
       background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
       width: 40%;
       margin-left: 0;
-    }
-  }
-
-  .freyja-article-summary {
-    color: #333;
-    img {
-      max-width: 100%;
-      height: auto;
     }
   }
 
