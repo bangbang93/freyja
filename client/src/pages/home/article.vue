@@ -55,8 +55,4 @@
     width: 40%;
     margin-left: 0;
   }
-  .freyja-article-time {
-    font-size: small;
-    color: #666;
-  }
 </style>

@@ -12,6 +12,7 @@
       </el-table-column>
     </el-table>
     <el-pagination :page-size="pageSize" :total="total" :current-page="currentPage"></el-pagination>
+    <el-button @click="onRerenderAllClick">重新渲染所有文章</el-button>
   </div>
 </template>
 <script>
@@ -63,6 +64,15 @@
           if (e !== 'cancel') {
             throw e
           }
+        }
+      },
+      async onRerenderAllClick() {
+        let resp = await this.$fetch.get('/api/admin/article/rerender-all')
+        if (resp.status === 200) {
+          this.$alert('渲染成功')
+        } else {
+          const body = await resp.json()
+          this.$alert(body.message || body.msg)
         }
       }
     }

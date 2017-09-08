@@ -5,8 +5,10 @@
 const ArticleModel = require('../../model/article')
 const MarkdownHelper = require('../../helper/markdown')
 
+const SUMMARY_LENGTH = 1000;
+
 exports.create = function ({title, content, tags, author, createdAt = new Date()}) {
-  const summary = MarkdownHelper.render(content.substr(0, 200))
+  const summary = MarkdownHelper.render(content.substr(0, SUMMARY_LENGTH))
   const html = MarkdownHelper.render(content)
   return ArticleModel.create({title, content, tags, author, createdAt, summary, html})
 }
@@ -35,9 +37,22 @@ exports.update = async function (id, newArticle) {
   if (!article) {
     throw new Error('no such article')
   }
-  newArticle.summary = MarkdownHelper.render(newArticle.content.substr(0, 200))
+  newArticle.summary = MarkdownHelper.render(newArticle.content.substr(0, SUMMARY_LENGTH))
   newArticle.html = MarkdownHelper.render(newArticle.content)
   return article.update(newArticle)
+}
+
+exports.reRenderAll = async function () {
+  let list = await ArticleModel.list({select: {}})
+  while (list.length) {
+    const promises = list.map((article) => {
+      article.html = MarkdownHelper.render(article.content)
+      article.summary = MarkdownHelper.render(article.content.substr(0, SUMMARY_LENGTH))
+      return article.save()
+    })
+    await Promise.all(promises)
+    list = await ArticleModel.list({lastId: list.pop()._id, select: {}})
+  }
 }
 
 exports.del = async function (id) {

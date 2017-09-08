@@ -69,26 +69,6 @@
   }
 </script>
 <style lang="scss">
-  .freyja-article-time {
-    font-size: small;
-    color: #666;
-    hr {
-      border: 0;
-      height: 1px;
-      background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
-      width: 40%;
-      margin-left: 0;
-    }
-  }
-
-  .freyja-article-title {
-    color: #333;
-    :link,
-    :visited {
-      color: #333;
-      text-decoration: none;
-    }
-  }
   .freyja-article-pager-prev {
     float: left;
     width: 300px;

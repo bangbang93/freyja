@@ -45,7 +45,7 @@ exports.create = function (article) {
   return Model.create(article);
 }
 
-exports.list = function (lastId, limit = 20) {
+exports.list = function ({lastId, limit = 20, select = {content: 0, html: 0}}) {
   let query;
   if (!lastId) {
     query = Model.find({})
@@ -57,7 +57,7 @@ exports.list = function (lastId, limit = 20) {
     })
   }
   return query.sort({_id: -1})
-    .select({content: 0, html: 0})
+    .select(select)
     .limit(limit)
     .exec()
 }

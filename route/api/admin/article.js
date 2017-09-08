@@ -67,4 +67,11 @@ router.get('/count', async function (req, res) {
   })
 })
 
+router.get('/rerender-all', async function (req, res) {
+  await AdminArticleService.reRenderAll()
+  res.json({
+    msg: 'success'
+  })
+})
+
 module.exports = router
