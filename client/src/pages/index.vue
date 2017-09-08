@@ -12,7 +12,6 @@
       <div class="container">
         <div class="header">
           <h1 class="no-link"><router-link :to="{name: 'home'}">bangbang93.blog()</router-link></h1>
-          <freyja-navbar></freyja-navbar>
         </div>
         <div class="view">
           <transition
@@ -50,6 +49,7 @@
     },
     mounted() {
       this.isShowMenu = true;
+      this.$store.state.origin = '';
     }
   }
 </script>
