@@ -23,13 +23,19 @@ const Schema = new mongoose.Schema({
     ref: 'admin',
   },
   createdAt: Date,
-  attachments: {
-    type: [ObjectId],
+  attachments: [{
+    type: ObjectId,
     ref: 'attachment',
+  }],
+  wordpress: {
+    postName: String,
+    id: Number,
   }
 })
 
 const Model = mongoose.model('article', Schema);
+
+exports._Model = Model
 
 exports.getById = function (id) {
   return Model.findById(id).exec()

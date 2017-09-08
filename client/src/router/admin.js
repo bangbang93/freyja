@@ -28,6 +28,10 @@ const routes = [{
   path: '/tag',
   component: require('../pages/admin/tag/list.vue').default,
   name: 'tag.list',
+}, {
+  path: '/import/wordpress',
+  component: require('../pages/admin/import/wordpress.vue').default,
+  name: 'import.wordpress',
 }]
 
 export default new VueRouter({

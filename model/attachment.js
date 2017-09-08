@@ -9,9 +9,14 @@ const Schema = new mongoose.Schema({
   path: String,
   mimeType: String,
   createdAt: Date,
+  wordpress: {
+
+  }
 })
 
 const Model = mongoose.model('attachment', Schema)
+
+exports._Model = Model
 
 exports.create = function (attachment) {
   attachment.createdAt = attachment.createdAt || new Date;
