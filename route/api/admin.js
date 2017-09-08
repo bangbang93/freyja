@@ -6,7 +6,7 @@ const router = require('express-promise-router')()
 
 router.use(function (req, res, next) {
   switch (true) {
-    case req.method === 'post' && req.url === '/login':
+    case req.method === 'post' && req.url === '/user/login':
       return next()
     default:
       if (!req.session.user){
