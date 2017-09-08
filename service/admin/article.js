@@ -3,13 +3,11 @@
  */
 'use strict';
 const ArticleModel = require('../../model/article')
-const MarkdownIt = require('markdown-it')
-
-const md = new MarkdownIt()
+const MarkdownHelper = require('../../helper/markdown')
 
 exports.create = function ({title, content, tags, author, createdAt = new Date()}) {
-  const summary = md.render(content.substr(0, 200))
-  const html = md.render(content)
+  const summary = MarkdownHelper.render(content.substr(0, 200))
+  const html = MarkdownHelper.render(content)
   return ArticleModel.create({title, content, tags, author, createdAt, summary, html})
 }
 
@@ -37,8 +35,8 @@ exports.update = async function (id, newArticle) {
   if (!article) {
     throw new Error('no such article')
   }
-  newArticle.summary = md.render(newArticle.content.substr(0, 200))
-  newArticle.html = md.render(newArticle.content)
+  newArticle.summary = MarkdownHelper.render(newArticle.content.substr(0, 200))
+  newArticle.html = MarkdownHelper.render(newArticle.content)
   return article.update(newArticle)
 }
 

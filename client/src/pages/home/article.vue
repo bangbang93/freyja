@@ -25,15 +25,12 @@
     components: {
       FreyjaArticleComment: () => import('../../components/home/article-comment.vue'),
     },
-    filters: {
-      time(time) {
-        return new Date(time).toLocaleString()
-      }
-    },
     mounted() {
-      this.highlight()
       const articleId = this.$route.params.id
       this.$store.dispatch('comment/list', {articleId, page: 1})
+    },
+    updated() {
+      this.highlight()
     },
     data() {
       return {

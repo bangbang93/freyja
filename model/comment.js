@@ -7,6 +7,7 @@ const ObjectId = mongoose.Schema.ObjectId
 
 const Schema = new mongoose.Schema({
   content: String,
+  html: String,
   article: {
     type: ObjectId,
     ref: 'article',
@@ -51,6 +52,8 @@ exports.listByArticle = function (articleId, {skip, limit}) {
   return Model.find({
     article: articleId
   })
+    .select({content: 0})
+    .sort({_id: -1})
     .skip(skip)
     .limit(limit)
     .exec()

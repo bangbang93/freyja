@@ -8,6 +8,7 @@ import VueRouter from 'vue-router'
 import VueFetch from 'vue-fetch'
 import {createRouter} from '../router/index'
 import {createStore} from '../store/index'
+import filters from '../filters/index'
 import Vuex from 'vuex'
 import {sync} from 'vuex-router-sync'
 
@@ -16,6 +17,10 @@ require('es6-promise').polyfill();
 Vue.use(VueRouter);
 Vue.use(VueFetch);
 Vue.use(Vuex)
+
+Vue.mixin({
+  filters,
+})
 
 const router = createRouter()
 const store = createStore()

@@ -4,6 +4,7 @@
 'use strict';
 const CommentModel = require('../model/comment')
 const crypto = require('crypto')
+const MarkdownHelper = require('../helper/markdown')
 
 exports.create = async function (comment, {article, reply}) {
   if (!article && !reply) {
@@ -14,6 +15,7 @@ exports.create = async function (comment, {article, reply}) {
   }
   const email = comment.publisher.email.toLowerCase().trim()
   comment.publisher.hash = crypto.createHash('md5').update(email).digest('hex')
+  comment.html = MarkdownHelper.render(comment.content)
   return CommentModel.create(comment, {article, reply})
 }
 

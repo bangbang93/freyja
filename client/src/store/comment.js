@@ -29,7 +29,7 @@ export default {
   },
   mutations: {
     create (state, comment) {
-      state.comments.push(comment)
+      state.comments.unshift(comment)
     },
     set (state, comments) {
       state.comments.splice(0, state.comments.length)

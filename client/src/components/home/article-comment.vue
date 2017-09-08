@@ -1,9 +1,23 @@
 <template>
   <div class="freyja-article-comment">
     <el-button size="small" @click="toggleEditor">发表评论</el-button>
-    <div v-for="comment in comments">
-      <img :src="`https://www.gravatar.com/avatar/${comment.publisher.hash}?s=50&d=retro`" class="freyja-comment-avatar">
-      {{comment.content}}
+    <div v-for="comment in comments" class="freyja-article-comment-container">
+      <div>
+        <img :src="`https://www.gravatar.com/avatar/${comment.publisher.hash}?s=50&d=retro`" class="freyja-comment-avatar">
+      </div>
+      <div>
+        <div class="freyja-comment-publisher">
+          <div class="freyja-comment-name freyja-comment-publisher-fields">
+            {{comment.publisher.name}}
+          </div>
+          <div class="freyja-comment-time freyja-comment-publisher-fields">
+            <i class="el-icon-time"></i>
+            {{comment.createdAt | time}}
+          </div>
+        </div>
+        <div class="freyja-comment-content" v-html="comment.html">
+        </div>
+      </div>
     </div>
     <freyja-comment-editor v-if="showEditor" @close="onCloseEditor" @submit="onSubmitComment" :publisher="publisher"></freyja-comment-editor>
   </div>
@@ -54,10 +68,26 @@
 </script>
 <style lang="scss">
   .freyja-article-comment {
+    .freyja-article-comment-container > div {
+      display: inline-block;
+    }
     .freyja-comment-avatar {
       border-radius: 50%;
       height: 50px;
       width: 50px;
+    }
+
+    .freyja-comment-publisher {
+      display: inline-block;
+      color: #aaa;
+    }
+
+    .freyja-comment-publisher-fields {
+      display: inline;
+    }
+
+    .freyja-comment-content {
+      margin-left: 50px;
     }
   }
 </style>

@@ -56,11 +56,6 @@
     mounted() {
       this.highlight()
     },
-    filters   : {
-      time (time) {
-        return new Date(time).toLocaleString()
-      }
-    },
     methods   : {
       onPager (page) {
         return this.$store.dispatch('home/doPager', page)
