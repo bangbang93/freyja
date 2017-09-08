@@ -5,7 +5,14 @@
       <freyja-navbar></freyja-navbar>
     </div>
     <div class="view">
-      <router-view></router-view>
+      <transition
+              name="custom-classes-transition"
+              enter-active-class="animated fadeIn"
+              leave-active-class="animated fadeOut"
+              mode="out-in"
+      >
+        <router-view></router-view>
+      </transition>
     </div>
     <div class="footer">
       <hr>
@@ -17,6 +24,7 @@
 </template>
 <script>
   import FreyjaNavbar from '../components/home/navbar.vue'
+  import 'animate.css'
 
   export default {
     components: {FreyjaNavbar},

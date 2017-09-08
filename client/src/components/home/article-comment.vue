@@ -3,24 +3,30 @@
     <div class="freyja-article-comment-buttons">
       <el-button size="small" @click="toggleEditor">发表评论</el-button>
     </div>
-    <div v-for="comment in comments" class="freyja-article-comment-container">
-      <div>
-        <img :src="`https://www.gravatar.com/avatar/${comment.publisher.hash}?s=50&d=retro`" class="freyja-comment-avatar">
-      </div>
-      <div>
-        <div class="freyja-comment-publisher">
-          <div class="freyja-comment-name freyja-comment-publisher-fields">
-            {{comment.publisher.name}}
+    <transition-group
+            appear
+            name="custom-classes-transition"
+            appear-active-class="animated slideInLeft"
+    >
+      <div v-for="comment in comments" class="freyja-article-comment-container" :key="comment._id">
+        <div>
+          <img :src="`https://www.gravatar.com/avatar/${comment.publisher.hash}?s=50&d=retro`" class="freyja-comment-avatar">
+        </div>
+        <div>
+          <div class="freyja-comment-publisher">
+            <div class="freyja-comment-name freyja-comment-publisher-fields">
+              {{comment.publisher.name}}
+            </div>
+            <div class="freyja-comment-time freyja-comment-publisher-fields">
+              <i class="el-icon-time"></i>
+              {{comment.createdAt | time}}
+            </div>
           </div>
-          <div class="freyja-comment-time freyja-comment-publisher-fields">
-            <i class="el-icon-time"></i>
-            {{comment.createdAt | time}}
+          <div class="freyja-comment-content" v-html="comment.html">
           </div>
         </div>
-        <div class="freyja-comment-content" v-html="comment.html">
-        </div>
       </div>
-    </div>
+    </transition-group>
     <freyja-comment-editor v-if="showEditor" @close="onCloseEditor" @submit="onSubmitComment" :publisher="publisher"></freyja-comment-editor>
   </div>
 </template>

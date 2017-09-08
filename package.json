@@ -12,6 +12,7 @@
     "update": "npm run build && npm run pm2"
   },
   "dependencies": {
+    "animate.css": "^3.5.2",
     "bcrypt": "^1.0.3",
     "bluebird": "^3.5.0",
     "body-parser": "^1.15.2",
