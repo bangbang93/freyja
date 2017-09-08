@@ -42,8 +42,6 @@
     "sass-loader": "^6.0.6",
     "serve-favicon": "^2.3.2",
     "style-loader": "^0.18.2",
-    "summarize-markdown": "^0.3.1",
-    "vue-markdown": "^2.2.4",
     "vue-server-renderer": "^2.4.2",
     "vuex": "^2.3.1",
     "vuex-router-sync": "^4.2.0"

@@ -11,6 +11,9 @@ const Schema = new mongoose.Schema({
     type: String,
     index: 'text',
   },
+  html: {
+    type: String,
+  },
   summary: {
     type: String,
   },
@@ -48,6 +51,7 @@ exports.list = function (lastId, limit = 20) {
     })
   }
   return query.sort({_id: -1})
+    .select({content: 0, html: 0})
     .limit(limit)
     .exec()
 }
@@ -57,7 +61,7 @@ exports.listByPage = function ({skip, page = 1, limit = 20}) {
     skip = (page - 1) * limit
   }
   return Model.find({})
-    .select({content: 0})
+    .select({content: 0, html: 0})
     .sort({_id: -1})
     .skip(skip)
     .limit(limit)

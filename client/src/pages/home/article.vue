@@ -8,7 +8,7 @@
     </div>
     <hr class="split-line">
     <div class="freyja-article-content">
-      <vue-markdown class="freyja-article-content" ref="articleContent">{{article.content}}</vue-markdown>
+      <div class="freyja-article-content" ref="articleContent" v-html="article.html"></div>
     </div>
     <hr>
     <div class="freyja-article-comment">
@@ -17,7 +17,6 @@
   </div>
 </template>
 <script>
-  import VueMarkdown from 'vue-markdown'
 
   export default {
     asyncData({store, route}) {
@@ -25,7 +24,6 @@
     },
     components: {
       FreyjaArticleComment: () => import('../../components/home/article-comment.vue'),
-      VueMarkdown,
     },
     filters: {
       time(time) {
