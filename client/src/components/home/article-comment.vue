@@ -9,10 +9,10 @@
             appear-active-class="animated slideInLeft"
     >
       <div v-for="comment in comments" class="freyja-article-comment-container" :key="comment._id">
-        <div>
-          <img :src="`https://www.gravatar.com/avatar/${comment.publisher.hash}?s=50&d=retro`" class="freyja-comment-avatar">
+        <div class="freyja-comment-avatar">
+          <img :src="`https://www.gravatar.com/avatar/${comment.publisher.hash}?s=50&d=retro`">
         </div>
-        <div>
+        <div class="freyja-comment-panel">
           <div class="freyja-comment-publisher">
             <div class="freyja-comment-name freyja-comment-publisher-fields">
               {{comment.publisher.name}}
@@ -22,8 +22,7 @@
               {{comment.createdAt | time}}
             </div>
           </div>
-          <div class="freyja-comment-content" v-html="comment.html">
-          </div>
+          <div class="freyja-comment-content freyja-article-content" v-html="comment.html"></div>
         </div>
       </div>
     </transition-group>
@@ -95,6 +94,11 @@
       border-radius: 50%;
       height: 50px;
       width: 50px;
+      overflow: hidden;
+    }
+
+    .freyja-comment-panel {
+      width: calc(100% - 80px);
     }
 
     .freyja-comment-publisher {

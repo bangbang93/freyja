@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="freyja-article-title">
-      <h1>{{article.title}}</h1>
+      <h3>{{article.title}}</h3>
     </div>
     <div class="freyja-article-time">
       <span><i class="el-icon-time"></i> {{article.createdAt | time}}</span>

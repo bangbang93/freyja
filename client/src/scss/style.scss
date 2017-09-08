@@ -31,7 +31,8 @@
   a {
     color: #08c;
     text-decoration: none;
-    :hover {
+    transition: all 0.3s ease-in-out;
+    &:hover {
       color: #33bee5;
     }
   }
