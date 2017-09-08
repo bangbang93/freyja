@@ -85,6 +85,7 @@
     color: #333;
     img {
       max-width: 100%;
+      height: auto;
     }
   }
 
