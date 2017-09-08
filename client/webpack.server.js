@@ -6,6 +6,7 @@ const merge = require('webpack-merge')
 const baseConfig = require('./webpack.base.config')
 const VueSSRServerPlugin = require('vue-server-renderer/server-plugin')
 const path = require('path')
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = merge(baseConfig, {
@@ -21,6 +22,7 @@ module.exports = merge(baseConfig, {
       inject  : true,
       chunks  : ['main', 'vendor.js']
     }),
+    new ExtractTextPlugin('style.[hash].css'),
     new VueSSRServerPlugin(),
   ],
 })

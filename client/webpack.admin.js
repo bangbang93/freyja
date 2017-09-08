@@ -40,7 +40,7 @@ if (IS_PRODUCTION) {
       }
     }),
     new webpack.optimize.CommonsChunkPlugin('vendor'),
-    new ExtractTextPlugin('style.css'),
+    new ExtractTextPlugin('style.[hash].css'),
   ]
   entries.forEach((entry) => {
     plugins.push(new HtmlWebpackPlugin({
@@ -63,6 +63,7 @@ if (IS_PRODUCTION) {
       }
     }),
     new webpack.HotModuleReplacementPlugin(),
+    new ExtractTextPlugin('style.[hash].css'),
   ]
   entries.forEach((entry) => {
     plugins.push(new HtmlWebpackPlugin({

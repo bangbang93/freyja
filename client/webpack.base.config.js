@@ -4,6 +4,7 @@
 'use strict';
 const path = require('path');
 const projectRoot = path.resolve(__dirname, './src');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production'
 
@@ -38,7 +39,8 @@ module.exports = Object.assign(config, {
         loader: 'vue-loader',
         options: {
           loaders: {
-            scss: 'vue-style-loader!css-loader!sass-loader'
+            scss: 'vue-style-loader!css-loader!sass-loader',
+            css: 'vue-style-loader!css-loader',
           },
           extractCss: IS_PRODUCTION
         }
@@ -51,7 +53,10 @@ module.exports = Object.assign(config, {
       },
       {
         test: /\.css$/,
-        loader: 'vue-style-loader!css-loader'
+        loader: ExtractTextPlugin.extract({
+          fallback: 'vue-style-loader',
+          use: 'css-loader',
+        })
       },
       {
         test: /\.html$/,

@@ -39,7 +39,7 @@ if (IS_PRODUCTION) {
       exclude: ['.gitkeep']
     }),
     new webpack.optimize.CommonsChunkPlugin('vendor'),
-    new ExtractTextPlugin('style.css'),
+    new ExtractTextPlugin('style.[hash].css'),
     new VueSSRClientPlugin(),
   ]
   entries.forEach((entry) => {
@@ -63,6 +63,7 @@ if (IS_PRODUCTION) {
       }
     }),
     new webpack.HotModuleReplacementPlugin(),
+    new ExtractTextPlugin('style.[hash].css'),
     new VueSSRClientPlugin(),
   ]
   entries.forEach((entry) => {
