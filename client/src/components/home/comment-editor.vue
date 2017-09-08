@@ -48,16 +48,13 @@
       ElCol: Col,
     },
     props: {
-      display: Boolean
+      display: Boolean,
+      publisher: Object,
     },
     data() {
       return {
         comment: {
-          publisher: {
-            name: '',
-            email: '',
-            website: '',
-          },
+          publisher: this.publisher,
           content: '',
         },
         height: defaultHeight,

@@ -2,7 +2,7 @@
   <div>
     <el-button size="small" @click="toggleEditor">发表评论</el-button>
     <div v-for="comment in comments">{{comment.content}}</div>
-    <freyja-comment-editor v-if="showEditor" @close="onCloseEditor" @submit="onSubmitComment"></freyja-comment-editor>
+    <freyja-comment-editor v-if="showEditor" @close="onCloseEditor" @submit="onSubmitComment" :publisher="publisher"></freyja-comment-editor>
   </div>
 </template>
 <script>
@@ -28,6 +28,7 @@
     data() {
       return {
         showEditor: false,
+        publisher: this.$store.getters['comment/publisher']
       }
     },
     methods: {

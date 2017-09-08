@@ -7,7 +7,25 @@ import {Fetch} from './index'
 export default {
   namespaced: true,
   state: {
-    comments: []
+    comments: [],
+    publisher: {
+      name: '',
+      email: '',
+      website: '',
+    },
+  },
+  getters: {
+    publisher(state) {
+      if (typeof localStorage === 'undefined') {
+        return state.publisher
+      }
+      const storage = localStorage.getItem('freyja:publisher')
+      if (!storage) {
+        return state.publisher
+      }
+      state.publisher = Object.assign(state.publisher, JSON.parse(storage))
+      return state.publisher
+    }
   },
   mutations: {
     create (state, comment) {
@@ -16,6 +34,10 @@ export default {
     set (state, comments) {
       state.comments.splice(0, state.comments.length)
       comments.forEach((comment) => state.comments.push(comment))
+    },
+    savePublisher(state, publisher) {
+      state.publisher = Object.assign(state.publisher, publisher)
+      localStorage && localStorage.setItem('freyja:publisher', JSON.stringify(publisher))
     }
   },
   actions: {
@@ -35,6 +57,7 @@ export default {
       const comment = await resp.json()
 
       commit('create', comment)
+      commit('savePublisher', comment.publisher)
       return comment
     },
     async list ({commit}, {articleId, page}) {

@@ -12,7 +12,7 @@ exports.create = async function (comment, {article, reply}) {
   if (!article && reply) {
     article = await CommentModel.getById(reply)
   }
-  const email = comment.email.toLowerCase().trim()
+  const email = comment.publisher.email.toLowerCase().trim()
   comment.publisher.hash = crypto.createHash('md5').update(email).digest('hex')
   return CommentModel.create(comment, {article, reply})
 }
