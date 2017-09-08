@@ -27,7 +27,13 @@
         </div>
       </div>
     </transition-group>
-    <freyja-comment-editor v-if="showEditor" @close="onCloseEditor" @submit="onSubmitComment" :publisher="publisher"></freyja-comment-editor>
+
+    <transition name="custom-classes-transition"
+                enter-active-class="animated slideInUp"
+                leave-active-class="animated slideOutDown"
+    >
+      <freyja-comment-editor v-if="showEditor" @close="onCloseEditor" @submit="onSubmitComment" :publisher="publisher"></freyja-comment-editor>
+    </transition>
   </div>
 </template>
 <script>
