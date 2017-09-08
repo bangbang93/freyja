@@ -15,7 +15,7 @@ exports.create = async function (comment, {article, reply}) {
   }
   const email = comment.publisher.email.toLowerCase().trim()
   comment.publisher.hash = crypto.createHash('md5').update(email).digest('hex')
-  comment.html = MarkdownHelper.render(comment.content)
+  comment.html = MarkdownHelper.renderComment(comment.content)
   return CommentModel.create(comment, {article, reply})
 }
 

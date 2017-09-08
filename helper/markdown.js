@@ -4,8 +4,19 @@
 'use strict';
 const MarkdownIt = require('markdown-it')
 
-const md = new MarkdownIt()
+const md = new MarkdownIt({
+  html: true,
+  breaks: true,
+})
+
+const commentMd = new MarkdownIt({
+  html: false,
+})
 
 exports.render = function (src, env) {
   return md.render(src, env)
+}
+
+exports.renderComment = function (src, env) {
+  return commentMd.render(src, env)
 }
