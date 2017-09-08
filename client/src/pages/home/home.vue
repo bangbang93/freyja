@@ -44,7 +44,7 @@
         return this.$store.state.home.page > 1
       },
       canGoForward() {
-        return this.$store.state.home.articleCount === 20
+        return this.$store.getters['home/articleCount'] === 20
       }
     },
     data () {
