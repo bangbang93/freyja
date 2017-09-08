@@ -53,6 +53,9 @@
         page    : 1
       }
     },
+    mounted() {
+      this.highlight()
+    },
     filters   : {
       time (time) {
         return new Date(time).toLocaleString()
@@ -61,7 +64,12 @@
     methods   : {
       onPager (page) {
         return this.$store.dispatch('home/doPager', page)
-      }
+      },
+      async highlight() {
+        await import('prismjs/themes/prism-okaidia.css')
+        const prismjs = await import('prismjs')
+        prismjs.highlightAll()
+      },
     }
   }
 </script>
