@@ -20,6 +20,7 @@ exports.login = async function (username, password) {
 }
 
 exports.create = async function (username, password) {
-  const hash = await bcrypt.hash(password)
-  return AdminModel.create({username, password: hash})
+  const salt = await bcrypt.genSalt(10)
+  const hash = await bcrypt.hash(password, salt)
+  return AdminModel.create({username, password: hash, salt})
 }
