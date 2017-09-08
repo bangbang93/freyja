@@ -3,7 +3,7 @@
     "name": "freyja",
     "script": "bin/www",
     "env":{
-      "PORT": 3000,
+      "PORT": 4004,
       "NODE_ENV": "production"
     }
   }]
