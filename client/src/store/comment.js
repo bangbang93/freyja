@@ -19,7 +19,7 @@ export default {
   },
   actions: {
     async create ({commit}, {content, articleId, publisher, reply}) {
-      let resp = await Fetch.post(`/api/comment/${articleId}`, {
+      let resp = await Fetch.post(`/api/comment/article/${articleId}`, {
         content,
         publisher,
         reply,

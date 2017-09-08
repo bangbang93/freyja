@@ -12,7 +12,7 @@
     </div>
     <hr>
     <div class="freyja-article-comment">
-      <freyja-article-comment :comments="comments"></freyja-article-comment>
+      <freyja-article-comment :comments="comments" :articleId="article._id"></freyja-article-comment>
     </div>
   </div>
 </template>

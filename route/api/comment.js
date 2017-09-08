@@ -28,7 +28,7 @@ router.post('/article/:id(\\w{24})', async function (req, res) {
     publisher,
   }, {article: articleId, reply})
 
-  res.json(comment)
+  res.status(201).json(comment)
 })
 
 module.exports = router
