@@ -47,4 +47,7 @@
   .footer {
     color: #ccc;
   }
+  .animated {
+    animation-duration: 0.3s;
+  }
 </style>
