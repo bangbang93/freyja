@@ -19,8 +19,6 @@ module.exports = function (renderer) {
   return function render (req, res, next) {
     const s = Date.now()
 
-    res.setHeader("Content-Type", "text/html")
-
     const handleError = err => {
       if (err.url) {
         res.redirect(err.url)
@@ -56,6 +54,7 @@ module.exports = function (renderer) {
       if (context.status) {
         res.status(context.status)
       }
+      res.setHeader("Content-Type", "text/html")
       res.end(html)
       if (cacheable) {
         microCache.set(req.url, html)
