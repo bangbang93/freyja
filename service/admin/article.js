@@ -37,7 +37,7 @@ exports.update = async function (id, newArticle) {
   if (!article) {
     throw new Error('no such article')
   }
-  newArticle.summary = md.render(content.substr(0, 200))
+  newArticle.summary = md.render(newArticle.content.substr(0, 200))
   newArticle.html = md.render(newArticle.content)
   return article.update(newArticle)
 }
