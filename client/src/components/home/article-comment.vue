@@ -1,6 +1,8 @@
 <template>
   <div class="freyja-article-comment">
-    <el-button size="small" @click="toggleEditor">发表评论</el-button>
+    <div class="freyja-article-comment-buttons">
+      <el-button size="small" @click="toggleEditor">发表评论</el-button>
+    </div>
     <div v-for="comment in comments" class="freyja-article-comment-container">
       <div>
         <img :src="`https://www.gravatar.com/avatar/${comment.publisher.hash}?s=50&d=retro`" class="freyja-comment-avatar">
@@ -68,8 +70,14 @@
 </script>
 <style lang="scss">
   .freyja-article-comment {
-    .freyja-article-comment-container > div {
-      display: inline-block;
+    .freyja-article-comment-buttons {
+      margin-bottom: 20px;
+    }
+    .freyja-article-comment-container {
+      > div {
+        vertical-align: top;
+        display: inline-block;
+      }
     }
     .freyja-comment-avatar {
       border-radius: 50%;
