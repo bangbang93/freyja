@@ -14,7 +14,7 @@ const Bluebird = require('bluebird')
 const publicPath = path.join(__dirname, '../../public')
 
 
-exports.wordpress = async function ({host, user, password, database, prefix = 'wp_'}, userId) {
+exports.wordpress = async function ({host, user, password, database, port, prefix = 'wp_'}, userId) {
   const knex = new Knex({
     client: 'mysql2',
     connection: {
@@ -22,6 +22,7 @@ exports.wordpress = async function ({host, user, password, database, prefix = 'w
       user,
       password,
       database,
+      port,
     }
   })
   let posts = await knex(`${prefix}posts`)
@@ -39,7 +40,7 @@ exports.wordpress = async function ({host, user, password, database, prefix = 'w
     createdAt: new Date(post['post_date']),
     attachments: [],
     wordpress: {
-      postName: decodeURIComponent(post['post_name']),
+      postName: post['post_name'],
       id: post['id'],
     }
   }))
@@ -67,5 +68,14 @@ exports.wordpress = async function ({host, user, password, database, prefix = 'w
   return {
     articles: articles.length,
     attachments: attachments.length,
+  }
+}
+
+
+function decodePostName(postName, title) {
+  try {
+    return decodeURIComponent(postName)
+  } catch (e) {
+    return title
   }
 }

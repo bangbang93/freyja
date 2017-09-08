@@ -8,13 +8,13 @@ const AdminImportService = require('../../../service/admin/import')
 router.post('/wordpress', async function (req, res) {
   const {database} = req.body
 
-  if (['host', 'user', 'password', 'database', 'prefix'].some((key) => !database[key])) {
+  if (['host', 'user', 'password', 'database', 'prefix'].some((key) => typeof database[key] === 'undefined')) {
     return res.status(400).json({
       msg: 'missing params'
     })
   }
 
-  const result = await AdminImportService(database, req.session.user._id)
+  const result = await AdminImportService.wordpress(database, req.session.user._id)
   res.json(result)
 })
 
