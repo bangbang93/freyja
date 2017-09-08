@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-button size="small" @click="toggleEditor">发表评论</el-button>
-    <div v-for="comment in comments">{{comment.context}}</div>
+    <div v-for="comment in comments">{{comment.content}}</div>
     <freyja-comment-editor v-if="showEditor" @close="onCloseEditor" @submit="onSubmitComment"></freyja-comment-editor>
   </div>
 </template>
@@ -38,11 +38,12 @@
         this.showEditor = false
       },
       async onSubmitComment({publisher, content}) {
-        this.$store.dispatch('comment/create', {
+        await this.$store.dispatch('comment/create', {
           content,
           articleId: this.articleId,
           publisher,
         })
+        this.showEditor = false
       }
     }
   }

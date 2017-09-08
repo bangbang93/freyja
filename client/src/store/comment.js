@@ -14,7 +14,8 @@ export default {
       state.comments.push(comment)
     },
     set (state, comments) {
-      state.comments = comments;
+      state.comments.splice(0, state.comments.length)
+      comments.forEach((comment) => state.comments.push(comment))
     }
   },
   actions: {
