@@ -10,7 +10,7 @@
     >
       <div v-for="comment in comments" class="freyja-article-comment-container" :key="comment._id">
         <div class="freyja-comment-avatar">
-          <img :src="`https://www.gravatar.com/avatar/${comment.publisher.hash}?s=50&d=retro`">
+          <img :src="`https://www.gravatar.com/avatar/${comment.publisher.hash}?s=100&d=retro`">
         </div>
         <div class="freyja-comment-panel">
           <div class="freyja-comment-publisher">
@@ -81,6 +81,7 @@
 </script>
 <style lang="scss">
   .freyja-article-comment {
+    $avatar-size: 100px;
     .freyja-article-comment-buttons {
       margin-bottom: 20px;
     }
@@ -92,13 +93,18 @@
     }
     .freyja-comment-avatar {
       border-radius: 50%;
-      height: 50px;
-      width: 50px;
+      height: $avatar-size;
+      width: $avatar-size;
       overflow: hidden;
+      transition: all 0.3s ease-in-out;
+      &:hover {
+        transform: rotate(360deg);
+        box-shadow: 0 0 10px #10befe;
+      }
     }
 
     .freyja-comment-panel {
-      width: calc(100% - 80px);
+      width: calc(100% - #{$avatar-size} - 30px);
     }
 
     .freyja-comment-publisher {
