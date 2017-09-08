@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="header">
-      <h1>bangbang93.blog()</h1>
+      <h1 class="no-link"><router-link :to="{name: 'home'}">bangbang93.blog()</router-link></h1>
       <freyja-navbar></freyja-navbar>
     </div>
     <div class="view">

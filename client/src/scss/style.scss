@@ -40,3 +40,11 @@
     white-space: pre-wrap;
   }
 }
+
+.no-link {
+  :link,
+  :visited {
+    color: inherit;
+    text-decoration: none;
+  }
+}
