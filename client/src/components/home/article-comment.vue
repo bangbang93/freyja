@@ -9,7 +9,7 @@
             appear-active-class="animated slideInLeft"
     >
       <div v-for="comment in comments" class="freyja-article-comment-container" :key="comment._id">
-        <div class="freyja-comment-avatar">
+        <div class="freyja-comment-avatar freyja-avatar-animation">
           <img :src="`https://www.gravatar.com/avatar/${comment.publisher.hash}?s=100&d=retro`">
         </div>
         <div class="freyja-comment-panel">
@@ -96,11 +96,6 @@
       height: $avatar-size;
       width: $avatar-size;
       overflow: hidden;
-      transition: all 0.3s ease-in-out;
-      &:hover {
-        transform: rotate(360deg);
-        box-shadow: 0 0 10px #10befe;
-      }
     }
 
     .freyja-comment-panel {

@@ -41,6 +41,14 @@
   }
 }
 
+.freyja-avatar-animation {
+  transition: all 0.3s ease-in-out;
+  &:hover {
+    transform: rotate(360deg);
+    box-shadow: 0 0 10px #10befe;
+  }
+}
+
 .no-link {
   :link,
   :visited {

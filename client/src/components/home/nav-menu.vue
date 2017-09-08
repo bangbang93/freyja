@@ -1,0 +1,67 @@
+<template>
+  <div class="freyja-nav-menu">
+    <img src="https://tva3.sinaimg.cn/crop.0.0.200.200.200/56e0fc78jw1e8qgp5bmzyj2050050aa8.jpg"
+         class="freyja-my-avatar freyja-avatar-animation">
+    <hr>
+    <div class="freyja-nav-menu-item-group">
+      <div class="freyja-nav-menu-item no-link">
+        <router-link :to="{name: 'home'}">首页</router-link>
+      </div>
+      <hr>
+      <div class="freyja-nav-menu-item no-link">
+        <router-link :to="{name: 'category'}">分类</router-link>
+      </div>
+      <hr>
+      <div class="freyja-nav-menu-item no-link">
+        <router-link :to="{name: 'tag'}">标签</router-link>
+      </div>
+      <hr>
+      <div class="freyja-nav-menu-item no-link">
+        <router-link :to="{name: 'link'}">友联</router-link>
+      </div>
+      <hr>
+      <div class="freyja-nav-menu-item no-link">
+        <router-link to="/pages/i">我</router-link>
+      </div>
+      <hr>
+    </div>
+    <div class="me">
+      @bangbang93
+    </div>
+  </div>
+</template>
+<script>
+  export default {
+    name: 'FreyjaNavMenu',
+  }
+</script>
+<style lang="scss">
+  .freyja-nav-menu {
+    $avatar-size: 200px;
+    $padding-top: 30px;
+    $top-color: #033440;
+    $bottom-color: #011a20;
+    text-align: center;
+    padding-top: $padding-top;
+    background-color: $top-color;
+    height: 100%;
+    $margin-bottom: $padding-top - 8px;
+    .freyja-my-avatar {
+      height: $avatar-size;
+      width: $avatar-size;
+      border-radius: 50%;
+      margin: auto auto $margin-bottom;
+    }
+    .freyja-nav-menu-item-group {
+      height: calc(100% - #{$avatar-size + $padding-top + $margin-bottom} - 2*8px - 1px);
+      background-image: linear-gradient(to bottom, $top-color, $bottom-color);
+      color: #cdf3fd;
+    }
+    .me {
+      position: fixed;
+      bottom: 5px;
+      text-align: center;
+      width: 16.66667%;
+    }
+  }
+</style>
