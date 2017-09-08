@@ -18,3 +18,8 @@ exports.login = async function (username, password) {
     throw new Error('wrong password')
   }
 }
+
+exports.create = async function (username, password) {
+  const hash = await bcrypt.hash(password)
+  return AdminModel.create({username, password: hash})
+}
