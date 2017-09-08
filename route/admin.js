@@ -10,7 +10,7 @@ let _hash;
 (async () => {
   const path = require('path')
   const fs = require('fs-extra')
-  const files = await fs.readdir(path.join(__dirname, '../client/dist/js/hljs'))
+  const files = await fs.readdir(path.join(__dirname, '../client/dist/admin/js/hljs'))
   let match
   for (const file of files){
     match = file.match(/hljs\.\w+\.(\w+)\.js/i)
