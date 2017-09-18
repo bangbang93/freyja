@@ -37,6 +37,7 @@ module.exports = function (renderer) {
         if (!req.app.get('env') !== 'production') {
           console.log(`cache hit!`)
         }
+        res.setHeader("Content-Type", "text/html")
         return res.end(hit)
       }
     }

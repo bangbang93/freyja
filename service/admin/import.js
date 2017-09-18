@@ -4,6 +4,7 @@
 'use strict';
 const ArticleModel = require('../../model/article')
 const AttachmentModel = require('../../model/attachment')
+const CommentModel = require('../../model/comment')
 const Knex = require('knex')
 const MarkdownHelper = require('../../helper/markdown')
 const path = require('path')
@@ -66,7 +67,7 @@ exports.wordpress = async function ({host, user, password, database, port, prefi
 
   const wpComments = await knex(`${prefix}comments`)
     .select()
-  const comments = wpComments.map((wpComment) => {
+  let comments = wpComments.map((wpComment) => {
     if (articlesMap.has(wpComment['comment_post_ID'])) {
       return {
         content: wpComment['comment_content'],
@@ -76,11 +77,14 @@ exports.wordpress = async function ({host, user, password, database, port, prefi
           email: wpComment['comment_author_email'],
           name: wpComment['comment_author'],
           website: wpComment['comment_author_url'],
-
-        }
+          ip: wpComment['comment_author_IP'],
+        },
+        createdAt: new Date(wpComment['comment_date'])
       }
     }
   })
+  comments = await CommentModel._Model.create(comments)
+
 
   // await Bluebird.each(posts, async(post) => {
   //   const resp = await rp(post['guid'], {encoding: null})

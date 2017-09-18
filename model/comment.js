@@ -32,6 +32,8 @@ const Schema = new mongoose.Schema({
 
 const Model = mongoose.model('comment', Schema)
 
+exports._Model = Model
+
 exports.create = function (comment, {article, reply}) {
   if (!comment.article && article) {
     comment.article = article
