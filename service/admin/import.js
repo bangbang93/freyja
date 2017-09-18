@@ -41,7 +41,8 @@ exports.wordpress = async function ({host, user, password, database, port, prefi
     attachments: [],
     wordpress: {
       postName: post['post_name'],
-      id: post['id'],
+      id: post['ID'],
+      guid: post['guid'],
     }
   }))
   await ArticleModel._Model.create(articles)
@@ -59,11 +60,11 @@ exports.wordpress = async function ({host, user, password, database, port, prefi
   }))
   await AttachmentModel._Model.create(attachments)
 
-  await Bluebird.each(posts, async(post) => {
-    const resp = await rp(post['guid'], {encoding: null})
-    const filepath = path.join(publicPath, url.parse(post['guid']).path)
-    await fs.outputFile(filepath, resp)
-  })
+  // await Bluebird.each(posts, async(post) => {
+  //   const resp = await rp(post['guid'], {encoding: null})
+  //   const filepath = path.join(publicPath, url.parse(post['guid']).path)
+  //   await fs.outputFile(filepath, resp)
+  // })
 
   return {
     articles: articles.length,
