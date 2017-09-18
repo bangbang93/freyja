@@ -18,6 +18,7 @@ const Schema = new mongoose.Schema({
     name: String,
     website: String,
     hash: String,
+    ip: String,
   },
   reply: {
     type: ObjectId,

@@ -30,7 +30,7 @@ exports.wordpress = async function ({host, user, password, database, port, prefi
       post_status: 'publish',
       post_type: 'post',
     })
-  const articles = posts.map((post) => ({
+  let articles = posts.map((post) => ({
     title: post['post_title'],
     content: post['post_content'],
     html: MarkdownHelper.render(post['post_content']),
@@ -45,7 +45,11 @@ exports.wordpress = async function ({host, user, password, database, port, prefi
       guid: post['guid'],
     }
   }))
-  await ArticleModel._Model.create(articles)
+  articles = await ArticleModel._Model.create(articles)
+  const articlesMap = new Map()
+  articles.forEach((article) => {
+    articlesMap.set(article.wordpress.id, article)
+  })
 
   posts = await knex(`${prefix}posts`)
     .where({
@@ -59,6 +63,24 @@ exports.wordpress = async function ({host, user, password, database, port, prefi
     createdAt: post['post_date'],
   }))
   await AttachmentModel._Model.create(attachments)
+
+  const wpComments = await knex(`${prefix}comments`)
+    .select()
+  const comments = wpComments.map((wpComment) => {
+    if (articlesMap.has(wpComment['comment_post_ID'])) {
+      return {
+        content: wpComment['comment_content'],
+        html: MarkdownHelper.renderComment(wpComment['comment_content']),
+        article: articlesMap.get(wpComment['comment_post_ID'])._id,
+        publisher: {
+          email: wpComment['comment_author_email'],
+          name: wpComment['comment_author'],
+          website: wpComment['comment_author_url'],
+
+        }
+      }
+    }
+  })
 
   // await Bluebird.each(posts, async(post) => {
   //   const resp = await rp(post['guid'], {encoding: null})
