@@ -32,6 +32,7 @@ app.use(session(Object.assign({
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(require('helmet')())
 
 app.use('/', require('./route/index'));
 
