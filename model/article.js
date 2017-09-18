@@ -30,6 +30,7 @@ const Schema = new mongoose.Schema({
   wordpress: {
     postName: String,
     id: Number,
+    guid: String,
   }
 })
 
@@ -80,4 +81,14 @@ exports.del = function (id) {
 
 exports.count = function () {
   return Model.count({}).exec()
+}
+
+exports.getByWordpress = function (key, value) {
+  if (arguments.length === 1) {
+    [key] = Object.keys(key)
+    value = arguments[0][key]
+  }
+  return Model.findOne({
+    [`wordpress.${key}`]: value
+  }).exec()
 }

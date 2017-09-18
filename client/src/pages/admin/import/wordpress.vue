@@ -44,7 +44,7 @@
         const resp = await this.$fetch.post('/api/admin/import/wordpress', {database: this.database})
         if (resp.status === 200) {
           this.$alert('导入成功')
-          this.$router.go({name: 'article.list'})
+          this.$router.push({name: 'article.list'})
         } else {
           const body = await resp.json()
           this.$alert(body.msg || body.message)
