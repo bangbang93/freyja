@@ -68,10 +68,17 @@
   .animated {
     animation-duration: 0.3s;
   }
-  .freyja-left-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
+  @media (min-width: 1000px) {
+    .freyja-left-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+    }
+  }
+  @media (max-width: 999px) {
+    .freyja-left-nav {
+      display: none;
+    }
   }
 </style>
