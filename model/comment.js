@@ -19,6 +19,7 @@ const Schema = new mongoose.Schema({
     website: String,
     hash: String,
     ip: String,
+    agent: String,
   },
   reply: {
     type: ObjectId,

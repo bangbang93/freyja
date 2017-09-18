@@ -24,6 +24,7 @@ router.post('/article/:id(\\w{24})', async function (req, res) {
   }
 
   publisher.ip = req.ip;
+  publisher.agent = req.get('user-agent')
 
   const comment = await CommentService.create({
     content,
