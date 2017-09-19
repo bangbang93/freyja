@@ -67,23 +67,36 @@ exports.wordpress = async function ({host, user, password, database, port, prefi
 
   const wpComments = await knex(`${prefix}comments`)
     .select()
+  const wpCommentsMap = new Map()
   let comments = wpComments.map((wpComment) => {
-    if (articlesMap.has(wpComment['comment_post_ID'])) {
-      return {
-        content: wpComment['comment_content'],
-        html: MarkdownHelper.renderComment(wpComment['comment_content']),
-        article: articlesMap.get(wpComment['comment_post_ID'])._id,
-        publisher: {
-          email: wpComment['comment_author_email'],
-          name: wpComment['comment_author'],
-          website: wpComment['comment_author_url'],
-          ip: wpComment['comment_author_IP'],
-        },
-        createdAt: new Date(wpComment['comment_date'])
-      }
+    if (!articlesMap.has(wpComment['comment_post_ID'])) return
+    wpCommentsMap.set(wpComment['ID'], wpComment)
+    return {
+      content  : wpComment['comment_content'],
+      html     : MarkdownHelper.renderComment(wpComment['comment_content']),
+      article  : articlesMap.get(wpComment['comment_post_ID'])._id,
+      publisher: {
+        email  : wpComment['comment_author_email'],
+        name   : wpComment['comment_author'],
+        website: wpComment['comment_author_url'],
+        ip     : wpComment['comment_author_IP'],
+      },
+      createdAt: new Date(wpComment['comment_date']),
+      wordpress: {
+        id: wpComment['ID'],
+        commentParent: wpComment['comment_parent'],
+      },
     }
   })
+  comments = comments.filter((e) => !!e)
   comments = await CommentModel._Model.create(comments)
+  await comments.map(async(comment) => {
+    if (comment.wordpress.commentParent !== 0) {
+      const parentComment = await CommentModel.getByWordpress('id', comment.wordpress.commentParent)
+      comment.reply = parentComment._id
+      return comment.save()
+    }
+  })
 
 
   // await Bluebird.each(posts, async(post) => {
@@ -95,6 +108,7 @@ exports.wordpress = async function ({host, user, password, database, port, prefi
   return {
     articles: articles.length,
     attachments: attachments.length,
+    comments: comments.length,
   }
 }
 

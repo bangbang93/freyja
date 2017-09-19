@@ -29,6 +29,14 @@ const Schema = new mongoose.Schema({
     type: Date,
     default: () => new Date()
   },
+  admin: {
+    type: ObjectId,
+    ref: 'admin'
+  },
+  wordpress: {
+    id: Number,
+    commentParent: Number,
+  }
 })
 
 const Model = mongoose.model('comment', Schema)
@@ -61,5 +69,11 @@ exports.listByArticle = function (articleId, {skip, limit}) {
     .skip(skip)
     .limit(limit)
     .exec()
+}
+
+exports.getByWordpress = function (key, value) {
+  return Model.findOne({
+    [`wordpress.${key}`]: value,
+  }).exec()
 }
 
