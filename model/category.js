@@ -37,7 +37,11 @@ exports.create = async function ({name, parentId, wordpress}) {
       throw new Error('no such parent')
     }
   }
-  const category = await Model.create({name, parent: parentId})
+  const category = await Model.create({
+    name,
+    parent: parentId,
+    wordpress,
+  })
   if (parent){
     parent.children.push(category._id)
     await parent.save()

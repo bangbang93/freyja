@@ -54,28 +54,28 @@ exports.wordpress = async function ({host, user, password, database, port, prefi
         object_id: post['ID']
       })
     const termTaxonomyIds = terms.map((term) => term['term_taxonomy_id'])
-    const termTaxonomies = await knex(`${prefix}term_taxonomy`).whereIn({
-      term_taxonomy_id: [termTaxonomyIds],
-    })
+    const termTaxonomies = await knex(`${prefix}term_taxonomy`).whereIn('term_taxonomy_id', termTaxonomyIds)
     for(const termTaxonomy of termTaxonomies) {
       switch (termTaxonomy['taxonomy']) {
         case 'category':
           let category = await CategoryModel.getByWordpress('taxonomyId', termTaxonomy['term_taxonomy_id'])
-          articles.category.push(category._id)
+          article.category.push(category._id)
           break;
         case 'post_tag':
           const term = await knex(`${prefix}terms`).where({
             term_id: termTaxonomy['term_id']
           })
             .first()
-          articles.tags.push(term['name'])
+          article.tags.push(term['name'])
           await TagModel.createIfNotExists(term['name'])
           break;
         default:
           break;
       }
     }
+    return article
   })
+  articles = await Promise.all(articles)
   articles = await ArticleModel._Model.create(articles)
   const articlesMap = new Map()
   articles.forEach((article) => {
@@ -148,28 +148,33 @@ async function importCategory(knex, prefix) {
     })
   const categoriesMap = new Map()
   for(const termTaxonomy of termTaxonomies){
-    await buildTree(termTaxonomy['term_id'], termTaxonomy)
+    if (termTaxonomy['parent'] === 0){
+      await buildTree(termTaxonomy)
+    }
   }
 
-  async function buildTree(parentId, currentTermTaxonomy) {
-    const term = await knex(`${prefix}terms`)
-      .where({
-        term_id: currentTermTaxonomy['term_id']
+  async function buildTree(currentTermTaxonomy) {
+    const parentId = currentTermTaxonomy['parent']
+    if (!categoriesMap.has(currentTermTaxonomy['term_id'])) {
+      const term = await knex(`${prefix}terms`)
+        .where({
+          term_id: currentTermTaxonomy['term_id']
+        })
+        .first()
+      const category = await CategoryModel.create({
+        name: term.name,
+        parentId: parentId === 0 ? null : categoriesMap.get(parentId)._id,
+        wordpress: {
+          id: currentTermTaxonomy['term_id'],
+          taxonomyId: currentTermTaxonomy['term_taxonomy_id'],
+          slug: term.slug,
+        }
       })
-      .first()
-    const category = await CategoryModel.create({
-      name: term.name,
-      parentId: parentId === 0 ? null : categoriesMap.get(parentId)._id,
-      wordpress: {
-        id: currentTermTaxonomy['term_id'],
-        taxonomyId: currentTermTaxonomy['term_taxonomy_id'],
-        slug: term.slug,
-      }
-    })
-    categoriesMap.set(currentTermTaxonomy['term_id'], category)
+      categoriesMap.set(currentTermTaxonomy['term_id'], category)
+    }
     for(const termTaxonomy of termTaxonomies) {
-      if (termTaxonomy['parent'] === parentId) {
-        await buildTree(termTaxonomy['term_id'], termTaxonomy)
+      if (termTaxonomy['parent'] === currentTermTaxonomy['term_id']) {
+        await buildTree(termTaxonomy)
       }
     }
   }
