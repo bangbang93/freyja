@@ -14,7 +14,8 @@ export default {
       author: {
         username: '',
       },
-      createdAt: ''
+      createdAt: '',
+      commentCount: 0,
     }],
     page: 1
   },

@@ -3,15 +3,21 @@
  */
 'use strict';
 const ArticleModel = require('../model/article')
+const CommentModel = require('../model/comment')
 const nurl = require('url')
 
 exports.getById = function (id) {
   return ArticleModel.getById(id)
 }
 
-exports.list = function (page, limit = 20) {
+exports.list = async function (page, limit = 20) {
   const skip = (page - 1) * limit
-  return ArticleModel.listByPage({skip, limit})
+  const list = await ArticleModel.listByPage({skip, limit})
+  return Promise.all(list.map(async (article) => {
+    article = article.toJSON()
+    article.commentCount = await CommentModel.countByArticle(article._id)
+    return article
+  }))
 }
 
 exports.getByWordpress = function ({id, postName, guid}) {

@@ -77,3 +77,9 @@ exports.getByWordpress = function (key, value) {
   }).exec()
 }
 
+exports.countByArticle = function (articleId) {
+  return Model.count({
+    article: articleId,
+  }).exec()
+}
+

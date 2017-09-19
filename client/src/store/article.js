@@ -14,7 +14,7 @@ export default {
       author: {
         username: '',
       },
-      createdAt: ''
+      createdAt: '',
     },
   },
   mutations: {

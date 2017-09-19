@@ -7,9 +7,13 @@
             {{article.title}}
           </router-link>
         </h3>
-        <div class="freyja-article-time">
+        <div class="freyja-article-info freyja-article-time">
           <hr>
-          <span><i class="el-icon-time"></i> {{article.createdAt | time}}</span>
+          <span class="time"><i class="el-icon-time"></i> {{article.createdAt | time}}</span>
+          <span class="comments">
+            <i v-if="article.commentCount === 0" class="el-icon-message">并没有评论</i>
+            <i v-else class="el-icon-message">有{{article.commentCount}}条评论</i>
+          </span>
         </div>
         <div class="freyja-article-summary freyja-article-content">
           <div v-html="article.summary"></div>
@@ -78,5 +82,10 @@
     float: right;
     width: 300px;
     max-width: 40%;
+  }
+  .freyja-article-info {
+    .time {
+      margin-right: 20px;
+    }
   }
 </style>
