@@ -8,7 +8,7 @@ import ArticleStore from './article'
 import CommentStore from './comment'
 import HomeStore from './home'
 
-export const Fetch = VueFetch({logging: true})
+export const Fetch = VueFetch()
 
 
 export function createStore (){
