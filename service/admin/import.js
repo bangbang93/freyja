@@ -9,11 +9,7 @@ const Knex = require('knex')
 const MarkdownHelper = require('../../helper/markdown')
 const path = require('path')
 const url = require('url')
-const fs = require('fs-extra')
-const rp = require('request-promise')
-const Bluebird = require('bluebird')
-const publicPath = path.join(__dirname, '../../public')
-
+const HashHelper = require('../../helper/hash')
 
 exports.wordpress = async function ({host, user, password, database, port, prefix = 'wp_'}, userId) {
   const knex = new Knex({
@@ -67,10 +63,8 @@ exports.wordpress = async function ({host, user, password, database, port, prefi
 
   const wpComments = await knex(`${prefix}comments`)
     .select()
-  const wpCommentsMap = new Map()
   let comments = wpComments.map((wpComment) => {
     if (!articlesMap.has(wpComment['comment_post_ID'])) return
-    wpCommentsMap.set(wpComment['ID'], wpComment)
     return {
       content  : wpComment['comment_content'],
       html     : MarkdownHelper.renderComment(wpComment['comment_content']),
@@ -80,10 +74,11 @@ exports.wordpress = async function ({host, user, password, database, port, prefi
         name   : wpComment['comment_author'],
         website: wpComment['comment_author_url'],
         ip     : wpComment['comment_author_IP'],
+        hash   : HashHelper.md5(wpComment['comment_author_email']),
       },
       createdAt: new Date(wpComment['comment_date']),
       wordpress: {
-        id: wpComment['ID'],
+        id: wpComment['comment_ID'],
         commentParent: wpComment['comment_parent'],
       },
     }
