@@ -12,6 +12,7 @@ import filters from '../filters/index'
 import Vuex from 'vuex'
 import {sync} from 'vuex-router-sync'
 import '../scss/style.scss'
+import 'font-awesome/scss/font-awesome.scss'
 
 require('es6-promise').polyfill();
 

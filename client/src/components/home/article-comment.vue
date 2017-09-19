@@ -1,7 +1,7 @@
 <template>
   <div class="freyja-article-comment">
     <div class="freyja-article-comment-buttons">
-      <el-button size="small" @click="toggleEditor">发表评论</el-button>
+      <el-button size="small" @click="toggleEditor"><i class="fa fa-comment"></i> 发表评论</el-button>
     </div>
     <transition-group
             appear

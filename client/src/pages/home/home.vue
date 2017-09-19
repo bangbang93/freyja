@@ -11,8 +11,8 @@
           <hr>
           <span class="time"><i class="el-icon-time"></i> {{article.createdAt | time}}</span>
           <span class="comments">
-            <i v-if="article.commentCount === 0" class="el-icon-message">并没有评论</i>
-            <i v-else class="el-icon-message">有{{article.commentCount}}条评论</i>
+            <i v-if="article.commentCount === 0" class="fa fa-comments">并没有评论</i>
+            <i class="fa fa-comments" v-else>有{{article.commentCount}}条评论</i>
           </span>
         </div>
         <div class="freyja-article-summary freyja-article-content">
