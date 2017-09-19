@@ -26,6 +26,17 @@ router.get('/login', function (req, res) {
   res.redirect('/admin/login.html')
 })
 
+router.use(function (req, res, next) {
+  if (req.url === '/admin/login.html') {
+    return next()
+  } else {
+    if (!req.session.user) {
+      return res.redirect('/admin/login.html')
+    }
+    next()
+  }
+})
+
 
 router.get('/article/js/hljs.:lang.js', function (req, res) {
   const lang = req.params.lang
