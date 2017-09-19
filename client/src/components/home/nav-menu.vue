@@ -5,23 +5,23 @@
     <hr>
     <div class="freyja-nav-menu-item-group">
       <div class="freyja-nav-menu-item no-link">
-        <router-link :to="{name: 'home'}">首页</router-link>
+        <router-link :to="{name: 'home'}"><i class="fa fa-home"></i>&nbsp;首页</router-link>
       </div>
       <hr>
       <div class="freyja-nav-menu-item no-link">
-        <router-link :to="{name: 'category'}">分类</router-link>
+        <router-link :to="{name: 'category'}"><i class="fa fa-sitemap"></i>&nbsp;分类</router-link>
       </div>
       <hr>
       <div class="freyja-nav-menu-item no-link">
-        <router-link :to="{name: 'tag'}">标签</router-link>
+        <router-link :to="{name: 'tag'}"><i class="fa fa-tags"></i>&nbsp;标签</router-link>
       </div>
       <hr>
       <div class="freyja-nav-menu-item no-link">
-        <router-link :to="{name: 'link'}">友联</router-link>
+        <router-link :to="{name: 'link'}"><i class="fa fa-link"></i>&nbsp;友联</router-link>
       </div>
       <hr>
       <div class="freyja-nav-menu-item no-link">
-        <router-link to="/pages/i">我</router-link>
+        <router-link to="/pages/i"><i class="fa fa-id-card"></i>&nbsp;我</router-link>
       </div>
       <hr>
     </div>
