@@ -10,6 +10,7 @@ const MarkdownHelper = require('../../helper/markdown')
 const path = require('path')
 const url = require('url')
 const HashHelper = require('../../helper/hash')
+const htmlSubstring = require('../../lib/html-substring')
 
 exports.wordpress = async function ({host, user, password, database, port, prefix = 'wp_'}, userId) {
   const knex = new Knex({
@@ -31,7 +32,7 @@ exports.wordpress = async function ({host, user, password, database, port, prefi
     title: post['post_title'],
     content: post['post_content'],
     html: MarkdownHelper.render(post['post_content']),
-    summary: MarkdownHelper.render(post['post_content'].substr(0, 200)),
+    summary: MarkdownHelper.render(htmlSubstring(post['post_content'], 200)),
     tags: [],
     author: userId,
     createdAt: new Date(post['post_date']),
