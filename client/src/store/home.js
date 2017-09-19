@@ -17,7 +17,6 @@ export default {
       createdAt: '',
       commentCount: 0,
     }],
-    page: 1
   },
   getters: {
     articleCount(state) {
@@ -46,9 +45,5 @@ export default {
       commit('setArticles', list)
       return list
     },
-    doPager({commit, dispatch, state}, page) {
-      commit('addPage', page)
-      return dispatch('getArticles', state.page)
-    }
   }
 }

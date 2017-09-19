@@ -41,11 +41,11 @@
       ElButton: Button,
     },
     asyncData ({store, route}) {
-      return store.dispatch('home/getArticles', store.state.home.page)
+      return store.dispatch('home/getArticles', route.query.page || 1)
     },
     computed : {
       canGoBackward() {
-        return this.$store.state.home.page > 1
+        return this.page > 1
       },
       canGoForward() {
         return this.$store.getters['home/articleCount'] === 20
@@ -54,7 +54,7 @@
     data () {
       return {
         articles: this.$store.state.home.articles,
-        page    : 1
+        page    : Number(this.$route.query.page) || 1,
       }
     },
     mounted() {
@@ -62,7 +62,9 @@
     },
     methods   : {
       onPager (page) {
-        return this.$store.dispatch('home/doPager', page)
+        this.page += page
+        this.$router.push({query: {page: this.page}})
+        return this.$store.dispatch('home/getArticles', this.page)
       },
       async highlight() {
         await import('prismjs/themes/prism-okaidia.css')
