@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-col :span="4" class="freyja-left-nav">
+    <el-col :span="menuWidth" class="freyja-left-nav">
       <transition
               name="custom-classes-transition"
               enter-active-class="animated slideInLeft"
@@ -8,7 +8,7 @@
         <freyja-nav-menu v-show="isShowMenu"></freyja-nav-menu>
       </transition>
     </el-col>
-    <el-col :span="20" :offset="4">
+    <el-col :span="containerWidth" :offset="menuWidth">
       <div class="container">
         <div class="header">
           <h1 class="no-link"><router-link :to="{name: 'home'}">bangbang93.blog()</router-link></h1>
@@ -45,11 +45,24 @@
     data () {
       return {
         isShowMenu: false,
+        menuWidth: 4,
+      }
+    },
+    computed: {
+      containerWidth() {
+        if (this.menuWidth === 4) {
+          return 20
+        }
+        return 22
       }
     },
     mounted() {
-      this.isShowMenu = true;
-      this.$store.state.origin = '';
+      const mq = window.matchMedia( "(min-width: 1000px)" )
+      if (!mq.matches) {
+        this.menuWidth = 1
+      }
+      this.isShowMenu = true
+      this.$store.state.origin = ''
     }
   }
 </script>
@@ -58,7 +71,7 @@
     background-color: #eee;
   }
   .container {
-    width: 1000px;
+    max-width: 1000px;
     margin: auto;
     padding-bottom: 50px;
   }
