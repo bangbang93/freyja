@@ -29,6 +29,10 @@ const routes = [{
   component: require('../pages/admin/tag/list.vue').default,
   name: 'tag.list',
 }, {
+  path: '/comment',
+  component: require('../pages/admin/comment/list.vue').default,
+  name: 'comment.list'
+}, {
   path: '/import/wordpress',
   component: require('../pages/admin/import/wordpress.vue').default,
   name: 'import.wordpress',

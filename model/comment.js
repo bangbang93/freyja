@@ -83,3 +83,16 @@ exports.countByArticle = function (articleId) {
   }).exec()
 }
 
+exports.list = function ({skip, limit}) {
+  return Model.find({})
+    .sort({_id: -1})
+    .skip(skip)
+    .limit(limit)
+    .exec()
+}
+
+exports.deleteById = function (id) {
+  return Model.remove({
+    _id: id
+  }).exec()
+}
