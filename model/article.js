@@ -17,6 +17,10 @@ const Schema = new mongoose.Schema({
   summary: {
     type: String,
   },
+  category: {
+    type: [ObjectId],
+    ref: 'category',
+  },
   tags: [String],
   author: {
     type: ObjectId,

@@ -6,7 +6,10 @@ const mongoose = require('../model').mongoose
 const ObjectId = mongoose.Schema.ObjectId
 
 const Schema = new mongoose.Schema({
-  name: String,
+  name: {
+    type: String,
+    unique: true,
+  },
   parent: {
     type: ObjectId,
     ref: 'category',
@@ -15,18 +18,37 @@ const Schema = new mongoose.Schema({
     type: [ObjectId],
     ref: 'category',
   },
+  wordpress: {
+    id: Number,
+    slug: String,
+    taxonomyId: Number,
+  }
 })
 
 const Model = mongoose.model('category', Schema)
 
-exports.create = async function (name, parentId) {
-  const parent = await Model.findById(parentId)
-  if (!parent) {
-    throw new Error('no such parent')
+exports._Model = Model
+
+exports.create = async function ({name, parentId, wordpress}) {
+  let parent
+  if (parentId) {
+    parent = await Model.findById(parentId)
+    if (!parent) {
+      throw new Error('no such parent')
+    }
   }
   const category = await Model.create({name, parent: parentId})
-  parent.children.push(category.id)
-  return parent.save()
+  if (parent){
+    parent.children.push(category._id)
+    await parent.save()
+  }
+  return category
+}
+
+exports.getByName = function (name) {
+  return Model.findOne({
+    name,
+  }).exec()
 }
 
 exports.getById = function (id) {
@@ -39,4 +61,10 @@ exports.listAll = async function () {
 
 exports.findRoot = async function () {
   return Model.find({parent: null}).exec()
+}
+
+exports.getByWordpress = function (key, value) {
+  return Model.findOne({
+    [`wordpress.${key}`]: value
+  }).exec()
 }
