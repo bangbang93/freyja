@@ -4,8 +4,9 @@
 'use strict';
 const ArticleModel = require('../../model/article')
 const MarkdownHelper = require('../../helper/markdown')
+const htmlSubstring = require('../../lib/html-substring')
 
-const SUMMARY_LENGTH = 1000;
+const SUMMARY_LENGTH = 200;
 
 exports.create = function ({title, content, tags, author, createdAt = new Date()}) {
   const summary = MarkdownHelper.render(content.substr(0, SUMMARY_LENGTH))
@@ -14,7 +15,7 @@ exports.create = function ({title, content, tags, author, createdAt = new Date()
 }
 
 exports.list = async function (lastId, limit = 20) {
-  let list = await ArticleModel.list(lastId, limit)
+  let list = await ArticleModel.list({lastId, limit})
   let promises = list.map((article) => article.populate('author').execPopulate())
   await Promise.all(promises)
   return list
@@ -37,7 +38,7 @@ exports.update = async function (id, newArticle) {
   if (!article) {
     throw new Error('no such article')
   }
-  newArticle.summary = MarkdownHelper.render(newArticle.content.substr(0, SUMMARY_LENGTH))
+  newArticle.summary = MarkdownHelper.render(htmlSubstring(newArticle.content, SUMMARY_LENGTH))
   newArticle.html = MarkdownHelper.render(newArticle.content)
   return article.update(newArticle)
 }
@@ -47,7 +48,7 @@ exports.reRenderAll = async function () {
   while (list.length) {
     const promises = list.map((article) => {
       article.html = MarkdownHelper.render(article.content)
-      article.summary = MarkdownHelper.render(article.content.substr(0, SUMMARY_LENGTH))
+      article.summary = MarkdownHelper.render(htmlSubstring(article.content, SUMMARY_LENGTH))
       return article.save()
     })
     await Promise.all(promises)
