@@ -21,7 +21,7 @@
           <el-menu-item index="comment" :route="{name: 'comment.list'}">评论管理</el-menu-item>
           <el-submenu index="import">
             <template slot="title">导入</template>
-            <el-menu-item index="tag" :route="{name: 'import.wordpress'}">wordpress</el-menu-item>
+            <el-menu-item index="import" :route="{name: 'import.wordpress'}">wordpress</el-menu-item>
           </el-submenu>
         </el-menu>
       </el-col>
