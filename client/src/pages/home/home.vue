@@ -22,12 +22,16 @@
       </article>
     </div>
     <div class="freyja-article-pager">
-      <el-button class="freyja-article-pager-prev" @click="onPager(-1)" :disabled="!canGoBackward">
-        <i class="el-icon-arrow-left"></i>
-      </el-button>
-      <el-button class="freyja-article-pager-next" @click="onPager(1)" :disabled="!canGoForward">
-        <i class="el-icon-arrow-right"></i>
-      </el-button>
+      <router-link :to="{query: {page: this.page-1}}">
+        <el-button class="freyja-article-pager-prev" :disabled="!canGoBackward">
+          <i class="el-icon-arrow-left"></i>
+        </el-button>
+      </router-link>
+      <router-link :to="{query: {page: this.page+1}}">
+        <el-button class="freyja-article-pager-next" :disabled="!canGoForward">
+          <i class="el-icon-arrow-right"></i>
+        </el-button>
+      </router-link>
       <div style="clear: both"></div>
     </div>
   </div>
@@ -57,13 +61,17 @@
         page    : Number(this.$route.query.page) || 1,
       }
     },
+    watch: {
+      $route() {
+        this.page = Number(this.$route.query.page) || 1
+        this.onPager()
+      }
+    },
     mounted() {
       this.highlight()
     },
     methods   : {
       onPager (page) {
-        this.page += page
-        this.$router.push({query: {page: this.page}})
         return this.$store.dispatch('home/getArticles', this.page)
       },
       async highlight() {
