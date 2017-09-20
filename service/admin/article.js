@@ -9,7 +9,7 @@ const htmlSubstring = require('../../lib/html-substring')
 const SUMMARY_LENGTH = 200;
 
 exports.create = function ({title, content, tags, author, createdAt = new Date()}) {
-  const summary = MarkdownHelper.render(content.substr(0, SUMMARY_LENGTH))
+  const summary = MarkdownHelper.render(htmlSubstring(content, SUMMARY_LENGTH))
   const html = MarkdownHelper.render(content)
   return ArticleModel.create({title, content, tags, author, createdAt, summary, html})
 }
