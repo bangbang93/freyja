@@ -1,6 +1,6 @@
 <template>
   <div class="freyja-article-list">
-    <el-table :data="articles">
+    <el-table :data="pages">
       <el-table-column label="标题" prop="title"></el-table-column>
       <el-table-column label="作者" prop="author.username"></el-table-column>
       <el-table-column label="发布时间" prop="createdAt"></el-table-column>
@@ -20,7 +20,7 @@
   export default {
     data() {
       return {
-        articles: [],
+        pages: [],
         pageSize: 20,
         total: 0,
         currentPage: 1,
@@ -31,21 +31,21 @@
     },
     methods: {
       async initData() {
-        let resp = await this.$fetch.get('/api/admin/article', {
+        let resp = await this.$fetch.get('/api/admin/page', {
           page: this.currentPage
         })
         let body = await resp.json()
-        body.forEach(function (article) {
-          article.createdAt = new Date(article.createdAt).toLocaleString()
+        body.forEach(function (page) {
+          page.createdAt = new Date(page.createdAt).toLocaleString()
         })
-        this.articles = body
-        resp = await this.$fetch.get('/api/admin/article/count')
+        this.pages = body
+        resp = await this.$fetch.get('/api/admin/page/count')
         body = await resp.json()
         this.total = body.count
       },
       handleEdit($index, row) {
         this.$router.push({
-          name: 'article.edit',
+          name: 'page.edit',
           params: {
             id: row._id
           }
@@ -55,7 +55,7 @@
         try {
           const result = await this.$confirm('确定删除', 'Freyja')
           if (result === 'confirm') {
-            let resp = await this.$fetch.del(`/api/admin/article/${row._id}`)
+            let resp = await this.$fetch.del(`/api/admin/page/${row._id}`)
             if (resp.status === 204) {
               await this.initData();
             }
@@ -67,7 +67,7 @@
         }
       },
       async onRerenderAllClick() {
-        let resp = await this.$fetch.get('/api/admin/article/rerender-all')
+        let resp = await this.$fetch.get('/api/admin/page/rerender-all')
         if (resp.status === 200) {
           this.$alert('渲染成功')
         } else {
