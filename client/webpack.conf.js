@@ -31,14 +31,13 @@ if (IS_PRODUCTION) {
     new webpack.optimize.UglifyJsPlugin({
       mangle: {
         except   : ['$super', '$', 'exports', 'require'],
-        sourceMap: true,
       }
     }),
     new CleanPlugin(config.output.path, {
       root   : require('path').resolve('..'),
       exclude: ['.gitkeep']
     }),
-    new webpack.optimize.CommonsChunkPlugin('vendor'),
+    // new webpack.optimize.CommonsChunkPlugin('vendor'),
     new ExtractTextPlugin('style.[hash].css'),
     new VueSSRClientPlugin(),
   ]
@@ -47,7 +46,7 @@ if (IS_PRODUCTION) {
       filename: `${entry}.html`,
       template: `client/src/html/${entry}.html`,
       inject  : true,
-      chunks  : [entry, 'vendor']
+      chunks  : [entry]
     }))
   })
 } else {
@@ -63,7 +62,6 @@ if (IS_PRODUCTION) {
       }
     }),
     new webpack.HotModuleReplacementPlugin(),
-    new ExtractTextPlugin('style.[hash].css'),
     new VueSSRClientPlugin(),
   ]
   entries.forEach((entry) => {

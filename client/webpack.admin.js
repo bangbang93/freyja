@@ -36,11 +36,13 @@ if (IS_PRODUCTION) {
     new webpack.optimize.UglifyJsPlugin({
       mangle: {
         except   : ['$super', '$', 'exports', 'require'],
-        sourceMap: true,
       }
     }),
     new webpack.optimize.CommonsChunkPlugin('vendor'),
-    new ExtractTextPlugin('style.[hash].css'),
+    new ExtractTextPlugin({
+      filename: '[name].[hash].css',
+      allChunks: true,
+    }),
   ]
   entries.forEach((entry) => {
     plugins.push(new HtmlWebpackPlugin({
@@ -62,8 +64,7 @@ if (IS_PRODUCTION) {
         NODE_ENV: `'${process.env.NODE_ENV}'`
       }
     }),
-    new webpack.HotModuleReplacementPlugin(),
-    new ExtractTextPlugin('style.[hash].css'),
+    new webpack.HotModuleReplacementPlugin()
   ]
   entries.forEach((entry) => {
     plugins.push(new HtmlWebpackPlugin({

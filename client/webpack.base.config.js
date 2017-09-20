@@ -53,17 +53,17 @@ module.exports = Object.assign(config, {
       },
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract({
+        loader: IS_PRODUCTION ? ExtractTextPlugin.extract({
+          use: 'css-loader?minimize',
           fallback: 'vue-style-loader',
-          use: 'css-loader',
-        })
+        }) : ['vue-style-loader', 'css-loader']
       },
       {
         test: /\.s[ac]ss$/,
-        loader: ExtractTextPlugin.extract({
+        loader: IS_PRODUCTION ? ExtractTextPlugin.extract({
+          use: 'css-loader?minimize!sass-loader',
           fallback: 'vue-style-loader',
-          use: 'css-loader!sass-loader',
-        })
+        }) : ['vue-style-loader', 'css-loader', 'sass-loader']
       },
       {
         test: /\.html$/,

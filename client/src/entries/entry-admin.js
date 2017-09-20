@@ -9,9 +9,8 @@ import App from '../pages/admin/index.vue'
 import VueRouter from 'vue-router'
 import VueFetch from 'vue-fetch'
 import router from '../router/admin'
-// import {createStore} from '../store/index'
 import Vuex from 'vuex'
-// import {sync} from 'vuex-router-sync'
+import 'font-awesome/scss/font-awesome.scss'
 
 require('es6-promise').polyfill();
 

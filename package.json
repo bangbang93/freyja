@@ -34,7 +34,7 @@
     "loud-rejection": "^1.6.0",
     "lru-cache": "^4.1.1",
     "markdown-it": "^8.4.0",
-    "mavon-editor": "^2.2.4",
+    "mavon-editor": "^2.2.6",
     "memory-fs": "^0.4.1",
     "mkdirp": "^0.5.1",
     "moment": "^2.18.1",
