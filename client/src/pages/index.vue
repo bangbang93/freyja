@@ -25,8 +25,9 @@
         </div>
         <div class="footer">
           <hr>
-          <div>
-            Powered by freyja,written by bangbang93
+          <div class="no-link">
+            Powered by <a href="https://github.com/bangbang93/freyja">Freyja</a>.
+            Contribute by <a href="https://weibo.com/bangbang93">bangbang93</a>.
           </div>
         </div>
       </div>
