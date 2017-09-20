@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-col :span="menuWidth" class="freyja-left-nav">
+    <el-col v-if="menuWidth !== 1" :span="menuWidth" class="freyja-left-nav">
       <transition
               name="custom-classes-transition"
               enter-active-class="animated slideInLeft"
@@ -43,9 +43,20 @@
       ElCol       : Col,
     },
     data () {
+      let menuWidth = 1
+      if (typeof window !== 'undefined') {
+        const mq = window.matchMedia( "(min-width: 1000px)" )
+        mq.addListener(onWidthChange)
+        onWidthChange(mq)
+        function onWidthChange(mq) {
+          if (mq.matches) {
+            menuWidth = 4
+          }
+        }
+      }
       return {
         isShowMenu: false,
-        menuWidth: 4,
+        menuWidth,
       }
     },
     computed: {
@@ -57,10 +68,6 @@
       }
     },
     mounted() {
-      const mq = window.matchMedia( "(min-width: 1000px)" )
-      if (!mq.matches) {
-        this.menuWidth = 1
-      }
       this.isShowMenu = true
       this.$store.state.origin = ''
     }

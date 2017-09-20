@@ -6,6 +6,8 @@ body {
   $aColor: #333;
   color: $aColor;
   background-image: linear-gradient(to right, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0));
+  word-wrap: break-word;
+  text-overflow: '...';
   :link,
   :visited {
     color: $aColor;
