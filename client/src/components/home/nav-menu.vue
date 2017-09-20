@@ -24,6 +24,10 @@
         <router-link to="/page/i"><i class="fa fa-id-card"></i>&nbsp;我</router-link>
       </div>
       <hr>
+      <div class="freyja-nav-menu-item no-link">
+        <a href="https://blog-old.bangbang93.com/"><i class="fa fa-archive"></i>&nbsp;旧博客存档</a>
+      </div>
+      <hr>
     </div>
     <div class="me">
       @bangbang93
