@@ -9,8 +9,8 @@ const htmlSubstring = require('../../lib/html-substring')
 const SUMMARY_LENGTH = 200;
 
 exports.create = function ({title, content, tags, author, createdAt = new Date()}) {
-  const summary = MarkdownHelper.render(htmlSubstring(content, SUMMARY_LENGTH))
   const html = MarkdownHelper.render(content)
+  const summary = htmlSubstring(html, SUMMARY_LENGTH)
   return ArticleModel.create({title, content, tags, author, createdAt, summary, html})
 }
 
@@ -38,8 +38,8 @@ exports.update = async function (id, newArticle) {
   if (!article) {
     throw new Error('no such article')
   }
-  newArticle.summary = MarkdownHelper.render(htmlSubstring(newArticle.content, SUMMARY_LENGTH))
   newArticle.html = MarkdownHelper.render(newArticle.content)
+  newArticle.summary = htmlSubstring(newArticle.html, SUMMARY_LENGTH)
   return article.update(newArticle)
 }
 
@@ -48,7 +48,7 @@ exports.reRenderAll = async function () {
   while (list.length) {
     const promises = list.map((article) => {
       article.html = MarkdownHelper.render(article.content)
-      article.summary = MarkdownHelper.render(htmlSubstring(article.content, SUMMARY_LENGTH))
+      article.summary = htmlSubstring(article.html, SUMMARY_LENGTH)
       return article.save()
     })
     await Promise.all(promises)
