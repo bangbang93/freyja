@@ -85,6 +85,7 @@ jspm_packages
 
 public/
 !public/.gitkeep
+!public/favicon.ico
 client/dist
 config/*.development.*
 .idea/
