@@ -20,10 +20,10 @@
         <router-link :to="{name: 'link'}"><i class="fa fa-link"></i>&nbsp;友联</router-link>
       </div>
       <hr>
-      <!--<div class="freyja-nav-menu-item no-link">-->
-        <!--<router-link to="/pages/i"><i class="fa fa-id-card"></i>&nbsp;我</router-link>-->
-      <!--</div>-->
-      <!--<hr>-->
+      <div class="freyja-nav-menu-item no-link">
+        <router-link to="/page/i"><i class="fa fa-id-card"></i>&nbsp;我</router-link>
+      </div>
+      <hr>
     </div>
     <div class="me">
       @bangbang93

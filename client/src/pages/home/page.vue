@@ -3,9 +3,9 @@
     <div class="freyja-article-title">
       <h3>{{page.title}}</h3>
     </div>
-    <div class="freyja-article-time">
-      <span><i class="el-icon-time"></i> {{page.createdAt | time}}</span>
-    </div>
+    <!--<div class="freyja-article-time">-->
+      <!--<span><i class="el-icon-time"></i> {{page.createdAt | time}}</span>-->
+    <!--</div>-->
     <hr class="split-line">
     <div class="freyja-article-content">
       <div class="freyja-article-content" ref="articleContent" v-html="page.html"></div>

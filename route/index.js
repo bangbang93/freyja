@@ -23,4 +23,8 @@ router.get('/', async function (req, res, next) {
   res.redirect(301, `/article/${article._id}`)
 })
 
+router.get('/about', function (req, res) {
+  res.redirect(301, '/page/i')
+})
+
 module.exports = router;
