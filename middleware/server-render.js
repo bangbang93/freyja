@@ -44,7 +44,7 @@ module.exports = function (renderer) {
     const origin = `http://localhost:${req.app.get('port')}`
 
     const context = {
-      title: 'Vue HN 2.0', // default title
+      title: 'Freyja', // default title
       url: req.url,
       origin,
     }
