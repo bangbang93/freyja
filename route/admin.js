@@ -38,7 +38,7 @@ router.use(function (req, res, next) {
 })
 
 
-router.get('/article/js/hljs.:lang.js', function (req, res) {
+router.get('/:type/js/hljs.:lang.js', function (req, res) {
   const lang = req.params.lang
   const hash = req.app.get('bundleHash') || _hash
   res.redirect(`/admin/js/hljs/hljs.${lang}.${hash}.js`);

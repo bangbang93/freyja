@@ -36,7 +36,19 @@ const routes = [{
   path: '/import/wordpress',
   component: require('../pages/admin/import/wordpress.vue').default,
   name: 'import.wordpress',
-}]
+}, {
+  path: '/page/create',
+  component: require('../pages/admin/page/create.vue').default,
+  name: 'page.create',
+}, {
+  path: '/page',
+  component: require('../pages/admin/page/list.vue').default,
+  name: 'page.list',
+}, {
+  path: '/page/:id',
+  component: require('../pages/admin/page/create.vue').default,
+  name: 'page.edit',
+}, ]
 
 export default new VueRouter({
   routes,
