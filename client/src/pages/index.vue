@@ -43,17 +43,7 @@
       ElCol       : Col,
     },
     data () {
-      let menuWidth = 1
-      if (typeof window !== 'undefined') {
-        const mq = window.matchMedia( "(min-width: 1000px)" )
-        mq.addListener(onWidthChange)
-        onWidthChange(mq)
-        function onWidthChange(mq) {
-          if (mq.matches) {
-            menuWidth = 4
-          }
-        }
-      }
+      let menuWidth = 4
       return {
         isShowMenu: false,
         menuWidth,
@@ -68,8 +58,20 @@
       }
     },
     mounted() {
+      const mq = window.matchMedia( "(max-width: 999px)" )
+      mq.addListener(this.onWidthChange.bind(this))
+      this.onWidthChange(mq)
       this.isShowMenu = true
       this.$store.state.origin = ''
+    },
+    methods: {
+      onWidthChange(mq) {
+        if (mq.matches) {
+          this.menuWidth = 1
+        } else {
+          this.menuWidth = 4
+        }
+      }
     }
   }
 </script>
