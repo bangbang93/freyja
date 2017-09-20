@@ -17,7 +17,7 @@ const Schema = new mongoose.Schema({
   summary: {
     type: String,
   },
-  category: {
+  categories: {
     type: [ObjectId],
     ref: 'category',
   },

@@ -40,7 +40,7 @@ exports.wordpress = async function ({host, user, password, database, port, prefi
       html: MarkdownHelper.render(post['post_content']),
       summary: MarkdownHelper.render(htmlSubstring(post['post_content'], 200)),
       tags: [],
-      category: [],
+      categories: [],
       author: userId,
       createdAt: new Date(post['post_date']),
       attachments: [],
@@ -60,7 +60,7 @@ exports.wordpress = async function ({host, user, password, database, port, prefi
       switch (termTaxonomy['taxonomy']) {
         case 'category':
           let category = await CategoryModel.getByWordpress('taxonomyId', termTaxonomy['term_taxonomy_id'])
-          article.category.push(category._id)
+          article.categories.push(category._id)
           break;
         case 'post_tag':
           const term = await knex(`${prefix}terms`).where({

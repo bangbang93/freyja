@@ -6,8 +6,8 @@ const router = require('express-promise-router')()
 const AdminArticleService = require('../../../service/admin/article')
 
 router.post('/', async function (req, res) {
-  const {title, content, tags} = req.body
-  if (!title || !content || !tags) {
+  const {title, content, tags, categories} = req.body
+  if (!title || !content || !tags || !categories) {
     return res.status(400).json({
       msg: 'missing param'
     })
@@ -16,7 +16,7 @@ router.post('/', async function (req, res) {
   const author = req.session.user._id
   const createdAt = req.body.createdAt || new Date()
 
-  const article = await AdminArticleService.create({title, content, tags, author, createdAt})
+  const article = await AdminArticleService.create({title, content, tags, author, createdAt, categories})
 
   res.status(201).json(article);
 })
@@ -38,15 +38,15 @@ router.get('/:id(\\w{24})', async function (req, res) {
 })
 
 router.put('/:id(\\w{24})', async function (req, res) {
-  const {title, content, tags} = req.body
+  const {title, content, tags, categories} = req.body
   const {id} = req.params
-  if (!title || !content || !tags) {
+  if (!title || !content || !tags || !categories) {
     return res.status(400).json({
       msg: 'missing param'
     })
   }
 
-  const article = await AdminArticleService.update(id, {title, content, tags})
+  const article = await AdminArticleService.update(id, {title, content, tags, categories})
 
   res.json(article)
 })

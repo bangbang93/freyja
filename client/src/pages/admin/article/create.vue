@@ -1,18 +1,29 @@
 <template>
   <div class="freyja-article-create">
     <el-form @submit="submit">
+      <!--<el-form-item style="float: right">-->
+        <!--<el-button type="primary" @click="submit">发布</el-button>-->
+      <!--</el-form-item>-->
       <el-form-item label="标题">
         <el-input v-model="article.title"></el-input>
       </el-form-item>
       <el-form-item class="editor-container">
         <freyja-md-editor v-model="article.content" @attachAdd="onAttachAdd"></freyja-md-editor>
       </el-form-item>
-      <el-form-item label="标签">
-        <freyja-tag-editor :tags="this.tags" :selected-tags="article.tags" @tag-add="onTagAdd" @tag-close="onTagClose"></freyja-tag-editor>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="submit">发布</el-button>
-      </el-form-item>
+      <el-row>
+        <el-col :span="8">
+          <el-tree :data="categoriesTree" show-checkbox default-expand-all node-key="id" ref="categories" highlight-current></el-tree>
+        </el-col>
+        <el-col :span="15" :offset="1">
+          <el-form-item label="标签">
+            <freyja-tag-editor :tags="this.tags" :selected-tags="article.tags" @tag-add="onTagAdd"
+                               @tag-close="onTagClose"></freyja-tag-editor>
+          </el-form-item>
+          <el-form-item style="margin-top: 10px">
+            <el-button type="primary" @click="submit">发布</el-button>
+          </el-form-item>
+        </el-col>
+      </el-row>
     </el-form>
   </div>
 </template>
@@ -37,6 +48,23 @@
         tagInput: '',
         edit: {
           id:'',
+        },
+        categories: [],
+      }
+    },
+    computed: {
+      categoriesTree() {
+        return this.categories.map(walk)
+
+        function walk(root) {
+          const node = {
+            label: root.name,
+            id: root._id,
+          }
+          if (root.children) {
+            node.children = root.children.map(walk)
+          }
+          return node
         }
       }
     },
@@ -50,10 +78,15 @@
       async initData() {
         let resp = await this.$fetch.get('/api/admin/tag')
         if (resp.status !== 200) {
-          return this.$message({message: '获取tag失败', type: 'error'})
+          this.$message({message: '获取tag失败', type: 'error'})
         }
         const body = await resp.json()
         this.tags = body.map((tag) => tag.title)
+        resp = await this.$fetch.get('/api/category/tree')
+        if (resp.status !== 200) {
+          this.$message({message: '获取分类失败', type: 'error'})
+        }
+        this.categories = await resp.json()
       },
       async initEdit({id}) {
         let resp = await this.$fetch.get(`/api/admin/article/${id}`)
@@ -61,10 +94,12 @@
         article.tags = article.tags || []
         this.article = article
         this.edit.id = article._id
+        this.$refs.categories.setCheckedKeys(article.categories)
       },
       async submit() {
         const data = Object.assign({}, this.article)
         data.attachments = this.attachments
+        data.categories = this.$refs.categories.getCheckedKeys()
         let resp
         if (this.edit.id) {
           resp = await this.$fetch.put(`/api/admin/article/${this.edit.id}`, data)
