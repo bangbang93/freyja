@@ -10,6 +10,12 @@ router.get('/:id(\\w{24})', async function (req, res) {
 
   const article = await ArticleService.getById(id)
 
+  if (!article) {
+    return res.status(404).json({
+      msg: 'no such article'
+    })
+  }
+
   res.json(article)
 })
 
