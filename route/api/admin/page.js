@@ -38,9 +38,9 @@ router.get('/:id(\\w{24})', async function (req, res) {
 })
 
 router.put('/:id(\\w{24})', async function (req, res) {
-  const {title, content, tags} = req.body
+  const {title, content} = req.body
   const {id} = req.params
-  if (!title || !content || !tags) {
+  if (!title || !content) {
     return res.status(400).json({
       msg: 'missing param'
     })
