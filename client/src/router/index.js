@@ -13,6 +13,10 @@ export function createRouter () {
     path: '/article/:id',
     component: require('../pages/home/article.vue').default,
     name: 'article',
+  }, {
+    path: '/page/link',
+    component: require('../pages/home/link.vue').default,
+    name: 'link',
   }]
 
   // routes.push({

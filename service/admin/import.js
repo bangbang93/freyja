@@ -7,6 +7,7 @@ const AttachmentModel = require('../../model/attachment')
 const CommentModel = require('../../model/comment')
 const CategoryModel = require('../../model/category')
 const TagModel = require('../../model/tag')
+const LinkModel = require('../../model/link')
 const Knex = require('knex')
 const MarkdownHelper = require('../../helper/markdown')
 const path = require('path')
@@ -127,6 +128,13 @@ exports.wordpress = async function ({host, user, password, database, port, prefi
     }
   })
 
+  let links = await knex(`${prefix}links`).select()
+  links = links.map((link) => ({
+    name: link['link_name'],
+    href: link['link_url'],
+  }))
+  links = await LinkModel._Model.create(links)
+
 
   // await Bluebird.each(posts, async(post) => {
   //   const resp = await rp(post['guid'], {encoding: null})
@@ -138,6 +146,7 @@ exports.wordpress = async function ({host, user, password, database, port, prefi
     articles: articles.length,
     attachments: attachments.length,
     comments: comments.length,
+    links: links.length,
   }
 }
 
