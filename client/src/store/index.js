@@ -8,6 +8,7 @@ import ArticleStore from './article'
 import CommentStore from './comment'
 import HomeStore from './home'
 import LinkStore from './link'
+import PageStore from './page'
 
 export const Fetch = VueFetch()
 
@@ -39,6 +40,7 @@ export function createStore (){
       comment: CommentStore,
       home: HomeStore,
       link: LinkStore,
+      page: PageStore,
     }
   })  
 }

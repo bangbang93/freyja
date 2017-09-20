@@ -17,6 +17,10 @@ export function createRouter () {
     path: '/page/link',
     component: require('../pages/home/link.vue').default,
     name: 'link',
+  }, {
+    path: '/page/:name',
+    component: require('../pages/home/page.vue').default,
+    name: 'general-page'
   }]
 
   // routes.push({
