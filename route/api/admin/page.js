@@ -46,7 +46,7 @@ router.put('/:id(\\w{24})', async function (req, res) {
     })
   }
 
-  const article = await AdminPageService.update(id, {title, content, tags})
+  const article = await AdminPageService.update(id, {title, content})
 
   res.json(article)
 })
