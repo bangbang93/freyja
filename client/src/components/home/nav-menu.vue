@@ -8,22 +8,22 @@
         <router-link :to="{name: 'home'}"><i class="fa fa-home"></i>&nbsp;首页</router-link>
       </div>
       <hr>
-      <div class="freyja-nav-menu-item no-link">
-        <router-link :to="{name: 'category'}"><i class="fa fa-sitemap"></i>&nbsp;分类</router-link>
-      </div>
-      <hr>
-      <div class="freyja-nav-menu-item no-link">
-        <router-link :to="{name: 'tag'}"><i class="fa fa-tags"></i>&nbsp;标签</router-link>
-      </div>
-      <hr>
-      <div class="freyja-nav-menu-item no-link">
-        <router-link :to="{name: 'link'}"><i class="fa fa-link"></i>&nbsp;友联</router-link>
-      </div>
-      <hr>
-      <div class="freyja-nav-menu-item no-link">
-        <router-link to="/pages/i"><i class="fa fa-id-card"></i>&nbsp;我</router-link>
-      </div>
-      <hr>
+      <!--<div class="freyja-nav-menu-item no-link">-->
+        <!--<freyja-menu-category><i class="fa fa-sitemap"></i>&nbsp;分类</freyja-menu-category>-->
+      <!--</div>-->
+      <!--<hr>-->
+      <!--<div class="freyja-nav-menu-item no-link">-->
+        <!--<router-link :to="{name: 'tag'}"><i class="fa fa-tags"></i>&nbsp;标签</router-link>-->
+      <!--</div>-->
+      <!--<hr>-->
+      <!--<div class="freyja-nav-menu-item no-link">-->
+        <!--<router-link :to="{name: 'link'}"><i class="fa fa-link"></i>&nbsp;友联</router-link>-->
+      <!--</div>-->
+      <!--<hr>-->
+      <!--<div class="freyja-nav-menu-item no-link">-->
+        <!--<router-link to="/pages/i"><i class="fa fa-id-card"></i>&nbsp;我</router-link>-->
+      <!--</div>-->
+      <!--<hr>-->
     </div>
     <div class="me">
       @bangbang93
@@ -31,8 +31,14 @@
   </div>
 </template>
 <script>
+  import FreyjaMenuCategory from './menu-category.vue'
+
   export default {
     name: 'FreyjaNavMenu',
+    components: {
+      FreyjaMenuCategory
+
+    }
   }
 </script>
 <style lang="scss">

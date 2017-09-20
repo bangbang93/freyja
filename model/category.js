@@ -63,7 +63,7 @@ exports.listAll = async function () {
   return Model.find({}).exec()
 }
 
-exports.findRoot = async function () {
+exports.listRoot = async function () {
   return Model.find({parent: null}).exec()
 }
 

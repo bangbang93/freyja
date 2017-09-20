@@ -17,11 +17,12 @@ export default {
       createdAt: '',
       commentCount: 0,
     }],
+    categories: [],
   },
   getters: {
     articleCount(state) {
       return state.articles.length
-    }
+    },
   },
   mutations: {
     setArticles(state, list) {
@@ -32,6 +33,12 @@ export default {
     },
     addPage(state, page) {
       state.page += page;
+    },
+    setCategories(state, categories) {
+      state.categories.splice(0, state.categories.length)
+      categories.forEach((e) => {
+        state.categories.push(e)
+      })
     }
   },
   actions: {
@@ -45,5 +52,10 @@ export default {
       commit('setArticles', list)
       return list
     },
+    async getCategories({commit}) {
+      let resp = await Fetch.get('/api/category/tree')
+      const categories = await resp.json()
+      commit('setCategories', categories)
+    }
   }
 }
