@@ -5,6 +5,7 @@
 const merge = require('webpack-merge')
 const baseConfig = require('./webpack.base.config')
 const VueSSRServerPlugin = require('vue-server-renderer/server-plugin')
+const nodeExternals = require('webpack-node-externals')
 const path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -15,6 +16,9 @@ module.exports = merge(baseConfig, {
   output: {
     libraryTarget: 'commonjs2',
   },
+  externals: nodeExternals({
+    whitelist: /\.(css|scss)$/
+  }),
   plugins: [
     new HtmlWebpackPlugin({
       filename: `index.html`,
