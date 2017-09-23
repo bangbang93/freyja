@@ -34,13 +34,13 @@ module.exports = function (renderer) {
     if (cacheable) {
       const hit = microCache.get(req.url)
       if (hit) {
-        if (!req.app.get('env') !== 'production') {
-          console.log(`cache hit!`)
-        }
+        res.set('x-ssr-cache', 'hit')
         res.setHeader("Content-Type", "text/html")
         return res.end(hit)
       }
     }
+    res.set('x-ssr-cache', 'miss')
+
     const origin = `http://localhost:${req.app.get('port')}`
 
     const context = {
@@ -60,7 +60,7 @@ module.exports = function (renderer) {
       if (cacheable) {
         microCache.set(req.url, html)
       }
-      if (!req.app.get('env') !== 'production') {
+      if (req.app.get('env') !== 'production') {
         console.log(`whole request: ${Date.now() - s}ms`)
       }
     })
