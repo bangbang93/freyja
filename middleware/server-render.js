@@ -20,6 +20,8 @@ module.exports = function (renderer) {
     const s = Date.now()
 
     const handleError = err => {
+      const time = Date.now() - s
+      res.set('x-ssr-time', time)
       if (err.url) {
         res.redirect(err.url)
       } else if(err.code === 404) {

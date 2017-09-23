@@ -14,14 +14,10 @@ const readFile = (fs, file) => {
   return fs.readFileSync(path.join(clientConfig.output.path, file), 'utf-8')
 }
 
-module.exports = function (app, cb) {
+module.exports = function (app) {
   let bundle, clientManifest
   let resolve
   const readyPromise = new Promise(r => { resolve = r })
-  const ready = (...args) => {
-    resolve()
-    cb(...args)
-  }
 
   let clientCompiler = webpack([clientConfig, adminConfig]);
   let devMiddleware = require('webpack-dev-middleware')(clientCompiler, {
@@ -45,8 +41,11 @@ module.exports = function (app, cb) {
       'vue-ssr-client-manifest.json'
     ))
     if (bundle) {
-      ready(bundle, {
-        clientManifest
+      resolve({
+        bundle,
+        options: {
+          clientManifest
+        }
       })
     }
   })
@@ -64,8 +63,11 @@ module.exports = function (app, cb) {
 
     bundle = JSON.parse(readFile(mfs, 'vue-ssr-server-bundle.json'))
     if (clientManifest) {
-      ready(bundle, {
-        clientManifest
+      resolve({
+        bundle,
+        options: {
+          clientManifest
+        }
       })
     }
   })
