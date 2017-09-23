@@ -24,12 +24,12 @@ Vue.mixin({
   filters,
 })
 
-const router = createRouter()
-const store = createStore()
-
-sync(store, router)
 
 export function createApp() {
+  const router = createRouter()
+  const store = createStore()
+  sync(store, router)
+
   const app = new Vue({
     router,
     store,
