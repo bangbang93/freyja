@@ -6,9 +6,9 @@ import {Fetch} from './index'
 
 export default {
   namespaced: true,
-  state: {
+  state: () => ({
     links: []
-  },
+  }),
   mutations: {
     setLinks(state, links) {
       state.links.splice(0, state.links.length)

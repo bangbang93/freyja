@@ -84,8 +84,8 @@ jspm_packages
 .node_repl_history
 
 public/
-!public/.gitkeep
 !public/favicon.ico
+!public/assets
 client/dist
 config/*.development.*
 .idea/

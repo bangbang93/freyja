@@ -6,7 +6,7 @@ import {Fetch} from './index'
 
 export default {
   namespaced: true,
-  state: {
+  state: () => ({
     article: {
       title: '',
       content: '',
@@ -16,7 +16,7 @@ export default {
       },
       createdAt: '',
     },
-  },
+  }),
   mutations: {
     set (state, article) {
       state.article = article

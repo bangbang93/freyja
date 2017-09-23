@@ -6,14 +6,14 @@ import {Fetch} from './index'
 
 export default {
   namespaced: true,
-  state: {
+  state: () => ({
     comments: [],
     publisher: {
       name: '',
       email: '',
       website: '',
     },
-  },
+  }),
   getters: {
     publisher(state) {
       if (typeof localStorage === 'undefined') {

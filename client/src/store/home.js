@@ -6,7 +6,7 @@ import {Fetch} from './index'
 
 export default {
   namespaced: true,
-  state: {
+  state: () => ({
     articles: [{
       title: '',
       summary: '',
@@ -18,7 +18,7 @@ export default {
       commentCount: 0,
     }],
     categories: [],
-  },
+  }),
   getters: {
     articleCount(state) {
       return state.articles.length
