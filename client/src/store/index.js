@@ -16,9 +16,9 @@ export const Fetch = VueFetch()
 export function createStore (){
   console.log('create store')
   return new Vuex.Store({
-    state: () => ({
+    state: {
       origin: '',
-    }),
+    },
     mutations: {
       updateONI(state, str) {
         state.oni = str

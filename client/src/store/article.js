@@ -8,6 +8,7 @@ export default {
   namespaced: true,
   state: () => ({
     article: {
+      _id: '',
       title: '',
       content: '',
       tags: [],
