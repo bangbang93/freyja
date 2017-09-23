@@ -56,13 +56,15 @@ module.exports = function (renderer) {
         res.status(context.status)
       }
       res.setHeader("Content-Type", "text/html")
-      res.end(html)
       if (cacheable) {
         microCache.set(req.url, html)
       }
+      const time = Date.now() - s
       if (req.app.get('env') !== 'production') {
-        console.log(`whole request: ${Date.now() - s}ms`)
+        console.log(`whole request: ${time}ms`)
       }
+      res.set('x-ssr-time', time)
+      res.end(html)
     })
   }
 }
