@@ -42,8 +42,15 @@ export default {
     }
   },
   actions: {
-    async getArticles({commit, rootState}, page) {
-      let resp = await Fetch.get(`${rootState.origin}/api/article`, {page})
+    async getArticles({commit, rootState}, {page, tag, category}) {
+      let resp
+      if (tag) {
+        resp = await Fetch.get(`${rootState.origin}/api/tag/${tag}`, {page})
+      } else if (category) {
+        resp = await Fetch.get(`${rootState.origin}/api/category/${category}`, {page})
+      } else {
+        resp = await Fetch.get(`${rootState.origin}/api/article`, {page})
+      }
       if (resp.status !== 200) {
         throw new Error('fetch article list failed')
       }

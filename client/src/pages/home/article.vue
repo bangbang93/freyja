@@ -10,6 +10,13 @@
     <div class="freyja-article-content">
       <div class="freyja-article-content" ref="articleContent" v-html="article.html"></div>
     </div>
+    <div class="freyja-article-tag no-link">
+      <span v-for="tag in article.tags" :key="tag">
+        <router-link :to="{name: 'tag', params: {tag}}">
+            <i class="fa fa-tag"></i> {{tag}}
+        </router-link>
+      </span>
+    </div>
     <hr>
     <div class="freyja-article-comment">
       <freyja-article-comment :comments="comments" :articleId="article._id"></freyja-article-comment>
@@ -47,12 +54,17 @@
     }
   }
 </script>
-<style scoped>
+<style scoped lang="scss">
   .split-line {
     border: 0;
     height: 1px;
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
     width: 40%;
     margin-left: 0;
+  }
+  .freyja-article-tag {
+    span {
+      margin-right: 10px;
+    }
   }
 </style>

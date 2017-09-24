@@ -96,3 +96,21 @@ exports.getByWordpress = function (key, value) {
     [`wordpress.${key}`]: value
   }).exec()
 }
+
+exports.findByTag = function ({tag, skip = 0, limit = 20}) {
+  return Model.find({
+    tags: tag
+  })
+    .skip(skip)
+    .limit(limit)
+    .exec()
+}
+
+exports.findByCategoryId = function ({categoryId, skip, limit}) {
+  return Model.find({
+    category: categoryId
+  })
+    .skip(skip)
+    .limit(limit)
+    .exec()
+}

@@ -4,6 +4,7 @@
 'use strict';
 const ArticleModel = require('../model/article')
 const CommentModel = require('../model/comment')
+const CategoryModel = require('../model/category')
 const nurl = require('url')
 
 exports.getById = function (id) {
@@ -31,4 +32,25 @@ exports.getByWordpress = function ({id, postName, guid}) {
     const url = nurl.parse(guid)
     return ArticleModel.getByWordpress({guid: new RegExp(url.path)})
   }
+}
+
+exports.findByTag = function (tag, page, limit) {
+  const skip = (page - 1) * limit
+  return ArticleModel.findByTag({tag, skip, limit})
+}
+
+exports.findByCategory = async function (category, page, limit) {
+  const skip = (page - 1) * limit
+
+  category = await CategoryModel.getByName(category)
+  if (!category) {
+    throw new Error('no such category')
+  }
+
+  return ArticleModel.findByCategoryId({categoryId: category._id, skip, limit})
+}
+
+exports.findByCategorId = function (categoryId, page, limit) {
+  const skip = (page - 1) * limit
+  return ArticleModel.findByCategoryId({categoryId, skip, limit})
 }

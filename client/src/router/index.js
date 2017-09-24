@@ -21,6 +21,14 @@ export function createRouter () {
     path: '/page/:name',
     component: require('../pages/home/page.vue').default,
     name: 'general-page'
+  }, {
+    path: '/tag/:tag',
+    component: require('../pages/home/home.vue').default,
+    name: 'tag',
+  }, {
+    path: '/category/:category',
+    component: require('../pages/home/home.vue').default,
+    name: 'category',
   }]
 
   // routes.push({

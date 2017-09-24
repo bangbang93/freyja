@@ -1,5 +1,11 @@
 <template>
   <div>
+    <h2 v-if="category">
+      分类: {{category}}
+    </h2>
+    <h2 v-if="tag">
+      标签: {{tag}}
+    </h2>
     <div class="freyja-article-list">
       <article v-for="article in articles" :key="article._id">
         <h3 class="freyja-article-title">
@@ -45,7 +51,20 @@
       ElButton: Button,
     },
     asyncData ({store, route}) {
-      return store.dispatch('home/getArticles', route.query.page || 1)
+      switch (route.name) {
+        case 'home':
+          return store.dispatch('home/getArticles', {page: route.query.page || 1})
+        case 'category':
+          return store.dispatch('home/getArticles', {
+            page: route.query.page || 1,
+            category: route.params.category
+          })
+        case 'tag':
+          return store.dispatch('home/getArticles', {
+            page: route.query.page || 1,
+            tag: route.params.tag
+          })
+      }
     },
     computed : {
       canGoBackward() {
@@ -59,6 +78,8 @@
       return {
         articles: this.$store.state.home.articles,
         page    : Number(this.$route.query.page) || 1,
+        tag: this.$route.params.tag,
+        category: this.$route.params.category,
       }
     },
     watch: {
