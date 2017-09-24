@@ -86,6 +86,8 @@ jspm_packages
 public/
 !public/favicon.ico
 !public/assets
+!public/.gitignore
+!public/robots.txt
 client/dist
 config/*.development.*
 .idea/
