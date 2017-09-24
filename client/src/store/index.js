@@ -17,7 +17,7 @@ export function createStore (){
   return new Vuex.Store({
     state: {
       origin: '',
-      referer: '',
+      ssrReferer: '',
     },
     mutations: {
       updateONI(state, str) {
@@ -25,7 +25,7 @@ export function createStore (){
       },
       setReferer(state, referer) {
         Fetch.setDefaultHeader('referer', referer)
-        state.referer = referer
+        state.ssrReferer = referer
       },
       setOrigin(state, origin) {
         state.origin = origin

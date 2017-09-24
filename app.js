@@ -68,9 +68,9 @@ if (app.get('env') === 'production') {
 } else {
   let renderer
   const renderPromise = require('./setup-dev-server')(app)
-  renderPromise.then((bundle, options) => {
+  renderPromise.then(({bundle, options}) => {
     renderer = require('./middleware/server-render')(createRenderer(bundle, options))
-  })
+  }).catch(console.error)
   app.get('*', function (req, res, next) {
     if (renderPromise && renderPromise.isFulfilled) {
       renderer(req, res, next)
