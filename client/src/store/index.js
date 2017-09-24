@@ -17,11 +17,19 @@ export function createStore (){
   return new Vuex.Store({
     state: {
       origin: '',
+      referer: '',
     },
     mutations: {
       updateONI(state, str) {
         state.oni = str
       },
+      setReferer(state, referer) {
+        Fetch.setDefaultHeader('referer', referer)
+        state.referer = referer
+      },
+      setOrigin(state, origin) {
+        state.origin = origin
+      }
     },
     actions: {
       fetchLatest(ctx) {

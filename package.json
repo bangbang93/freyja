@@ -80,7 +80,7 @@
     "shelljs": "^0.7.5",
     "url-loader": "^0.5.7",
     "vue": "^2.4.2",
-    "vue-fetch": "^0.7.2",
+    "vue-fetch": "^0.9.0",
     "vue-html-loader": "^1.2.3",
     "vue-loader": "^13.0.4",
     "vue-router": "^2.1.1",

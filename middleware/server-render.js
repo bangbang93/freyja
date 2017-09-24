@@ -49,6 +49,7 @@ module.exports = function (renderer) {
       title: 'Freyja', // default title
       url: req.url,
       origin,
+      referer: req.get('referer'),
     }
     renderer.renderToString(context, (err, html) => {
       if (err) {

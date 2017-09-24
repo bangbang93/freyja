@@ -17,7 +17,8 @@ export default (context) => {
       Promise.all(matchedComponents.map((Component) => {
         if (!Component) return Promise.resolve()
         if (Component.asyncData) {
-          store.state.origin = context.origin
+          store.commit('setOrigin', context.origin)
+          store.commit('setReferer', context.referer)
           return Component.asyncData({
             store,
             route: router.currentRoute,
