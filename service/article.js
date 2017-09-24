@@ -25,7 +25,6 @@ exports.getByWordpress = function ({id, postName, guid}) {
     return ArticleModel.getByWordpress({id})
   }
   if (postName) {
-    console.log(postName)
     return ArticleModel.getByWordpress({postName: encodeURIComponent(postName).toLowerCase()})
   }
   if (guid) {

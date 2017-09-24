@@ -14,7 +14,6 @@ export const Fetch = VueFetch()
 
 
 export function createStore (){
-  console.log('create store')
   return new Vuex.Store({
     state: {
       origin: '',
