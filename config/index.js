@@ -5,18 +5,22 @@
 const fs = require('fs');
 const path = require('path');
 
-exports.database = require('./database.default.json');
+exports.database = require('./default/database.json');
 
-exports.session = require('./session.default.json');
+exports.session = require('./default/session.json');
 
-exports.logger = require('./logger.default');
+exports.logger = require('./default/logger');
+
+exports.freyja = require('./default/freyja')
 
 const index = Object.keys(exports);
 
 const env = process.env.NODE_ENV || 'development';
 
 index.forEach((config)=>{
-  if (fs.existsSync(path.join(__dirname, `${config}.${env}.json`)) || fs.existsSync(path.join(__dirname, `${config}.${env}.js`)) ){
-    exports[config] = require(`./${config}.${env}`);
+  if (fs.existsSync(path.join(__dirname, env, `${config}.json`))
+    || fs.existsSync(path.join(__dirname, env,`${config}.js`))
+    || fs.existsSync(path.join(__dirname, env,`${config}.ts`))) {
+    exports[config] = require(`./${env}/${config}`);
   }
 });

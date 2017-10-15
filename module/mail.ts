@@ -3,13 +3,23 @@
  */
 'use strict';
 import * as NodeMailer from 'nodemailer'
+import * as Config from '../config'
+import * as MarkdownHelper from '../helper/markdown'
 const transporter = NodeMailer.createTransport({
   sendmail: true,
 })
 
-transporter.sendMail({
-  from: 'bangbang93@bangbang93.com',
-  to: 'bangbang93@163.com',
-  subject: 'test',
-  text: 'text'
-})
+export function commentReply({to, article}) {
+  return transporter.sendMail({
+    from: Config.freyja.mail.from,
+    to,
+    subject: 'bangbang93.forum() 通知',
+    html: MarkdownHelper.render(`
+    bangbang93.forum()
+    ---
+    您在bangbang93.forum()的文章${article.title}收到了新的回复
+    查看链接
+    <https://blog.bangbang93.com/article/${article._id}>
+    `)
+  })
+}
