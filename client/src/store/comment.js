@@ -38,6 +38,21 @@ export default {
     savePublisher(state, publisher) {
       state.publisher = Object.assign(state.publisher, publisher)
       localStorage && localStorage.setItem('freyja:publisher', JSON.stringify(publisher))
+    },
+    reply(state, {replyId, newComment}) {
+      return walk(state.comments)
+      function walk(comments) {
+        for(const comment of comments) {
+          if (comment._id === replyId) {
+            comment.replies = comment.replies || []
+            comment.replies.push(newComment)
+            return
+          }
+          if (comment.replies) {
+            walk(comment.replies)
+          }
+        }
+      }
     }
   },
   actions: {
@@ -56,7 +71,11 @@ export default {
 
       const comment = await resp.json()
 
-      commit('create', comment)
+      if (reply) {
+        commit('reply', {replyId: reply, newComment: comment})
+      } else {
+        commit('create', comment)
+      }
       commit('savePublisher', comment.publisher)
       return comment
     },

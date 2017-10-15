@@ -6,6 +6,7 @@ const CommentModel = require('../model/comment')
 const ArticleModel = require('../model/article')
 const crypto = require('crypto')
 const MarkdownHelper = require('../helper/markdown')
+const MailModule = require('../module/mail')
 
 exports.create = async function (comment, {article, reply}) {
   if (!article && !reply) {
@@ -25,7 +26,18 @@ exports.create = async function (comment, {article, reply}) {
   if (replyComment) {
     await CommentModel.addReply(replyComment._id, newComment._id)
   }
-  return newComment
+
+  if (replyComment.publisher.email) {
+    MailModule.commentReply({
+      to: replyComment.publisher.email,
+      article: await ArticleModel.getById(article)
+    })
+  }
+
+  return {
+    comment: newComment,
+    replyComment,
+  }
 }
 
 exports.listByArticle = async function (articleId, page, limit = 20) {
