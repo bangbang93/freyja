@@ -11,6 +11,19 @@ router.get('/article/:id(\\w{24})', async function (req, res) {
 
   const list = await CommentService.listByArticle(articleId, page)
 
+  removeEmail(list)
+
+  function removeEmail(comments) {
+    for(const comment of comments) {
+      delete comment.publisher.email
+      delete comment.publisher.agent
+      delete comment.publisher.ip
+      if (comment.replies) {
+        removeEmail(comment.replies)
+      }
+    }
+  }
+
   res.json(list)
 })
 
