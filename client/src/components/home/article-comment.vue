@@ -8,28 +8,8 @@
             name="custom-classes-transition"
             appear-active-class="animated slideInLeft"
     >
-      <div v-for="comment in comments" class="freyja-article-comment-container" :key="comment._id">
-        <div class="freyja-comment-avatar freyja-avatar-animation">
-          <img :src="`https://www.gravatar.com/avatar/${comment.publisher.hash}?s=100&d=retro`"
-            @click="onReplyClicked(comment)">
-        </div>
-        <div class="freyja-comment-panel">
-          <div class="freyja-comment-publisher">
-            <div class="freyja-comment-time freyja-comment-publisher-fields">
-              <i class="el-icon-time"></i>
-              {{comment.createdAt | time}}
-            </div>
-            <div class="freyja-comment-name freyja-comment-publisher-fields">
-              <i class="fa fa-user"></i>
-              {{comment.publisher.name}}
-            </div>
-            <div class="freyja-comment-publisher-fields" v-if="comment.reply">
-              <i class="fa fa-reply"></i>
-              {{comment.reply}}
-            </div>
-          </div>
-          <div class="freyja-comment-content freyja-article-content" v-html="comment.html"></div>
-        </div>
+      <div v-for="comment in comments" :key="comment._id">
+        <freyja-article-comment-item :comment="comment" @reply-clicked="onReplyClicked"></freyja-article-comment-item>
       </div>
     </transition-group>
 
@@ -47,10 +27,12 @@
 <script>
   import FreyjaCommentEditor from './comment-editor.vue'
   import {Button} from 'element-ui'
+  import FreyjaArticleCommentItem from './article-comment-item.vue'
 
   export default {
     name      : "FreyjaArticleComment",
     components: {
+      FreyjaArticleCommentItem,
       FreyjaCommentEditor,
       ElButton: Button,
     },
@@ -103,38 +85,8 @@
 </script>
 <style lang="scss">
   .freyja-article-comment {
-    $avatar-size: 100px;
     .freyja-article-comment-buttons {
       margin-bottom: 20px;
-    }
-    .freyja-article-comment-container {
-      > div {
-        vertical-align: top;
-        display: inline-block;
-      }
-    }
-    .freyja-comment-avatar {
-      border-radius: 50%;
-      height: $avatar-size;
-      width: $avatar-size;
-      overflow: hidden;
-    }
-
-    .freyja-comment-panel {
-      width: calc(100% - #{$avatar-size} - 30px);
-    }
-
-    .freyja-comment-publisher {
-      display: inline-block;
-      color: #aaa;
-    }
-
-    .freyja-comment-publisher-fields {
-      display: inline;
-    }
-
-    .freyja-comment-content {
-      margin-left: 50px;
     }
   }
 </style>
