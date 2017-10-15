@@ -10,16 +10,22 @@
     >
       <div v-for="comment in comments" class="freyja-article-comment-container" :key="comment._id">
         <div class="freyja-comment-avatar freyja-avatar-animation">
-          <img :src="`https://www.gravatar.com/avatar/${comment.publisher.hash}?s=100&d=retro`">
+          <img :src="`https://www.gravatar.com/avatar/${comment.publisher.hash}?s=100&d=retro`"
+            @click="onReplyClicked(comment)">
         </div>
         <div class="freyja-comment-panel">
           <div class="freyja-comment-publisher">
-            <div class="freyja-comment-name freyja-comment-publisher-fields">
-              {{comment.publisher.name}}
-            </div>
             <div class="freyja-comment-time freyja-comment-publisher-fields">
               <i class="el-icon-time"></i>
               {{comment.createdAt | time}}
+            </div>
+            <div class="freyja-comment-name freyja-comment-publisher-fields">
+              <i class="fa fa-user"></i>
+              {{comment.publisher.name}}
+            </div>
+            <div class="freyja-comment-publisher-fields" v-if="comment.reply">
+              <i class="fa fa-reply"></i>
+              {{comment.reply}}
             </div>
           </div>
           <div class="freyja-comment-content freyja-article-content" v-html="comment.html"></div>
@@ -31,7 +37,10 @@
                 enter-active-class="animated slideInUp"
                 leave-active-class="animated slideOutDown"
     >
-      <freyja-comment-editor v-if="showEditor" @close="onCloseEditor" @submit="onSubmitComment" :publisher="publisher"></freyja-comment-editor>
+      <freyja-comment-editor v-if="showEditor" @close="onCloseEditor" @submit="onSubmitComment"
+                             :publisher="publisher" :reply="replying">
+
+      </freyja-comment-editor>
     </transition>
   </div>
 </template>
@@ -58,23 +67,36 @@
     data() {
       return {
         showEditor: false,
-        publisher: this.$store.getters['comment/publisher']
+        publisher: this.$store.getters['comment/publisher'],
+        replying: null,
       }
     },
     methods: {
       toggleEditor() {
         this.showEditor = !this.showEditor
+        if (!this.showEditor) {
+          this.replying = null
+        }
       },
       onCloseEditor() {
         this.showEditor = false
+        this.replying = null
       },
       async onSubmitComment({publisher, content}) {
-        await this.$store.dispatch('comment/create', {
+        const data = {
           content,
           articleId: this.articleId,
           publisher,
-        })
+        }
+        if (this.replying) {
+          data.reply = this.replying._id
+        }
+        await this.$store.dispatch('comment/create', data)
         this.showEditor = false
+      },
+      onReplyClicked(comment) {
+        this.showEditor = true
+        this.replying = comment
       }
     }
   }

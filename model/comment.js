@@ -25,6 +25,10 @@ const Schema = new mongoose.Schema({
     type: ObjectId,
     ref: 'comment'
   },
+  replies: {
+    type: [ObjectId],
+    ref: 'comment',
+  },
   createdAt: {
     type: Date,
     default: () => new Date()
@@ -62,7 +66,8 @@ exports.getById = function (id) {
 
 exports.listByArticle = function (articleId, {skip, limit}) {
   return Model.find({
-    article: articleId
+    article: articleId,
+    reply: null,
   })
     .select({content: 0})
     .sort({_id: -1})
@@ -95,4 +100,15 @@ exports.deleteById = function (id) {
   return Model.remove({
     _id: id
   }).exec()
+}
+
+exports.addReply = function (commentId, replyId) {
+  return Model.update({
+    _id: commentId,
+  }, {
+    $push: {
+      replies: replyId
+    }
+  })
+    .exec()
 }

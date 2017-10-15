@@ -27,6 +27,7 @@
       </el-col>
       <el-col :offset="1" :span="15">
         <el-form-item label="评论" prop="content">
+          <div v-if="reply">正在回复{{reply.publisher.name}}</div>
           <el-input type="textarea" :autosize="{minRows: 10}" v-model="comment.content"></el-input>
         </el-form-item>
       </el-col>
@@ -50,6 +51,7 @@
     props: {
       display: Boolean,
       publisher: Object,
+      reply: Object,
     },
     data() {
       return {
