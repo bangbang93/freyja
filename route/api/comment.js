@@ -9,7 +9,9 @@ router.get('/article/:id(\\w{24})', async function (req, res) {
   const {page = 1} = req.query
   const {id: articleId} = req.params
 
-  const list = await CommentService.listByArticle(articleId, page)
+  let list = await CommentService.listByArticle(articleId, page)
+
+  list = list.map((e) => e.toJSON())
 
   removeEmail(list)
 
