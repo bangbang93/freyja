@@ -25,3 +25,20 @@ bangbang93.forum()
     html
   })
 }
+
+export function comment({article}) {
+  const content = `
+bangbang93.form()
+---
+文章《${article.title}》有新评论
+查看链接
+<https://blog.bangbang93.com/article/${article._id}>
+`
+  const html = MarkdownHelper.render(content)
+  return transporter.sendMail({
+    from: Config.freyja.mail.from,
+    to: Config.freyja.mail.to,
+    subject: 'bangbang93.forum() 评论',
+    html
+  })
+}

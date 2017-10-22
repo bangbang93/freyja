@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@types/node": "^8.0.34",
+    "@types/nodemailer": "^4.2.0",
     "animate.css": "^3.5.2",
     "bcrypt": "^1.0.3",
     "bluebird": "^3.5.0",

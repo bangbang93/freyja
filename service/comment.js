@@ -27,11 +27,14 @@ exports.create = async function (comment, {article, reply}) {
     await CommentModel.addReply(replyComment._id, newComment._id)
   }
 
-  if (replyComment.publisher.email) {
+  if (reply && replyComment.publisher.email) {
     MailModule.commentReply({
       to: replyComment.publisher.email,
       article: await ArticleModel.getById(article)
     })
+  }
+  if (!reply) {
+    MailModule.comment({article: await ArticleModel.getById(article)})
   }
 
   return {
