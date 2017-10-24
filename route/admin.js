@@ -27,7 +27,7 @@ router.get('/login', function (req, res) {
 })
 
 router.use(function (req, res, next) {
-  if (req.url === '/admin/login.html') {
+  if (req.url === '/login.html' || req.url.match(/\.(js|css)$/)) {
     return next()
   } else {
     if (!req.session.user) {

@@ -37,6 +37,7 @@
 <script>
   import 'animate.css'
   import {Col} from 'element-ui'
+  import lozad from 'lozad'
 
   export default {
     components: {
@@ -64,6 +65,7 @@
       this.onWidthChange(mq)
       this.isShowMenu = true
       this.$store.state.origin = ''
+      lozad().observe()
     },
     methods: {
       onWidthChange(mq) {
