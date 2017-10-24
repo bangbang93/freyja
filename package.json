@@ -38,7 +38,7 @@
     "lozad": "^1.0.8",
     "lru-cache": "^4.1.1",
     "markdown-it": "^8.4.0",
-    "markdown-it-lozad": "0.0.1",
+    "markdown-it-lozad": "0.0.2",
     "mavon-editor": "^2.2.6",
     "memory-fs": "^0.4.1",
     "mkdirp": "^0.5.1",
