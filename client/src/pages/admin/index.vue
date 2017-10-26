@@ -1,6 +1,9 @@
 <template>
   <div class="container">
     <el-menu mode="horizontal" theme="dark" :router="true">
+      <el-menu-item index="front" @click="goHome">
+        首页
+      </el-menu-item>
       <el-menu-item index="dashboard" :route="{name: 'dashboard'}">
         dashboard
       </el-menu-item>
@@ -48,6 +51,11 @@
       const resp = await this.$fetch.get('/api/admin/user/login')
       if (resp.status !== 200) {
         window.location.href = '/admin/login'
+      }
+    },
+    methods: {
+      goHome() {
+        window.location.href = '/'
       }
     }
   }
