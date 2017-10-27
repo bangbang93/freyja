@@ -10,6 +10,7 @@ const Schema = new mongoose.Schema({
     unique: true,
   },
   password: String,
+  email: String,
   salt: String,
 })
 
@@ -22,7 +23,7 @@ exports.getByName = function (username) {
 }
 
 exports.getById = function (id) {
-  return Model.getById(id).exec()
+  return Model.findById(id).exec()
 }
 
 exports.create = function ({username, password, salt}) {

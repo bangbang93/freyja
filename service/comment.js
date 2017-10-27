@@ -3,12 +3,13 @@
  */
 'use strict';
 const CommentModel = require('../model/comment')
-const ArticleModel = require('../model/article')
+const ArticleModel = require('../model/article').ArticleModel
+const AdminModel = require('../model/admin')
 const crypto = require('crypto')
 const MarkdownHelper = require('../helper/markdown')
 const MailModule = require('../module/mail')
 
-exports.create = async function (comment, {article, reply}) {
+exports.create = async function (comment, {article, reply}, loginUser) {
   if (!article && !reply) {
     throw new Error('article or reply must has one')
   }
@@ -19,7 +20,21 @@ exports.create = async function (comment, {article, reply}) {
   if (!article && reply) {
     article = replyComment.article
   }
+  if (!article) {
+    throw new Error('no such article')
+  }
+  if (typeof article === 'string') {
+    article = await ArticleModel.getById(article)
+  }
+  const author = await AdminModel.getById(article.author)
   const email = comment.publisher.email.toLowerCase().trim()
+
+  if (author.email && author.email.toLowerCase().trim() === email) {
+    if (!loginUser || loginUser._id !== author._id.toString()) {
+      throw new Error('cannot use author email')
+    }
+  }
+
   comment.publisher.hash = crypto.createHash('md5').update(email).digest('hex')
   comment.html = MarkdownHelper.renderComment(comment.content)
   const newComment = await CommentModel.create(comment, {article, reply})

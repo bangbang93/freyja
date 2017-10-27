@@ -3,7 +3,7 @@
  */
 'use strict';
 const Feed = require('feed')
-const ArticleModel = require('../model/article')
+const ArticleModel = require('../model/article').ArticleModel
 
 exports.getFeed = async function (baseUrl) {
   const feed = new Feed({

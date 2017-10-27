@@ -12,6 +12,7 @@
     "update": "npm run build && npm run pm2"
   },
   "dependencies": {
+    "@types/mongoose": "^4.7.24",
     "@types/node": "^8.0.34",
     "@types/nodemailer": "^4.2.0",
     "animate.css": "^3.5.2",

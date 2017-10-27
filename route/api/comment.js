@@ -48,12 +48,23 @@ router.post('/article/:id(\\w{24})', async function (req, res) {
   publisher.ip = req.ip;
   publisher.agent = req.get('user-agent')
 
-  const {comment} = await CommentService.create({
-    content,
-    publisher,
-  }, {article: articleId, reply})
+  try {
+    const {comment} = await CommentService.create({
+      content,
+      publisher,
+    }, {article: articleId, reply}, req.session.user)
 
-  res.status(201).json(comment)
+    res.status(201).json(comment)
+  } catch (e) {
+    switch (e.message) {
+      case 'cannot use author email':
+        return res.status(403).json({
+          msg: 'cannot use author email'
+        })
+      default:
+        throw e;
+    }
+  }
 })
 
 module.exports = router

@@ -2,7 +2,7 @@
  * Created by bangbang93 on 2017/9/3.
  */
 'use strict';
-const ArticleModel = require('../model/article')
+const ArticleModel = require('../model/article').ArticleModel
 const CommentModel = require('../model/comment')
 const CategoryModel = require('../model/category')
 const nurl = require('url')

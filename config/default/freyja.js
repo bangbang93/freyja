@@ -4,7 +4,6 @@
 'use strict';
 module.exports = {
   mail: {
-    from: 'noreply@bangbang93.com',
-    to: 'bangbang93@163.com'
+    from: 'noreply@bangbang93.com'
   }
 }

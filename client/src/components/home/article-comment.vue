@@ -26,7 +26,7 @@
 </template>
 <script>
   import FreyjaCommentEditor from './comment-editor.vue'
-  import {Button} from 'element-ui'
+  import {Button, Notification} from 'element-ui'
   import FreyjaArticleCommentItem from './article-comment-item.vue'
 
   export default {
@@ -73,8 +73,26 @@
         if (this.replying) {
           data.reply = this.replying._id
         }
-        await this.$store.dispatch('comment/create', data)
-        this.showEditor = false
+        try {
+          await this.$store.dispatch('comment/create', data)
+          this.showEditor = false
+        } catch (e) {
+          switch (e.status) {
+            case 403:
+              Notification({
+                title: 'bangbang93.blog()',
+                message: '不能使用作者邮箱',
+                type: 'error',
+              })
+              break
+            default:
+              Notification({
+                title: 'bangbang93.blog()',
+                message: e.body.msg || e.body,
+                type: 'error',
+              })
+          }
+        }
       },
       onReplyClicked(comment) {
         this.showEditor = true
