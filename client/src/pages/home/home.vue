@@ -90,6 +90,7 @@
     },
     mounted() {
       this.highlight()
+      import('lozad').then((lozad) => lozad().observe())
     },
     methods   : {
       onPager (page) {

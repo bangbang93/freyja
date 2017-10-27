@@ -41,5 +41,12 @@ export function createRouter () {
     routes,
     mode: 'history',
     base: '/',
+    scrollBehavior (to, from, savedPosition) {
+      if (savedPosition) {
+        return savedPosition
+      } else {
+        return { x: 0, y: 0 }
+      }
+    },
   })
 }
