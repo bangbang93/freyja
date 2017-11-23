@@ -2,7 +2,7 @@
  * Created by bangbang93 on 2017/9/8.
  */
 'use strict';
-const ArticleModel = require('../../model/article')
+const {ArticleModel} = require('../../model/article')
 const AttachmentModel = require('../../model/attachment')
 const CommentModel = require('../../model/comment')
 const CategoryModel = require('../../model/category')

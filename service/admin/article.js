@@ -2,7 +2,7 @@
  * Created by bangbang93 on 2017/9/5.
  */
 'use strict';
-const ArticleModel = require('../../model/article')
+const {ArticleModel} = require('../../model/article')
 const MarkdownHelper = require('../../helper/markdown')
 const htmlSubstring = require('../../lib/html-substring')
 
