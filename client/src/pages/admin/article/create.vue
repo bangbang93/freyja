@@ -111,7 +111,7 @@
           this.$router.push({name: 'article.list'})
         } else {
           const body = await resp.json()
-          this.$alert(body.msg, 'Freyja')
+          this.$alert(body.msg || body.message, 'Freyja')
         }
       },
       onAttachAdd({id}) {
