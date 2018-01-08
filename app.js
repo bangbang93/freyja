@@ -101,7 +101,7 @@ if (app.get('env') === 'development'){
     })
   })
 } else {
-  const config = require('../config')
+  const config = require('./config')
   if (config.freyja.fundebug.enable) {
     const fundebug = require('fundebug-nodejs')
     fundebug.apikey = config.freyja.fundebug.apikey
