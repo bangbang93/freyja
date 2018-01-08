@@ -101,6 +101,12 @@ if (app.get('env') === 'development'){
     })
   })
 } else {
+  const config = require('../config')
+  if (config.freyja.fundebug.enable) {
+    const fundebug = require('fundebug-nodejs')
+    fundebug.apikey = config.freyja.fundebug.apikey
+    app.use(fundebug.ExpressErrorHandler)
+  }
   app.use(function(err, req, res, next) {
     console.error(err);
     if (res.headersSent) return;

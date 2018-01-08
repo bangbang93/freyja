@@ -5,5 +5,9 @@
 module.exports = {
   mail: {
     from: 'noreply@bangbang93.com'
-  }
+  },
+  fundebug: {
+    apikey: '',
+    enable: false,
+  },
 }
