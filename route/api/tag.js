@@ -7,7 +7,9 @@ const ArticleService = require('../../service/article')
 
 router.get('/:tag', async function (req, res) {
   const {tag} = req.params
-  const {page} = req.query
+  let {page} = req.query
+
+  page = Math.max(parseInt(page), 1)
 
   const list = await ArticleService.findByTag(tag, page)
 

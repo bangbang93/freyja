@@ -20,7 +20,9 @@ router.get('/:id(\\w{24})', async function (req, res) {
 })
 
 router.get('/', async function (req, res) {
-  const {page} = req.query
+  let {page} = req.query
+
+  page = Math.max(parseInt(page), 1)
 
   const list = await ArticleService.list(page, 20)
 

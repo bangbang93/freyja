@@ -17,9 +17,10 @@ router.get('/tree', async function (req, res) {
 })
 
 router.get('/:category', async function (req, res) {
-  const {tag: category} = req.params
-  const {page}          = req.query
+  const {category} = req.params
+  let {page}       = req.query
 
+  page = Math.max(parseInt(page), 1)
 
   const list = await ArticleService.findByCategory(category, page)
 
