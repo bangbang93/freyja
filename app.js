@@ -105,6 +105,10 @@ if (app.get('env') === 'development'){
   if (config.freyja.fundebug.enable) {
     const fundebug = require('fundebug-nodejs')
     fundebug.apikey = config.freyja.fundebug.apikey
+    app.use(function (err, req, res, next) {
+      res.status(500)
+      next(err)
+    })
     app.use(fundebug.ExpressErrorHandler)
   }
   app.use(function(err, req, res, next) {
