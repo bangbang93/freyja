@@ -89,6 +89,6 @@ public/
 !public/.gitignore
 !public/robots.txt
 client/dist
-config/*.development.*
+config/development
 .idea/
 apidoc/

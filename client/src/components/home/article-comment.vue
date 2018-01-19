@@ -9,7 +9,7 @@
             appear-active-class="animated slideInLeft"
     >
       <div v-for="comment in comments" :key="comment._id">
-        <freyja-article-comment-item :comment="comment" @reply-clicked="onReplyClicked"></freyja-article-comment-item>
+        <freyja-article-comment-item :comment="comment" @reply-clicked="onReplyClicked"/>
       </div>
     </transition-group>
 
