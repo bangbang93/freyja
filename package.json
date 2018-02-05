@@ -52,7 +52,7 @@
     "mysql2": "^1.4.2",
     "node-sass": "^4.5.3",
     "nodemailer": "^4.2.0",
-    "prismjs": "^1.6.0",
+    "prismjs": "^1.10.0",
     "randomstring": "^1.1.5",
     "request": "^2.81.0",
     "request-promise": "^4.2.1",

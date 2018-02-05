@@ -24,7 +24,7 @@ app.use(cookieParser());
 app.use(session(Object.assign({
     store: new RedisStore({
       prefix: 'freyja:session:',
-      ...require('../config').database.redis
+      ...require('./config').database.redis
     })
   }, require('./config').session)
 ));

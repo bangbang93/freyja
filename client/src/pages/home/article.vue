@@ -49,6 +49,7 @@
     methods: {
       async highlight() {
         await import('prismjs/themes/prism-okaidia.css')
+        await import('prismjs/components/prism-typescript')
         const prismjs = await import('prismjs')
         prismjs.highlightAll()
       },
