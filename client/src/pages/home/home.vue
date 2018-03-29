@@ -88,6 +88,10 @@
         this.onPager()
       }
     },
+    mounted() {
+      this.highlight()
+      import('lozad').then((lozad) => lozad().observe())
+    },
     updated() {
       this.highlight()
       import('lozad').then((lozad) => lozad().observe())
