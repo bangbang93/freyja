@@ -94,7 +94,7 @@
     },
     methods   : {
       onPager (page) {
-        return this.$store.dispatch('home/getArticles', this.page)
+        return this.$store.dispatch('home/getArticles', {page: this.page})
       },
       async highlight() {
         await import('prismjs/themes/prism-okaidia.css')
