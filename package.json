@@ -12,6 +12,7 @@
     "update": "npm run build && npm run pm2"
   },
   "dependencies": {
+    "@types/moment": "^2.13.0",
     "@types/mongoose": "^4.7.24",
     "@types/node": "^8.0.34",
     "@types/nodemailer": "^4.2.0",
@@ -44,7 +45,7 @@
     "mavon-editor": "^2.2.6",
     "memory-fs": "^0.4.1",
     "mkdirp": "^0.5.1",
-    "moment": "^2.18.1",
+    "moment": "^2.22.0",
     "mongoose": "^4.11.8",
     "morgan": "^1.7.0",
     "ms": "^2.0.0",
