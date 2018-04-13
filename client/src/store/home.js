@@ -45,9 +45,9 @@ export default {
     async getArticles({commit, rootState}, {page, tag, category}) {
       let resp
       if (tag) {
-        resp = await Fetch.get(`${rootState.origin}/api/tag/${tag}`, {page})
+        resp = await Fetch.get(`${rootState.origin}/api/tag/${encodeURIComponent(tag)}`, {page})
       } else if (category) {
-        resp = await Fetch.get(`${rootState.origin}/api/category/${category}`, {page})
+        resp = await Fetch.get(`${rootState.origin}/api/category/${encodeURIComponent(category)}`, {page})
       } else {
         resp = await Fetch.get(`${rootState.origin}/api/article`, {page})
       }
