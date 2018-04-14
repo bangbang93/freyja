@@ -27,7 +27,9 @@ export default {
     async get({commit, rootState}, id) {
       let resp = await Fetch.get(`${rootState.origin}/api/article/${id}`)
       if (resp.status !== 200) {
-        throw new Error('fetch article failed')
+        let err = new Error('fetch article failed')
+        err.res = resp
+        throw err
       }
 
       const article = await resp.json()

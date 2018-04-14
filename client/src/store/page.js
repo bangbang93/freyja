@@ -26,7 +26,9 @@ export default {
     async get({commit, rootState}, name) {
       let resp = await Fetch.get(`${rootState.origin}/api/page/${name}`)
       if (resp.status !== 200) {
-        throw new Error('fetch article failed')
+        let err = new Error('fetch page failed')
+        err.res = resp
+        throw err
       }
 
       const page = await resp.json()
