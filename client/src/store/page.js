@@ -24,7 +24,7 @@ export default {
   },
   actions: {
     async get({commit, rootState}, name) {
-      let resp = await Fetch.get(`${rootState.origin}/api/page/${name}`)
+      let resp = await Fetch.get(`${rootState.origin}/api/page/${encodeURIComponent(name)}`)
       if (resp.status !== 200) {
         let err = new Error('fetch page failed')
         err.res = resp
