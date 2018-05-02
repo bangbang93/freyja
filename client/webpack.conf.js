@@ -11,6 +11,7 @@ const CleanPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
+const PreloadWebpackPlugin = require('preload-webpack-plugin');
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production'
 
@@ -47,6 +48,9 @@ if (IS_PRODUCTION) {
       template: `client/src/html/${entry}.html`,
       inject  : true,
       chunks  : [entry]
+    }), new PreloadWebpackPlugin({
+      rel: 'preload',
+      include: [entry],
     }))
   })
 } else {
