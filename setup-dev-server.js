@@ -26,6 +26,7 @@ module.exports = function (app) {
     serverSideRender: true,
     index: false,
     stats: {
+      colors: true,
       excludeAssets: [/^js\/hljs\//, /^static\//]
     }
   });
