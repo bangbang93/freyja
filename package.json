@@ -9,7 +9,8 @@
     "start": "node bin/www",
     "pm2": "pm2 startOrReload process.json",
     "build": "NODE_ENV=production node script/build",
-    "update": "npm run build && npm run pm2"
+    "update": "npm run build && npm run pm2",
+    "test": "npm run build"
   },
   "dependencies": {
     "@types/bcrypt": "^2.0.0",
