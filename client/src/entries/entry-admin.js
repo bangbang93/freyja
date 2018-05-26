@@ -4,7 +4,7 @@
 'use strict';
 import Vue from 'vue'
 import Element from 'element-ui'
-import 'element-ui/lib/theme-default/index.css'
+import 'element-ui/lib/theme-chalk/index.css'
 import App from '../pages/admin/index.vue'
 import VueRouter from 'vue-router'
 import VueFetch from 'vue-fetch'

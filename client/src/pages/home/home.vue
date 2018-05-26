@@ -43,7 +43,7 @@
   </div>
 </template>
 <script>
-  import 'element-ui/lib/theme-default/index.css'
+  import 'element-ui/lib/theme-chalk/index.css'
   import { Icon, Button } from 'element-ui'
 
   export default {
