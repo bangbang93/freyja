@@ -4,7 +4,7 @@
 'use strict';
 const path = require('path');
 const projectRoot = path.resolve(__dirname, './src');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production'
 
@@ -20,6 +20,7 @@ let config = (function(){
   return config[IS_PRODUCTION? 'build' : 'dev']
 })();
 module.exports = Object.assign(config, {
+  mode: IS_PRODUCTION ? 'production': 'development',
   name: 'freyja',
   output: {
     path: path.resolve(__dirname, './dist'),
@@ -37,13 +38,6 @@ module.exports = Object.assign(config, {
       {
         test: /\.vue$/,
         loader: 'vue-loader',
-        options: {
-          loaders: {
-            scss: 'vue-style-loader!css-loader!sass-loader',
-            css: 'vue-style-loader!css-loader',
-          },
-          extractCss: IS_PRODUCTION
-        }
       },
       {
         test: /\.js$/,
@@ -52,18 +46,28 @@ module.exports = Object.assign(config, {
         exclude: /node_modules/,
       },
       {
-        test: /\.css$/,
-        loader: IS_PRODUCTION ? ExtractTextPlugin.extract({
-          use: 'css-loader?minimize',
-          fallback: 'vue-style-loader',
-        }) : ['vue-style-loader', 'css-loader']
+        test: /\.ts$/,
+        exclude: /node_modules/,
+        use:[{
+          loader: 'ts-loader',
+          options: {
+            transpileOnly: true,
+            appendTsSuffixTo: [/\.vue$/],
+            configFile: 'tsconfig-fe.json'
+          }
+        }]
       },
       {
-        test: /\.s[ac]ss$/,
-        loader: IS_PRODUCTION ? ExtractTextPlugin.extract({
-          use: 'css-loader?minimize!sass-loader',
-          fallback: 'vue-style-loader',
-        }) : ['vue-style-loader', 'css-loader', 'sass-loader']
+        test: /\.css$/,
+        use: IS_PRODUCTION ?
+          [MiniCssExtractPlugin.loader, 'css-loader'] :
+          ['vue-style-loader', 'css-loader'],
+      },
+      {
+        test: /\.s[ca]ss$/,
+        use: IS_PRODUCTION ?
+          [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'] :
+          ['vue-style-loader', 'css-loader', 'sass-loader']
       },
       {
         test: /\.html$/,

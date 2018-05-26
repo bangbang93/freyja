@@ -25,6 +25,10 @@ module.exports = function (app) {
     hot: true,
     serverSideRender: true,
     index: false,
+    stats: {
+      colors: true,
+      excludeAssets: [/^js\/hljs\//, /^static\//]
+    }
   });
   let hotMiddleware = require('webpack-hot-middleware')(clientCompiler);
   app.use(devMiddleware);

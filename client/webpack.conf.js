@@ -8,10 +8,11 @@ const webpack = require('webpack');
 const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
 const PreloadWebpackPlugin = require('preload-webpack-plugin');
+const {VueLoaderPlugin} = require('vue-loader')
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production'
 
@@ -20,26 +21,29 @@ const entry = {
 }
 const entries = Object.keys(entry)
 
-let plugins;
+let plugins = [
+  new VueLoaderPlugin(),
+  new webpack.DefinePlugin({
+    'process.env': {
+      NODE_ENV: `'${process.env.NODE_ENV}'`
+    }
+  }),
+];
 if (IS_PRODUCTION) {
   console.log('production webpack')
   plugins     = [
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: `'${process.env.NODE_ENV}'`
-      }
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      mangle: {
-        except   : ['$super', '$', 'exports', 'require'],
-      }
+    ...plugins,
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
     }),
     new CleanPlugin(config.output.path, {
       root   : require('path').resolve('..'),
       exclude: ['.gitkeep']
     }),
-    // new webpack.optimize.CommonsChunkPlugin('vendor'),
-    new ExtractTextPlugin('style.[hash].css'),
+    new MiniCssExtractPlugin({
+      filename: '[name].[hash].css',
+      chunkFilename: '[id].css',
+    }),
     new VueSSRClientPlugin(),
   ]
   entries.forEach((entry) => {
@@ -60,11 +64,7 @@ if (IS_PRODUCTION) {
     entry[name] = ['webpack-hot-middleware/client?name=freyja'].concat(entry[name])
   })
   plugins     = [
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: `'${process.env.NODE_ENV}'`
-      }
-    }),
+    ...plugins,
     new webpack.HotModuleReplacementPlugin(),
     new VueSSRClientPlugin(),
   ]
