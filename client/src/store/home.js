@@ -26,10 +26,8 @@ export default {
   },
   mutations: {
     setArticles(state, list) {
-      state.articles.splice(0, state.articles.length)
-      list.forEach((article) => {
-        state.articles.push(article)
-      })
+      state.articles.length = 0
+      state.articles.push.apply(state.articles, list)
     },
     addPage(state, page) {
       state.page += page;
@@ -65,6 +63,11 @@ export default {
       let resp = await Fetch.get('/api/category/tree')
       const categories = await resp.json()
       commit('setCategories', categories)
+    },
+    async search({commit, rootState}, {keyword, page}) {
+      const resp = await Fetch.get(`${rootState.origin}/api/article/search`, {keyword, page})
+      const articles = await resp.json()
+      commit('setArticles', articles)
     }
   }
 }

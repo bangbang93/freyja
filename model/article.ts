@@ -137,4 +137,14 @@ export class ArticleModel {
       .limit(limit)
       .exec()
   }
+
+  static search (keyword, skip, limit) {
+    return Model.find({
+      $text: {
+        $search: keyword
+      },
+    })
+      .skip(skip)
+      .limit(limit)
+  }
 }
