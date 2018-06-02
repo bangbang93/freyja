@@ -8,7 +8,7 @@ const clientConfig = require('./client/webpack.conf')
 const adminConfig = require('./client/webpack.admin')
 const serverConfig = require('./client/webpack.server')
 const path = require('path')
-const Promise = require('bluebird')
+const Bluebird = require('bluebird')
 
 const readFile = (fs, file) => {
   return fs.readFileSync(path.join(clientConfig.output.path, file), 'utf-8')
@@ -16,8 +16,7 @@ const readFile = (fs, file) => {
 
 module.exports = function (app) {
   let bundle, clientManifest
-  let resolve
-  const readyPromise = new Promise(r => { resolve = r })
+  const defer = Bluebird.defer()
 
   let clientCompiler = webpack([clientConfig, adminConfig]);
   let devMiddleware = require('webpack-dev-middleware')(clientCompiler, {
@@ -45,7 +44,7 @@ module.exports = function (app) {
       'vue-ssr-client-manifest.json'
     ))
     if (bundle) {
-      resolve({
+      defer.resolve({
         bundle,
         options: {
           clientManifest
@@ -67,7 +66,7 @@ module.exports = function (app) {
 
     bundle = JSON.parse(readFile(mfs, 'vue-ssr-server-bundle.json'))
     if (clientManifest) {
-      resolve({
+      defer.resolve({
         bundle,
         options: {
           clientManifest
@@ -76,5 +75,5 @@ module.exports = function (app) {
     }
   })
 
-  return readyPromise
+  return defer.promise
 }

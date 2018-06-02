@@ -66,6 +66,7 @@ if (IS_PRODUCTION) {
   plugins     = [
     ...plugins,
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin(),
     new VueSSRClientPlugin(),
   ]
   entries.forEach((entry) => {
