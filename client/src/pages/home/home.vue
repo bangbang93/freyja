@@ -6,6 +6,9 @@
     <h2 v-if="tag">
       标签: {{tag}}
     </h2>
+    <h2 v-if="keyword">
+      关键字: {{keyword}}
+    </h2>
     <div class="freyja-article-list">
       <article v-for="article in articles" :key="article._id">
         <h3 class="freyja-article-title">
@@ -43,29 +46,36 @@
   </div>
 </template>
 <script>
-  import 'element-ui/lib/theme-default/index.css'
+  import 'element-ui/lib/theme-chalk/index.css'
   import { Icon, Button } from 'element-ui'
+
+  function asyncData ({store, route}) {
+    switch (route.name) {
+      case 'home':
+        return store.dispatch('home/getArticles', {page: route.query.page || 1})
+      case 'category':
+        return store.dispatch('home/getArticles', {
+          page: route.query.page || 1,
+          category: route.params.category
+        })
+      case 'tag':
+        return store.dispatch('home/getArticles', {
+          page: route.query.page || 1,
+          tag: route.params.tag
+        })
+      case 'search':
+        return store.dispatch('home/search', {
+          keyword: route.query.keyword,
+          page: route.query.page || 1,
+        })
+    }
+  }
 
   export default {
     components: {
       ElButton: Button,
     },
-    asyncData ({store, route}) {
-      switch (route.name) {
-        case 'home':
-          return store.dispatch('home/getArticles', {page: route.query.page || 1})
-        case 'category':
-          return store.dispatch('home/getArticles', {
-            page: route.query.page || 1,
-            category: route.params.category
-          })
-        case 'tag':
-          return store.dispatch('home/getArticles', {
-            page: route.query.page || 1,
-            tag: route.params.tag
-          })
-      }
-    },
+    asyncData,
     computed : {
       canGoBackward() {
         return this.page > 1
@@ -75,31 +85,33 @@
       }
     },
     data () {
-      return {
+      const result =  {
         articles: this.$store.state.home.articles,
         page    : Number(this.$route.query.page) || 1,
         tag: this.$route.params.tag,
         category: this.$route.params.category,
       }
+      if (this.$route.name === 'search') {
+        result.keyword = this.$route.query.keyword
+      }
+      return result
     },
     watch: {
       $route() {
         this.page = Number(this.$route.query.page) || 1
-        this.onPager()
+        asyncData({store: this.$store, route: this.$route})
+        this.keyword = this.$route.query.keyword
       }
     },
     mounted() {
       this.highlight()
-      import('lozad').then((lozad) => lozad().observe())
+      import('lozad').then((lozad) => lozad.default().observe())
     },
     updated() {
       this.highlight()
-      import('lozad').then((lozad) => lozad().observe())
+      import('lozad').then((lozad) => lozad.default().observe())
     },
     methods   : {
-      onPager (page) {
-        return this.$store.dispatch('home/getArticles', {page: this.page})
-      },
       async highlight() {
         await import('prismjs/themes/prism-okaidia.css')
         const prismjs = await import('prismjs')

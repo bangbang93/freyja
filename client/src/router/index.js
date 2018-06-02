@@ -29,6 +29,10 @@ export function createRouter () {
     path: '/category/:category',
     component: require('../pages/home/home.vue').default,
     name: 'category',
+  }, {
+    path: '/search',
+    component: require('../pages/home/home.vue').default,
+    name: 'search',
   }]
 
   // routes.push({
