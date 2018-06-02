@@ -94,7 +94,7 @@
     "shelljs": "^0.8.2",
     "ts-loader": "^4.3.0",
     "url-loader": "^1.0.1",
-    "vue-fetch": "^1.0.4",
+    "vue-fetch": "^1.0.5",
     "vue-html-loader": "^1.2.3",
     "vue-loader": "^15.2.4",
     "vue-router": "^3.0.1",
