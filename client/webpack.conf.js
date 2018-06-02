@@ -41,8 +41,8 @@ if (IS_PRODUCTION) {
       exclude: ['.gitkeep']
     }),
     new MiniCssExtractPlugin({
-      filename: '[name].[chunkhash:8].css',
-      chunkFilename: '[id].[chunkhash:8].css',
+      filename: 'css/[name].[chunkhash:8].css',
+      chunkFilename: 'css/[id].[chunkhash:8].css',
     }),
     new VueSSRClientPlugin(),
   ]
