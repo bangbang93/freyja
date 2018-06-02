@@ -54,3 +54,8 @@ exports.findByCategorId = function (categoryId, page, limit) {
   const skip = (page - 1) * limit
   return ArticleModel.findByCategoryId({categoryId, skip, limit})
 }
+
+exports.search = function (keyword, page, limit = 20) {
+  const skip = (page - 1) * limit
+  return ArticleModel.search(keyword, skip, limit)
+}

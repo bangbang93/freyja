@@ -28,6 +28,10 @@
         <a href="https://blog-old.bangbang93.com/"><i class="fa fa-archive"></i>&nbsp;旧博客存档</a>
       </div>
       <hr>
+      <div class="freyja-nav-menu-item no-link">
+        <label><i class="fa fa-search"></i> 搜索 <input class="search-box" v-model="keyword" @keydown.enter="onSearch" title="搜索"/></label>
+      </div>
+      <hr>
     </div>
     <div class="me">
       @bangbang93
@@ -36,12 +40,30 @@
 </template>
 <script>
   import FreyjaMenuCategory from './menu-category.vue'
+  import {Input} from 'element-ui'
 
   export default {
     name: 'FreyjaNavMenu',
     components: {
-      FreyjaMenuCategory
-
+      FreyjaMenuCategory,
+      ElInput: Input,
+    },
+    data() {
+      return {
+        keyword: '',
+      }
+    },
+    methods: {
+      onSearch () {
+        console.log(this.keyword)
+        this.$router.push({
+          name: 'search',
+          query: {
+            keyword: this.keyword,
+            page: 1,
+          }
+        })
+      }
     }
   }
 </script>
@@ -72,6 +94,11 @@
       bottom: 5px;
       text-align: center;
       width: 16.66667%;
+    }
+    .search-box {
+      background: transparent;
+      color: #cdf3fd;
+      border: none;
     }
   }
 </style>

@@ -29,4 +29,11 @@ router.get('/', async function (req, res) {
   res.json(list)
 })
 
+router.get('/search', async function (req, res) {
+  const {keyword} = req.query
+  let page = Math.max(req.query.page , 1 ) || 1
+  const list = await ArticleService.search(keyword, page)
+  res.json(list)
+})
+
 module.exports = router
