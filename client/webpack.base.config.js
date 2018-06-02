@@ -25,7 +25,7 @@ module.exports = Object.assign(config, {
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/',
-    filename: 'js/[name].[chunkhash:8].js'
+    filename: IS_PRODUCTION ? 'js/[name].[chunkhash:8].js': 'js/[name].js'
   },
   resolve: {
     modules: [

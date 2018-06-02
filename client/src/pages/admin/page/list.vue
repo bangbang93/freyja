@@ -5,7 +5,7 @@
       <el-table-column label="作者" prop="author.username"></el-table-column>
       <el-table-column label="发布时间" prop="createdAt"></el-table-column>
       <el-table-column label="操作">
-        <template scope="scope">
+        <template slot-scope="scope">
           <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
           <el-button size="small" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
         </template>
