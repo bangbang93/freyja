@@ -27,6 +27,8 @@ webpack([webpackClientConfig, webpackServerConfig, webpackAdminConfig], function
   if (err) throw err;
   process.stdout.write(stats.toString({
     colors: true,
+    env: true,
+    entrypoints: false,
     excludeAssets: [/^js\/hljs\//, /^static\//]
     }) + '\n')
 });
