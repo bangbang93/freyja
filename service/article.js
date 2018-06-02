@@ -50,7 +50,7 @@ exports.findByCategory = async function (category, page, limit) {
   return ArticleModel.findByCategoryId({categoryId: category._id, skip, limit})
 }
 
-exports.findByCategorId = function (categoryId, page, limit) {
+exports.findByCategoryId = function (categoryId, page, limit) {
   const skip = (page - 1) * limit
   return ArticleModel.findByCategoryId({categoryId, skip, limit})
 }
