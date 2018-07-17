@@ -28,7 +28,7 @@
     "express-simple-route": "^1.6.3",
     "feed": "^1.1.1",
     "font-awesome": "^4.7.0",
-    "fs-extra": "^6.0.1",
+    "fs-extra": "^7.0.0",
     "fundebug-nodejs": "0.0.9",
     "helmet": "^3.12.1",
     "highlight.js-async-webpack": "^1.0.4",
