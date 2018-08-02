@@ -9,9 +9,8 @@ const nodeExternals = require('webpack-node-externals')
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const {VueLoaderPlugin} = require('vue-loader')
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-module.exports = merge(baseConfig, {
+let config = merge(baseConfig, {
   entry: path.join(__dirname, './src/entries/entry-server.js'),
   target: 'node',
   output: {
@@ -28,10 +27,19 @@ module.exports = merge(baseConfig, {
       inject  : true,
       chunks  : ['main', 'vendor.js']
     }),
-    new MiniCssExtractPlugin({
-      filename: '[name].[hash].css',
-      chunkFilename: '[id].css',
-    }),
     new VueSSRServerPlugin(),
   ],
 })
+
+config.module.rules.forEach((rule) => {
+  switch (rule.test.toString()) {
+    case '/\\.css$/':
+      rule.use = ['vue-style-loader', 'css-loader']
+      break
+    case '/\\.s[ca]ss$/':
+      rule.use = ['vue-style-loader', 'css-loader', 'sass-loader']
+  }
+})
+
+
+module.exports = config

@@ -90,6 +90,7 @@
         page    : Number(this.$route.query.page) || 1,
         tag: this.$route.params.tag,
         category: this.$route.params.category,
+        keyword: this.$route.params.keyword,
       }
       if (this.$route.name === 'search') {
         result.keyword = this.$route.query.keyword
