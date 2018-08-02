@@ -38,7 +38,7 @@
     },
     updated() {
       this.highlight()
-      import('lozad').then((lozad) => lozad().observe())
+      import('lozad').then((lozad) => lozad.default().observe())
     },
     data() {
       return {
