@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const { createBundleRenderer } = require('vue-server-renderer')
 const fs = require('fs')
+const cacheControl = require('cache-control')
 
 const app = express();
 app.set('trust proxy', 'loopback');
@@ -63,6 +64,10 @@ if (app.get('env') === 'production') {
       max: 10000
     })
   })
+  app.use(cacheControl({
+    '/': 3600,
+    '/article/**': 3600,
+  }))
   app.get('*', require('./middleware/server-render')(renderer))
 
   app.use(express.static(path.join(__dirname, 'client/dist')));
