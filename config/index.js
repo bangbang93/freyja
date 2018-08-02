@@ -2,25 +2,23 @@
  * Created by bangbang93 on 2017/3/20.
  */
 'use strict';
-const fs = require('fs');
-const path = require('path');
 
-exports.database = require('./default/database.json');
+const configure = {
+  database: require('./default/database'),
+  session: require('./default/session'),
+  logger: require('./default/logger'),
+  freyja: require('./default/freyja'),
+}
 
-exports.session = require('./default/session.json');
-
-exports.logger = require('./default/logger');
-
-exports.freyja = require('./default/freyja')
-
-const index = Object.keys(exports);
+const index = Object.keys(configure);
 
 const env = process.env.NODE_ENV || 'development';
 
 index.forEach((config)=>{
-  if (fs.existsSync(path.join(__dirname, env, `${config}.json`))
-    || fs.existsSync(path.join(__dirname, env,`${config}.js`))
-    || fs.existsSync(path.join(__dirname, env,`${config}.ts`))) {
+  try {
+    require.resolve(`./${env}/${config}`)
     exports[config] = require(`./${env}/${config}`);
-  }
+  } catch {}
 });
+
+module.exports = configure
