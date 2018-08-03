@@ -34,7 +34,7 @@
     "helmet": "^3.12.1",
     "highlight.js-async-webpack": "^1.0.4",
     "ioredis": "^3.2.2",
-    "knex": "^0.14.6",
+    "knex": "^0.15.2",
     "lodash": "^4.17.10",
     "loud-rejection": "^1.6.0",
     "lozad": "^1.4.0",
