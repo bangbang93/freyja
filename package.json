@@ -58,7 +58,7 @@
     "request-promise": "^4.2.2",
     "sass-loader": "^7.0.1",
     "serve-favicon": "^2.5.0",
-    "style-loader": "^0.21.0",
+    "style-loader": "^0.22.1",
     "ts-node": "^7.0.0",
     "typescript": "^2.8.3",
     "validator": "^10.2.0",
