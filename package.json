@@ -27,7 +27,7 @@
     "express-promise-router": "^3.0.2",
     "express-session": "^1.15.6",
     "express-simple-route": "^1.6.3",
-    "feed": "^1.1.1",
+    "feed": "^2.0.0",
     "font-awesome": "^4.7.0",
     "fs-extra": "^7.0.0",
     "fundebug-nodejs": "0.0.9",
