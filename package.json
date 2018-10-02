@@ -71,7 +71,7 @@
     "@babel/plugin-transform-runtime": "^7.0.0-rc.1",
     "@babel/preset-env": "^7.0.0-rc.1",
     "@babel/runtime": "^7.0.0-rc.1",
-    "@types/bcrypt": "^2.0.0",
+    "@types/bcrypt": "^3.0.0",
     "@types/lodash": "^4.14.109",
     "@types/moment": "^2.13.0",
     "@types/mongoose": "^5.0.14",
