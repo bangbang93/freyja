@@ -30,7 +30,7 @@
     "feed": "^2.0.0",
     "font-awesome": "^4.7.0",
     "fs-extra": "^7.0.0",
-    "fundebug-nodejs": "0.0.9",
+    "fundebug-nodejs": "0.1.0",
     "helmet": "^3.12.1",
     "ioredis": "^4.0.0",
     "knex": "^0.15.2",
