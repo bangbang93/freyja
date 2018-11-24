@@ -1,28 +1,23 @@
 /**
  * Created by bangbang93 on 2017/9/5.
  */
-'use strict';
-const CategoryModel = require('../../model/category')
+'use strict'
+const {CategoryModel} = require('../../model/category')
 
-exports.getById = function (id) {
-  return CategoryModel.getById(id)
-}
+exports.getById = (id) => CategoryModel.findById(id)
 
-exports.create = function (name, parentId) {
-  return CategoryModel.create(name, parentId)
-}
+exports.create = (name, parentId) => CategoryModel.add(name, parentId)
 
-exports.listAll = function () {
-  return CategoryModel.listAll()
-}
+exports.listAll = () => CategoryModel.find()
 
-exports.listTree = async function () {
-  const root = await CategoryModel.findRoot()
-  async function bfs (root) {
+exports.listTree = async () => {
+  const root = await CategoryModel.listRoot()
+  async function bfs(root) {
     const promises = []
     for (const category of root) {
       if (category.children.length) {
-        promises.push(root.populate('children').execPopulate())
+        promises.push(root.populate('children')
+                          .execPopulate())
       }
     }
     if (promises.length === 0) {
