@@ -74,7 +74,8 @@ if (app.get('env') === 'production') {
     '/': 3600,
     '/article/**': 3600,
   }))
-  app.get('*', require('./middleware/server-render')(renderer))
+  app.get('*', require('./middleware/server-render')
+    .default(renderer))
 
   app.use(express.static(path.join(__dirname, 'client/dist')))
 } else {
