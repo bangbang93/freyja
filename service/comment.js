@@ -1,15 +1,15 @@
 /**
  * Created by bangbang93 on 2017/9/7.
  */
-'use strict';
+'use strict'
 const CommentModel = require('../model/comment')
 const ArticleModel = require('../model/article').ArticleModel
-const AdminModel = require('../model/admin')
+const {AdminModel} = require('../model/admin')
 const crypto = require('crypto')
 const MarkdownHelper = require('../helper/markdown')
 const MailModule = require('../module/mail')
 
-exports.create = async function (comment, {article, reply}, loginUser) {
+exports.create = async (comment, {article, reply}, loginUser) => {
   if (!article && !reply) {
     throw new Error('article or reply must has one')
   }
@@ -26,16 +26,19 @@ exports.create = async function (comment, {article, reply}, loginUser) {
   if (typeof article === 'string') {
     article = await ArticleModel.getById(article)
   }
-  const author = await AdminModel.getById(article.author)
-  const email = comment.publisher.email.toLowerCase().trim()
+  const author = await AdminModel.findById(article.author)
+  const email = comment.publisher.email.toLowerCase()
+                       .trim()
 
-  if (author.email && author.email.toLowerCase().trim() === email) {
+  if (author.email && author.email.toLowerCase() === email) {
     if (!loginUser || loginUser._id !== author._id.toString()) {
       throw new Error('cannot use author email')
     }
   }
 
-  comment.publisher.hash = crypto.createHash('md5').update(email).digest('hex')
+  comment.publisher.hash = crypto.createHash('md5')
+                                 .update(email)
+                                 .digest('hex')
   comment.html = MarkdownHelper.renderComment(comment.content)
   const newComment = await CommentModel.create(comment, {article, reply})
   if (replyComment) {
@@ -45,7 +48,7 @@ exports.create = async function (comment, {article, reply}, loginUser) {
   if (reply && replyComment.publisher.email) {
     MailModule.commentReply({
       to: replyComment.publisher.email,
-      article: await ArticleModel.getById(article)
+      article: await ArticleModel.getById(article),
     })
   }
   if (!reply) {
@@ -58,12 +61,12 @@ exports.create = async function (comment, {article, reply}, loginUser) {
   }
 }
 
-exports.listByArticle = async function (articleId, page, limit = 20) {
+exports.listByArticle = async (articleId, page, limit = 20) => {
   const skip = (page - 1) * limit
   const list = await CommentModel.listByArticle(articleId, {skip, limit})
   return walkComments(list)
-  async function walkComments (comments) {
-    for(const comment of comments) {
+  async function walkComments(comments) {
+    for (const comment of comments) {
       if (comment.replies) {
         comment.populate('replies')
         await comment.execPopulate()

@@ -4,7 +4,9 @@
     "target": "es2017",
     "sourceMap": true,
     "lib": ["es5", "es6", "es7"],
-    "allowJs": true
+    "allowJs": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
   },
   "exclude": [
     "node_modules"

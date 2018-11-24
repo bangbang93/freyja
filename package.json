@@ -10,7 +10,8 @@
     "pm2": "pm2 startOrReload process.json",
     "build": "NODE_ENV=production node script/build",
     "update": "npm run build && npm run pm2",
-    "test": "npm run build"
+    "test": "npm run build",
+    "lint": "tslint -p . -c tslint.json"
   },
   "dependencies": {
     "animate.css": "^3.6.1",
@@ -18,6 +19,7 @@
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.3",
     "bunyan": "^1.8.10",
+    "bunyan-serializer-error": "latest",
     "cache-control": "^2.0.0",
     "connect-history-api-fallback": "^1.5.0",
     "connect-redis": "^3.3.3",
@@ -27,6 +29,7 @@
     "express-promise-router": "^3.0.2",
     "express-session": "^1.15.6",
     "express-simple-route": "^1.6.3",
+    "express-validator": "latest",
     "feed": "^2.0.0",
     "font-awesome": "^4.7.0",
     "fs-extra": "^7.0.0",
@@ -44,6 +47,7 @@
     "memory-fs": "^0.4.1",
     "moment": "^2.22.2",
     "mongoose": "^5.3.13",
+    "mongoose-typescript": "^0.2.6",
     "morgan": "^1.9.0",
     "ms": "^2.1.1",
     "multer": "^1.3.0",
@@ -63,9 +67,7 @@
     "vue-template-compiler": "^2.5.17",
     "vuex": "^3.0.1",
     "vuex-router-sync": "^5.0.0",
-    "webpack-node-externals": "^1.7.2",
-    "bunyan-serializer-error": "latest",
-    "express-validator": "latest"
+    "webpack-node-externals": "^1.7.2"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-rc.1",
