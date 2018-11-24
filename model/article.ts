@@ -2,13 +2,12 @@
  * Created by bangbang93 on 2017/9/3.
  */
 
-
-'use strict';
+'use strict'
 import {Document, Types} from 'mongoose'
 import IObjectId = Types.ObjectId
 import model = require('../model')
 import mongoose = model.mongoose
-const ObjectId = mongoose.Schema.Types.ObjectId;
+const ObjectId = mongoose.Schema.Types.ObjectId
 
 export interface IArticle extends Document {
   title: string,
@@ -57,31 +56,31 @@ const Schema = new mongoose.Schema({
     postName: String,
     id: Number,
     guid: String,
-  }
+  },
 })
 
-const Model = mongoose.model<IArticle>('article', Schema);
+const Model = mongoose.model<IArticle>('article', Schema)
 
 export const _Model = Model
 
 export class ArticleModel {
-  static getById (id: string): Promise<IArticle> {
+  public static getById(id: string): Promise<IArticle> {
     return Model.findById(id).exec()
   }
 
-  static create (article) {
-    return Model.create(article);
+  public static create(article) {
+    return Model.create(article)
   }
 
-  static list ({lastId, limit = 20, select = {content: 0, html: 0}}) {
-    let query;
+  public static list({lastId, limit = 20, select = {content: 0, html: 0}}) {
+    let query
     if (!lastId) {
       query = Model.find({})
     } else {
       query = Model.find({
         _id: {
-          $gt: lastId
-        }
+          $gt: lastId,
+        },
       })
     }
     return query.sort({_id: -1})
@@ -90,7 +89,7 @@ export class ArticleModel {
       .exec()
   }
 
-  static listByPage ({skip, page = 1, limit = 20}) {
+  public static listByPage({skip = 0, page = 1, limit = 20}) {
     if (!skip) {
       skip = (page - 1) * limit
     }
@@ -102,46 +101,46 @@ export class ArticleModel {
       .exec()
   }
 
-  static del (id) {
+  public static del(id) {
     return Model.remove({_id: id}).exec()
   }
 
-  static count () {
+  public static count() {
     return Model.count({}).exec()
   }
 
-  static getByWordpress (key, value) {
+  public static getByWordpress(key, value) {
     if (arguments.length === 1) {
       [key] = Object.keys(key)
       value = arguments[0][key]
     }
     return Model.findOne({
-      [`wordpress.${key}`]: value
+      [`wordpress.${key}`]: value,
     }).exec()
   }
 
-  static findByTag ({tag, skip = 0, limit = 20}) {
+  public static findByTag({tag, skip = 0, limit = 20}) {
     return Model.find({
-      tags: tag
+      tags: tag,
     })
       .skip(skip)
       .limit(limit)
       .exec()
   }
 
-  static findByCategoryId ({categoryId, skip, limit}) {
+  public static findByCategoryId({categoryId, skip, limit}) {
     return Model.find({
-      category: categoryId
+      category: categoryId,
     })
       .skip(skip)
       .limit(limit)
       .exec()
   }
 
-  static search (keyword, skip, limit) {
+  public static search(keyword, skip, limit) {
     return Model.find({
       $text: {
-        $search: keyword
+        $search: keyword,
       },
     })
       .skip(skip)

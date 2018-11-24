@@ -2,10 +2,11 @@
  * Created by bangbang93 on 2017/9/24.
  */
 'use strict';
-const router = require('express-promise-router')()
-const FeedService = require('../service/feed')
+import Router from 'express-promise-router'
+import {FeedService} from '../service/feed.service'
 
-router.get('/', async function (req, res) {
+const router = Router()
+router.get('/', async (req, res) => {
   const baseUrl = `${req.protocol}://${req.hostname}`
   const rss = await FeedService.getFeed(baseUrl)
 
