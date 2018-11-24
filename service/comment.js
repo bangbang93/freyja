@@ -2,7 +2,7 @@
  * Created by bangbang93 on 2017/9/7.
  */
 'use strict'
-const CommentModel = require('../model/comment')
+const {CommentModel} = require('../model/comment')
 const ArticleModel = require('../model/article').ArticleModel
 const {AdminModel} = require('../model/admin')
 const crypto = require('crypto')
@@ -15,7 +15,7 @@ exports.create = async (comment, {article, reply}, loginUser) => {
   }
   let replyComment
   if (reply) {
-    replyComment = await CommentModel.getById(reply)
+    replyComment = await CommentModel.findById(reply)
   }
   if (!article && reply) {
     article = replyComment.article

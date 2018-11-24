@@ -4,7 +4,7 @@
 'use strict'
 const {ArticleModel} = require('../../model/article')
 const {AttachmentModel} = require('../../model/attachment')
-const CommentModel = require('../../model/comment')
+const {CommentModel} = require('../../model/comment')
 const {CategoryModel} = require('../../model/category')
 const TagModel = require('../../model/tag')
 const LinkModel = require('../../model/link')
@@ -121,7 +121,7 @@ exports.wordpress = async ({host, user, password, database, port, prefix = 'wp_'
     }
   })
   comments = comments.filter((e) => !!e)
-  comments = await CommentModel._Model.create(comments)
+  comments = await CommentModel.create(comments)
   await comments.map(async (comment) => {
     if (comment.wordpress.commentParent !== 0) {
       const parentComment = await CommentModel.getByWordpress('id', comment.wordpress.commentParent)

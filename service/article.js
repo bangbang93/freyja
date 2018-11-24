@@ -3,7 +3,7 @@
  */
 'use strict'
 const ArticleModel = require('../model/article').ArticleModel
-const CommentModel = require('../model/comment')
+const {CommentModel} = require('../model/comment')
 const {CategoryModel} = require('../model/category')
 const nurl = require('url')
 const createHttpError = require('http-errors')
@@ -25,12 +25,12 @@ exports.getByWordpress = ({id, postName, guid}) => {
     return ArticleModel.getByWordpress({id})
   }
   if (postName) {
-    return ArticleModel.getByWordpress({postName: encodeURIComponent(postName)
-        .toLowerCase()})
+    return ArticleModel.getByWordpress('postName', encodeURIComponent(postName)
+        .toLowerCase())
   }
   if (guid) {
     const url = nurl.parse(guid)
-    return ArticleModel.getByWordpress({guid: new RegExp(url.path)})
+    return ArticleModel.getByWordpress('guid', new RegExp(url.path))
   }
 }
 
