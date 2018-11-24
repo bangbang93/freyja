@@ -17,7 +17,7 @@ const env = process.env.NODE_ENV || 'development';
 index.forEach((config)=>{
   try {
     require.resolve(`./${env}/${config}`)
-    exports[config] = require(`./${env}/${config}`);
+    configure[config] = require(`./${env}/${config}`);
   } catch {}
 });
 
