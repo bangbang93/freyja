@@ -61,7 +61,11 @@ export default function (renderer: BundleRenderer) {
       }
       const time = Date.now() - s
       if (req.app.get('env') !== 'production') {
-        req.logger.info(`whole request: ${time}ms`)
+        if (time < 1000) {
+          req.logger.debug(`whole request: ${time}ms`)
+        } else {
+          req.logger.error(`whole request: ${time}ms`)
+        }
       }
       res.set('x-ssr-time', time)
       res.end(html)

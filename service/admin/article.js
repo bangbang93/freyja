@@ -30,11 +30,11 @@ exports.listByPage = async function (page = 1, limit = 20) {
 }
 
 exports.getById = function (id) {
-  return ArticleModel.getById(id)
+  return ArticleModel.findById(id)
 }
 
 exports.update = async function (id, newArticle) {
-  const article = await ArticleModel.getById(id)
+  const article = await ArticleModel.findById(id)
   if (!article) {
     throw new Error('no such article')
   }

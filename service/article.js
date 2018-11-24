@@ -8,7 +8,7 @@ const {CategoryModel} = require('../model/category')
 const nurl = require('url')
 const createHttpError = require('http-errors')
 
-exports.getById = (id) => ArticleModel.getById(id)
+exports.getById = (id) => ArticleModel.findById(id)
 
 exports.list = async (page, limit = 20) => {
   const skip = (page - 1) * limit

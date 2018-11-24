@@ -24,7 +24,7 @@ exports.create = async (comment, {article, reply}, loginUser) => {
     throw new Error('no such article')
   }
   if (typeof article === 'string') {
-    article = await ArticleModel.getById(article)
+    article = await ArticleModel.findById(article)
   }
   const author = await AdminModel.findById(article.author)
   const email = comment.publisher.email.toLowerCase()
@@ -48,11 +48,11 @@ exports.create = async (comment, {article, reply}, loginUser) => {
   if (reply && replyComment.publisher.email) {
     MailModule.commentReply({
       to: replyComment.publisher.email,
-      article: await ArticleModel.getById(article),
+      article: await ArticleModel.findById(article),
     })
   }
   if (!reply) {
-    MailModule.comment({article: await ArticleModel.getById(article)})
+    MailModule.comment({article: await ArticleModel.findById(article)})
   }
 
   return {
