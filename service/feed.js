@@ -1,11 +1,11 @@
 /**
  * Created by bangbang93 on 2017/9/24.
  */
-'use strict';
-const Feed = require('feed')
+'use strict'
+const {Feed} = require('feed')
 const ArticleModel = require('../model/article').ArticleModel
 
-exports.getFeed = async function (baseUrl) {
+exports.getFeed = async (baseUrl) => {
   const feed = new Feed({
     title: 'bangbang93.blog()',
     description: 'the blog of bangbang93',
@@ -20,10 +20,10 @@ exports.getFeed = async function (baseUrl) {
       name: 'bangbang93',
       email: 'bangbang93@163.com',
       link: 'https://blog.bangbang93.com',
-    }
+    },
   })
   const articles = await ArticleModel.listByPage({page: 1})
-  for(const article of articles) {
+  for (const article of articles) {
     article.populate('author')
     await article.execPopulate()
     feed.addItem({
