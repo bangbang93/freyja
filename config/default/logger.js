@@ -1,33 +1,43 @@
 /**
  * Created by bangbang93 on 2017/4/28.
  */
-'use strict';
-const bunyanPrettyStream = require('bunyan-prettystream');
+'use strict'
+const BunyanPrettyStream = require('bunyan-prettystream')
 
-const prettyStream = new bunyanPrettyStream();
-prettyStream.pipe(process.stdout);
+const prettyStream = new BunyanPrettyStream()
+prettyStream.pipe(process.stdout)
 
-module.exports = {
-  service: {
-    socket: {
-      name: 'service',
-      service: 'socket',
-      level: 'debug',
-      streams: [{
-        type: 'raw',
-        stream: prettyStream
-      }]
-    }
+const streams = [{
+  type: 'raw',
+  stream: prettyStream,
+}, {
+  level: 'fatal',
+  stream: process.stderr,
+}]
+
+const Loggers = {
+  middleware: {
+    name: 'haruhi',
+    level: 'info',
+    streams,
   },
-  socket: {
-    chat: {
-      name: 'socket',
-      namespace: 'chat',
-      level: 'trace',
-      streams: [{
-        type: 'raw',
-        stream: prettyStream
-      }]
+}
+
+module.exports = function getLogger(name) {
+  const defaultLogger = {
+    name,
+    level: 'debug',
+    streams,
+  }
+
+  let loggers = Loggers
+  const steps = name.split('.')
+  for (const step of steps) {
+    if (step in loggers) {
+      loggers = loggers[step]
+    } else {
+      return defaultLogger
     }
   }
-};
+  return loggers
+}

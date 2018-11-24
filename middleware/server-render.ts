@@ -1,30 +1,26 @@
-/**
- * Created by bangbang93 on 2017/8/25.
- */
-'use strict';
-const LRU = require('lru-cache')
-const ms = require('ms')
+import * as LRU from 'lru-cache'
+import ms = require('ms')
+import {BundleRenderer} from 'vue-server-renderer'
 
 const microCache = new LRU({
   max: 1000,
-  maxAge: ms('30s')
+  maxAge: ms('30s'),
 })
 
 const isCacheable = (req) => {
   return req.app.get('env') === 'production'
 }
 
-
-module.exports = function (renderer) {
-  return function render (req, res, next) {
+export default function (renderer: BundleRenderer) {
+  return function render(req, res, next) {
     const s = Date.now()
 
-    const handleError = err => {
+    const handleError = (err) => {
       const time = Date.now() - s
       res.set('x-ssr-time', time)
       if (err.url) {
         res.redirect(err.url)
-      } else if(err.code === 404) {
+      } else if (err.code === 404) {
         next()
       } else {
         // Render Error Page or Redirect
@@ -37,7 +33,7 @@ module.exports = function (renderer) {
       const hit = microCache.get(req.url)
       if (hit) {
         res.set('x-ssr-cache', 'hit')
-        res.setHeader("Content-Type", "text/html")
+        res.set('content-type', 'text/html')
         return res.end(hit)
       }
     }
@@ -50,6 +46,7 @@ module.exports = function (renderer) {
       url: req.url,
       origin,
       referer: `${req.protocol}://${req.hostname}${req.url}`,
+      status: null,
     }
     renderer.renderToString(context, (err, html) => {
       if (err) {
@@ -58,13 +55,13 @@ module.exports = function (renderer) {
       if (context.status) {
         res.status(context.status)
       }
-      res.setHeader("Content-Type", "text/html")
+      res.set('Content-Type', 'text/html')
       if (cacheable) {
         microCache.set(req.url, html)
       }
       const time = Date.now() - s
       if (req.app.get('env') !== 'production') {
-        console.log(`whole request: ${time}ms`)
+        req.logger.info(`whole request: ${time}ms`)
       }
       res.set('x-ssr-time', time)
       res.end(html)
