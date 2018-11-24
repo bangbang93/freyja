@@ -60,7 +60,7 @@ if (app.get('env') === 'production') {
   const LRU = require('lru-cache')
   const renderer = createRenderer(bundle, {
     clientManifest,
-    cache: LRU({
+    cache: new LRU({
       max: 10000
     })
   })
