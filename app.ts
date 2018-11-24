@@ -1,6 +1,6 @@
 'use strict'
 import * as bodyParser from 'body-parser'
-import cacheControl from 'cache-control'
+import * as cacheControl from 'cache-control'
 import * as connectRedis from 'connect-redis'
 import * as cookieParser from 'cookie-parser'
 import * as express from 'express'
