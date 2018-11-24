@@ -6,6 +6,7 @@ const ArticleModel = require('../model/article').ArticleModel
 const CommentModel = require('../model/comment')
 const {CategoryModel} = require('../model/category')
 const nurl = require('url')
+const createHttpError = require('http-errors')
 
 exports.getById = (id) => ArticleModel.getById(id)
 
@@ -43,7 +44,7 @@ exports.findByCategory = async (category, page, limit) => {
 
   category = await CategoryModel.getByName(category)
   if (!category) {
-    throw new Error('no such category')
+    throw createHttpError(404, 'no such category')
   }
 
   return ArticleModel.findByCategoryId({categoryId: category._id, skip, limit})

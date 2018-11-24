@@ -50,8 +50,9 @@ export default {
         resp = await Fetch.get(`${rootState.origin}/api/article`, {page})
       }
       if (resp.status !== 200) {
-        let err = new Error('fetch article list failed')
+        const err = new Error('fetch article list failed')
         err.resp = resp
+        err.status = resp.status
         throw err
       }
 
