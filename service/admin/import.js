@@ -1,9 +1,9 @@
 /**
  * Created by bangbang93 on 2017/9/8.
  */
-'use strict';
+'use strict'
 const {ArticleModel} = require('../../model/article')
-const AttachmentModel = require('../../model/attachment')
+const {AttachmentModel} = require('../../model/attachment')
 const CommentModel = require('../../model/comment')
 const CategoryModel = require('../../model/category')
 const TagModel = require('../../model/tag')
@@ -15,7 +15,7 @@ const url = require('url')
 const HashHelper = require('../../helper/hash')
 const htmlSubstring = require('../../lib/html-substring')
 
-exports.wordpress = async function ({host, user, password, database, port, prefix = 'wp_'}, userId) {
+exports.wordpress = async ({host, user, password, database, port, prefix = 'wp_'}, userId) => {
   const knex = new Knex({
     client: 'mysql2',
     connection: {
@@ -24,7 +24,7 @@ exports.wordpress = async function ({host, user, password, database, port, prefi
       password,
       database,
       port,
-    }
+    },
   })
   await importCategory(knex, prefix)
 
@@ -48,30 +48,32 @@ exports.wordpress = async function ({host, user, password, database, port, prefi
         postName: post['post_name'],
         id: post['ID'],
         guid: post['guid'],
-      }
+      },
     }
     const terms = await knex(`${prefix}term_relationships`)
       .where({
-        object_id: post['ID']
+        object_id: post['ID'],
       })
     const termTaxonomyIds = terms.map((term) => term['term_taxonomy_id'])
-    const termTaxonomies = await knex(`${prefix}term_taxonomy`).whereIn('term_taxonomy_id', termTaxonomyIds)
-    for(const termTaxonomy of termTaxonomies) {
+    const termTaxonomies = await knex(`${prefix}term_taxonomy`)
+      .whereIn('term_taxonomy_id', termTaxonomyIds)
+    for (const termTaxonomy of termTaxonomies) {
       switch (termTaxonomy['taxonomy']) {
         case 'category':
-          let category = await CategoryModel.getByWordpress('taxonomyId', termTaxonomy['term_taxonomy_id'])
+          const category = await CategoryModel.getByWordpress('taxonomyId', termTaxonomy['term_taxonomy_id'])
           article.categories.push(category._id)
-          break;
+          break
         case 'post_tag':
-          const term = await knex(`${prefix}terms`).where({
-            term_id: termTaxonomy['term_id']
-          })
+          const term = await knex(`${prefix}terms`)
+            .where({
+              term_id: termTaxonomy['term_id'],
+            })
             .first()
           article.tags.push(term['name'])
           await TagModel.createIfNotExists(term['name'])
-          break;
+          break
         default:
-          break;
+          break
       }
     }
     return article
@@ -120,7 +122,7 @@ exports.wordpress = async function ({host, user, password, database, port, prefi
   })
   comments = comments.filter((e) => !!e)
   comments = await CommentModel._Model.create(comments)
-  await comments.map(async(comment) => {
+  await comments.map(async (comment) => {
     if (comment.wordpress.commentParent !== 0) {
       const parentComment = await CommentModel.getByWordpress('id', comment.wordpress.commentParent)
       comment.reply = parentComment._id
@@ -128,13 +130,13 @@ exports.wordpress = async function ({host, user, password, database, port, prefi
     }
   })
 
-  let links = await knex(`${prefix}links`).select()
+  let links = await knex(`${prefix}links`)
+    .select()
   links = links.map((link) => ({
     name: link['link_name'],
     href: link['link_url'],
   }))
   links = await LinkModel._Model.create(links)
-
 
   // await Bluebird.each(posts, async(post) => {
   //   const resp = await rp(post['guid'], {encoding: null})
@@ -153,11 +155,11 @@ exports.wordpress = async function ({host, user, password, database, port, prefi
 async function importCategory(knex, prefix) {
   const termTaxonomies = await knex(`${prefix}term_taxonomy`)
     .where({
-      taxonomy: 'category'
+      taxonomy: 'category',
     })
   const categoriesMap = new Map()
-  for(const termTaxonomy of termTaxonomies){
-    if (termTaxonomy['parent'] === 0){
+  for (const termTaxonomy of termTaxonomies) {
+    if (termTaxonomy['parent'] === 0) {
       await buildTree(termTaxonomy)
     }
   }
@@ -167,7 +169,7 @@ async function importCategory(knex, prefix) {
     if (!categoriesMap.has(currentTermTaxonomy['term_id'])) {
       const term = await knex(`${prefix}terms`)
         .where({
-          term_id: currentTermTaxonomy['term_id']
+          term_id: currentTermTaxonomy['term_id'],
         })
         .first()
       const category = await CategoryModel.create({
@@ -177,18 +179,17 @@ async function importCategory(knex, prefix) {
           id: currentTermTaxonomy['term_id'],
           taxonomyId: currentTermTaxonomy['term_taxonomy_id'],
           slug: term.slug,
-        }
+        },
       })
       categoriesMap.set(currentTermTaxonomy['term_id'], category)
     }
-    for(const termTaxonomy of termTaxonomies) {
+    for (const termTaxonomy of termTaxonomies) {
       if (termTaxonomy['parent'] === currentTermTaxonomy['term_id']) {
         await buildTree(termTaxonomy)
       }
     }
   }
 }
-
 
 function decodePostName(postName, title) {
   try {
