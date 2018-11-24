@@ -5,7 +5,7 @@
 const LRU = require('lru-cache')
 const ms = require('ms')
 
-const microCache = LRU({
+const microCache = new LRU({
   max: 1000,
   maxAge: ms('30s')
 })
