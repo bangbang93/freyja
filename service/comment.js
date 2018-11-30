@@ -40,7 +40,7 @@ exports.create = async (comment, {article, reply}, loginUser) => {
                                  .update(email)
                                  .digest('hex')
   comment.html = MarkdownHelper.renderComment(comment.content)
-  const newComment = await CommentModel.create(comment, {article, reply})
+  const newComment = await CommentModel.add(comment, {article, reply})
   if (replyComment) {
     await CommentModel.addReply(replyComment._id, newComment._id)
   }

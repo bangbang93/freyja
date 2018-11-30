@@ -16,7 +16,7 @@ router.get('/article/:id(\\w{24})', async function (req, res) {
   removeEmail(list)
 
   function removeEmail(comments) {
-    for(const comment of comments) {
+    for (const comment of comments) {
       delete comment.publisher.email
       delete comment.publisher.agent
       delete comment.publisher.ip
