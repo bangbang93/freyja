@@ -1,7 +1,7 @@
 <template>
   <div class="freyja-article-comment-item">
     <div class="freyja-comment-avatar freyja-avatar-animation">
-      <img :src="`https://www.gravatar.com/avatar/${comment.publisher.hash}?s=100&d=retro`"
+      <img :src="`https://gravatar.933.moe/avatar/${comment.publisher.hash}?s=100&d=retro`"
            @click="onReplyClicked(comment)">
     </div>
     <div class="freyja-comment-panel">
