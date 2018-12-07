@@ -87,7 +87,7 @@ export class Article extends Model<Article> implements IArticleSchema {
 
   @statics
   public static async findByCategoryId({categoryId, skip, limit}): Promise<IArticleDocument[]> {
-    return Model.find({
+    return this.find({
       category: categoryId,
     })
       .skip(skip)

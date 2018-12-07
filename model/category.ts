@@ -1,4 +1,4 @@
-import {Types, Schema} from 'mongoose'
+import {Schema, Types} from 'mongoose'
 import {
   array, DocumentType, getModel, id, Model, model, ModelType, prop, Ref, ref, statics, subModel, type, unique,
 } from 'mongoose-typescript'
