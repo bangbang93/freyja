@@ -77,7 +77,7 @@
     "@babel/preset-env": "^7.0.0-rc.1",
     "@babel/runtime": "^7.0.0-rc.1",
     "@types/bcrypt": "^3.0.0",
-    "@types/connect-redis": "0.0.8",
+    "@types/connect-redis": "0.0.9",
     "@types/express": "^4.16.0",
     "@types/express-session": "^1.15.11",
     "@types/helmet": "0.0.42",
