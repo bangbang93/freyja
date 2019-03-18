@@ -39,7 +39,7 @@
     "ioredis": "^4.0.0",
     "knex": "^0.16.2",
     "lodash": "^4.17.10",
-    "loud-rejection": "^1.6.0",
+    "loud-rejection": "^2.0.0",
     "lozad": "^1.4.0",
     "lru-cache": "^5.1.1",
     "markdown-it": "^8.4.1",
