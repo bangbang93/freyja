@@ -1,6 +1,6 @@
 workflow "build" {
   on = "push"
-  resolves = ["npm install"]
+  resolves = ["npm run build"]
 }
 
 action "npm install" {
