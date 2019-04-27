@@ -61,7 +61,7 @@ export class Article extends Model<Article> implements IArticleSchema {
 
   @statics
   public static async del(id): Promise<void> {
-    return this.remove({_id: id})
+    await this.remove({_id: id})
   }
 
   @statics
