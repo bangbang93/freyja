@@ -36,7 +36,7 @@ if (IS_PRODUCTION) {
     new webpack.LoaderOptionsPlugin({
       minimize: true,
     }),
-    new CleanPlugin(config.output.path, {
+    new CleanPlugin({
       root   : require('path')
         .resolve('..'),
       exclude: ['.gitkeep'],
