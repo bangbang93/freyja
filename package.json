@@ -47,7 +47,7 @@
     "mavon-editor": "^2.6.4",
     "memory-fs": "^0.4.1",
     "moment": "^2.22.2",
-    "mongoose": "^5.3.13",
+    "mongoose": "^5.5.4",
     "mongoose-typescript": "^0.2.8",
     "morgan": "^1.9.0",
     "ms": "^2.1.1",
