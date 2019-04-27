@@ -1,7 +1,7 @@
 /**
  * Created by bangbang93 on 2017/8/25.
  */
-'use strict';
+'use strict'
 import {createApp} from './index'
 
 export default (context) => {
@@ -28,7 +28,7 @@ export default (context) => {
         .then(() => {
           context.state = store.state
           if (router.currentRoute.meta.status) {
-            context.status = router.currentRoute.meta.status;
+            context.status = router.currentRoute.meta.status
           }
           resolve(app)
         })

@@ -13,6 +13,7 @@ import * as favicon from 'serve-favicon'
 import {createBundleRenderer} from 'vue-server-renderer'
 import * as Config from './config'
 import {haruhiMiddleware} from './middleware/middlewares'
+import serverRender from './middleware/server-render'
 
 const app = express()
 app.set('trust proxy', 'loopback')
@@ -74,16 +75,14 @@ if (app.get('env') === 'production') {
     '/': 3600,
     '/article/**': 3600,
   }))
-  app.get('*', require('./middleware/server-render')
-    .default(renderer))
+  app.get('*', serverRender(renderer))
 
   app.use(express.static(path.join(__dirname, 'client/dist')))
 } else {
   let renderer
   const renderPromise = require('./setup-dev-server')(app)
   renderPromise.then(({bundle, options}) => {
-    renderer = require('./middleware/server-render')
-      .default(createRenderer(bundle, options))
+    renderer = serverRender(createRenderer(bundle, options))
   })
   app.get('*', (req, res, next) => {
     if (renderPromise && renderPromise.isFulfilled) {

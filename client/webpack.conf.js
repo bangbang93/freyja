@@ -64,7 +64,7 @@ if (IS_PRODUCTION) {
   for (const name of Object.keys(entry)) {
     entry[name] = ['webpack-hot-middleware/client?name=freyja'].concat(entry[name])
   }
-  plugins = plugins.push(
+  plugins.push(
     new webpack.HotModuleReplacementPlugin(),
     new VueSSRClientPlugin(),
   )

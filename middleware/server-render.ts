@@ -64,7 +64,7 @@ export default function (renderer: BundleRenderer) {
         if (time < 1000) {
           req.logger.debug(`whole request: ${time}ms`)
         } else {
-          req.logger.error(`whole request: ${time}ms`)
+          req.logger.warn(`whole request: ${time}ms`)
         }
       }
       res.set('x-ssr-time', time)
