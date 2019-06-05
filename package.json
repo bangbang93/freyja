@@ -101,7 +101,7 @@
     "shelljs": "^0.8.2",
     "ts-loader": "^4.3.0",
     "tslint": "^5.11.0",
-    "url-loader": "^1.0.1",
+    "url-loader": "^2.0.0",
     "vue": "^2.6.10",
     "vue-fetch": "^1.1.2",
     "vue-html-loader": "^1.2.3",
