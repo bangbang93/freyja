@@ -21,7 +21,7 @@ export class Attachment extends Model<Attachment> implements IAttachmentSchema {
     if (!skip) {
       skip = (page - 1) * limit
     }
-    return Model.find({})
+    return this.find({})
       .sort({_id: -1})
       .skip(skip)
       .limit(limit)
