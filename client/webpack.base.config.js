@@ -73,7 +73,7 @@ module.exports = Object.assign(config, {
       },
       {
         test: /\.html$/,
-        loader: 'vue-html-loader',
+        loader: 'html-loader',
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,

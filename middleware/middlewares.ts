@@ -1,7 +1,7 @@
 import * as bunyan from 'bunyan'
 import errSerializer from 'bunyan-serializer-error'
 import {NextFunction, Request, Response} from 'express'
-import {validationResult} from 'express-validator/check'
+import {validationResult} from 'express-validator'
 import {logger as loggerConfig} from '../config'
 
 const Logger = bunyan.createLogger({
