@@ -2,6 +2,7 @@
  * Created by bangbang93 on 2017/9/3.
  */
 'use strict'
+/* eslint-disable @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires */
 const ArticleModel = require('../model/article').ArticleModel
 const {CommentModel} = require('../model/comment')
 const {CategoryModel} = require('../model/category')
@@ -20,13 +21,13 @@ exports.list = async (page, limit = 20) => {
   }))
 }
 
-exports.getByWordpress = ({id, postName, guid}) => {
+exports.getByWordpress = async ({id, postName, guid}) => {
   if (id) {
     return ArticleModel.getByWordpress({id})
   }
   if (postName) {
     return ArticleModel.getByWordpress('postName', encodeURIComponent(postName)
-        .toLowerCase())
+      .toLowerCase())
   }
   if (guid) {
     const url = nurl.parse(guid)
@@ -34,7 +35,7 @@ exports.getByWordpress = ({id, postName, guid}) => {
   }
 }
 
-exports.findByTag = (tag, page, limit) => {
+exports.findByTag = async (tag, page, limit) => {
   const skip = (page - 1) * limit
   return ArticleModel.findByTag({tag, skip, limit})
 }
@@ -50,12 +51,12 @@ exports.findByCategory = async (category, page, limit) => {
   return ArticleModel.findByCategoryId({categoryId: category._id, skip, limit})
 }
 
-exports.findByCategoryId = (categoryId, page, limit) => {
+exports.findByCategoryId = async (categoryId, page, limit) => {
   const skip = (page - 1) * limit
   return ArticleModel.findByCategoryId({categoryId, skip, limit})
 }
 
-exports.search = (keyword, page, limit = 20) => {
+exports.search = async (keyword, page, limit = 20) => {
   const skip = (page - 1) * limit
   return ArticleModel.search(keyword, skip, limit)
 }

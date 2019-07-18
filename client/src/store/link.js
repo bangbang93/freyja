@@ -1,13 +1,13 @@
 /**
  * Created by bangbang93 on 2017/9/20.
  */
-'use strict';
+'use strict'
 import {Fetch} from './index'
 
 export default {
   namespaced: true,
-  state: () => ({
-    links: []
+  state     : () => ({
+    links: [],
   }),
   mutations: {
     setLinks(state, links) {
@@ -15,12 +15,12 @@ export default {
       links.forEach((e) => {
         state.links.push(e)
       })
-    }
+    },
   },
   actions: {
     async getLinks({commit, rootState}) {
-      let resp = await Fetch.get(`${rootState.origin}/api/link`)
+      const resp = await Fetch.get(`${rootState.origin}/api/link`)
       commit('setLinks', await resp.json())
-    }
-  }
+    },
+  },
 }

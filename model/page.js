@@ -1,18 +1,19 @@
 /**
  * Created by bangbang93 on 2017/9/20.
  */
-'use strict';
-const mongoose = require('../model').mongoose;
-const ObjectId = mongoose.Schema.ObjectId;
+'use strict'
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const mongoose = require('../model').mongoose
+const ObjectId = mongoose.Schema.ObjectId
 
 const Schema = new mongoose.Schema({
   name: {
-    type: String,
+    type  : String,
     unique: true,
   },
-  title: String,
+  title  : String,
   content: {
-    type: String,
+    type : String,
     index: 'text',
   },
   html: {
@@ -20,45 +21,47 @@ const Schema = new mongoose.Schema({
   },
   author: {
     type: ObjectId,
-    ref: 'admin',
+    ref : 'admin',
   },
-  createdAt: Date,
-  attachments: [{
-    type: ObjectId,
-    ref: 'attachment',
-  }],
+  createdAt  : Date,
+  attachments: [
+    {
+      type: ObjectId,
+      ref : 'attachment',
+    },
+  ],
   wordpress: {
     postName: String,
-    id: Number,
-    guid: String,
-  }
+    id      : Number,
+    guid    : String,
+  },
 })
 
-const Model = mongoose.model('page', Schema);
+const Model = mongoose.model('page', Schema)
 
-exports.getById = function (id) {
+exports.getById = async function getById(id) {
   return Model.findById(id).exec()
 }
 
-exports.create = function (article) {
-  return Model.create(article);
+exports.create = async function create(article) {
+  return Model.create(article)
 }
 
-exports.getByName = function (name) {
+exports.getByName = async function getByName(name) {
   return Model.findOne({
-    name
+    name,
   }).exec()
 }
 
-exports.list = function ({lastId, limit = 20, select = {content: 0, html: 0}}) {
-  let query;
+exports.list = async function list({lastId, limit = 20, select = {content: 0, html: 0}}) {
+  let query
   if (!lastId) {
     query = Model.find({})
   } else {
     query = Model.find({
       _id: {
-        $gt: lastId
-      }
+        $gt: lastId,
+      },
     })
   }
   return query.sort({_id: -1})
@@ -67,7 +70,7 @@ exports.list = function ({lastId, limit = 20, select = {content: 0, html: 0}}) {
     .exec()
 }
 
-exports.listByPage = function ({skip, page = 1, limit = 20}) {
+exports.listByPage = async function listByPage({skip, page = 1, limit = 20}) {
   if (!skip) {
     skip = (page - 1) * limit
   }
@@ -79,10 +82,10 @@ exports.listByPage = function ({skip, page = 1, limit = 20}) {
     .exec()
 }
 
-exports.del = function (id) {
+exports.del = async function del(id) {
   return Model.remove({_id: id}).exec()
 }
 
-exports.count = function () {
+exports.count = async function count() {
   return Model.count({}).exec()
 }

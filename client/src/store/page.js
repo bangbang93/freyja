@@ -1,32 +1,32 @@
 /**
  * Created by bangbang93 on 2017/9/6.
  */
-'use strict';
+'use strict'
 import {Fetch} from './index'
 
 export default {
   namespaced: true,
-  state: () => ({
+  state     : () => ({
     page: {
-      title: '',
+      title  : '',
       content: '',
-      name: '',
-      author: {
+      name   : '',
+      author : {
         username: '',
       },
       createdAt: '',
     },
   }),
   mutations: {
-    set (state, page) {
+    set(state, page) {
       state.page = page
     },
   },
   actions: {
     async get({commit, rootState}, name) {
-      let resp = await Fetch.get(`${rootState.origin}/api/page/${encodeURIComponent(name)}`)
+      const resp = await Fetch.get(`${rootState.origin}/api/page/${encodeURIComponent(name)}`)
       if (resp.status !== 200) {
-        let err = new Error('fetch page failed')
+        const err = new Error('fetch page failed')
         err.res = resp
         throw err
       }
@@ -35,5 +35,5 @@ export default {
       commit('set', page)
       return page
     },
-  }
+  },
 }

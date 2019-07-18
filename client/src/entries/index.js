@@ -13,8 +13,9 @@ import Vuex from 'vuex'
 import {sync} from 'vuex-router-sync'
 import '../scss/style.scss'
 import 'font-awesome/scss/font-awesome.scss'
+import * as es6Promise from 'es6-promise'
 
-require('es6-promise').polyfill()
+es6Promise.polyfill()
 
 Vue.use(VueRouter)
 Vue.use(VueFetch)

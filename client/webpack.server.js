@@ -2,6 +2,7 @@
  * Created by bangbang93 on 2017/8/25.
  */
 'use strict'
+/* eslint-disable @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires */
 const merge = require('webpack-merge')
 const baseConfig = require('./webpack.base.config')
 const VueSSRServerPlugin = require('vue-server-renderer/server-plugin')
@@ -10,8 +11,8 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const {VueLoaderPlugin} = require('vue-loader')
 
-let config = merge(baseConfig, {
-  entry: path.join(__dirname, './src/entries/entry-server.js'),
+const config = merge(baseConfig, {
+  entry : path.join(__dirname, './src/entries/entry-server.js'),
   target: 'node',
   output: {
     libraryTarget: 'commonjs2',
@@ -38,6 +39,8 @@ config.module.rules.forEach((rule) => {
       break
     case '/\\.s[ca]ss$/':
       rule.use = ['vue-style-loader', 'css-loader', 'sass-loader']
+      break
+    default:
   }
 })
 

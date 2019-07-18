@@ -2,6 +2,7 @@
  * Created by bangbang93 on 2017/9/3.
  */
 'use strict'
+/* eslint-disable @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires */
 const {AdminModel} = require('../../model/admin')
 const bcrypt = require('bcrypt')
 
@@ -14,9 +15,8 @@ exports.login = async (username, password) => {
     admin = admin.toJSON()
     delete admin.password
     return admin
-  } else {
-    throw new Error('wrong password')
   }
+  throw new Error('wrong password')
 }
 
 exports.create = async (username, password) => {

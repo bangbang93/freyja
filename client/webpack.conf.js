@@ -2,7 +2,7 @@
  * Created by bangbang93 on 16/9/30.
  */
 'use strict'
-
+/* eslint-disable @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires */
 const config = require('./webpack.base.config')
 const webpack = require('webpack')
 const merge = require('webpack-merge')
@@ -30,19 +30,19 @@ let plugins = [
   }),
 ]
 if (IS_PRODUCTION) {
-  console.log('production webpack') // tslint:disable-line:no-console
+  console.log('production webpack') // eslint-disable-line no-console
   plugins     = [
     ...plugins,
     new webpack.LoaderOptionsPlugin({
       minimize: true,
     }),
     new CleanPlugin({
-      root   : require('path')
+      root: require('path')
         .resolve('..'),
       exclude: ['.gitkeep'],
     }),
     new MiniCssExtractPlugin({
-      filename: 'css/[name].[chunkhash:8].css',
+      filename     : 'css/[name].[chunkhash:8].css',
       chunkFilename: 'css/[id].[chunkhash:8].css',
     }),
     new VueSSRClientPlugin(),
@@ -54,12 +54,11 @@ if (IS_PRODUCTION) {
       inject  : true,
       chunks  : [entry],
     }), new PreloadWebpackPlugin({
-      rel: 'preload',
+      rel    : 'preload',
       include: [entry],
     }))
   })
 } else {
-
 // add hot-reload related code to entry chunks
   for (const name of Object.keys(entry)) {
     entry[name] = ['webpack-hot-middleware/client?name=freyja'].concat(entry[name])

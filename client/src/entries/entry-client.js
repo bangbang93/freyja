@@ -1,7 +1,7 @@
 /**
  * Created by bangbang93 on 2017/8/25.
  */
-'use strict';
+'use strict'
 import {createApp} from './index'
 
 
@@ -19,16 +19,18 @@ router.onReady(() => {
     // 所以我们对比它们，找出两个匹配列表的差异组件
     let diffed = false
     const activated = matched.filter((c, i) => {
-      return diffed || (diffed = (prevMatched[i] !== c))
+      const result = diffed || (diffed = prevMatched[i] !== c)
+      return result
     })
     if (!activated.length) {
       return next()
     }
     // 这里如果有加载指示器(loading indicator)，就触发
-    Promise.all(activated.map(c => {
+    Promise.all(activated.map((c) => {
       if (c.asyncData) {
-        return c.asyncData({ store, route: to })
+        return c.asyncData({store, route: to})
       }
+      return null
     })).then(() => {
       // 停止加载指示器(loading indicator)
       next()
@@ -36,4 +38,4 @@ router.onReady(() => {
   })
 })
 
-app.$mount('app');
+app.$mount('app')

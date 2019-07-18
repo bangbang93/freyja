@@ -2,11 +2,12 @@
  * Created by bangbang93 on 2017/9/5.
  */
 'use strict'
+/* eslint-disable @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires */
 const {CategoryModel} = require('../../model/category')
 
 exports.getById = (id) => CategoryModel.findById(id)
 
-exports.create = (name, parentId) => CategoryModel.add(name, parentId)
+exports.create = async (name, parentId) => CategoryModel.add(name, parentId)
 
 exports.listAll = () => CategoryModel.find()
 
@@ -17,7 +18,7 @@ exports.listTree = async () => {
     for (const category of root) {
       if (category.children.length) {
         promises.push(root.populate('children')
-                          .execPopulate())
+          .execPopulate())
       }
     }
     if (promises.length === 0) {

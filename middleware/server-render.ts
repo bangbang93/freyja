@@ -1,9 +1,10 @@
-import * as LRU from 'lru-cache'
-import ms = require('ms')
+import {Middleware} from 'express-validator/src/base'
+import LRU from 'lru-cache'
+import ms from 'ms'
 import {BundleRenderer} from 'vue-server-renderer'
 
 const microCache = new LRU({
-  max: 1000,
+  max   : 1000,
   maxAge: ms('30s'),
 })
 
@@ -11,7 +12,7 @@ const isCacheable = (req) => {
   return req.app.get('env') === 'production'
 }
 
-export default function (renderer: BundleRenderer) {
+export default function (renderer: BundleRenderer): Middleware {
   return function render(req, res, next) {
     const s = Date.now()
 
@@ -21,10 +22,10 @@ export default function (renderer: BundleRenderer) {
       if (err.url) {
         res.redirect(err.url)
       } else if (err.code === 404) {
-        next()
+        return next()
       } else {
         // Render Error Page or Redirect
-        next(err)
+        return next(err)
       }
     }
 
@@ -42,11 +43,11 @@ export default function (renderer: BundleRenderer) {
     const origin = `http://localhost:${req.app.get('port')}`
 
     const context = {
-      title: 'Freyja', // default title
-      url: req.url,
+      title  : 'Freyja', // default title
+      url    : req.url,
       origin,
       referer: `${req.protocol}://${req.hostname}${req.url}`,
-      status: null,
+      status : null,
     }
     renderer.renderToString(context, (err, html) => {
       if (err) {

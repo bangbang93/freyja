@@ -2,6 +2,7 @@
  * Created by bangbang93 on 2017/9/7.
  */
 'use strict'
+/* eslint-disable @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires */
 const {CommentModel} = require('../model/comment')
 const ArticleModel = require('../model/article').ArticleModel
 const {AdminModel} = require('../model/admin')
@@ -28,7 +29,7 @@ exports.create = async (comment, {article, reply}, loginUser) => {
   }
   const author = await AdminModel.findById(article.author)
   const email = comment.publisher.email.toLowerCase()
-                       .trim()
+    .trim()
 
   if (author.email && author.email.toLowerCase() === email) {
     if (!loginUser || loginUser._id !== author._id.toString()) {
@@ -37,8 +38,8 @@ exports.create = async (comment, {article, reply}, loginUser) => {
   }
 
   comment.publisher.hash = crypto.createHash('md5')
-                                 .update(email)
-                                 .digest('hex')
+    .update(email)
+    .digest('hex')
   comment.html = MarkdownHelper.renderComment(comment.content)
   const newComment = await CommentModel.add(comment, {article, reply})
   if (replyComment) {
@@ -47,7 +48,7 @@ exports.create = async (comment, {article, reply}, loginUser) => {
 
   if (reply && replyComment.publisher.email) {
     MailModule.commentReply({
-      to: replyComment.publisher.email,
+      to     : replyComment.publisher.email,
       article: await ArticleModel.findById(article),
     })
   }

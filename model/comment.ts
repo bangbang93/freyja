@@ -12,7 +12,7 @@ export interface ICommentSchema {
   article: Ref<Article>
   publisher: CommentPublisher
   reply: Ref<Comment>
-  replies: Array<Ref<Comment>>
+  replies: Ref<Comment>[]
   wordpress: CommentWordpress
 
   createdAt?: Date
@@ -22,21 +22,57 @@ export interface ICommentSchema {
 @subModel()
 class CommentPublisher {
   @prop() public email: string
+
   @prop() public name: string
+
   @prop() public website: string
+
   @prop() public hash: string
+
   @prop() public ip: string
+
   @prop() public agent: string
 }
 
 @subModel()
 class CommentWordpress {
   @prop() public id: number
+
   @prop() public commentParent: number
 }
 
 @model('comment', {timestamps: true})
 export class Comment extends Model<Comment> implements ICommentSchema {
+  @id
+  public _id: Types.ObjectId
+
+  @prop() @required
+  public content: string
+
+  @prop() @required
+  public html: string
+
+  @prop() @ref(Article) @required
+  public article: Ref<Article>
+
+  @prop() @ref('comment') @type(Schema.Types.ObjectId)
+  public reply: Ref<Comment>
+
+  @array(Schema.Types.ObjectId) @ref('comment')
+  public replies: Ref<Comment>[]
+
+  @prop() @required
+  public publisher: CommentPublisher
+
+  @prop() @ref(Admin)
+  public admin: Ref<Admin>
+
+  @prop()
+  public wordpress: CommentWordpress
+
+  public createdAt: Date
+
+  public updatedAt: Date
 
   @statics
   public static async add(comment, {article, reply}): Promise<ICommentDocument> {
@@ -56,7 +92,7 @@ export class Comment extends Model<Comment> implements ICommentSchema {
   public static async listByArticle(articleId, {skip, limit}): Promise<ICommentDocument[]> {
     return this.find({
       article: articleId,
-      reply: null,
+      reply  : null,
     })
       .select({content: 0})
       .sort({_id: -1})
@@ -104,29 +140,6 @@ export class Comment extends Model<Comment> implements ICommentSchema {
     })
       .exec()
   }
-
-  @id
-  public _id: Types.ObjectId
-  @prop() @required
-  public content: string
-  @prop() @required
-  public html: string
-  @prop() @ref(Article) @required
-  public article: Ref<Article>
-  @prop() @ref('comment') @type(Schema.Types.ObjectId)
-  public reply: Ref<Comment>
-  @array(Schema.Types.ObjectId) @ref('comment')
-  public replies: Array<Ref<Comment>>
-  @prop() @required
-  public publisher: CommentPublisher
-  @prop() @ref(Admin)
-  public admin: Ref<Admin>
-  @prop()
-  public wordpress: CommentWordpress
-
-  public createdAt: Date
-  public updatedAt: Date
-
 }
 
 export type ICommentDocument = DocumentType<Comment>
