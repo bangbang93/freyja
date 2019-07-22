@@ -84,7 +84,7 @@
     "@types/mongoose": "^5.3.27",
     "@types/ms": "^0.7.30",
     "@types/node": "^12.6.6",
-    "@types/nodemailer": "^4.6.8",
+    "@types/nodemailer": "^6.2.1",
     "@types/serve-favicon": "^2.2.30",
     "babel-loader": "^8.0.4",
     "bunyan-prettystream": "^0.1.3",
