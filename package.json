@@ -33,7 +33,7 @@
     "feed": "^4.0.0",
     "font-awesome": "^4.7.0",
     "fs-extra": "^8.1.0",
-    "fundebug-nodejs": "0.1.0",
+    "fundebug-nodejs": "0.2.0",
     "helmet": "^3.12.1",
     "http-errors": "^1.7.1",
     "ioredis": "^4.0.0",
