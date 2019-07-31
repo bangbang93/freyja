@@ -34,12 +34,12 @@ export default {
   data() {
     return {
       page: {
-        title  : '',
+        title: '',
         content: '',
-        name   : '',
+        name: '',
       },
       attachments: [],
-      edit       : {
+      edit: {
         id: '',
       },
     }
@@ -47,6 +47,13 @@ export default {
   mounted() {
     if (this.$route.name === 'page.edit') {
       this.initEdit(this.$route.params)
+    }
+  },
+  beforeRouteLeave(to, from, next) {
+    if (this.article.title || this.article.content) {
+      this.$confirm('文章没有保存，是否离开')
+        .then(() => next())
+        .catch(() => next(false))
     }
   },
   methods: {
