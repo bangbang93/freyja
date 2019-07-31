@@ -1,55 +1,56 @@
 /**
  * Created by bangbang93 on 2017/9/3.
  */
+
 'use strict'
-import VueRouter from 'vue-router'
+import VueRouter, {RouteConfig} from 'vue-router'
 
 /* eslint-disable @typescript-eslint/no-require-imports */
-const routes = [
+const routes: RouteConfig[] = [
   {
-    path     : '/home',
+    path: '/home',
     component: require('../pages/admin/dashboard.vue').default,
-    name     : 'dashboard',
+    name: 'dashboard',
   }, {
-    path     : '/article/create',
+    path: '/article/create',
     component: require('../pages/admin/article/create.vue').default,
-    name     : 'article.create',
+    name: 'article.create',
   }, {
-    path     : '/articles',
+    path: '/articles',
     component: require('../pages/admin/article/list.vue').default,
-    name     : 'article.list',
+    name: 'article.list',
   }, {
-    path     : '/article/:id',
+    path: '/article/:id',
     component: require('../pages/admin/article/create.vue').default,
-    name     : 'article.edit',
+    name: 'article.edit',
   }, {
-    path     : '/attachment',
+    path: '/attachment',
     component: require('../pages/admin/attachment/list.vue').default,
-    name     : 'attachment.list',
+    name: 'attachment.list',
   }, {
-    path     : '/tag',
+    path: '/tag',
     component: require('../pages/admin/tag/list.vue').default,
-    name     : 'tag.list',
+    name: 'tag.list',
   }, {
-    path     : '/comment',
+    path: '/comment',
     component: require('../pages/admin/comment/list.vue').default,
-    name     : 'comment.list',
+    name: 'comment.list',
   }, {
-    path     : '/import/wordpress',
+    path: '/import/wordpress',
     component: require('../pages/admin/import/wordpress.vue').default,
-    name     : 'import.wordpress',
+    name: 'import.wordpress',
   }, {
-    path     : '/page/create',
+    path: '/page/create',
     component: require('../pages/admin/page/create.vue').default,
-    name     : 'page.create',
+    name: 'page.create',
   }, {
-    path     : '/page',
+    path: '/page',
     component: require('../pages/admin/page/list.vue').default,
-    name     : 'page.list',
+    name: 'page.list',
   }, {
-    path     : '/page/:id',
+    path: '/page/:id',
     component: require('../pages/admin/page/create.vue').default,
-    name     : 'page.edit',
+    name: 'page.edit',
   },
 ]
 

@@ -44,12 +44,9 @@ rules:
   indent: off
   key-spacing:
     - error
-    - singleLine:
-        beforeColon: false
-        afterColon: true
-        mode: strict
-      multiLine:
-        align: colon
+    - beforeColon: false
+      afterColon: true
+      mode: strict
   keyword-spacing: error
   linebreak-style: [error, unix]
   lines-between-class-members: error

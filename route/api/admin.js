@@ -6,17 +6,15 @@
 const router = require('express-promise-router')()
 
 router.use((req, res, next) => {
-  switch (true) {
-    case req.method === 'POST' && req.url === '/user/login':
-      return next()
-    default:
-      if (!req.session.user) {
-        return res.status(403).json({
-          msg: 'need login',
-        })
-      }
-      return next()
+  if (req.method === 'POST' && req.url === '/user/login') {
+    return next()
   }
+  if (!req.session.user) {
+    return res.status(403).json({
+      msg: 'need login',
+    })
+  }
+  return next()
 })
 
 module.exports = router

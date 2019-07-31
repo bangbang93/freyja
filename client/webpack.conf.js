@@ -42,7 +42,7 @@ if (IS_PRODUCTION) {
       exclude: ['.gitkeep'],
     }),
     new MiniCssExtractPlugin({
-      filename     : 'css/[name].[chunkhash:8].css',
+      filename: 'css/[name].[chunkhash:8].css',
       chunkFilename: 'css/[id].[chunkhash:8].css',
     }),
     new VueSSRClientPlugin(),
@@ -51,10 +51,10 @@ if (IS_PRODUCTION) {
     plugins.push(new HtmlWebpackPlugin({
       filename: `${entry}.html`,
       template: `client/src/html/${entry}.html`,
-      inject  : true,
-      chunks  : [entry],
+      inject: true,
+      chunks: [entry],
     }), new PreloadWebpackPlugin({
-      rel    : 'preload',
+      rel: 'preload',
       include: [entry],
     }))
   })
@@ -72,8 +72,8 @@ if (IS_PRODUCTION) {
     plugins.push(new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'client/src/html/index.html',
-      inject  : true,
-      chunks  : [entry],
+      inject: true,
+      chunks: [entry],
     }))
   })
 }

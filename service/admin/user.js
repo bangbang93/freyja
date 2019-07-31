@@ -11,12 +11,11 @@ exports.login = async (username, password) => {
   if (!admin) throw new Error('no such user')
 
   const result = await bcrypt.compare(password, admin.password)
-  if (result) {
-    admin = admin.toJSON()
-    delete admin.password
-    return admin
-  }
-  throw new Error('wrong password')
+  if (!result) throw new Error('wrong password')
+
+  admin = admin.toJSON()
+  delete admin.password
+  return admin
 }
 
 exports.create = async (username, password) => {

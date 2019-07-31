@@ -49,7 +49,7 @@
     </el-form>
   </div>
 </template>
-<script>
+<script lang="ts">
 import FreyjaMdEditor from '../../../components/admin/md-editor.vue'
 import FreyjaTagEditor from '../../../components/admin/tag-editor.vue'
 
@@ -81,7 +81,8 @@ export default {
       function walk(root) {
         const node = {
           label: root.name,
-          id   : root._id,
+          id: root._id,
+          children: null,
         }
         if (root.children) {
           node.children = root.children.map(walk)
@@ -94,6 +95,13 @@ export default {
     this.initData()
     if (this.$route.name === 'article.edit') {
       this.initEdit(this.$route.params)
+    }
+  },
+  beforeRouteLeave(to, from, next) {
+    if (this.article.title || this.article.content) {
+      this.$confirm('文章没有保存，是否离开')
+        .then(() => next())
+        .catch(() => next(false))
     }
   },
   methods: {

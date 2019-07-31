@@ -22,76 +22,77 @@ const config = (() => {
 }
 )()
 module.exports = Object.assign(config, {
-  mode  : IS_PRODUCTION ? 'production' : 'development',
-  name  : 'freyja',
-  bail  : true,
+  mode: IS_PRODUCTION ? 'production' : 'development',
+  name: 'freyja',
+  bail: true,
   output: {
-    path      : path.resolve(__dirname, './dist'),
+    path: path.resolve(__dirname, './dist'),
     publicPath: '/',
-    filename  : IS_PRODUCTION ? 'js/[name].[chunkhash:8].js' : 'js/[name].js',
+    filename: IS_PRODUCTION ? 'js/[name].[chunkhash:8].js' : 'js/[name].js',
   },
   resolve: {
     modules: [
       path.join(__dirname, 'src'),
       path.join(__dirname, '../node_modules'),
     ],
+    extensions: ['.js', '.json', '.ts', '.vue'],
   },
   module: {
     rules: [
       {
-        test  : /\.vue$/,
+        test: /\.vue$/,
         loader: 'vue-loader',
       },
       {
-        test   : /\.js$/,
-        loader : 'babel-loader',
+        test: /\.js$/,
+        loader: 'babel-loader',
         include: projectRoot,
         exclude: /node_modules/,
       },
       {
-        test   : /\.ts$/,
+        test: /\.ts$/,
         exclude: /node_modules/,
-        use    : [
+        use: [
           {
-            loader : 'ts-loader',
+            loader: 'ts-loader',
             options: {
-              transpileOnly   : true,
+              transpileOnly: true,
               appendTsSuffixTo: [/\.vue$/],
-              configFile      : 'tsconfig-fe.json',
+              configFile: 'tsconfig-fe.json',
             },
           },
         ],
       },
       {
         test: /\.css$/,
-        use : IS_PRODUCTION
+        use: IS_PRODUCTION
           ? [MiniCssExtractPlugin.loader, 'css-loader']
           : ['vue-style-loader', 'css-loader'],
       },
       {
         test: /\.s[ca]ss$/,
-        use : IS_PRODUCTION
+        use: IS_PRODUCTION
           ? [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
           : ['vue-style-loader', 'css-loader', 'sass-loader'],
       },
       {
-        test  : /\.html$/,
+        test: /\.html$/,
         loader: 'html-loader',
       },
       {
-        test  : /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
-        query : {
+        query: {
           limit: 10000,
-          name : assetsPath('img/[name].[hash:7].[ext]'),
+          name: assetsPath('img/[name].[hash:7].[ext]'),
         },
       },
       {
-        test  : /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
         loader: 'url-loader',
-        query : {
+        query: {
           limit: 10000,
-          name : assetsPath('fonts/[name].[hash:7].[ext]'),
+          name: assetsPath('fonts/[name].[hash:7].[ext]'),
         },
       },
     ],

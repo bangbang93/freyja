@@ -35,7 +35,7 @@ if (IS_PRODUCTION) {
       minimize: true,
     }),
     new MiniCssExtractPlugin({
-      filename     : 'css/[name].[hash].css',
+      filename: 'css/[name].[hash].css',
       chunkFilename: 'css/[id].css',
     }),
   ]
@@ -43,8 +43,8 @@ if (IS_PRODUCTION) {
     plugins.push(new HtmlWebpackPlugin({
       filename: `${entry}.html`,
       template: 'client/src/html/admin.html',
-      inject  : true,
-      chunks  : [entry, 'vendor'],
+      inject: true,
+      chunks: [entry, 'vendor'],
     }))
   })
 } else {
@@ -60,19 +60,19 @@ if (IS_PRODUCTION) {
     plugins.push(new HtmlWebpackPlugin({
       filename: `${entry}.html`,
       template: 'client/src/html/admin.html',
-      inject  : true,
-      chunks  : [entry],
+      inject: true,
+      chunks: [entry],
     }))
   })
 }
 
 module.exports = merge(config, {
-  name  : 'admin',
+  name: 'admin',
   entry,
   plugins,
   output: {
-    path      : path.resolve(__dirname, './dist/admin'),
+    path: path.resolve(__dirname, './dist/admin'),
     publicPath: '/admin/',
-    filename  : 'js/[name].[hash].js',
+    filename: 'js/[name].[hash].js',
   },
 })
