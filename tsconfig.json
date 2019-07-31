@@ -6,8 +6,7 @@
     "lib": ["es5", "es6", "es7"],
     "allowJs": true,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "esModuleInterop": true,
+    "experimentalDecorators": true
   },
   "exclude": [
     "node_modules"

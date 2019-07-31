@@ -1,6 +1,6 @@
 import {Middleware} from 'express-validator/src/base'
-import LRU from 'lru-cache'
-import ms from 'ms'
+import * as LRU from 'lru-cache'
+import ms = require('ms')
 import {BundleRenderer} from 'vue-server-renderer'
 
 const microCache = new LRU({
