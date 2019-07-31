@@ -82,49 +82,49 @@ import {Button, Col, Form, FormItem, Input} from 'element-ui'
 const defaultHeight = 300
 
 export default {
-  name      : 'FreyjaCommentEditor',
+  name: 'FreyjaCommentEditor',
   components: {
-    ElButton  : Button,
-    ElForm    : Form,
+    ElButton: Button,
+    ElForm: Form,
     ElFormItem: FormItem,
-    ElInput   : Input,
-    ElCol     : Col,
+    ElInput: Input,
+    ElCol: Col,
   },
   props: {
-    display  : Boolean,
+    display: Boolean,
     publisher: Object,
-    reply    : Object,
+    reply: Object,
   },
   data() {
     return {
       beforeHeight: 0,
-      dragY       : 0,
-      comment     : {
+      dragY: 0,
+      comment: {
         publisher: this.publisher,
-        content  : '',
+        content: '',
       },
-      height      : defaultHeight,
+      height: defaultHeight,
       commentRules: {
         publisher: {
-          type    : 'object',
+          type: 'object',
           required: true,
-          fields  : {
+          fields: {
             name: {
-              type    : 'string',
+              type: 'string',
               required: true,
             },
             email: {
-              type    : 'email',
+              type: 'email',
               required: true,
             },
             website: {
-              type    : 'url',
+              type: 'url',
               required: false,
             },
           },
         },
         content: {
-          type    : 'string',
+          type: 'string',
           required: true,
         },
       },

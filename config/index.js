@@ -5,9 +5,9 @@
 /* eslint-disable @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires */
 const configure = {
   database: require('./default/database'),
-  session : require('./default/session'),
-  logger  : require('./default/logger'),
-  freyja  : require('./default/freyja'),
+  session: require('./default/session'),
+  logger: require('./default/logger'),
+  freyja: require('./default/freyja'),
 }
 
 const index = Object.keys(configure)

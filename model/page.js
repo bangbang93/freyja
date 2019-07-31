@@ -8,12 +8,12 @@ const ObjectId = mongoose.Schema.ObjectId
 
 const Schema = new mongoose.Schema({
   name: {
-    type  : String,
+    type: String,
     unique: true,
   },
-  title  : String,
+  title: String,
   content: {
-    type : String,
+    type: String,
     index: 'text',
   },
   html: {
@@ -21,19 +21,19 @@ const Schema = new mongoose.Schema({
   },
   author: {
     type: ObjectId,
-    ref : 'admin',
+    ref: 'admin',
   },
-  createdAt  : Date,
+  createdAt: Date,
   attachments: [
     {
       type: ObjectId,
-      ref : 'attachment',
+      ref: 'attachment',
     },
   ],
   wordpress: {
     postName: String,
-    id      : Number,
-    guid    : String,
+    id: Number,
+    guid: String,
   },
 })
 

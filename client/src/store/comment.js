@@ -6,11 +6,11 @@ import {Fetch} from './index'
 
 export default {
   namespaced: true,
-  state     : () => ({
-    comments : [],
+  state: () => ({
+    comments: [],
     publisher: {
-      name   : '',
-      email  : '',
+      name: '',
+      email: '',
       website: '',
     },
   }),

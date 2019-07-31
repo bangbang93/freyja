@@ -19,7 +19,7 @@ const htmlSubstring = require('../../lib/html-substring')
 
 exports.wordpress = async ({host, user, password, database, port, prefix = 'wp_'}, userId) => {
   const knex = new Knex({
-    client    : 'mysql2',
+    client: 'mysql2',
     connection: {
       host,
       user,
@@ -33,23 +33,23 @@ exports.wordpress = async ({host, user, password, database, port, prefix = 'wp_'
   let posts = await knex(`${prefix}posts`)
     .where({
       post_status: 'publish',
-      post_type  : 'post',
+      post_type: 'post',
     })
   let articles = posts.map(async (post) => {
     const article = {
-      title      : post.post_title,
-      content    : post.post_content,
-      html       : MarkdownHelper.render(post.post_content),
-      summary    : MarkdownHelper.render(htmlSubstring(post.post_content, 200)),
-      tags       : [],
-      categories : [],
-      author     : userId,
-      createdAt  : new Date(post.post_date),
+      title: post.post_title,
+      content: post.post_content,
+      html: MarkdownHelper.render(post.post_content),
+      summary: MarkdownHelper.render(htmlSubstring(post.post_content, 200)),
+      tags: [],
+      categories: [],
+      author: userId,
+      createdAt: new Date(post.post_date),
       attachments: [],
-      wordpress  : {
+      wordpress: {
         postName: post.post_name,
-        id      : post.ID,
-        guid    : post.guid,
+        id: post.ID,
+        guid: post.guid,
       },
     }
     const terms = await knex(`${prefix}term_relationships`)
@@ -95,9 +95,9 @@ exports.wordpress = async ({host, user, password, database, port, prefix = 'wp_'
     })
 
   const attachments = posts.map((post) => ({
-    filename : path.basename(post.guid),
-    path     : url.parse(post.guid).path,
-    mimeType : post.post_mime_type,
+    filename: path.basename(post.guid),
+    path: url.parse(post.guid).path,
+    mimeType: post.post_mime_type,
     createdAt: post.post_date,
   }))
   await AttachmentModel._Model.create(attachments)
@@ -107,19 +107,19 @@ exports.wordpress = async ({host, user, password, database, port, prefix = 'wp_'
   let comments = wpComments.map((wpComment) => {
     if (!articlesMap.has(wpComment.comment_post_ID)) return null
     return {
-      content  : wpComment.comment_content,
-      html     : MarkdownHelper.renderComment(wpComment.comment_content),
-      article  : articlesMap.get(wpComment.comment_post_ID)._id,
+      content: wpComment.comment_content,
+      html: MarkdownHelper.renderComment(wpComment.comment_content),
+      article: articlesMap.get(wpComment.comment_post_ID)._id,
       publisher: {
-        email  : wpComment.comment_author_email,
-        name   : wpComment.comment_author,
+        email: wpComment.comment_author_email,
+        name: wpComment.comment_author,
         website: wpComment.comment_author_url,
-        ip     : wpComment.comment_author_IP,
-        hash   : HashHelper.md5(wpComment.comment_author_email),
+        ip: wpComment.comment_author_IP,
+        hash: HashHelper.md5(wpComment.comment_author_email),
       },
       createdAt: new Date(wpComment.comment_date),
       wordpress: {
-        id           : wpComment.comment_ID,
+        id: wpComment.comment_ID,
         commentParent: wpComment.comment_parent,
       },
     }
@@ -149,10 +149,10 @@ exports.wordpress = async ({host, user, password, database, port, prefix = 'wp_'
   // })
 
   return {
-    articles   : articles.length,
+    articles: articles.length,
     attachments: attachments.length,
-    comments   : comments.length,
-    links      : links.length,
+    comments: comments.length,
+    links: links.length,
   }
 }
 
@@ -177,12 +177,12 @@ async function importCategory(knex, prefix) {
         })
         .first()
       const category = await CategoryModel.create({
-        name     : term.name,
-        parentId : parentId === 0 ? null : categoriesMap.get(parentId)._id,
+        name: term.name,
+        parentId: parentId === 0 ? null : categoriesMap.get(parentId)._id,
         wordpress: {
-          id        : currentTermTaxonomy.term_id,
+          id: currentTermTaxonomy.term_id,
           taxonomyId: currentTermTaxonomy.term_taxonomy_id,
-          slug      : term.slug,
+          slug: term.slug,
         },
       })
       categoriesMap.set(currentTermTaxonomy.term_id, category)

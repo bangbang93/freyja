@@ -10,17 +10,17 @@ prettyStream.pipe(process.stdout)
 
 const streams = [
   {
-    type  : 'raw',
+    type: 'raw',
     stream: prettyStream,
   }, {
-    level : 'fatal',
+    level: 'fatal',
     stream: process.stderr,
   },
 ]
 
 const Loggers = {
   middleware: {
-    name : 'haruhi',
+    name: 'haruhi',
     level: 'info',
     streams,
   },

@@ -22,12 +22,12 @@ module.exports = (app) => {
 
   const clientCompiler = webpack([clientConfig, adminConfig])
   const devMiddleware = require('webpack-dev-middleware')(clientCompiler, {
-    publicPath      : clientConfig.output.publicPath,
-    hot             : true,
+    publicPath: clientConfig.output.publicPath,
+    hot: true,
     serverSideRender: true,
-    index           : false,
-    stats           : {
-      colors       : true,
+    index: false,
+    stats: {
+      colors: true,
       excludeAssets: [/^js\/hljs\//, /^static\//],
     },
   })

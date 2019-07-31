@@ -12,7 +12,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const {VueLoaderPlugin} = require('vue-loader')
 
 const config = merge(baseConfig, {
-  entry : path.join(__dirname, './src/entries/entry-server.js'),
+  entry: path.join(__dirname, './src/entries/entry-server.js'),
   target: 'node',
   output: {
     libraryTarget: 'commonjs2',
@@ -25,8 +25,8 @@ const config = merge(baseConfig, {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'client/src/html/index.html',
-      inject  : true,
-      chunks  : ['main', 'vendor.js'],
+      inject: true,
+      chunks: ['main', 'vendor.js'],
     }),
     new VueSSRServerPlugin(),
   ],

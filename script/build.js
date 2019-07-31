@@ -23,9 +23,9 @@ webpack([webpackClientConfig, webpackServerConfig, webpackAdminConfig], (err, st
   spinner.stop()
   if (err) throw err
   process.stdout.write(`${stats.toString({
-    colors       : true,
-    env          : true,
-    entrypoints  : false,
+    colors: true,
+    env: true,
+    entrypoints: false,
     excludeAssets: [/^js\/hljs\//, /^static\//],
   })}\n`)
 })

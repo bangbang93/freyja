@@ -11,7 +11,7 @@
     "build": "NODE_ENV=production node script/build",
     "update": "npm run build && npm run pm2",
     "test": "npm run build",
-    "lint": "eslint --ext .js,.ts,.vue . --fix"
+    "lint": "eslint --ext .js,.ts,.vue ."
   },
   "dependencies": {
     "animate.css": "^3.6.1",

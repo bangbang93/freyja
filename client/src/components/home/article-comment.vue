@@ -45,7 +45,7 @@ import {Button, Notification} from 'element-ui'
 import FreyjaArticleCommentItem from './article-comment-item.vue'
 
 export default {
-  name      : 'FreyjaArticleComment',
+  name: 'FreyjaArticleComment',
   components: {
     FreyjaArticleCommentItem,
     FreyjaCommentEditor,
@@ -53,19 +53,19 @@ export default {
   },
   props: {
     comments: {
-      type    : Array,
+      type: Array,
       required: true,
     },
     articleId: {
-      type    : String,
+      type: String,
       required: true,
     },
   },
   data() {
     return {
       showEditor: false,
-      publisher : this.$store.getters['comment/publisher'],
-      replying  : null,
+      publisher: this.$store.getters['comment/publisher'],
+      replying: null,
     }
   },
   methods: {
@@ -95,16 +95,16 @@ export default {
         switch (e.status) {
           case 403:
             Notification({
-              title  : 'bangbang93.blog()',
+              title: 'bangbang93.blog()',
               message: '不能使用作者邮箱',
-              type   : 'error',
+              type: 'error',
             })
             break
           default:
             Notification({
-              title  : 'bangbang93.blog()',
+              title: 'bangbang93.blog()',
               message: e.body.msg || e.body,
-              type   : 'error',
+              type: 'error',
             })
         }
       }

@@ -15,7 +15,7 @@
 </template>
 <script>
 export default {
-  name : 'FreyjaAttachmentCard',
+  name: 'FreyjaAttachmentCard',
   props: {
     attachment: Object,
   },

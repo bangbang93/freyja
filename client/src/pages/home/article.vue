@@ -41,7 +41,7 @@ export default {
   },
   data() {
     return {
-      article : this.$store.state.article.article,
+      article: this.$store.state.article.article,
       comments: this.$store.state.comment.comments,
     }
   },

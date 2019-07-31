@@ -35,7 +35,7 @@
 </template>
 <script>
 export default {
-  name : 'FreyjaArticleCommentItem',
+  name: 'FreyjaArticleCommentItem',
   props: {
     comment: Object,
   },

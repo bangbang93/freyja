@@ -43,8 +43,8 @@ export default {
   data() {
     return {
       attachments: [],
-      pageSize   : 20,
-      total      : 0,
+      pageSize: 20,
+      total: 0,
       currentPage: 1,
     }
   },

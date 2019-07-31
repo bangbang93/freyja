@@ -61,14 +61,14 @@ export default {
   data() {
     return {
       article: {
-        title  : '',
+        title: '',
         content: '',
-        tags   : [],
+        tags: [],
       },
       attachments: [],
-      tags       : [],
-      tagInput   : '',
-      edit       : {
+      tags: [],
+      tagInput: '',
+      edit: {
         id: '',
       },
       categories: [],

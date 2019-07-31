@@ -4,7 +4,7 @@ import ms = require('ms')
 import {BundleRenderer} from 'vue-server-renderer'
 
 const microCache = new LRU({
-  max   : 1000,
+  max: 1000,
   maxAge: ms('30s'),
 })
 
@@ -43,11 +43,11 @@ export default function (renderer: BundleRenderer): Middleware {
     const origin = `http://localhost:${req.app.get('port')}`
 
     const context = {
-      title  : 'Freyja', // default title
-      url    : req.url,
+      title: 'Freyja', // default title
+      url: req.url,
       origin,
       referer: `${req.protocol}://${req.hostname}${req.url}`,
-      status : null,
+      status: null,
     }
     renderer.renderToString(context, (err, html) => {
       if (err) {

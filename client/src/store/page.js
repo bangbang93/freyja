@@ -6,12 +6,12 @@ import {Fetch} from './index'
 
 export default {
   namespaced: true,
-  state     : () => ({
+  state: () => ({
     page: {
-      title  : '',
+      title: '',
       content: '',
-      name   : '',
-      author : {
+      name: '',
+      author: {
         username: '',
       },
       createdAt: '',

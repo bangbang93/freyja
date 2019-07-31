@@ -16,7 +16,7 @@ export const Fetch = VueFetch()
 export function createStore() {
   return new Vuex.Store({
     state: {
-      origin    : '',
+      origin: '',
       ssrReferer: '',
     },
     mutations: {
@@ -45,9 +45,9 @@ export function createStore() {
     modules: {
       article: ArticleStore,
       comment: CommentStore,
-      home   : HomeStore,
-      link   : LinkStore,
-      page   : PageStore,
+      home: HomeStore,
+      link: LinkStore,
+      page: PageStore,
     },
   })
 }

@@ -8,33 +8,33 @@ import VueRouter from 'vue-router'
 export function createRouter() {
   const routes = [
     {
-      path     : '/',
+      path: '/',
       component: require('../pages/home/home.vue').default,
-      name     : 'home',
+      name: 'home',
     }, {
-      path     : '/article/:id',
+      path: '/article/:id',
       component: require('../pages/home/article.vue').default,
-      name     : 'article',
+      name: 'article',
     }, {
-      path     : '/page/link',
+      path: '/page/link',
       component: require('../pages/home/link.vue').default,
-      name     : 'link',
+      name: 'link',
     }, {
-      path     : '/page/:name',
+      path: '/page/:name',
       component: require('../pages/home/page.vue').default,
-      name     : 'general-page',
+      name: 'general-page',
     }, {
-      path     : '/tag/:tag',
+      path: '/tag/:tag',
       component: require('../pages/home/home.vue').default,
-      name     : 'tag',
+      name: 'tag',
     }, {
-      path     : '/category/:category',
+      path: '/category/:category',
       component: require('../pages/home/home.vue').default,
-      name     : 'category',
+      name: 'category',
     }, {
-      path     : '/search',
+      path: '/search',
       component: require('../pages/home/home.vue').default,
-      name     : 'search',
+      name: 'search',
     },
   ]
 

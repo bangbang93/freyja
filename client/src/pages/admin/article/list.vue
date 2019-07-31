@@ -46,9 +46,9 @@
 export default {
   data() {
     return {
-      articles   : [],
-      pageSize   : 20,
-      total      : 0,
+      articles: [],
+      pageSize: 20,
+      total: 0,
       currentPage: 1,
     }
   },
@@ -71,7 +71,7 @@ export default {
     },
     handleEdit($index, row) {
       this.$router.push({
-        name  : 'article.edit',
+        name: 'article.edit',
         params: {
           id: row._id,
         },

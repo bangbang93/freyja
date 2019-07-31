@@ -32,20 +32,20 @@
 </template>
 <script>
 export default {
-  name : 'FreyjaTagEditor',
+  name: 'FreyjaTagEditor',
   props: {
     tags: {
-      type    : Array,
+      type: Array,
       required: true,
     },
     selectedTags: {
-      type    : Array,
+      type: Array,
       required: true,
     },
   },
   data() {
     return {
-      tagInput      : '',
+      tagInput: '',
       isInputVisible: false,
     }
   },

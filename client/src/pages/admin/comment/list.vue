@@ -36,10 +36,10 @@
 export default {
   data() {
     return {
-      comments   : [],
+      comments: [],
       currentPage: 1,
-      pageSize   : 20,
-      total      : 0,
+      pageSize: 20,
+      total: 0,
     }
   },
   mounted() {

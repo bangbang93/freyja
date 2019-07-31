@@ -48,7 +48,7 @@ exports.create = async (comment, {article, reply}, loginUser) => {
 
   if (reply && replyComment.publisher.email) {
     MailModule.commentReply({
-      to     : replyComment.publisher.email,
+      to: replyComment.publisher.email,
       article: await ArticleModel.findById(article),
     })
   }

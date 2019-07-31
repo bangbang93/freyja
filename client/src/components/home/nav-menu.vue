@@ -62,10 +62,10 @@ export default {
   methods: {
     onSearch() {
       this.$router.push({
-        name : 'search',
+        name: 'search',
         query: {
           keyword: this.keyword,
-          page   : 1,
+          page: 1,
         },
       })
     },

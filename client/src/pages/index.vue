@@ -52,7 +52,7 @@ import {Col} from 'element-ui'
 export default {
   components: {
     FreyjaNavMenu: async () => import('../components/home/nav-menu.vue'),
-    ElCol        : Col,
+    ElCol: Col,
   },
   data() {
     const menuWidth = 4

@@ -19,7 +19,7 @@ bangbang93.forum()
 `
   const html = MarkdownHelper.render(content)
   return transporter.sendMail({
-    from   : Config.freyja.mail.from,
+    from: Config.freyja.mail.from,
     to,
     subject: 'bangbang93.forum() 通知',
     html,
@@ -36,8 +36,8 @@ bangbang93.form()
 `
   const html = MarkdownHelper.render(content)
   return transporter.sendMail({
-    from   : Config.freyja.mail.from,
-    to     : Config.freyja.mail.to,
+    from: Config.freyja.mail.from,
+    to: Config.freyja.mail.to,
     subject: 'bangbang93.forum() 评论',
     html,
   })

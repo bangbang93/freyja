@@ -38,12 +38,12 @@ export default {
   data() {
     return {
       database: {
-        host    : 'localhost',
-        port    : 3306,
+        host: 'localhost',
+        port: 3306,
         database: 'wordpress',
-        user    : 'root',
+        user: 'root',
         password: '',
-        prefix  : 'wp_',
+        prefix: 'wp_',
       },
     }
   },

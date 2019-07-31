@@ -92,7 +92,7 @@ export class Comment extends Model<Comment> implements ICommentSchema {
   public static async listByArticle(articleId, {skip, limit}): Promise<ICommentDocument[]> {
     return this.find({
       article: articleId,
-      reply  : null,
+      reply: null,
     })
       .select({content: 0})
       .sort({_id: -1})

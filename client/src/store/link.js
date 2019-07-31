@@ -6,7 +6,7 @@ import {Fetch} from './index'
 
 export default {
   namespaced: true,
-  state     : () => ({
+  state: () => ({
     links: [],
   }),
   mutations: {

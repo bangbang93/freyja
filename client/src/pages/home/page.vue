@@ -28,7 +28,7 @@ export default {
   },
   data() {
     return {
-      page    : this.$store.state.page.page,
+      page: this.$store.state.page.page,
       comments: this.$store.state.comment.comments,
     }
   },

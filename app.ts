@@ -69,7 +69,7 @@ if (app.get('env') === 'production') {
     }),
   })
   app.use(cacheControl({
-    '/'          : 3600,
+    '/': 3600,
     '/article/**': 3600,
   }))
   app.get('*', serverRender(renderer))

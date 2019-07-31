@@ -70,18 +70,18 @@ function asyncData({store, route}) {
       return store.dispatch('home/getArticles', {page: route.query.page || 1})
     case 'category':
       return store.dispatch('home/getArticles', {
-        page    : route.query.page || 1,
+        page: route.query.page || 1,
         category: route.params.category,
       })
     case 'tag':
       return store.dispatch('home/getArticles', {
         page: route.query.page || 1,
-        tag : route.params.tag,
+        tag: route.params.tag,
       })
     case 'search':
       return store.dispatch('home/search', {
         keyword: route.query.keyword,
-        page   : route.query.page || 1,
+        page: route.query.page || 1,
       })
     default:
   }
@@ -94,10 +94,10 @@ export default {
   data() {
     const result =  {
       articles: this.$store.state.home.articles,
-      page    : Number(this.$route.query.page) || 1,
-      tag     : this.$route.params.tag,
+      page: Number(this.$route.query.page) || 1,
+      tag: this.$route.params.tag,
       category: this.$route.params.category,
-      keyword : this.$route.params.keyword,
+      keyword: this.$route.params.keyword,
     }
     if (this.$route.name === 'search') {
       result.keyword = this.$route.query.keyword

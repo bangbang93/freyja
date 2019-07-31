@@ -6,16 +6,16 @@ import {Fetch} from './index'
 
 export default {
   namespaced: true,
-  state     : () => ({
+  state: () => ({
     articles: [
       {
-        title  : '',
+        title: '',
         summary: '',
-        tags   : [],
-        author : {
+        tags: [],
+        author: {
           username: '',
         },
-        createdAt   : '',
+        createdAt: '',
         commentCount: 0,
       },
     ],

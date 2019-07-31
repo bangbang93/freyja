@@ -7,7 +7,7 @@ const mongoose = require('../model').mongoose
 
 const Schema = new mongoose.Schema({
   title: {
-    type  : String,
+    type: String,
     unique: true,
   },
 })
