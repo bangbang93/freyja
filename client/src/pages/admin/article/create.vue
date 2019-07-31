@@ -102,6 +102,8 @@ export default {
       this.$confirm('文章没有保存，是否离开')
         .then(() => next())
         .catch(() => next(false))
+    } else {
+      next()
     }
   },
   methods: {
