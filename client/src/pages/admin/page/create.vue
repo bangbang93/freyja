@@ -55,7 +55,7 @@ export default {
         .then(() => next())
         .catch(() => next(false))
     } else {
-      next()
+      return next()
     }
   },
   methods: {
