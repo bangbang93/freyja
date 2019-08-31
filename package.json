@@ -22,7 +22,7 @@
     "bunyan-serializer-error": "latest",
     "cache-control": "^2.0.0",
     "connect-history-api-fallback": "^1.5.0",
-    "connect-redis": "^3.3.3",
+    "connect-redis": "^4.0.0",
     "cookie-parser": "^1.4.3",
     "debug": "^4.0.1",
     "express": "^4.16.3",
