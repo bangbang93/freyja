@@ -1,15 +1,16 @@
 /**
  * Created by bangbang93 on 2017/9/4.
  */
-'use strict';
+'use strict'
+/* eslint-disable @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires */
 const router = require('express-promise-router')()
 const AdminPageService = require('../../../service/admin/page')
 
-router.post('/', async function (req, res) {
+router.post('/', async (req, res) => {
   const {title, content, name} = req.body
   if (!title || !content || !name) {
     return res.status(400).json({
-      msg: 'missing param'
+      msg: 'missing param',
     })
   }
 
@@ -18,10 +19,10 @@ router.post('/', async function (req, res) {
 
   const article = await AdminPageService.create({title, content, name, author, createdAt})
 
-  res.status(201).json(article);
+  res.status(201).json(article)
 })
 
-router.get('/', async function (req, res) {
+router.get('/', async (req, res) => {
   const {page} = req.query
 
   const list = await AdminPageService.listByPage(page, 20)
@@ -29,7 +30,7 @@ router.get('/', async function (req, res) {
   res.json(list)
 })
 
-router.get('/:id(\\w{24})', async function (req, res) {
+router.get('/:id(\\w{24})', async (req, res) => {
   const {id} = req.params
 
   const article = await AdminPageService.getById(id)
@@ -37,12 +38,12 @@ router.get('/:id(\\w{24})', async function (req, res) {
   res.json(article)
 })
 
-router.put('/:id(\\w{24})', async function (req, res) {
+router.put('/:id(\\w{24})', async (req, res) => {
   const {title, content} = req.body
   const {id} = req.params
   if (!title || !content) {
     return res.status(400).json({
-      msg: 'missing param'
+      msg: 'missing param',
     })
   }
 
@@ -51,26 +52,26 @@ router.put('/:id(\\w{24})', async function (req, res) {
   res.json(article)
 })
 
-router.delete('/:id(\\w{24})', async function (req, res) {
-  const {id} = req.params;
+router.delete('/:id(\\w{24})', async (req, res) => {
+  const {id} = req.params
 
   await AdminPageService.del(id)
 
   res.status(204).end()
 })
 
-router.get('/count', async function (req, res) {
+router.get('/count', async (req, res) => {
   const count = await AdminPageService.count()
 
   res.json({
-    count
+    count,
   })
 })
 
-router.get('/rerender-all', async function (req, res) {
+router.get('/rerender-all', async (req, res) => {
   await AdminPageService.reRenderAll()
   res.json({
-    msg: 'success'
+    msg: 'success',
   })
 })
 

@@ -1,7 +1,7 @@
 /**
  * Created by bangbang93 on 2017/9/6.
  */
-'use strict';
+'use strict'
 import {Fetch} from './index'
 
 export default {
@@ -25,13 +25,13 @@ export default {
       }
       state.publisher = Object.assign(state.publisher, JSON.parse(storage))
       return state.publisher
-    }
+    },
   },
   mutations: {
-    create (state, comment) {
+    create(state, comment) {
       state.comments.unshift(comment)
     },
-    set (state, comments) {
+    set(state, comments) {
       state.comments.splice(0, state.comments.length)
       comments.forEach((comment) => state.comments.push(comment))
     },
@@ -42,7 +42,7 @@ export default {
     reply(state, {replyId, newComment}) {
       return walk(state.comments)
       function walk(comments) {
-        for(const comment of comments) {
+        for (const comment of comments) {
           if (comment._id === replyId) {
             comment.replies = comment.replies || []
             comment.replies.push(newComment)
@@ -53,17 +53,17 @@ export default {
           }
         }
       }
-    }
+    },
   },
   actions: {
-    async create ({commit}, {content, articleId, publisher, reply}) {
-      let resp = await Fetch.post(`/api/comment/article/${articleId}`, {
+    async create({commit}, {content, articleId, publisher, reply}) {
+      const resp = await Fetch.post(`/api/comment/article/${articleId}`, {
         content,
         publisher,
         reply,
       })
       if (resp.status !== 201) {
-        let err = new Error('add commit failed')
+        const err = new Error('add commit failed')
         err.status = resp.status
         err.body = await resp.json()
         throw err
@@ -79,9 +79,9 @@ export default {
       commit('savePublisher', comment.publisher)
       return comment
     },
-    async list ({commit}, {articleId, page}) {
-      let resp = await Fetch.get(`/api/comment/article/${articleId}`, {page})
-      if (resp.status !== 200){
+    async list({commit}, {articleId, page}) {
+      const resp = await Fetch.get(`/api/comment/article/${articleId}`, {page})
+      if (resp.status !== 200) {
         throw new Error('fetch comments failed')
       }
 
@@ -93,6 +93,6 @@ export default {
     async reply({dispatch}, {comment, replyCommentId}) {
       comment.reply = replyCommentId
       return dispatch('create', comment)
-    }
-  }
+    },
+  },
 }

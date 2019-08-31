@@ -4,7 +4,7 @@
 'use strict'
 import {createApp} from './index'
 
-export default (context) => {
+export default async (context) => {
   return new Promise((resolve, reject) => {
     const {app, router, store} = createApp()
     router.push(context.url)
@@ -12,7 +12,9 @@ export default (context) => {
     router.onReady(() => {
       const matchedComponents = router.getMatchedComponents()
       if (!matchedComponents.length) {
-        return reject({code: 404})
+        const error = new Error('no such route')
+        error.code = 404
+        return reject(error)
       }
       Promise.all(matchedComponents.map((Component) => {
         if (!Component) return Promise.resolve()
@@ -24,6 +26,7 @@ export default (context) => {
             route: router.currentRoute,
           })
         }
+        return null
       }))
         .then(() => {
           context.state = store.state

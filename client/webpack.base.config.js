@@ -2,13 +2,14 @@
  * Created by bangbang93 on 16/9/20.
  */
 'use strict'
+/* eslint-disable @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires */
 const path = require('path')
 const projectRoot = path.resolve(__dirname, './src')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production'
 
-let config = (() => {
+const config = (() => {
   const config = {
     build: {
       devtool: false,
@@ -34,6 +35,7 @@ module.exports = Object.assign(config, {
       path.join(__dirname, 'src'),
       path.join(__dirname, '../node_modules'),
     ],
+    extensions: ['.js', '.json', '.ts', '.vue'],
   },
   module: {
     rules: [
@@ -50,30 +52,32 @@ module.exports = Object.assign(config, {
       {
         test: /\.ts$/,
         exclude: /node_modules/,
-        use: [{
-          loader: 'ts-loader',
-          options: {
-            transpileOnly: true,
-            appendTsSuffixTo: [/\.vue$/],
-            configFile: 'tsconfig-fe.json',
+        use: [
+          {
+            loader: 'ts-loader',
+            options: {
+              transpileOnly: true,
+              appendTsSuffixTo: [/\.vue$/],
+              configFile: 'tsconfig-fe.json',
+            },
           },
-        }],
+        ],
       },
       {
         test: /\.css$/,
-        use: IS_PRODUCTION ?
-          [MiniCssExtractPlugin.loader, 'css-loader'] :
-          ['vue-style-loader', 'css-loader'],
+        use: IS_PRODUCTION
+          ? [MiniCssExtractPlugin.loader, 'css-loader']
+          : ['vue-style-loader', 'css-loader'],
       },
       {
         test: /\.s[ca]ss$/,
-        use: IS_PRODUCTION ?
-          [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'] :
-          ['vue-style-loader', 'css-loader', 'sass-loader'],
+        use: IS_PRODUCTION
+          ? [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
+          : ['vue-style-loader', 'css-loader', 'sass-loader'],
       },
       {
         test: /\.html$/,
-        loader: 'vue-html-loader',
+        loader: 'html-loader',
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,

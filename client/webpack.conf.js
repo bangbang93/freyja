@@ -2,12 +2,12 @@
  * Created by bangbang93 on 16/9/30.
  */
 'use strict'
-
+/* eslint-disable @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires */
 const config = require('./webpack.base.config')
 const webpack = require('webpack')
 const merge = require('webpack-merge')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CleanPlugin = require('clean-webpack-plugin')
+const {CleanWebpackPlugin} = require('clean-webpack-plugin')
 const path = require('path')
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
 const PreloadWebpackPlugin = require('preload-webpack-plugin')
@@ -30,17 +30,13 @@ let plugins = [
   }),
 ]
 if (IS_PRODUCTION) {
-  console.log('production webpack') // tslint:disable-line:no-console
+  console.log('production webpack') // eslint-disable-line no-console
   plugins     = [
     ...plugins,
     new webpack.LoaderOptionsPlugin({
       minimize: true,
     }),
-    new CleanPlugin({
-      root   : require('path')
-        .resolve('..'),
-      exclude: ['.gitkeep'],
-    }),
+    new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: 'css/[name].[chunkhash:8].css',
       chunkFilename: 'css/[id].[chunkhash:8].css',
@@ -51,15 +47,14 @@ if (IS_PRODUCTION) {
     plugins.push(new HtmlWebpackPlugin({
       filename: `${entry}.html`,
       template: `client/src/html/${entry}.html`,
-      inject  : true,
-      chunks  : [entry],
+      inject: true,
+      chunks: [entry],
     }), new PreloadWebpackPlugin({
       rel: 'preload',
       include: [entry],
     }))
   })
 } else {
-
 // add hot-reload related code to entry chunks
   for (const name of Object.keys(entry)) {
     entry[name] = ['webpack-hot-middleware/client?name=freyja'].concat(entry[name])
@@ -73,8 +68,8 @@ if (IS_PRODUCTION) {
     plugins.push(new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'client/src/html/index.html',
-      inject  : true,
-      chunks  : [entry],
+      inject: true,
+      chunks: [entry],
     }))
   })
 }

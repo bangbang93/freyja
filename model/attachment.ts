@@ -14,30 +14,32 @@ export interface IAttachmentSchema {
 
 @model('attachment', {timestamps: true})
 export class Attachment extends Model<Attachment> implements IAttachmentSchema {
+  @id
+  public _id: Types.ObjectId
+
+  @prop()
+  public filename: string
+
+  @prop()
+  public path: string
+
+  @prop()
+  public mimeType: string
+
+  @prop(Schema.Types.Mixed)
+  public wordpress: object
 
   @statics
   public static async listByPage({skip = 0, page = 1, limit = 20}): Promise<IAttachmentDocument[]> {
-
     if (!skip) {
       skip = (page - 1) * limit
     }
-    return Model.find({})
+    return this.find({})
       .sort({_id: -1})
       .skip(skip)
       .limit(limit)
       .exec()
   }
-
-  @id
-  public _id: Types.ObjectId
-  @prop()
-  public filename: string
-  @prop()
-  public path: string
-  @prop()
-  public mimeType: string
-  @prop(Schema.Types.Mixed)
-  public wordpress: object
 }
 
 export type IAttachmentDocument = DocumentType<Attachment>

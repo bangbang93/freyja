@@ -1,7 +1,7 @@
 /**
  * Created by bangbang93 on 2017/8/25.
  */
-'use strict';
+'use strict'
 import Vuex from 'vuex'
 import VueFetch from 'vue-fetch'
 import ArticleStore from './article'
@@ -13,7 +13,7 @@ import PageStore from './page'
 export const Fetch = VueFetch()
 
 
-export function createStore (){
+export function createStore() {
   return new Vuex.Store({
     state: {
       origin: '',
@@ -29,7 +29,7 @@ export function createStore (){
       },
       setOrigin(state, origin) {
         state.origin = origin
-      }
+      },
     },
     actions: {
       fetchLatest(ctx) {
@@ -40,8 +40,7 @@ export function createStore (){
           .then((text) => {
             ctx.commit('updateONI', text)
           })
-          .catch(console.error);
-      }
+      },
     },
     modules: {
       article: ArticleStore,
@@ -49,6 +48,6 @@ export function createStore (){
       home: HomeStore,
       link: LinkStore,
       page: PageStore,
-    }
-  })  
+    },
+  })
 }
