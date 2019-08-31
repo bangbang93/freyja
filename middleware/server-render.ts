@@ -1,3 +1,4 @@
+import {Middleware} from 'express-validator/src/base'
 import * as LRU from 'lru-cache'
 import ms = require('ms')
 import {BundleRenderer} from 'vue-server-renderer'
@@ -11,7 +12,7 @@ const isCacheable = (req) => {
   return req.app.get('env') === 'production'
 }
 
-export default function (renderer: BundleRenderer) {
+export default function (renderer: BundleRenderer): Middleware {
   return function render(req, res, next) {
     const s = Date.now()
 
@@ -21,10 +22,10 @@ export default function (renderer: BundleRenderer) {
       if (err.url) {
         res.redirect(err.url)
       } else if (err.code === 404) {
-        next()
+        return next()
       } else {
         // Render Error Page or Redirect
-        next(err)
+        return next(err)
       }
     }
 

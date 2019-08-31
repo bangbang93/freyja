@@ -1,4 +1,5 @@
 'use strict'
+/* eslint-disable @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires */
 const {CategoryModel} = require('../model/category')
 
 exports.listAll = () => CategoryModel.find()

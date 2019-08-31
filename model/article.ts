@@ -1,6 +1,6 @@
 import {Types} from 'mongoose'
 import {
-  array, DocumentType, getModel, id, model, Model, ModelType, prop, ref, Ref, statics, subModel,
+  array, DocumentType, getModel, id, Model, model, ModelType, prop, Ref, ref, statics, subModel,
 } from 'mongoose-typescript'
 import {Admin} from './admin'
 import {Attachment} from './attachment'
@@ -8,27 +8,62 @@ import {Category} from './category'
 
 export interface IArticleSchema {
   _id: Types.ObjectId
-  title: string,
-  content: string,
-  html: string,
-  summary: string,
-  categories: Array<Ref<Category>>,
-  tags: string[],
-  author: Ref<Admin>,
-  createdAt: Date,
-  attachments: Array<Ref<Attachment>>,
+  title: string
+  content: string
+  html: string
+  summary: string
+  categories: Ref<Category>[]
+  tags: string[]
+  author: Ref<Admin>
+  createdAt: Date
+  attachments: Ref<Attachment>[]
   wordpress: ArticleWordpress
 }
 
 @subModel()
 export class ArticleWordpress {
   @prop() public postName: string
+
   @prop() public id: number
+
   @prop() public guid: string
 }
 
 @model('article', {timestamps: true})
 export class Article extends Model<Article> implements IArticleSchema {
+  @id
+  public _id: Types.ObjectId
+
+  @prop()
+  public title: string
+
+  @prop({index: 'text'})
+  public content: string
+
+  @prop()
+  public html: string
+
+  @prop()
+  public summary: string
+
+  @array() @ref(Category)
+  public categories: Ref<Category>[]
+
+  @array(String)
+  public tags: string[]
+
+  @prop() @ref(Admin)
+  public author: Ref<Admin>
+
+  @array() @ref(Attachment)
+  public attachments: Ref<Attachment>[]
+
+  @prop()
+  public wordpress: ArticleWordpress
+
+  public createdAt: Date
+
+  public updatedAt: Date
 
   @statics
   public static async list({lastId, limit = 20, select = {content: 0, html: 0}}): Promise<IArticleDocument[]> {
@@ -68,7 +103,7 @@ export class Article extends Model<Article> implements IArticleSchema {
   public static async getByWordpress(key, value): Promise<IArticleDocument> {
     if (arguments.length === 1) {
       [key] = Object.keys(key)
-      value = arguments[0][key]
+      value = key[key]
     }
     return this.findOne({
       [`wordpress.${key}`]: value,
@@ -104,30 +139,6 @@ export class Article extends Model<Article> implements IArticleSchema {
       .skip(skip)
       .limit(limit)
   }
-
-  @id
-  public _id: Types.ObjectId
-  @prop()
-  public title: string
-  @prop({index: 'text'})
-  public content: string
-  @prop()
-  public html: string
-  @prop()
-  public summary: string
-  @array() @ref(Category)
-  public categories: Array<Ref<Category>>
-  @array(String)
-  public tags: string[]
-  @prop() @ref(Admin)
-  public author: Ref<Admin>
-  @array() @ref(Attachment)
-  public attachments: Array<Ref<Attachment>>
-  @prop()
-  public wordpress: ArticleWordpress
-
-  public createdAt: Date
-  public updatedAt: Date
 }
 
 export type IArticleDocument = DocumentType<Article>

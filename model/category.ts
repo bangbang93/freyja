@@ -7,19 +7,35 @@ export interface ICategorySchema {
   _id: Types.ObjectId
   name: string
   parent: Ref<Category>
-  children: Array<Ref<Category>>
+  children: Ref<Category>[]
   wordpress: CategoryWordpress
 }
 
 @subModel()
 class CategoryWordpress {
   @prop() public id: number
+
   @prop() public slug: string
+
   @prop() public taxonomyId: number
 }
 
 @model('category', {timestamps: true})
 export class Category extends Model<Category> implements ICategorySchema {
+  @id
+  public _id: Types.ObjectId
+
+  @prop() @unique
+  public name: string
+
+  @prop() @ref('category') @type(Schema.Types.ObjectId)
+  public parent: Ref<Category>
+
+  @array(Schema.Types.ObjectId) @ref('category')
+  public children: Ref<Category>[]
+
+  @prop()
+  public wordpress: CategoryWordpress
 
   @statics
   public static async add({name, parentId, wordpress}): Promise<ICategoryDocument> {
@@ -60,17 +76,6 @@ export class Category extends Model<Category> implements ICategorySchema {
       [`wordpress.${key}`]: value,
     })
   }
-
-  @id
-  public _id: Types.ObjectId
-  @prop() @unique
-  public name: string
-  @prop() @ref('category') @type(Schema.Types.ObjectId)
-  public parent: Ref<Category>
-  @array(Schema.Types.ObjectId) @ref('category')
-  public children: Array<Ref<Category>>
-  @prop()
-  public wordpress: CategoryWordpress
 }
 
 export type ICategoryDocument = DocumentType<Category>

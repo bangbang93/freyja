@@ -5,8 +5,8 @@
 import {Feed} from 'feed'
 import {ArticleModel} from '../model/article'
 
-export class FeedService {
-  public static async getFeed(baseUrl: string) {
+export const FeedService = {
+  async getFeed(baseUrl: string) {
     const feed = new Feed({
       feed: 'bangbang93.blog()',
       title: 'bangbang93.blog()',
@@ -35,14 +35,16 @@ export class FeedService {
         link: `${baseUrl}/article/${article._id}`,
         description: article.summary,
         content: article.html,
-        author: [{
-          name: article.author['username'],
-          email: article.author['email'],
-        }],
+        author: [
+          {
+            name: article.author['username'],
+            email: article.author['email'],
+          },
+        ],
         date: article.createdAt,
       })
     }
 
     return feed.rss2()
-  }
+  },
 }

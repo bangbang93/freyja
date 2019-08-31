@@ -1,7 +1,7 @@
 /**
  * Created by bangbang93 on 2017/9/24.
  */
-'use strict';
+'use strict'
 import Router from 'express-promise-router'
 import {FeedService} from '../service/feed.service'
 

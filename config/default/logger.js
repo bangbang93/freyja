@@ -2,18 +2,21 @@
  * Created by bangbang93 on 2017/4/28.
  */
 'use strict'
+/* eslint-disable @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires */
 const BunyanPrettyStream = require('bunyan-prettystream')
 
 const prettyStream = new BunyanPrettyStream()
 prettyStream.pipe(process.stdout)
 
-const streams = [{
-  type: 'raw',
-  stream: prettyStream,
-}, {
-  level: 'fatal',
-  stream: process.stderr,
-}]
+const streams = [
+  {
+    type: 'raw',
+    stream: prettyStream,
+  }, {
+    level: 'fatal',
+    stream: process.stderr,
+  },
+]
 
 const Loggers = {
   middleware: {

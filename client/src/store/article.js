@@ -1,7 +1,7 @@
 /**
  * Created by bangbang93 on 2017/9/6.
  */
-'use strict';
+'use strict'
 import {Fetch} from './index'
 
 export default {
@@ -19,15 +19,15 @@ export default {
     },
   }),
   mutations: {
-    set (state, article) {
+    set(state, article) {
       state.article = article
     },
   },
   actions: {
     async get({commit, rootState}, id) {
-      let resp = await Fetch.get(`${rootState.origin}/api/article/${id}`)
+      const resp = await Fetch.get(`${rootState.origin}/api/article/${id}`)
       if (resp.status !== 200) {
-        let err = new Error('fetch article failed')
+        const err = new Error('fetch article failed')
         err.res = resp
         throw err
       }
@@ -36,5 +36,5 @@ export default {
       commit('set', article)
       return article
     },
-  }
+  },
 }
