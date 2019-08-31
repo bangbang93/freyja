@@ -30,7 +30,7 @@
         >
           <el-form-item label="标签">
             <freyja-tag-editor
-              :tags="this.tags"
+              :tags="tags"
               :selected-tags="article.tags"
               @tag-add="onTagAdd"
               @tag-close="onTagClose"
@@ -103,7 +103,7 @@ export default {
         .then(() => next())
         .catch(() => next(false))
     } else {
-      next()
+      return next()
     }
   },
   methods: {
