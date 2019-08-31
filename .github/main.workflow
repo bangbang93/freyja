@@ -1,6 +1,6 @@
-workflow "build" {
+workflow "test" {
   on = "push"
-  resolves = ["npm run build"]
+  resolves = ["npm run test"]
 }
 
 action "npm install" {
@@ -8,8 +8,8 @@ action "npm install" {
   args = "install"
 }
 
-action "npm run build" {
+action "npm run test" {
   uses = "actions/npm@59b64a598378f31e49cb76f27d6f3312b582f680"
   needs = ["npm install"]
-  args = "run build"
+  args = "run test"
 }
