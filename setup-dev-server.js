@@ -1,7 +1,8 @@
 /**
  * Created by bangbang93 on 2017/8/25.
  */
-'use strict';
+'use strict'
+/* eslint-disable @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires,no-console */
 const MFS = require('memory-fs')
 const webpack = require('webpack')
 const clientConfig = require('./client/webpack.conf')
@@ -14,30 +15,30 @@ const readFile = (fs, file) => {
   return fs.readFileSync(path.join(clientConfig.output.path, file), 'utf-8')
 }
 
-module.exports = function (app) {
-  let bundle, clientManifest
+module.exports = (app) => {
+  let bundle; let clientManifest
   let resolve
-  const readyPromise = new Promise(r => { resolve = r })
+  const readyPromise = new Promise((r) => {resolve = r})
 
-  let clientCompiler = webpack([clientConfig, adminConfig]);
-  let devMiddleware = require('webpack-dev-middleware')(clientCompiler, {
+  const clientCompiler = webpack([clientConfig, adminConfig])
+  const devMiddleware = require('webpack-dev-middleware')(clientCompiler, {
     publicPath: clientConfig.output.publicPath,
     hot: true,
     serverSideRender: true,
     index: false,
     stats: {
       colors: true,
-      excludeAssets: [/^js\/hljs\//, /^static\//]
-    }
-  });
-  let hotMiddleware = require('webpack-hot-middleware')(clientCompiler);
-  app.use(devMiddleware);
-  app.use(hotMiddleware);
-  clientCompiler.plugin('done', stats => {
+      excludeAssets: [/^js\/hljs\//, /^static\//],
+    },
+  })
+  const hotMiddleware = require('webpack-hot-middleware')(clientCompiler)
+  app.use(devMiddleware)
+  app.use(hotMiddleware)
+  clientCompiler.plugin('done', (stats) => {
     stats = stats.toJson()
     app.set('bundleHash', stats.children[1].hash)
-    stats.errors.forEach(err => console.error(err))
-    stats.warnings.forEach(err => console.warn(err))
+    stats.errors.forEach((err) => console.error(err))
+    stats.warnings.forEach((err) => console.warn(err))
     if (stats.errors.length) return
 
     clientManifest = JSON.parse(readFile(
@@ -48,21 +49,21 @@ module.exports = function (app) {
       resolve({
         bundle,
         options: {
-          clientManifest
-        }
+          clientManifest,
+        },
       })
     }
   })
 
-// server renderer
+  // server renderer
   const serverCompiler = webpack(serverConfig)
   const mfs = new MFS()
   serverCompiler.outputFileSystem = mfs
   serverCompiler.watch({}, (err, stats) => {
     if (err) throw err
     stats = stats.toJson()
-    stats.errors.forEach(err => console.error(err))
-    stats.warnings.forEach(err => console.warn(err))
+    stats.errors.forEach((err) => console.error(err))
+    stats.warnings.forEach((err) => console.warn(err))
     if (stats.errors.length) return
 
     bundle = JSON.parse(readFile(mfs, 'vue-ssr-server-bundle.json'))
@@ -70,8 +71,8 @@ module.exports = function (app) {
       resolve({
         bundle,
         options: {
-          clientManifest
-        }
+          clientManifest,
+        },
       })
     }
   })

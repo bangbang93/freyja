@@ -1,7 +1,8 @@
 /**
  * Created by bangbang93 on 2017/9/20.
  */
-'use strict';
+'use strict'
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const mongoose = require('../model').mongoose
 
 const Schema = new mongoose.Schema({
@@ -13,6 +14,4 @@ const Model = mongoose.model('link', Schema)
 
 exports._Model = Model
 
-exports.listAll = function () {
-  return Model.find({}).exec()
-}
+exports.listAll = async () => Model.find({})

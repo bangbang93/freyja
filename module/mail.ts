@@ -1,7 +1,7 @@
 /**
  * Created by bangbang93 on 2017/10/15.
  */
-'use strict';
+'use strict'
 import * as NodeMailer from 'nodemailer'
 import * as Config from '../config'
 import * as MarkdownHelper from '../helper/markdown'
@@ -9,7 +9,7 @@ const transporter = NodeMailer.createTransport({
   sendmail: true,
 })
 
-export function commentReply({to, article}) {
+export async function commentReply({to, article}): Promise<any> {
   const content = `
 bangbang93.forum()
 ---
@@ -22,11 +22,11 @@ bangbang93.forum()
     from: Config.freyja.mail.from,
     to,
     subject: 'bangbang93.forum() 通知',
-    html
+    html,
   })
 }
 
-export function comment({article}) {
+export async function comment({article}): Promise<any> {
   const content = `
 bangbang93.form()
 ---
@@ -39,6 +39,6 @@ bangbang93.form()
     from: Config.freyja.mail.from,
     to: Config.freyja.mail.to,
     subject: 'bangbang93.forum() 评论',
-    html
+    html,
   })
 }

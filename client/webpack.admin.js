@@ -2,7 +2,7 @@
  * Created by bangbang93 on 16/9/30.
  */
 'use strict'
-
+/* eslint-disable @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires */
 const config = require('./webpack.base.config')
 const webpack = require('webpack')
 const merge = require('webpack-merge')
@@ -28,7 +28,7 @@ let plugins = [
   }),
 ]
 if (IS_PRODUCTION) {
-  console.log('production webpack') // tslint:disable-line:no-console
+  console.log('production webpack') // eslint-disable-line no-console
   plugins     = [
     ...plugins,
     new webpack.LoaderOptionsPlugin({
@@ -43,12 +43,11 @@ if (IS_PRODUCTION) {
     plugins.push(new HtmlWebpackPlugin({
       filename: `${entry}.html`,
       template: 'client/src/html/admin.html',
-      inject  : true,
-      chunks  : [entry, 'vendor'],
+      inject: true,
+      chunks: [entry, 'vendor'],
     }))
   })
 } else {
-
 // add hot-reload related code to entry chunks
   entries.forEach((name) => {
     entry[name] = ['webpack-hot-middleware/client?name=admin'].concat(entry[name])
@@ -61,8 +60,8 @@ if (IS_PRODUCTION) {
     plugins.push(new HtmlWebpackPlugin({
       filename: `${entry}.html`,
       template: 'client/src/html/admin.html',
-      inject  : true,
-      chunks  : [entry],
+      inject: true,
+      chunks: [entry],
     }))
   })
 }

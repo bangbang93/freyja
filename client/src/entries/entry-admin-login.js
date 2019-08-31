@@ -1,22 +1,23 @@
 /**
  * Created by bangbang93 on 2017/8/25.
  */
-'use strict';
+'use strict'
 import Vue from 'vue'
 import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import App from '../pages/admin/login.vue'
 import VueFetch from 'vue-fetch'
+import * as es6Promise from 'es6-promise'
 
-require('es6-promise').polyfill();
+es6Promise.polyfill()
 
-Vue.use(Element);
-Vue.use(VueFetch);
+Vue.use(Element)
+Vue.use(VueFetch)
 
 // const store = createStore()
 
 // sync(store, router)
 
-const app = new Vue({
-  render: (h)=>h(App),
+export const app = new Vue({
+  render: (h) => h(App),
 }).$mount('app')
