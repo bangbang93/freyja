@@ -14,6 +14,7 @@ import {BundleRenderer, createBundleRenderer} from 'vue-server-renderer'
 import * as Config from './config'
 import {haruhiMiddleware} from './middleware/middlewares'
 import serverRender from './middleware/server-render'
+import {redis} from './model'
 
 const app = express()
 app.set('trust proxy', 'loopback')
@@ -26,11 +27,13 @@ if (app.get('env') === 'development') {
 const RedisStore = connectRedis(session)
 
 app.use(cookieParser())
-app.use(session({store: new RedisStore({
-  prefix: 'freyja:session:',
-  ...Config.database.redis,
-}),
-...Config.session},))
+app.use(session({
+  store: new RedisStore({
+    client: redis,
+    prefix: 'freyja:session:',
+  }),
+  ...Config.session,
+}))
 app.use(haruhiMiddleware)
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))

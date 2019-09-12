@@ -10,6 +10,6 @@ mongoose.connect(`mongodb://${Config.mongodb.host}/${Config.mongodb.database}`)
 
 mongoose.Promise = require('bluebird')
 
-exports.redis = new Redis(Config.redis)
+export const redis = new Redis(Config.redis)
 
-exports.mongoose = mongoose
+export {mongoose}
