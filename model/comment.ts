@@ -1,6 +1,7 @@
 import {Schema, Types} from 'mongoose'
 import {
-  array, DocumentType, getModel, id, Model, model, ModelType, prop, Ref, ref, required, statics, subModel, type,
+  array, DocumentType, getModel, id, Model, model, ModelType, ObjectId, prop, Ref, ref, required, statics, subModel,
+  type,
 } from 'mongoose-typescript'
 import {Admin} from './admin'
 import {Article} from './article'
@@ -55,10 +56,10 @@ export class Comment extends Model<Comment> implements ICommentSchema {
   @prop() @ref(Article) @required
   public article: Ref<Article>
 
-  @prop() @ref('comment') @type(Schema.Types.ObjectId)
+  @prop() @ref(() => Comment, ObjectId)
   public reply: Ref<Comment>
 
-  @array(Schema.Types.ObjectId) @ref('comment')
+  @array(ObjectId) @ref(() => Comment, [ObjectId])
   public replies: Ref<Comment>[]
 
   @prop() @required
