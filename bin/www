@@ -1,5 +1,9 @@
 #!/usr/bin/env node
-require('ts-node/register')
+if (process.env.NODE_ENV === 'production') {
+  require('ts-node/register/transpile-only')
+} else {
+  require('ts-node/register')
+}
 /**
  * Module dependencies.
  */
