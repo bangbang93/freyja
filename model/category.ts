@@ -1,6 +1,6 @@
-import {Schema, Types} from 'mongoose'
+import {Types} from 'mongoose'
 import {
-  array, DocumentType, getModel, id, Model, model, ModelType, prop, Ref, ref, statics, subModel, type, unique,
+  array, DocumentType, getModel, id, Model, model, ModelType, ObjectId, prop, Ref, ref, statics, subModel, unique,
 } from 'mongoose-typescript'
 
 export interface ICategorySchema {
@@ -28,10 +28,10 @@ export class Category extends Model<Category> implements ICategorySchema {
   @prop() @unique
   public name: string
 
-  @prop() @ref('category') @type(Schema.Types.ObjectId)
+  @prop() @ref(() => Category, ObjectId)
   public parent: Ref<Category>
 
-  @array(Schema.Types.ObjectId) @ref('category')
+  @array(ObjectId) @ref(() => Category, [ObjectId])
   public children: Ref<Category>[]
 
   @prop()
