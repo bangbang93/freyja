@@ -45,7 +45,7 @@
     "markdown-it": "^9.0.1",
     "markdown-it-lozad": "^0.2.0",
     "mavon-editor": "^2.6.4",
-    "memory-fs": "^0.4.1",
+    "memory-fs": "^0.5.0",
     "moment": "^2.22.2",
     "mongoose": "^5.5.4",
     "mongoose-typescript": "^0.5.1",
