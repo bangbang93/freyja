@@ -48,7 +48,7 @@
     "memory-fs": "^0.4.1",
     "moment": "^2.22.2",
     "mongoose": "^5.5.4",
-    "mongoose-typescript": "^0.5.1",
+    "mongoose-typescript": "^0.6.0",
     "morgan": "^1.9.1",
     "ms": "^2.1.1",
     "multer": "^1.3.0",
