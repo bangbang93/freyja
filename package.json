@@ -34,7 +34,7 @@
     "font-awesome": "^4.7.0",
     "fs-extra": "^8.1.0",
     "fundebug-nodejs": "0.2.0",
-    "helmet": "^3.12.1",
+    "helmet": "^3.21.2",
     "http-errors": "^1.7.1",
     "ioredis": "^4.14.0",
     "knex": "^0.20.0",
