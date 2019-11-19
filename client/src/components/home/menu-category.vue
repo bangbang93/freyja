@@ -12,9 +12,6 @@ export default {
       categories: this.$store.state.home.categories,
     }
   },
-  mounted() {
-
-  },
   methods: {
     onMouseEnter() {
       // eslint-disable-next-line no-console
