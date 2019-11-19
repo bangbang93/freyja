@@ -41,10 +41,10 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(helmet())
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
+// eslint-disable-next-line @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires
 app.use('/', require('./route/index'))
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
+// eslint-disable-next-line @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires
 require('express-simple-route')(path.join(__dirname, 'route'), app)
 app.use(express.static(path.join(__dirname, 'public')))
 

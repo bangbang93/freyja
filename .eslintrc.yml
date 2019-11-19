@@ -13,6 +13,7 @@ plugins:
 parserOptions:
   project: ./tsconfig.json
   parser: '@typescript-eslint/parser'
+  extraFileExtensions: ['.vue']
 rules:
   array-bracket-newline: [error, consistent]
   array-bracket-spacing: [error, never]
