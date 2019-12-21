@@ -110,7 +110,7 @@
     "vue-fetch": "^1.1.2",
     "vue-loader": "^15.2.4",
     "vue-router": "^3.0.1",
-    "vue-server-renderer": "^2.6.10",
+    "vue-server-renderer": "^2.6.11",
     "vue-style-loader": "^4.1.0",
     "vue-template-compiler": "^2.6.10",
     "webpack": "^4.39.3",
