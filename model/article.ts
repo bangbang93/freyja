@@ -18,6 +18,7 @@ export interface IArticleSchema {
   createdAt: Date
   attachments: Ref<Attachment>[]
   wordpress: ArticleWordpress
+  slug: string
 }
 
 @subModel()
@@ -31,35 +32,17 @@ export class ArticleWordpress {
 
 @model('article', {timestamps: true})
 export class Article extends Model<Article> implements IArticleSchema {
-  @id
-  public _id: Types.ObjectId
-
-  @prop()
-  public title: string
-
-  @prop({index: 'text'})
-  public content: string
-
-  @prop()
-  public html: string
-
-  @prop()
-  public summary: string
-
-  @array() @ref(Category)
-  public categories: Ref<Category>[]
-
-  @array(String)
-  public tags: string[]
-
-  @prop() @ref(Admin)
-  public author: Ref<Admin>
-
-  @array() @ref(Attachment)
-  public attachments: Ref<Attachment>[]
-
-  @prop()
-  public wordpress: ArticleWordpress
+  @id public _id: Types.ObjectId
+  @prop() public title: string
+  @prop({index: 'text'}) public content: string
+  @prop() public html: string
+  @prop() public summary: string
+  @array() @ref(Category) public categories: Ref<Category>[]
+  @array(String) public tags: string[]
+  @prop() @ref(Admin) public author: Ref<Admin>
+  @array() @ref(Attachment) public attachments: Ref<Attachment>[]
+  @prop() public wordpress: ArticleWordpress
+  @prop() public slug: string
 
   public createdAt: Date
 

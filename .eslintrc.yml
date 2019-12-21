@@ -17,7 +17,6 @@ parserOptions:
 rules:
   array-bracket-newline: [error, consistent]
   array-bracket-spacing: [error, never]
-  array-element-newline: [error, consistent]
   array-callback-return: error
   arrow-parens: [error, always]
   arrow-spacing: error
@@ -50,9 +49,8 @@ rules:
       mode: strict
   keyword-spacing: error
   linebreak-style: [error, unix]
-  lines-between-class-members: error
+  lines-between-class-members: [error, always, {exceptAfterSingleLine: true}]
   max-len: [error, 120]
-  new-cap: [warn, {properties: false}]
   new-parens: error
   newline-per-chained-call: [error, {ignoreChainWithDepth: 3}]
   no-array-constructor: error
@@ -63,13 +61,11 @@ rules:
   no-duplicate-imports: [error]
   no-extra-bind: error
   no-extra-label: error
-  no-else-return: error
   no-floating-decimal: error
   no-implied-eval: error
   no-invalid-this: error
   no-label-var: error
   no-lone-blocks: error
-  no-lonely-if: error
   no-loop-func: error
   no-mixed-requires: error
   no-multiple-empty-lines: [error, {maxEOF: 1, maxBOF: 0, max: 2}]
@@ -145,13 +141,19 @@ rules:
         delimiter: semi
         requireLast: false
   '@typescript-eslint/member-ordering': error
-  '@typescript-eslint/no-extraneous-class': error
+  #  '@typescript-eslint/no-extraneous-class': error
   '@typescript-eslint/no-extra-parens': warn
   '@typescript-eslint/no-floating-promises': warn
   '@typescript-eslint/no-for-in-array': error
-  '@typescript-eslint/no-magic-numbers': [warn, {ignoreEnums: true, ignoreNumericLiteralTypes: true}]
+  '@typescript-eslint/no-magic-numbers':
+    - warn
+    - ignore: [-1, 0, 1]
+      ignoreEnums: true
+      ignoreNumericLiteralTypes: true
+      ignoreArrayIndexes: true
   #  '@typescript-eslint/no-misused-promises': error
   '@typescript-eslint/no-parameter-properties': off
+  #  '@typescript-eslint/no-require-imports': error
   '@typescript-eslint/no-this-alias': error
   '@typescript-eslint/no-use-before-define': [error, {functions: false, typedefs: false}]
   '@typescript-eslint/no-unnecessary-type-assertion': error
