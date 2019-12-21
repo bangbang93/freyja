@@ -43,7 +43,7 @@ module.exports = (app) => {
 
     clientManifest = JSON.parse(readFile(
       devMiddleware.fileSystem,
-      'vue-ssr-client-manifest.json'
+      'vue-ssr-client-manifest.json',
     ))
     if (bundle) {
       resolve({
