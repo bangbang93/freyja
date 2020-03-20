@@ -44,7 +44,7 @@
     "lru-cache": "^5.1.1",
     "markdown-it": "^10.0.0",
     "markdown-it-lozad": "^0.2.0",
-    "mavon-editor": "^2.6.4",
+    "mavon-editor": "^2.7.7",
     "memory-fs": "^0.5.0",
     "moment": "^2.22.2",
     "mongoose": "^5.9.4",
