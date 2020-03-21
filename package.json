@@ -36,7 +36,7 @@
     "fundebug-nodejs": "0.2.0",
     "helmet": "^3.21.2",
     "http-errors": "^1.7.1",
-    "ioredis": "^4.14.0",
+    "ioredis": "^4.16.0",
     "knex": "^0.20.11",
     "lodash": "^4.17.14",
     "loud-rejection": "^2.1.0",
