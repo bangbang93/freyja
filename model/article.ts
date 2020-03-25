@@ -1,6 +1,6 @@
 import {Types} from 'mongoose'
 import {
-  array, DocumentType, getModel, id, Model, model, ModelType, prop, Ref, ref, statics, subModel,
+  array, DocumentType, getModel, id, index, Model, model, ModelType, prop, Ref, ref, statics, subModel,
 } from 'mongoose-typescript'
 import {Admin} from './admin'
 import {Attachment} from './attachment'
@@ -31,10 +31,12 @@ export class ArticleWordpress {
 }
 
 @model('article', {timestamps: true})
+// eslint-disable-next-line camelcase,@typescript-eslint/camelcase
+@index({content: 'text'}, {default_language: 'ngram'})
 export class Article extends Model<Article> implements IArticleSchema {
   @id public _id: Types.ObjectId
   @prop() public title: string
-  @prop({index: 'text'}) public content: string
+  @prop() public content: string
   @prop() public html: string
   @prop() public summary: string
   @array() @ref(Category) public categories: Ref<Category>[]
