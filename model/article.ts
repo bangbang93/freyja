@@ -119,6 +119,7 @@ export class Article extends Model<Article> implements IArticleSchema {
         $search: keyword,
       },
     })
+      .sort({_id: -1})
       .skip(skip)
       .limit(limit)
   }
