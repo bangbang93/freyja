@@ -7,7 +7,6 @@ const config = require('./webpack.base.config')
 const webpack = require('webpack')
 const merge = require('webpack-merge')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const {CleanWebpackPlugin} = require('clean-webpack-plugin')
 const path = require('path')
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
 const PreloadWebpackPlugin = require('preload-webpack-plugin')
@@ -36,7 +35,6 @@ if (IS_PRODUCTION) {
     new webpack.LoaderOptionsPlugin({
       minimize: true,
     }),
-    new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: 'css/[name].[chunkhash:8].css',
       chunkFilename: 'css/[id].[chunkhash:8].css',
