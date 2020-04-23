@@ -38,7 +38,7 @@
     "helmet": "^3.22.0",
     "http-errors": "^1.7.3",
     "ioredis": "^4.16.2",
-    "knex": "^0.20.13",
+    "knex": "^0.21.0",
     "lodash": "^4.17.15",
     "loud-rejection": "^2.2.0",
     "lozad": "^1.14.0",
