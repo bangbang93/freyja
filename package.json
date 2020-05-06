@@ -11,7 +11,9 @@
     "build": "NODE_ENV=production node script/build",
     "update": "npm run build && npm run pm2",
     "test": "npm run lint && npm run build",
-    "lint": "eslint --ext .js,.ts,.vue ."
+    "lint": "eslint --ext .js,.ts,.vue .",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "dependencies": {
     "animate.css": "^3.7.2",
@@ -64,7 +66,8 @@
     "validator": "^12.2.0",
     "vuex": "^3.1.3",
     "vuex-router-sync": "^5.0.0",
-    "webpack-node-externals": "^1.7.2"
+    "webpack-node-externals": "^1.7.2",
+    "snyk": "^1.319.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
@@ -117,5 +120,6 @@
     "webpack-dev-middleware": "^3.7.2",
     "webpack-hot-middleware": "^2.25.0",
     "webpack-merge": "^4.2.2"
-  }
+  },
+  "snyk": true
 }
