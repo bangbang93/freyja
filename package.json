@@ -12,8 +12,7 @@
     "update": "npm run build && npm run pm2",
     "test": "npm run lint && npm run build",
     "lint": "eslint --ext .js,.ts,.vue .",
-    "snyk-protect": "snyk protect",
-    "prepare": "npm run snyk-protect"
+    "snyk-protect": "snyk protect"
   },
   "dependencies": {
     "animate.css": "^3.7.2",
