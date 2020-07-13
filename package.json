@@ -19,7 +19,7 @@
     "bcrypt": "^4.0.1",
     "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
-    "bunyan": "^1.8.10",
+    "bunyan": "^1.8.13",
     "bunyan-serializer-error": "latest",
     "cache-control": "^2.0.0",
     "connect-history-api-fallback": "^1.6.0",
