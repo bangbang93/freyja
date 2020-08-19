@@ -40,7 +40,7 @@
     "http-errors": "^1.7.3",
     "ioredis": "^4.16.2",
     "knex": "^0.21.0",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.20",
     "loud-rejection": "^2.2.0",
     "lozad": "^1.14.0",
     "lru-cache": "^5.1.1",
