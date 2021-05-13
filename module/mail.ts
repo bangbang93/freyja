@@ -5,9 +5,8 @@
 import * as NodeMailer from 'nodemailer'
 import * as Config from '../config'
 import * as MarkdownHelper from '../helper/markdown'
-const transporter = NodeMailer.createTransport({
-  sendmail: true,
-})
+
+const transporter = NodeMailer.createTransport(Config.freyja.mail)
 
 export async function commentReply({to, article}): Promise<any> {
   const content = `
