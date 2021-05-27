@@ -39,7 +39,9 @@ app.use(haruhiMiddleware)
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
-app.use(helmet())
+app.use(helmet({
+  contentSecurityPolicy: false,
+}))
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires
 app.use('/', require('./route/index'))
