@@ -36,6 +36,9 @@ module.exports = Object.assign(config, {
       path.join(__dirname, '../node_modules'),
     ],
     extensions: ['.js', '.json', '.ts', '.vue'],
+    alias: {
+      url: require.resolve('url/'),
+    },
   },
   module: {
     rules: [
@@ -82,7 +85,7 @@ module.exports = Object.assign(config, {
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
-        query: {
+        options: {
           limit: 10000,
           name: assetsPath('img/[name].[hash:7].[ext]'),
         },
@@ -90,7 +93,7 @@ module.exports = Object.assign(config, {
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
         loader: 'url-loader',
-        query: {
+        options: {
           limit: 10000,
           name: assetsPath('fonts/[name].[hash:7].[ext]'),
         },
