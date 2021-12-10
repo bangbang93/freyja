@@ -39,13 +39,6 @@ router.post('/article/:id(\\w{24})', async (req, res) => {
     })
   }
 
-  const referer = req.get('referer')
-  if (!referer || !referer.includes(req.url)) {
-    return res.status(400).json({
-      msg: 'missing params',
-    })
-  }
-
   publisher.ip = req.ip
   publisher.agent = req.get('user-agent')
 

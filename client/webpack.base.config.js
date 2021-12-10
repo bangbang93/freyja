@@ -9,19 +9,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production'
 
-const config = (() => {
-  const config = {
-    build: {
-      devtool: false,
-    },
-    dev: {
-      devtool: '#source-map',
-    },
-  }
-  return config[IS_PRODUCTION ? 'build' : 'dev']
-}
-)()
-module.exports = Object.assign(config, {
+module.exports = {
+  devtool: IS_PRODUCTION ? false : 'source-map',
   mode: IS_PRODUCTION ? 'production' : 'development',
   name: 'freyja',
   bail: true,
@@ -100,7 +89,7 @@ module.exports = Object.assign(config, {
       },
     ],
   },
-})
+}
 
 function assetsPath(_path) {
   const assetsSubDirectory = 'static'
