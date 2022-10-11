@@ -118,7 +118,7 @@
     "vue-template-compiler": "^2.6.11",
     "webpack": "^5.52.0",
     "webpack-dev-middleware": "^3.7.2",
-    "webpack-hot-middleware": "^2.25.0",
+    "webpack-hot-middleware": "^2.25.2",
     "webpack-merge": "^4.2.2"
   },
   "snyk": true
