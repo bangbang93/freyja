@@ -3,12 +3,15 @@
  */
 'use strict'
 import * as NodeMailer from 'nodemailer'
-import * as Config from '../config'
 import * as MarkdownHelper from '../helper/markdown'
+import {IArticleSchema} from '../model/article'
 
-const transporter = NodeMailer.createTransport(Config.freyja.mail)
+const transporter = NodeMailer.createTransport({
+  from: 'example.com',
+})
+// const transporter = NodeMailer.createTransport(Config.freyja.mail)
 
-export async function commentReply({to, article}): Promise<any> {
+export async function commentReply({to, article}: {to: string; article: IArticleSchema}): Promise<any> {
   const content = `
 bangbang93.forum()
 ---
@@ -18,14 +21,14 @@ bangbang93.forum()
 `
   const html = MarkdownHelper.render(content)
   return transporter.sendMail({
-    from: Config.freyja.mail.from,
+    from: 'Config.freyja.mail.from',
     to,
     subject: 'bangbang93.forum() 通知',
     html,
   })
 }
 
-export async function comment({article}): Promise<any> {
+export async function comment({article}: {article: IArticleSchema}): Promise<any> {
   const content = `
 bangbang93.form()
 ---
@@ -35,8 +38,8 @@ bangbang93.form()
 `
   const html = MarkdownHelper.render(content)
   return transporter.sendMail({
-    from: Config.freyja.mail.from,
-    to: Config.freyja.commentTo,
+    from: 'Config.freyja.mail.from',
+    to: 'Config.freyja.commentTo',
     subject: 'bangbang93.forum() 评论',
     html,
   })

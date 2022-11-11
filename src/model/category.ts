@@ -1,10 +1,10 @@
-import {Types} from 'mongoose'
 import {
-  array, DocumentType, getModel, id, Model, model, ModelType, ObjectId, prop, Ref, ref, statics, subModel, unique,
+  array, DocumentType, getModel, id, model, ModelType, ObjectId, prop, Ref, ref, RichModelType, statics, subModel,
+  unique,
 } from 'mongoose-typescript'
 
 export interface ICategorySchema {
-  _id: Types.ObjectId
+  _id: ObjectId
   name: string
   parent: Ref<Category>
   children: Ref<Category>[]
@@ -13,32 +13,35 @@ export interface ICategorySchema {
 
 @subModel()
 class CategoryWordpress {
-  @prop() public id: number
+  @prop() public id!: number
 
-  @prop() public slug: string
+  @prop() public slug!: string
 
-  @prop() public taxonomyId: number
+  @prop() public taxonomyId!: number
 }
 
 @model('category', {timestamps: true})
-export class Category extends Model<Category> implements ICategorySchema {
+export class Category implements ICategorySchema {
   @id()
-  public _id: Types.ObjectId
+  public _id!: ObjectId
 
   @prop() @unique()
-  public name: string
+  public name!: string
 
   @prop() @ref(() => Category, ObjectId)
-  public parent: Ref<Category>
+  public parent!: Ref<Category>
 
   @array(ObjectId) @ref(() => Category, [ObjectId])
-  public children: Ref<Category>[]
+  public children!: Ref<Category>[]
 
   @prop()
-  public wordpress: CategoryWordpress
+  public wordpress!: CategoryWordpress
 
   @statics()
-  public static async add({name, parentId, wordpress}): Promise<ICategoryDocument> {
+  public static async add(
+    this: ICategoryModel,
+    {name, parentId, wordpress}: {name: string; parentId: ObjectId; wordpress: CategoryWordpress},
+  ): Promise<ICategoryDocument> {
     let parent
     if (parentId) {
       parent = await this.findById(parentId)
@@ -59,19 +62,20 @@ export class Category extends Model<Category> implements ICategorySchema {
   }
 
   @statics()
-  public static async getByName(name): Promise<ICategoryDocument> {
+  public static async getByName(this: ICategoryModel, name: string): Promise<ICategoryDocument | null> {
     return this.findOne({
       name,
     })
   }
 
   @statics()
-  public static async listRoot(): Promise<ICategoryDocument[]> {
+  public static async listRoot(this: ICategoryModel): Promise<ICategoryDocument[]> {
     return this.find({parent: null})
   }
 
   @statics()
-  public static async getByWordpress(key: string, value: string) {
+  public static async getByWordpress(this: ICategoryModel, key: string,
+    value: string): Promise<ICategoryDocument | null> {
     return this.findOne({
       [`wordpress.${key}`]: value,
     })
@@ -79,6 +83,6 @@ export class Category extends Model<Category> implements ICategorySchema {
 }
 
 export type ICategoryDocument = DocumentType<Category>
-export type ICategoryModel = ModelType<Category> & typeof Category
+export type ICategoryModel = RichModelType<typeof Category>
 
 export const CategoryModel: ICategoryModel = getModel(Category)

@@ -1,7 +1,6 @@
 {
   "mongodb": {
-    "host"    : "localhost",
-    "database": "freyja"
+    "uri": "mongodb://localhost:27017/freyja"
   },
   "redis": {
     "host": "localhost",

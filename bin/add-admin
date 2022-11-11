@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const AdminUserService = require('../service/admin/user')
+const AdminUserService = require('../src/service/admin/user')
 const user = process.argv[2]
 const password = process.argv[3]
 

@@ -1,26 +1,29 @@
-import {Middleware} from 'express-validator/src/base'
-import * as LRU from 'lru-cache'
-import ms = require('ms')
+import {NextFunction, Request, Response} from 'express'
+import LRU from 'lru-cache'
 import {BundleRenderer} from 'vue-server-renderer'
+import ms = require('ms')
 
 const microCache = new LRU({
   max: 1000,
   maxAge: ms('30s'),
 })
 
-const isCacheable = (req) => {
+const isCacheable = (req: Request) => {
   return req.app.get('env') === 'production'
 }
 
-export default function serverRender(renderer: BundleRenderer): Middleware {
+export default function serverRender(
+  renderer: BundleRenderer,
+  port: number,
+): (req: Request, res: Response, next: any) => any {
   return function render(req, res, next) {
     const s = Date.now()
 
-    const handleError = (err) => {
+    const handleError = (err: any) => {
       const time = Date.now() - s
-      res.set('x-ssr-time', time)
+      res.set('x-ssr-time', time.toString())
       if (err.url) {
-        res.redirect(err.url)
+        res.redirect(err.url as string)
       } else if (err.code === 404) {
         return next()
       } else {
@@ -40,7 +43,7 @@ export default function serverRender(renderer: BundleRenderer): Middleware {
     }
     res.set('x-ssr-cache', 'miss')
 
-    const origin = `http://localhost:${req.app.get('port')}`
+    const origin = `http://localhost:${port}`
 
     const context = {
       title: 'Freyja', // default title
@@ -63,12 +66,12 @@ export default function serverRender(renderer: BundleRenderer): Middleware {
       const time = Date.now() - s
       if (req.app.get('env') !== 'production') {
         if (time < 1000) {
-          req.logger.debug(`whole request: ${time}ms`)
+          // req.logger.debug(`whole request: ${time}ms`)
         } else {
-          req.logger.warn(`whole request: ${time}ms`)
+          // req.logger.warn(`whole request: ${time}ms`)
         }
       }
-      res.set('x-ssr-time', time)
+      res.set('x-ssr-time', time.toString())
       res.end(html)
     })
   }

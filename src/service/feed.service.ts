@@ -3,6 +3,7 @@
  */
 'use strict'
 import {Feed} from 'feed'
+import {Admin} from '../model/admin'
 import {ArticleModel} from '../model/article'
 
 export const FeedService = {
@@ -27,8 +28,7 @@ export const FeedService = {
     })
     const articles = await ArticleModel.listByPage({page: 1})
     for (const article of articles) {
-      article.populate('author')
-      await article.execPopulate()
+      await article.populate('author')
       feed.addItem({
         title: article.title,
         id: `${baseUrl}/article/${article._id}`,
@@ -37,8 +37,8 @@ export const FeedService = {
         content: article.html,
         author: [
           {
-            name: article.author['username'],
-            email: article.author['email'],
+            name: (article.author as Admin)['username'],
+            email: (article.author as Admin)['email'],
           },
         ],
         date: article.createdAt,

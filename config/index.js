@@ -12,7 +12,7 @@ const configure = {
 
 const index = Object.keys(configure)
 
-const env = process.env.NODE_ENV || 'development'
+const env = process.env.NODE_ENV ?? 'development'
 
 index.forEach((config) => {
   try {

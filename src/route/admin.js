@@ -11,7 +11,7 @@ let _hash;
 (async () => {
   const path = require('path')
   const fs = require('fs-extra')
-  const files = await fs.readdir(path.join(__dirname, '../client/dist/admin/js/hljs'))
+  const files = await fs.readdir(path.join(__dirname, '../../../client/dist/admin/js/hljs'))
   let match
   for (const file of files) {
     match = file.match(/hljs\.\w+\.(\w+)\.js/i)
@@ -21,6 +21,10 @@ let _hash;
   }
   _hash = match[1]
 })()
+  .catch((err) => {
+    // eslint-disable-next-line no-console
+    console.error(err)
+  })
 
 
 router.get('/login', (req, res) => {

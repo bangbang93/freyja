@@ -1,12 +1,11 @@
 {
+  "extends": "@tsconfig/node16",
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es2017",
     "sourceMap": true,
-    "lib": ["es5", "es6", "es7"],
     "allowJs": true,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "importHelpers": true
   },
   "exclude": [
     "node_modules"
