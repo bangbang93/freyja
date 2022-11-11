@@ -18,13 +18,14 @@
 </template>
 <script>
 export default {
+  name: 'HomeLink',
+  asyncData({store}) {
+    return store.dispatch('link/getLinks')
+  },
   data() {
     return {
       links: this.$store.state.link.links,
     }
-  },
-  asyncData({store}) {
-    return store.dispatch('link/getLinks')
   },
 }
 </script>

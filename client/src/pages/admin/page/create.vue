@@ -28,8 +28,18 @@
 import FreyjaMdEditor from '../../../components/admin/md-editor.vue'
 
 export default {
+  name: 'FreyjaPageCreate',
   components: {
     FreyjaMdEditor,
+  },
+  beforeRouteLeave(to, from, next) {
+    if (this.article.title || this.article.content) {
+      this.$confirm('文章没有保存，是否离开')
+        .then(() => next())
+        .catch(() => next(false))
+    } else {
+      return next()
+    }
   },
   data() {
     return {
@@ -47,15 +57,6 @@ export default {
   mounted() {
     if (this.$route.name === 'page.edit') {
       this.initEdit(this.$route.params)
-    }
-  },
-  beforeRouteLeave(to, from, next) {
-    if (this.article.title || this.article.content) {
-      this.$confirm('文章没有保存，是否离开')
-        .then(() => next())
-        .catch(() => next(false))
-    } else {
-      return next()
     }
   },
   methods: {

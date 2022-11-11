@@ -109,6 +109,7 @@
 <script>
 
 export default {
+  name: 'FreyjaAdminIndex',
   data() {
     return {
       current: 'dashboard',

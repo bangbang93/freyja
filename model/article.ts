@@ -31,7 +31,7 @@ export class ArticleWordpress {
 }
 
 @model('article', {timestamps: true})
-// eslint-disable-next-line camelcase,@typescript-eslint/camelcase
+// eslint-disable-next-line camelcase
 @index({content: 'text'}, {default_language: 'ngram'})
 export class Article extends Model<Article> implements IArticleSchema {
   @id() public _id: Types.ObjectId

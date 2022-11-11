@@ -36,8 +36,12 @@
 <script>
 
 export default {
+  name: 'HomeArticle',
   components: {
     FreyjaArticleComment: async () => import('../../components/home/article-comment.vue'),
+  },
+  asyncData({store, route}) {
+    return store.dispatch('article/get', route.params.id)
   },
   data() {
     return {
@@ -45,16 +49,13 @@ export default {
       comments: this.$store.state.comment.comments,
     }
   },
-  asyncData({store, route}) {
-    return store.dispatch('article/get', route.params.id)
-  },
   mounted() {
     const articleId = this.$route.params.id
     this.$store.dispatch('comment/list', {articleId, page: 1})
   },
   updated() {
     this.highlight()
-      import('lozad').then((lozad) => lozad.default().observe())
+    import('lozad').then((lozad) => lozad.default().observe())
   },
   methods: {
     async highlight() {

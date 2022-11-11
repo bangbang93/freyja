@@ -34,6 +34,7 @@
 </template>
 <script>
 export default {
+  name: 'FreyjaCommentList',
   data() {
     return {
       comments: [],

@@ -39,6 +39,7 @@
 import FreyjaAttachmentCard from '../../../components/admin/attachment-card.vue'
 
 export default {
+  name: 'FreyjaAttachmentList',
   components: {FreyjaAttachmentCard},
   data() {
     return {

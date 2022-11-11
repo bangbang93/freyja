@@ -35,6 +35,7 @@
 </template>
 <script>
 export default {
+  name: 'FreyjaImportWordpress',
   data() {
     return {
       database: {

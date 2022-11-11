@@ -3,7 +3,7 @@
  */
 'use strict'
 /* eslint-disable
- @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires,camelcase,@typescript-eslint/camelcase */
+ @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires,camelcase */
 const {ArticleModel} = require('../../model/article')
 const {AttachmentModel} = require('../../model/attachment')
 const {CommentModel} = require('../../model/comment')

@@ -44,6 +44,7 @@
 <script>
 
 export default {
+  name: 'PageList',
   data() {
     return {
       pages: [],

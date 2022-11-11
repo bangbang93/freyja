@@ -12,7 +12,7 @@ const isCacheable = (req) => {
   return req.app.get('env') === 'production'
 }
 
-export default function (renderer: BundleRenderer): Middleware {
+export default function serverRender(renderer: BundleRenderer): Middleware {
   return function render(req, res, next) {
     const s = Date.now()
 

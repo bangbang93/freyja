@@ -19,11 +19,9 @@ export interface IServicedRequest<T> extends Request {
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Express {
-    // eslint-disable-next-line @typescript-eslint/interface-name-prefix
     interface Request {
       logger: bunyan
     }
-    // eslint-disable-next-line @typescript-eslint/interface-name-prefix
     interface Response {
       missing(fields: string | string[]): this
     }

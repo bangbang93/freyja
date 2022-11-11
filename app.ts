@@ -87,7 +87,7 @@ if (app.get('env') === 'production') {
     renderer = serverRender(createRenderer(bundle, options))
   })
   app.get('*', (req, res, next) => {
-    if (renderPromise && renderPromise.isFulfilled) {
+    if (renderPromise?.isFulfilled) {
       renderer(req, res, next)
     } else {
       renderPromise.then(() => {

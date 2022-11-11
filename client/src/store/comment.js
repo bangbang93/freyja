@@ -37,7 +37,7 @@ export default {
     },
     savePublisher(state, publisher) {
       state.publisher = Object.assign(state.publisher, publisher)
-      localStorage && localStorage.setItem('freyja:publisher', JSON.stringify(publisher))
+      localStorage?.setItem('freyja:publisher', JSON.stringify(publisher))
     },
     reply(state, {replyId, newComment}) {
       return walk(state.comments)

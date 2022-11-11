@@ -37,6 +37,7 @@
 </template>
 <script>
 export default {
+  name: 'FreyjaAdminLogin',
   data() {
     return {
       loginForm: {

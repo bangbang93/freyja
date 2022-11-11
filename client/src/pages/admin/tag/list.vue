@@ -11,6 +11,7 @@
 import FreyjaTagEditor from '../../../components/admin/tag-editor.vue'
 
 export default {
+  name: 'TagList',
   components: {
     FreyjaTagEditor,
   },

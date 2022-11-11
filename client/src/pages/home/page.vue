@@ -23,17 +23,18 @@
 <script>
 
 export default {
+  name: 'HomePage',
   components: {
     //      FreyjaArticleComment: () => import('../../components/home/page-comment.vue'),
+  },
+  asyncData({store, route}) {
+    return store.dispatch('page/get', route.params.name)
   },
   data() {
     return {
       page: this.$store.state.page.page,
       comments: this.$store.state.comment.comments,
     }
-  },
-  asyncData({store, route}) {
-    return store.dispatch('page/get', route.params.name)
   },
   mounted() {
     //      const pageName = this.$route.params.name
@@ -42,7 +43,7 @@ export default {
   },
   updated() {
     this.highlight()
-      import('lozad').then((lozad) => lozad.default().observe())
+    import('lozad').then((lozad) => lozad.default().observe())
   },
   methods: {
     async highlight() {

@@ -40,7 +40,7 @@
       </article>
     </div>
     <div class="freyja-article-pager">
-      <router-link :to="{query: {page: this.page-1}}">
+      <router-link :to="{query: {page: page-1}}">
         <el-button
           class="freyja-article-pager-prev"
           :disabled="!canGoBackward"
@@ -48,7 +48,7 @@
           <i class="el-icon-arrow-left" />
         </el-button>
       </router-link>
-      <router-link :to="{query: {page: this.page+1}}">
+      <router-link :to="{query: {page: page+1}}">
         <el-button
           class="freyja-article-pager-next"
           :disabled="!canGoForward"
@@ -88,9 +88,11 @@ function asyncData({store, route}) {
 }
 
 export default {
+  name: 'HomeHome',
   components: {
     ElButton: Button,
   },
+  asyncData,
   data() {
     const result =  {
       articles: this.$store.state.home.articles,
@@ -119,14 +121,13 @@ export default {
       this.keyword = this.$route.query.keyword
     },
   },
-  asyncData,
   mounted() {
     this.highlight()
-      import('lozad').then((lozad) => lozad.default().observe())
+    import('lozad').then((lozad) => lozad.default().observe())
   },
   updated() {
     this.highlight()
-      import('lozad').then((lozad) => lozad.default().observe())
+    import('lozad').then((lozad) => lozad.default().observe())
   },
   methods: {
     async highlight() {
