@@ -22,10 +22,10 @@ class CategoryWordpress {
 
 @model('category', {timestamps: true})
 export class Category extends Model<Category> implements ICategorySchema {
-  @id
+  @id()
   public _id: Types.ObjectId
 
-  @prop() @unique
+  @prop() @unique()
   public name: string
 
   @prop() @ref(() => Category, ObjectId)
@@ -37,7 +37,7 @@ export class Category extends Model<Category> implements ICategorySchema {
   @prop()
   public wordpress: CategoryWordpress
 
-  @statics
+  @statics()
   public static async add({name, parentId, wordpress}): Promise<ICategoryDocument> {
     let parent
     if (parentId) {
@@ -58,19 +58,19 @@ export class Category extends Model<Category> implements ICategorySchema {
     return category
   }
 
-  @statics
+  @statics()
   public static async getByName(name): Promise<ICategoryDocument> {
     return this.findOne({
       name,
     })
   }
 
-  @statics
+  @statics()
   public static async listRoot(): Promise<ICategoryDocument[]> {
     return this.find({parent: null})
   }
 
-  @statics
+  @statics()
   public static async getByWordpress(key: string, value: string) {
     return this.findOne({
       [`wordpress.${key}`]: value,

@@ -14,7 +14,7 @@ export interface IAttachmentSchema {
 
 @model('attachment', {timestamps: true})
 export class Attachment extends Model<Attachment> implements IAttachmentSchema {
-  @id
+  @id()
   public _id: Types.ObjectId
 
   @prop()
@@ -26,10 +26,10 @@ export class Attachment extends Model<Attachment> implements IAttachmentSchema {
   @prop()
   public mimeType: string
 
-  @prop(Schema.Types.Mixed)
+  @prop(Object)
   public wordpress: object
 
-  @statics
+  @statics()
   public static async listByPage({skip = 0, page = 1, limit = 20}): Promise<IAttachmentDocument[]> {
     if (!skip) {
       skip = (page - 1) * limit

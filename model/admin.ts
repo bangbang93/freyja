@@ -11,10 +11,10 @@ export interface IAdminSchema {
 
 @model('admin')
 export class Admin extends Model<Admin> implements IAdminSchema {
-  @id
+  @id()
   public _id: Types.ObjectId
 
-  @prop() @unique
+  @prop() @unique()
   public username: string
 
   @prop()
@@ -23,10 +23,10 @@ export class Admin extends Model<Admin> implements IAdminSchema {
   @prop()
   public salt: string
 
-  @prop() @unique
+  @prop() @unique()
   public email: string
 
-  @statics
+  @statics()
   public static async getByName(username: string) {
     return this.findOne({
       username,

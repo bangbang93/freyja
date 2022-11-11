@@ -34,7 +34,7 @@ export class ArticleWordpress {
 // eslint-disable-next-line camelcase,@typescript-eslint/camelcase
 @index({content: 'text'}, {default_language: 'ngram'})
 export class Article extends Model<Article> implements IArticleSchema {
-  @id public _id: Types.ObjectId
+  @id() public _id: Types.ObjectId
   @prop() public title: string
   @prop() public content: string
   @prop() public html: string
@@ -50,7 +50,7 @@ export class Article extends Model<Article> implements IArticleSchema {
 
   public updatedAt: Date
 
-  @statics
+  @statics()
   public static async list({lastId, limit = 20, select = {content: 0, html: 0}}): Promise<IArticleDocument[]> {
     let query
     if (!lastId) {
@@ -67,7 +67,7 @@ export class Article extends Model<Article> implements IArticleSchema {
       .limit(limit)
   }
 
-  @statics
+  @statics()
   public static async listByPage({skip = 0, page = 1, limit = 20}): Promise<IArticleDocument[]> {
     if (!skip) {
       skip = (page - 1) * limit
@@ -79,12 +79,12 @@ export class Article extends Model<Article> implements IArticleSchema {
       .limit(limit)
   }
 
-  @statics
+  @statics()
   public static async del(id): Promise<void> {
     await this.remove({_id: id})
   }
 
-  @statics
+  @statics()
   public static async getByWordpress(key, value): Promise<IArticleDocument> {
     if (arguments.length === 1) {
       [key] = Object.keys(key)
@@ -95,7 +95,7 @@ export class Article extends Model<Article> implements IArticleSchema {
     })
   }
 
-  @statics
+  @statics()
   public static async findByTag({tag, skip = 0, limit = 20}): Promise<IArticleDocument[]> {
     return this.find({
       tags: tag,
@@ -105,7 +105,7 @@ export class Article extends Model<Article> implements IArticleSchema {
       .exec()
   }
 
-  @statics
+  @statics()
   public static async findByCategoryId({categoryId, skip, limit}): Promise<IArticleDocument[]> {
     return this.find({
       category: categoryId,
@@ -114,7 +114,7 @@ export class Article extends Model<Article> implements IArticleSchema {
       .limit(limit)
   }
 
-  @statics
+  @statics()
   public static async search(keyword, skip, limit): Promise<IArticleDocument[]> {
     return this.find({
       $text: {

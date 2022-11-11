@@ -44,16 +44,16 @@ class CommentWordpress {
 
 @model('comment', {timestamps: true})
 export class Comment extends Model<Comment> implements ICommentSchema {
-  @id
+  @id()
   public _id: Types.ObjectId
 
-  @prop() @required
+  @prop() @required()
   public content: string
 
-  @prop() @required
+  @prop() @required()
   public html: string
 
-  @prop() @ref(Article) @required
+  @prop() @ref(Article) @required()
   public article: Ref<Article>
 
   @prop() @ref(() => Comment, ObjectId)
@@ -62,7 +62,7 @@ export class Comment extends Model<Comment> implements ICommentSchema {
   @array(ObjectId) @ref(() => Comment, [ObjectId])
   public replies: Ref<Comment>[]
 
-  @prop() @required
+  @prop() @required()
   public publisher: CommentPublisher
 
   @prop() @ref(Admin)
@@ -75,7 +75,7 @@ export class Comment extends Model<Comment> implements ICommentSchema {
 
   public updatedAt: Date
 
-  @statics
+  @statics()
   public static async add(comment, {article, reply}): Promise<ICommentDocument> {
     if (!comment.article && article) {
       comment.article = article
@@ -89,7 +89,7 @@ export class Comment extends Model<Comment> implements ICommentSchema {
     return this.create(comment)
   }
 
-  @statics
+  @statics()
   public static async listByArticle(articleId, {skip, limit}): Promise<ICommentDocument[]> {
     return this.find({
       article: articleId,
@@ -101,21 +101,21 @@ export class Comment extends Model<Comment> implements ICommentSchema {
       .limit(limit)
   }
 
-  @statics
+  @statics()
   public static async getByWordpress(key, value): Promise<ICommentDocument> {
     return this.findOne({
       [`wordpress.${key}`]: value,
     })
   }
 
-  @statics
+  @statics()
   public static async countByArticle(articleId): Promise<number> {
     return this.count({
       article: articleId,
     })
   }
 
-  @statics
+  @statics()
   public static async list({skip, limit}): Promise<ICommentDocument[]> {
     return this.find({})
       .sort({_id: -1})
@@ -123,14 +123,14 @@ export class Comment extends Model<Comment> implements ICommentSchema {
       .limit(limit)
   }
 
-  @statics
+  @statics()
   public static async deleteById(id: string) {
     return this.remove({
       _id: id,
     })
   }
 
-  @statics
+  @statics()
   public static async addReply(commentId, replyId) {
     return this.update({
       _id: commentId,
