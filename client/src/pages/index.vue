@@ -48,11 +48,12 @@
 <script>
 import 'animate.css'
 import {Col} from 'element-ui'
+import FreyjaNavMenu from '../components/home/nav-menu.vue'
 
 export default {
   name: 'PageIndex',
   components: {
-    FreyjaNavMenu: async () => import('../components/home/nav-menu.vue'),
+    FreyjaNavMenu,
     ElCol: Col,
   },
   data() {

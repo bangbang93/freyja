@@ -92,3 +92,4 @@ client/dist
 config/development
 .idea/
 apidoc/
+dist/
