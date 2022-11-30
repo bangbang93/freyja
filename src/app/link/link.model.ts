@@ -1,4 +1,4 @@
-import {getModel, id, model, ObjectId, prop, required, unique} from 'mongoose-typescript'
+import {DocumentType, getModel, id, model, ObjectId, prop, required, RichModelType, unique} from 'mongoose-typescript'
 
 export interface ILinkSchema {
   _id: ObjectId
@@ -13,8 +13,5 @@ export class Link implements ILinkSchema {
   @prop() @required() public href!: string
 }
 
-const Model = getModel(Link)
-
-exports._Model = Model
-
-exports.listAll = async () => Model.find({})
+export type ILinkDocument = DocumentType<Link>
+export type ILinkModel = RichModelType<typeof Link>

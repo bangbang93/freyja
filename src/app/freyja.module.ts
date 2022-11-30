@@ -4,6 +4,7 @@ import {ArticleModule} from './article/article.module'
 import {AttachmentModule} from './attachment/attachment.module'
 import {CategoryModule} from './category/category.module'
 import {CommentModule} from './comment/comment.module'
+import {LinkModule} from './link/link.module'
 import {PageModule} from './page/page.module'
 
 @Module({
@@ -14,6 +15,7 @@ import {PageModule} from './page/page.module'
     CategoryModule,
     CommentModule,
     PageModule,
+    LinkModule,
   ],
 })
 export class FreyjaModule {}
