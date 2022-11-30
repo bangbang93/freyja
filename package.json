@@ -18,7 +18,7 @@
     "snyk-protect": "snyk protect"
   },
   "dependencies": {
-    "@bangbang93/utils": "^5.2.1",
+    "@bangbang93/utils": "^5.3.0",
     "@nestjs/common": "^9.2.0",
     "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.2.0",
@@ -31,6 +31,8 @@
     "bunyan": "^1.8.13",
     "bunyan-serializer-error": "latest",
     "cache-control": "^2.0.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.13.2",
     "connect-history-api-fallback": "^1.6.0",
     "connect-redis": "^4.0.4",
     "cookie-parser": "^1.4.5",
@@ -46,6 +48,7 @@
     "fs-extra": "^8.1.0",
     "fundebug-nodejs": "0.2.0",
     "helmet": "^4.2.0",
+    "html-substring": "^1.8.1",
     "http-errors": "^1.7.3",
     "ioredis": "^5.2.4",
     "knex": "^0.21.0",
