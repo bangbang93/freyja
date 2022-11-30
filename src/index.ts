@@ -16,7 +16,7 @@ import morgan from 'morgan'
 import path from 'path'
 import favicon from 'serve-favicon'
 import {BundleRenderer, BundleRendererOptions, createBundleRenderer} from 'vue-server-renderer'
-import {AppModule} from './app/app.module'
+import {AppModule} from './app.module'
 import serverRender from './middleware/server-render'
 import {setupDevServer} from './setup-dev-server'
 

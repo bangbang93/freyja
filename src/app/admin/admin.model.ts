@@ -1,6 +1,4 @@
-import {
-  DocumentType, getModel, id, model, ModelType, ObjectId, prop, RichModelType, statics, unique,
-} from 'mongoose-typescript'
+import {DocumentType, getModel, id, model, ObjectId, prop, RichModelType, statics, unique} from 'mongoose-typescript'
 
 export interface IAdminSchema {
   _id: ObjectId

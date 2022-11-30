@@ -3,7 +3,7 @@
  */
 'use strict'
 /* eslint-disable @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires */
-const {AdminModel} = require('../../model/admin')
+const {AdminModel} = require('../../app/admin/admin.model')
 const bcrypt = require('bcrypt')
 
 exports.login = async (username, password) => {

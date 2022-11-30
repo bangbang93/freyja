@@ -3,7 +3,7 @@
  */
 'use strict'
 /* eslint-disable @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires */
-const {ArticleModel} = require('../../model/article')
+const {ArticleModel} = require('../../app/article/article.model')
 const MarkdownHelper = require('../../helper/markdown')
 const htmlSubstring = require('../../lib/html-substring')
 

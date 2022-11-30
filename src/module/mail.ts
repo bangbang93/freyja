@@ -4,7 +4,7 @@
 'use strict'
 import * as NodeMailer from 'nodemailer'
 import * as MarkdownHelper from '../helper/markdown'
-import {IArticleSchema} from '../model/article'
+import {IArticleSchema} from '../app/article/article.model'
 
 const transporter = NodeMailer.createTransport({
   from: 'example.com',

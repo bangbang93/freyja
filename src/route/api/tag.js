@@ -4,7 +4,7 @@
 'use strict'
 /* eslint-disable @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires */
 const router = require('express-promise-router')()
-const ArticleService = require('../../service/article')
+const ArticleService = require('../../app/article/article.service')
 
 router.get('/:tag', async (req, res) => {
   const {tag} = req.params

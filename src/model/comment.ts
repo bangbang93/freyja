@@ -3,8 +3,8 @@ import {
   array, DocumentType, getModel, id, Model, model, ModelType, ObjectId, prop, Ref, ref, required, RichModelType,
   statics, subModel,
 } from 'mongoose-typescript'
-import {Admin} from './admin'
-import {Article} from './article'
+import {Admin} from '../app/admin/admin.model'
+import {Article} from '../app/article/article.model'
 
 export interface ICommentSchema {
   _id: Types.ObjectId

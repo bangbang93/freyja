@@ -5,7 +5,7 @@
 /* eslint-disable @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires */
 const router = require('express-promise-router')()
 const CategoryService = require('../../service/category')
-const ArticleService = require('../../service/article')
+const ArticleService = require('../../app/article/article.service')
 
 router.get('/', async (req, res) => {
   const list = await CategoryService.listAll()

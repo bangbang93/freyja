@@ -4,7 +4,7 @@
 'use strict'
 /* eslint-disable
  @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires,camelcase */
-const {ArticleModel} = require('../../model/article')
+const {ArticleModel} = require('../../app/article/article.model')
 const {AttachmentModel} = require('../../model/attachment')
 const {CommentModel} = require('../../model/comment')
 const {CategoryModel} = require('../../model/category')

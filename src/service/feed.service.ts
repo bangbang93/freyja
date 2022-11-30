@@ -3,8 +3,8 @@
  */
 'use strict'
 import {Feed} from 'feed'
-import {Admin} from '../model/admin'
-import {ArticleModel} from '../model/article'
+import {Admin} from '../app/admin/admin.model'
+import {ArticleModel} from '../app/article/article.model'
 
 export const FeedService = {
   async getFeed(baseUrl: string) {

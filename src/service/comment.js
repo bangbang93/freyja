@@ -4,8 +4,8 @@
 'use strict'
 /* eslint-disable @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires */
 const {CommentModel} = require('../model/comment')
-const ArticleModel = require('../model/article').ArticleModel
-const {AdminModel} = require('../model/admin')
+const ArticleModel = require('../app/article/article.model').ArticleModel
+const {AdminModel} = require('../app/admin/admin.model')
 const crypto = require('crypto')
 const MarkdownHelper = require('../helper/markdown')
 const MailModule = require('../module/mail')

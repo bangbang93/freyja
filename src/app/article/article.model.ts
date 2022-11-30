@@ -1,10 +1,11 @@
+import {IdType} from '@bangbang93/utils/mongodb'
 import {
   array, DocumentType, getModel, id, index, model, ModelType, ObjectId, prop, Ref, ref, RichModelType, statics,
   subModel,
 } from 'mongoose-typescript'
-import {Admin} from './admin'
-import {Attachment} from './attachment'
-import {Category} from './category'
+import {Admin} from '../admin/admin.model'
+import {Attachment} from '../../model/attachment'
+import {Category} from '../../model/category'
 
 export interface IArticleSchema {
   _id: ObjectId
@@ -120,7 +121,7 @@ export class Article implements IArticleSchema {
   @statics()
   public static async findByCategoryId(
     this: IArticleModel,
-    {categoryId, skip, limit}: {categoryId: ObjectId; skip: number; limit: number},
+    {categoryId, skip, limit}: {categoryId: IdType; skip: number; limit: number},
   ): Promise<IArticleDocument[]> {
     return this.find({
       category: categoryId,
