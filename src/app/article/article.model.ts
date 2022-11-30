@@ -4,7 +4,7 @@ import {
   subModel,
 } from 'mongoose-typescript'
 import {Admin} from '../admin/admin.model'
-import {Attachment} from '../../model/attachment'
+import {Attachment} from '../attachment/attachment.model'
 import {Category} from '../../model/category'
 
 export interface IArticleSchema {

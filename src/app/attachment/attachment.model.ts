@@ -1,11 +1,11 @@
 import {DocumentType, getModel, id, model, ObjectId, prop, RichModelType, statics} from 'mongoose-typescript'
 
 export interface IAttachmentSchema {
-  _id: ObjectId
+  _id?: ObjectId
   filename: string
   path: string
   mimeType: string
-  wordpress: object
+  wordpress?: object
 
   createdAt?: Date
   updatedAt?: Date
@@ -26,7 +26,7 @@ export class Attachment implements IAttachmentSchema {
   public mimeType!: string
 
   @prop(Object)
-  public wordpress!: object
+  public wordpress?: object
 
   @statics()
   public static async listByPage(

@@ -5,7 +5,7 @@
 /* eslint-disable
  @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires,camelcase */
 const {ArticleModel} = require('../../app/article/article.model')
-const {AttachmentModel} = require('../../model/attachment')
+const {AttachmentModel} = require('../../app/attachment/attachment.model')
 const {CommentModel} = require('../../model/comment')
 const {CategoryModel} = require('../../model/category')
 const TagModel = require('../../model/tag')
