@@ -5,7 +5,7 @@ import {
 } from 'mongoose-typescript'
 import {Admin} from '../admin/admin.model'
 import {Attachment} from '../attachment/attachment.model'
-import {Category} from '../../model/category'
+import {Category} from '../category/category.model'
 
 export interface IArticleSchema {
   _id: ObjectId

@@ -1,6 +1,6 @@
+import {IdType} from '@bangbang93/utils/mongodb'
 import {
-  array, DocumentType, getModel, id, model, ModelType, ObjectId, prop, Ref, ref, RichModelType, statics, subModel,
-  unique,
+  array, DocumentType, getModel, id, model, ObjectId, prop, Ref, ref, RichModelType, statics, subModel, unique,
 } from 'mongoose-typescript'
 
 export interface ICategorySchema {
@@ -40,7 +40,7 @@ export class Category implements ICategorySchema {
   @statics()
   public static async add(
     this: ICategoryModel,
-    {name, parentId, wordpress}: {name: string; parentId: ObjectId; wordpress: CategoryWordpress},
+    {name, parentId, wordpress}: {name: string; parentId?: IdType; wordpress?: CategoryWordpress},
   ): Promise<ICategoryDocument> {
     let parent
     if (parentId) {

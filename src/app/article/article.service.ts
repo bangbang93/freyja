@@ -5,7 +5,7 @@ import Bluebird from 'bluebird'
 import htmlSubstring from 'html-substring'
 import {ObjectId} from 'mongoose-typescript'
 import {render} from '../../helper/markdown'
-import {CategoryModel} from '../../model/category'
+import {CategoryModel} from '../category/category.model'
 import {CommentModel} from '../../model/comment'
 import {Article, IArticleDocument, IArticleModel, IArticleSchema} from './article.model'
 
