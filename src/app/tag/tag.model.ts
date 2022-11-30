@@ -19,22 +19,3 @@ export class Tag implements ITagSchema {
 export type ITagDocument = DocumentType<Tag>
 export type ITagModel = RichModelType<typeof Tag>
 
-const Model = getModel(Tag)
-
-export async function create(title: string): Promise<ITagDocument> {
-  return Model.create({title})
-}
-
-export async function getById(id: ObjectId): Promise<ITagDocument | null> {
-  return Model.findById(id).exec()
-}
-
-export async function listAll(): Promise<ITagDocument[]> {
-  return Model.find({}).exec()
-}
-
-export async function createIfNotExists(title: string): Promise<void> {
-  await Model.update({title}, {title}, {
-    upsert: true,
-  })
-}
