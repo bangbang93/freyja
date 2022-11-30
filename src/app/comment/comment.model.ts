@@ -1,20 +1,20 @@
+import {IdType, toObjectId} from '@bangbang93/utils/mongodb'
 import {Types} from 'mongoose'
 import {
-  array, DocumentType, getModel, id, Model, model, ModelType, ObjectId, prop, Ref, ref, required, RichModelType,
-  statics, subModel,
+  array, DocumentType, getModel, id, model, ObjectId, prop, Ref, ref, required, RichModelType, statics, subModel,
 } from 'mongoose-typescript'
-import {Admin} from '../app/admin/admin.model'
-import {Article} from '../app/article/article.model'
+import {Admin} from '../admin/admin.model'
+import {Article} from '../article/article.model'
 
 export interface ICommentSchema {
-  _id: Types.ObjectId
+  _id?: Types.ObjectId
   content: string
   html: string
   article: Ref<Article>
   publisher: CommentPublisher
-  reply: Ref<Comment>
-  replies: Ref<Comment>[]
-  wordpress: CommentWordpress
+  reply?: Ref<Comment>
+  replies?: Ref<Comment>[]
+  wordpress?: CommentWordpress
 
   createdAt?: Date
   updatedAt?: Date
@@ -22,17 +22,17 @@ export interface ICommentSchema {
 
 @subModel()
 class CommentPublisher {
-  @prop() public email!: string
+  @prop() public email?: string
 
-  @prop() public name!: string
+  @prop() public name?: string
 
-  @prop() public website!: string
+  @prop() public website?: string
 
-  @prop() public hash!: string
+  @prop() public hash?: string
 
-  @prop() public ip!: string
+  @prop() public ip?: string
 
-  @prop() public agent!: string
+  @prop() public agent?: string
 }
 
 @subModel()
@@ -45,7 +45,7 @@ class CommentWordpress {
 @model('comment', {timestamps: true})
 export class Comment implements ICommentSchema {
   @id()
-  public _id!: Types.ObjectId
+  public _id!: ObjectId
 
   @prop() @required()
   public content!: string
@@ -79,13 +79,13 @@ export class Comment implements ICommentSchema {
   public static async add(
     this: ICommentModel,
     comment: ICommentSchema,
-    {article, reply}: { article: ObjectId; reply?: ObjectId },
+    {article, reply}: { article: IdType; reply?: IdType },
   ): Promise<ICommentDocument> {
     if (!comment.article && article) {
-      comment.article = article
+      comment.article = toObjectId(article)
     }
     if (!comment.reply && reply) {
-      comment.reply = reply
+      comment.reply = toObjectId(reply)
     }
     if (!comment.createdAt) {
       comment.createdAt = new Date()
@@ -96,7 +96,7 @@ export class Comment implements ICommentSchema {
   @statics()
   public static async listByArticle(
     this: ICommentModel,
-    articleId: ObjectId,
+    articleId: IdType,
     {skip, limit}: { skip: number; limit: number },
   ): Promise<ICommentDocument[]> {
     return this.find({

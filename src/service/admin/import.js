@@ -6,7 +6,7 @@
  @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires,camelcase */
 const {ArticleModel} = require('../../app/article/article.model')
 const {AttachmentModel} = require('../../app/attachment/attachment.model')
-const {CommentModel} = require('../../model/comment')
+const {CommentModel} = require('../../app/comment/comment.model')
 const {CategoryModel} = require('../../app/category/category.model')
 const TagModel = require('../../model/tag')
 const LinkModel = require('../../model/link')

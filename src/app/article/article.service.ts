@@ -6,7 +6,7 @@ import htmlSubstring from 'html-substring'
 import {ObjectId} from 'mongoose-typescript'
 import {render} from '../../helper/markdown'
 import {CategoryModel} from '../category/category.model'
-import {CommentModel} from '../../model/comment'
+import {CommentModel} from '../comment/comment.model'
 import {Article, IArticleDocument, IArticleModel, IArticleSchema} from './article.model'
 
 interface IArticleListItem extends IArticleSchema {

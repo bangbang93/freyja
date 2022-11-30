@@ -4,6 +4,7 @@ import {forNestModule} from 'mongoose-typescript'
 import {AdminController} from './admin.controller'
 import {AdminGuard} from './admin.guard'
 import {Admin} from './admin.model'
+import {AdminService} from './admin.service'
 
 @Module({
   imports: [
@@ -16,9 +17,11 @@ import {Admin} from './admin.model'
   ],
   providers: [
     AdminGuard,
+    AdminService,
   ],
   exports: [
     AdminGuard,
+    AdminService,
   ],
 })
 export class AdminModule {}
