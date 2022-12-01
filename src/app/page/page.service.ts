@@ -1,7 +1,7 @@
 import {IdType} from '@bangbang93/utils/mongodb'
 import {InjectModel} from '@bangbang93/utils/nest-mongo'
 import {Injectable, NotFoundException} from '@nestjs/common'
-import {render} from '../../helper/markdown'
+import {MarkdownService} from '../util/markdown.service'
 import {IPageDocument, IPageModel, IPageSchema, Page} from './page.model'
 
 interface ICreate {
@@ -21,10 +21,11 @@ interface IUpdate {
 export class PageService {
   constructor(
     @InjectModel(Page) private readonly pageModel: IPageModel,
+    private readonly markdownService: MarkdownService,
   ) {}
 
   public async create(data: ICreate): Promise<IPageSchema> {
-    const html = render(data.content)
+    const html = this.markdownService.render(data.content)
     return this.pageModel.create({
       ...data,
       html,
@@ -73,7 +74,7 @@ export class PageService {
     if (!page) {
       throw new NotFoundException('page not found')
     }
-    const html = render(update.content)
+    const html = this.markdownService.render(update.content)
     page.title = update.title
     page.content = update.content
     page.name = update.name
@@ -84,7 +85,7 @@ export class PageService {
   public async renderAll(): Promise<void> {
     const pages = this.pageModel.find()
     for await (const page of pages) {
-      page.html = render(page.content)
+      page.html = this.markdownService.render(page.content)
       await page.save()
     }
   }

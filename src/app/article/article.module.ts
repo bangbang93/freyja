@@ -1,6 +1,7 @@
-import {Controller, Module} from '@nestjs/common'
+import {Module} from '@nestjs/common'
 import {MongooseModule} from '@nestjs/mongoose'
 import {forNestModule} from 'mongoose-typescript'
+import {UtilModule} from '../util/util.module'
 import {ArticleAdminController} from './article-admin.controller'
 import {ArticleApiController} from './article-api.controller'
 import {Article} from './article.model'
@@ -11,6 +12,7 @@ import {ArticleService} from './article.service'
     MongooseModule.forFeature([
       forNestModule(Article),
     ]),
+    UtilModule,
   ],
   controllers: [
     ArticleApiController,

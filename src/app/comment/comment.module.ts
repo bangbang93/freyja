@@ -3,6 +3,7 @@ import {MongooseModule} from '@nestjs/mongoose'
 import {forNestModule} from 'mongoose-typescript'
 import {AdminModule} from '../admin/admin.module'
 import {ArticleModule} from '../article/article.module'
+import {UtilModule} from '../util/util.module'
 import {CommentAdminController} from './comment-admin.controller'
 import {CommentController} from './comment.controller'
 import {Comment} from './comment.model'
@@ -15,6 +16,7 @@ import {CommentService} from './comment.service'
     ]),
     ArticleModule,
     AdminModule,
+    UtilModule,
   ],
   controllers: [
     CommentController,

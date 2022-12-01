@@ -3,10 +3,10 @@ import {InjectModel} from '@bangbang93/utils/nest-mongo'
 import {BadRequestException, Injectable, NotFoundException} from '@nestjs/common'
 import {createHash} from 'crypto'
 import {ObjectId} from 'mongoose-typescript'
-import {renderComment} from '../../helper/markdown'
-import {comment, commentReply} from '../../module/mail'
 import {AdminService} from '../admin/admin.service'
 import {ArticleService} from '../article/article.service'
+import {MailService} from '../util/mail.service'
+import {MarkdownService} from '../util/markdown.service'
 import {Comment, ICommentDocument, ICommentModel} from './comment.model'
 
 interface ICreate {
@@ -27,6 +27,8 @@ export class CommentService {
     @InjectModel(Comment) private readonly commentModel: ICommentModel,
     private readonly articleService: ArticleService,
     private readonly adminService: AdminService,
+    private readonly mailService: MailService,
+    private readonly markdownService: MarkdownService,
   ) {}
 
   public async create(admin: IdType | undefined, data: ICreate): Promise<ICommentDocument> {
@@ -54,7 +56,7 @@ export class CommentService {
     }
     const commentDoc = await this.commentModel.add({
       content: data.content,
-      html: renderComment(data.content),
+      html: this.markdownService.renderComment(data.content),
       publisher: {
         ...data.publisher,
         hash: createHash('md5').update(data.publisher.email).digest('hex'),
@@ -66,7 +68,7 @@ export class CommentService {
       await this.commentModel.addReply(replyComment._id, commentDoc._id)
 
       if (replyComment.publisher.email) {
-        await commentReply({
+        await this.mailService.commentReply({
           to: replyComment.publisher.email,
           article,
         })
@@ -74,7 +76,7 @@ export class CommentService {
     }
 
     if (!data.replyTo) {
-      await comment({article})
+      await this.mailService.comment({article})
     }
 
     return commentDoc

@@ -4,9 +4,9 @@ import {Injectable, NotFoundException} from '@nestjs/common'
 import Bluebird from 'bluebird'
 import htmlSubstring from 'html-substring'
 import {ObjectId} from 'mongoose-typescript'
-import {render} from '../../helper/markdown'
 import {CategoryModel} from '../category/category.model'
 import {CommentModel} from '../comment/comment.model'
+import {MarkdownService} from '../util/markdown.service'
 import {Article, IArticleDocument, IArticleModel, IArticleSchema} from './article.model'
 
 interface IArticleListItem extends IArticleSchema {
@@ -38,10 +38,11 @@ const SUMMARY_LENGTH = 200
 export class ArticleService {
   constructor(
     @InjectModel(Article) private readonly articleModel: IArticleModel,
+    private readonly markdownService: MarkdownService,
   ) {}
 
   public async create(data: ICreate): Promise<IArticleDocument> {
-    const html = render(data.content)
+    const html = this.markdownService.render(data.content)
     const summary = htmlSubstring(html, SUMMARY_LENGTH)
     return this.articleModel.create({
       title: data.title, content: data.content, tags: data.tags, author: data.author, summary, html,
@@ -113,7 +114,7 @@ export class ArticleService {
   public async update(id: IdType, data: IUpdate): Promise<IArticleDocument> {
     const article = await this.articleModel.findById(id)
     if (!article) throw new NotFoundException('article not found')
-    const html = render(data.content)
+    const html = this.markdownService.render(data.content)
     const summary = htmlSubstring(html, SUMMARY_LENGTH)
     article.html = html
     article.summary = summary
@@ -131,7 +132,7 @@ export class ArticleService {
   public async renderAll(): Promise<void> {
     const articles = this.articleModel.find().cursor()
     for await (const article of articles) {
-      const html = render(article.content)
+      const html = this.markdownService.render(article.content)
       const summary = htmlSubstring(html, SUMMARY_LENGTH)
       article.html = html
       article.summary = summary
