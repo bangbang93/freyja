@@ -1,6 +1,7 @@
 import {Module} from '@nestjs/common'
 import {ConfigModule, ConfigService} from '@nestjs/config'
 import {MongooseModule} from '@nestjs/mongoose'
+import * as Mongoose from 'mongoose'
 import {BunyanLogger, BunyanLoggerModule} from 'nestjs-bunyan'
 import {FreyjaModule} from './app/freyja.module'
 
@@ -17,6 +18,9 @@ import {FreyjaModule} from './app/freyja.module'
     MongooseModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
+        if (configService.get('NODE_ENV') === 'development') {
+          Mongoose.set('debug', true)
+        }
         return {
           uri: configService.getOrThrow('database.mongodb.uri'),
         }
