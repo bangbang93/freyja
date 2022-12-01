@@ -58,14 +58,8 @@ export async function bootstrap(): Promise<void> {
     contentSecurityPolicy: false,
   }))
 
-
-  // eslint-disable-next-line @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires
-  app.use('/', require('./route/index'))
-
-  // eslint-disable-next-line @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires
-  require('express-simple-route')(path.join(__dirname, 'route'), app)
   app.use('/admin', historyApiFallback())
-  app.use(express.static(path.join(__dirname, 'public')))
+  app.use(express.static(path.join(__dirname, '..', 'public')))
 
   const port = parseInt(configService.get('PORT', '3000'), 10)
 
@@ -114,5 +108,5 @@ export async function bootstrap(): Promise<void> {
     app.use(fundebug.ExpressErrorHandler)
   }
 
-  await app.listen(configService.get('PORT', '3000'))
+  await app.listen(port)
 }

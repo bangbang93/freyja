@@ -15,7 +15,7 @@ interface IArticleListItem extends IArticleSchema {
 
 interface IArticleWordpressOptions {
   id?: number
-  postName?: number
+  postName?: string
   guid?: string
 }
 
