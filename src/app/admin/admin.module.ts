@@ -1,6 +1,7 @@
 import {Module} from '@nestjs/common'
 import {MongooseModule} from '@nestjs/mongoose'
 import {forNestModule} from 'mongoose-typescript'
+import {AdminAuthController} from './admin-auth.controller'
 import {AdminAuthService} from './admin-auth.service'
 import {AdminController} from './admin.controller'
 import {AdminGuard} from './admin.guard'
@@ -15,6 +16,7 @@ import {AdminService} from './admin.service'
   ],
   controllers: [
     AdminController,
+    AdminAuthController,
   ],
   providers: [
     AdminGuard,

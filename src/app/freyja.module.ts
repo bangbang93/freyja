@@ -6,6 +6,7 @@ import {CategoryModule} from './category/category.module'
 import {CommentModule} from './comment/comment.module'
 import {LinkModule} from './link/link.module'
 import {PageModule} from './page/page.module'
+import {TagModule} from './tag/tag.module'
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import {PageModule} from './page/page.module'
     CommentModule,
     PageModule,
     LinkModule,
+    TagModule,
   ],
 })
 export class FreyjaModule {}

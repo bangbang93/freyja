@@ -24,9 +24,6 @@
 
 export default {
   name: 'HomePage',
-  components: {
-    //      FreyjaArticleComment: () => import('../../components/home/page-comment.vue'),
-  },
   asyncData({store, route}) {
     return store.dispatch('page/get', route.params.name)
   },

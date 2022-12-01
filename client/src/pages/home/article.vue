@@ -34,11 +34,12 @@
   </div>
 </template>
 <script>
+import FreyjaArticleComment from '../../components/home/article-comment.vue'
 
 export default {
   name: 'HomeArticle',
   components: {
-    FreyjaArticleComment: async () => import('../../components/home/article-comment.vue'),
+    FreyjaArticleComment,
   },
   asyncData({store, route}) {
     return store.dispatch('article/get', route.params.id)

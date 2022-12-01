@@ -3,10 +3,11 @@ import {NestFactory} from '@nestjs/core'
 import {NestExpressApplication} from '@nestjs/platform-express'
 import bodyParser from 'body-parser'
 import cacheControl from 'cache-control'
+import historyApiFallback from 'connect-history-api-fallback'
 import connectRedis from 'connect-redis'
 import cookieParser from 'cookie-parser'
 import * as express from 'express'
-import {Application, NextFunction, Request, Response} from 'express'
+import {Application} from 'express'
 import session from 'express-session'
 import fs from 'fs'
 import helmet from 'helmet'
@@ -42,6 +43,7 @@ export async function bootstrap(): Promise<void> {
   app.use(cookieParser())
   const sessionConfig = configService.get('session')
   app.use(session({
+    name: 'freyja.sid',
     store: new RedisStore({
       client: redis,
       prefix: 'freyja:session:',
@@ -62,6 +64,7 @@ export async function bootstrap(): Promise<void> {
 
   // eslint-disable-next-line @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires
   require('express-simple-route')(path.join(__dirname, 'route'), app)
+  app.use('/admin', historyApiFallback())
   app.use(express.static(path.join(__dirname, 'public')))
 
   const port = parseInt(configService.get('PORT', '3000'), 10)
@@ -108,24 +111,8 @@ export async function bootstrap(): Promise<void> {
     // eslint-disable-next-line @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires
     const fundebug = require('fundebug-nodejs')
     fundebug.apikey = configService.get('freyja.fundebug.apikey')
-    app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-      res.status(500)
-      next(err)
-    })
     app.use(fundebug.ExpressErrorHandler)
   }
-  app.use((err: Record<string, unknown>, req: Request, res: Response, next: NextFunction) => {
-    if (!err.status) {
-      // eslint-disable-next-line no-console
-      console.error(err)
-      err.status = 500
-    }
-    if (res.headersSent) return
-    res.status((err.status as number) || 500)
-      .json({
-        message: err.message,
-      })
-  })
 
   await app.listen(configService.get('PORT', '3000'))
 }
