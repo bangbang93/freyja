@@ -3,7 +3,7 @@
  */
 'use strict'
 // eslint-disable-next-line @typescript-eslint/no-require-imports
-import {DocumentType, getModel, id, model, ObjectId, prop, RichModelType, unique} from 'mongoose-typescript'
+import {DocumentType, id, model, ObjectId, prop, RichModelType, unique} from 'mongoose-typescript'
 
 export interface ITagSchema {
   _id: ObjectId

@@ -2,12 +2,18 @@
  * Created by bangbang93 on 2017/9/24.
  */
 'use strict'
+import {Injectable} from '@nestjs/common'
 import {Feed} from 'feed'
-import {Admin} from '../app/admin/admin.model'
-import {ArticleModel} from '../app/article/article.model'
+import {Admin} from '../admin/admin.model'
+import {ArticleService} from '../article/article.service'
 
-export const FeedService = {
-  async getFeed(baseUrl: string) {
+@Injectable()
+export class FeedService {
+  constructor(
+    private readonly articleService: ArticleService,
+  ) {}
+
+  async getFeed(baseUrl: string): Promise<string> {
     const feed = new Feed({
       feed: 'bangbang93.blog()',
       title: 'bangbang93.blog()',
@@ -26,7 +32,7 @@ export const FeedService = {
       },
       feedLinks: {},
     })
-    const articles = await ArticleModel.listByPage({page: 1})
+    const articles = await this.articleService.listByPage(1)
     for (const article of articles) {
       await article.populate('author')
       feed.addItem({
@@ -46,5 +52,5 @@ export const FeedService = {
     }
 
     return feed.rss2()
-  },
+  }
 }
