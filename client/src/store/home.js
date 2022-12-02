@@ -2,13 +2,14 @@
  * Created by bangbang93 on 2017/9/6.
  */
 'use strict'
-import { Fetch } from './index'
+import {Fetch} from './index'
 
 export default {
   namespaced: true,
   state: () => ({
     articles: [
       {
+        _id: '0',
         title: '',
         summary: '',
         tags: [],
@@ -42,20 +43,20 @@ export default {
     },
   },
   actions: {
-    async getArticles({ commit, rootState }, { page, tag, category }) {
+    async getArticles({commit, rootState}, {page, tag, category}) {
       let resp
       if (tag) {
         resp = await Fetch.get(
           `${rootState.origin}/api/tag/${encodeURIComponent(tag)}`,
-          { page }
+          {page},
         )
       } else if (category) {
         resp = await Fetch.get(
           `${rootState.origin}/api/category/${encodeURIComponent(category)}`,
-          { page }
+          {page},
         )
       } else {
-        resp = await Fetch.get(`${rootState.origin}/api/article`, { page })
+        resp = await Fetch.get(`${rootState.origin}/api/article`, {page})
       }
       if (resp.status !== 200) {
         const err = new Error('fetch article list failed')
@@ -68,12 +69,12 @@ export default {
       commit('setArticles', list)
       return list
     },
-    async getCategories({ commit }) {
+    async getCategories({commit}) {
       const resp = await Fetch.get('/api/category/tree')
       const categories = await resp.json()
       commit('setCategories', categories)
     },
-    async search({ commit, rootState }, { keyword, page }) {
+    async search({commit, rootState}, {keyword, page}) {
       const resp = await Fetch.get(`${rootState.origin}/api/article/search`, {
         keyword,
         page,

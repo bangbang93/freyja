@@ -1,4 +1,12 @@
-declare module '*.vue' {
-  import Vue, {VNode} from 'vue'
-  export default Vue
+import {RouteLocationNormalizedLoaded} from 'vue-router'
+import {Store} from 'vuex'
+
+declare module 'vue' {
+  interface ComponentCustomOptions {
+    asyncData(context: {store: Store; route: RouteLocationNormalizedLoaded}): Promise<void>
+  }
+
+  interface ComponentCustomProperties {
+    $store: Store<any>
+  }
 }

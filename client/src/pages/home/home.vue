@@ -60,38 +60,39 @@
     </div>
   </div>
 </template>
-<script>
+<script lang="ts">
 import {ElButton} from 'element-plus'
+import {defineComponent} from 'vue'
+import 'prismjs/themes/prism-okaidia.css'
 
-function asyncData({store, route}) {
-  switch (route.name) {
-    case 'home':
-      return store.dispatch('home/getArticles', {page: route.query.page || 1})
-    case 'category':
-      return store.dispatch('home/getArticles', {
-        page: route.query.page || 1,
-        category: route.params.category,
-      })
-    case 'tag':
-      return store.dispatch('home/getArticles', {
-        page: route.query.page || 1,
-        tag: route.params.tag,
-      })
-    case 'search':
-      return store.dispatch('home/search', {
-        keyword: route.query.keyword,
-        page: route.query.page || 1,
-      })
-    default:
-  }
-}
 
-export default {
+export default defineComponent({
   name: 'HomeHome',
   components: {
     ElButton,
   },
-  asyncData,
+  asyncData({store, route}) {
+    switch (route.name) {
+      case 'home':
+        return store.dispatch('home/getArticles', {page: route.query.page || 1})
+      case 'category':
+        return store.dispatch('home/getArticles', {
+          page: route.query.page || 1,
+          category: route.params.category,
+        })
+      case 'tag':
+        return store.dispatch('home/getArticles', {
+          page: route.query.page || 1,
+          tag: route.params.tag,
+        })
+      case 'search':
+        return store.dispatch('home/search', {
+          keyword: route.query.keyword,
+          page: route.query.page || 1,
+        })
+      default:
+    }
+  },
   data() {
     const result =  {
       articles: this.$store.state.home.articles,
@@ -100,8 +101,8 @@ export default {
       category: this.$route.params.category,
       keyword: this.$route.params.keyword,
     }
-    if (this.$route.name === 'search') {
-      result.keyword = this.$route.query.keyword
+    if (this.$route.name === 'search' && this.$route.query.keyword) {
+      result.keyword = this.$route.query.keyword.toString()
     }
     return result
   },
@@ -116,26 +117,27 @@ export default {
   watch: {
     $route() {
       this.page = Number(this.$route.query.page) || 1
-      asyncData({store: this.$store, route: this.$route})
-      this.keyword = this.$route.query.keyword
+      this.asyncData({store: this.$store, route: this.$route})
+      this.keyword = this.$route.query.keyword?.toString() ?? ''
     },
   },
-  mounted() {
-    this.highlight()
-    import('lozad').then((lozad) => lozad.default().observe())
+  async mounted() {
+    await this.highlight()
+    const lozad = await import('lozad')
+    lozad.default().observe()
   },
-  updated() {
+  async updated() {
     this.highlight()
-    import('lozad').then((lozad) => lozad.default().observe())
+    const lozad = await import('lozad')
+    lozad.default().observe()
   },
   methods: {
     async highlight() {
-      await import('prismjs/themes/prism-okaidia.css')
       const prismjs = await import('prismjs')
       prismjs.highlightAll()
     },
   },
-}
+})
 </script>
 <style lang="scss">
   .freyja-article-pager-prev {

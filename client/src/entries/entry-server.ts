@@ -23,7 +23,7 @@ export default async function createSSRClient(context: Record<string, unknown>):
         store.commit('setReferer', context.referer)
         return Component.asyncData({
           store,
-          route: router.currentRoute,
+          route: router.currentRoute.value,
         })
       }
       return null
