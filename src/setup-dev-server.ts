@@ -8,9 +8,9 @@ export async function setupDevServer(app: Application): Promise<any> {
   let bundle: any
   let clientManifest: any
   const [clientConfig, adminConfig, serverConfig] = await Promise.all([
-    eval('import("../client/webpack.conf.js").then((e) => e.default)'),
-    eval('import("../client/webpack.admin.js").then((e) => e.default)'),
-    eval('import("../client/webpack.server.js").then((e) => e.default)'),
+    eval('import("../client/webpack.conf.ts").then((e) => e.default)'),
+    eval('import("../client/webpack.admin.ts").then((e) => e.default)'),
+    eval('import("../client/webpack.server.ts").then((e) => e.default)'),
   ])
   const readFile = (fs: MemoryFileSystem, file: string) => {
     return fs.readFileSync(path.join(clientConfig.output.path, file), 'utf-8')
@@ -68,12 +68,7 @@ export async function setupDevServer(app: Application): Promise<any> {
 
       bundle = JSON.parse(readFile(mfs, 'vue-ssr-server-bundle.json'))
       if (clientManifest) {
-        resolve({
-          bundle,
-          options: {
-            clientManifest,
-          },
-        })
+        resolve(app)
       }
     })
   })

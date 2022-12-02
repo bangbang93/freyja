@@ -61,8 +61,7 @@
   </div>
 </template>
 <script>
-import 'element-ui/lib/theme-chalk/index.css'
-import {Button, Icon} from 'element-ui'
+import {ElButton} from 'element-plus'
 
 function asyncData({store, route}) {
   switch (route.name) {
@@ -90,7 +89,7 @@ function asyncData({store, route}) {
 export default {
   name: 'HomeHome',
   components: {
-    ElButton: Button,
+    ElButton,
   },
   asyncData,
   data() {

@@ -9,8 +9,8 @@
     <div class="freyja-comment-panel">
       <div class="freyja-comment-publisher">
         <div class="freyja-comment-time freyja-comment-publisher-fields">
-          <i class="el-icon-time" />
-          {{ comment.createdAt | time }}
+          <el-icon><el-icon-time /></el-icon>
+          {{ $filters.time(comment.createdAt) }}
         </div>
         <div class="freyja-comment-name freyja-comment-publisher-fields">
           <i class="fa fa-user" />
@@ -33,22 +33,29 @@
     </div>
   </div>
 </template>
+
 <script>
+import {Timer} from '@element-plus/icons'
+import {$emit, $off, $on, $once} from '../../utils/gogocodeTransfer'
 export default {
   name: 'FreyjaArticleCommentItem',
+  components: {
+    ElIconTime: Timer,
+  },
   props: {
     comment: Object,
   },
+  emits: ['reply-clicked'],
   methods: {
     onReplyClicked(comment) {
-      this.$emit('reply-clicked', comment)
+      $emit(this, 'reply-clicked', comment)
     },
   },
 }
 </script>
+
 <style lang="scss">
 .freyja-article-comment-item {
-
   > div {
     vertical-align: top;
     display: inline-block;

@@ -17,8 +17,8 @@
       :fetch-suggestions="searchTag"
       class="input-new-tag"
       @select="onSelectTag"
-      @keydown.native.enter="onSelectTag(tagInput)"
-      @blur.native="hideInput"
+      @keydown.enter="onSelectTag(tagInput)"
+      @blur="hideInput"
     />
     <el-button
       v-if="!isInputVisible"
@@ -30,7 +30,9 @@
     </el-button>
   </div>
 </template>
+
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 export default {
   name: 'FreyjaTagEditor',
   props: {
@@ -59,20 +61,26 @@ export default {
     onSelectTag(tagInput) {
       tagInput = tagInput.value || tagInput
       if (!tagInput) return
-      this.$emit('tag-add', tagInput)
+      $emit(this, 'tag-add', tagInput)
       this.tagInput = ''
     },
     searchTag(query, cb) {
-      cb(this.tags.filter((tag) => tag.includes(query)).map((tag) => ({value: tag})))
+      cb(
+        this.tags
+          .filter((tag) => tag.includes(query))
+          .map((tag) => ({ value: tag }))
+      )
     },
     onClose(tag) {
-      this.$emit('tag-close', tag)
+      $emit(this, 'tag-close', tag)
     },
   },
+  emits: ['tag-add', 'tag-close'],
 }
 </script>
-<style scoped lang="scss">
-  .tag {
-    margin-left: 10px;
-  }
+
+<style lang="scss" scoped>
+.tag {
+  margin-left: 10px;
+}
 </style>

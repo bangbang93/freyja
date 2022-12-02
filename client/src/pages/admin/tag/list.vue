@@ -1,12 +1,9 @@
 <template>
   <div class="freyja-tag-list">
-    <freyja-tag-editor
-      :tags="tags"
-      :selected-tags="tags"
-      @tag-add="onTagAdd"
-    />
+    <freyja-tag-editor :tags="tags" :selected-tags="tags" @tag-add="onTagAdd" />
   </div>
 </template>
+
 <script>
 import FreyjaTagEditor from '../../../components/admin/tag-editor.vue'
 
@@ -37,9 +34,10 @@ export default {
   },
 }
 </script>
-<style scoped lang="scss">
-  .freyja-tag-list {
-    margin-top: 50px;
-    margin-left: 50px;
-  }
+
+<style lang="scss" scoped>
+.freyja-tag-list {
+  margin-top: 50px;
+  margin-left: 50px;
+}
 </style>

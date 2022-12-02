@@ -1,6 +1,7 @@
-import {NextFunction, Request, Response} from 'express'
+import {renderToString} from '@vue/server-renderer'
+import {Request, Response} from 'express'
 import LRU from 'lru-cache'
-import {BundleRenderer} from 'vue-server-renderer'
+import {App} from 'vue'
 import ms = require('ms')
 
 const microCache = new LRU({
@@ -13,24 +14,11 @@ const isCacheable = (req: Request) => {
 }
 
 export default function serverRender(
-  renderer: BundleRenderer,
+  app: App,
   port: number,
 ): (req: Request, res: Response, next: any) => any {
-  return function render(req, res, next) {
+  return async function render(req, res, next) {
     const s = Date.now()
-
-    const handleError = (err: any) => {
-      const time = Date.now() - s
-      res.set('x-ssr-time', time.toString())
-      if (err.url) {
-        res.redirect(err.url as string)
-      } else if (err.code === 404) {
-        return next()
-      } else {
-        // Render Error Page or Redirect
-        return next(err)
-      }
-    }
 
     const cacheable = isCacheable(req)
     if (cacheable) {
@@ -52,10 +40,8 @@ export default function serverRender(
       referer: `${req.protocol}://${req.hostname}${req.url}`,
       status: null,
     }
-    renderer.renderToString(context, (err, html) => {
-      if (err) {
-        return handleError(err)
-      }
+    try {
+      const html = await renderToString(app, context)
       if (context.status) {
         res.status(context.status)
       }
@@ -73,6 +59,17 @@ export default function serverRender(
       }
       res.set('x-ssr-time', time.toString())
       res.end(html)
-    })
+    } catch (err: any) {
+      const time = Date.now() - s
+      res.set('x-ssr-time', time.toString())
+      if (err.url) {
+        res.redirect(err.url as string)
+      } else if (err.code === 404) {
+        return next()
+      } else {
+        // Render Error Page or Redirect
+        return next(err)
+      }
+    }
   }
 }

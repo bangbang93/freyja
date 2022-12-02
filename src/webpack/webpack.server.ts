@@ -1,0 +1,47 @@
+/**
+ * Created by bangbang93 on 2017/8/25.
+ */
+'use strict'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
+import path from 'path'
+import {VueLoaderPlugin} from 'vue-loader'
+import merge from 'webpack-merge'
+import nodeExternals from 'webpack-node-externals'
+import baseConfig from './webpack.base.config'
+
+
+const config = merge(baseConfig, {
+  entry: path.join(__dirname, '../../client/src/entries/entry-server.ts'),
+  target: 'node',
+  output: {
+    libraryTarget: 'commonjs2',
+  },
+  externals: nodeExternals({
+    allowlist: /\.(?:css|scss)$/,
+  }),
+  plugins: [
+    new VueLoaderPlugin(),
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: 'client/src/html/index.html',
+      inject: true,
+      chunks: ['main', 'vendor.js'],
+    }),
+  ],
+})
+
+config.module?.rules?.forEach((rule) => {
+  if (typeof rule !== 'string') {
+    switch (rule?.test?.toString()) {
+      case '/\\.css$/':
+        rule.use = ['vue-style-loader', 'css-loader']
+        break
+      case '/\\.s[ca]ss$/':
+        rule.use = ['vue-style-loader', 'css-loader', 'sass-loader']
+        break
+      default:
+    }
+  }
+})
+
+module.exports = config

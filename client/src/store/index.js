@@ -2,7 +2,7 @@
  * Created by bangbang93 on 2017/8/25.
  */
 'use strict'
-import Vuex from 'vuex'
+import * as Vuex from 'vuex'
 import VueFetch from 'vue-fetch'
 import ArticleStore from './article'
 import CommentStore from './comment'
@@ -12,9 +12,8 @@ import PageStore from './page'
 
 export const Fetch = VueFetch()
 
-
 export function createStore() {
-  return new Vuex.Store({
+  return Vuex.createStore({
     state: {
       origin: '',
       ssrReferer: '',

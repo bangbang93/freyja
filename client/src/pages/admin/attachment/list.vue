@@ -8,18 +8,12 @@
         :on-success="initData"
         class="freyja-attachment-upload"
       >
-        <i class="el-icon-upload" />
-        <div class="">
-          将文件拖到此处，或<em>点击上传</em>
-        </div>
+        <el-icon><el-icon-upload /></el-icon>
+        <div class="">将文件拖到此处，或<em>点击上传</em></div>
       </el-upload>
     </el-row>
     <el-row>
-      <el-col
-        v-for="attachment in attachments"
-        :key="attachment._id"
-        :span="6"
-      >
+      <el-col v-for="attachment in attachments" :key="attachment._id" :span="6">
         <freyja-attachment-card
           class="freyja-attachment-card"
           :attachment="attachment"
@@ -35,12 +29,17 @@
     </el-row>
   </div>
 </template>
+
 <script>
+import { Upload as ElIconUpload } from '@element-plus/icons'
 import FreyjaAttachmentCard from '../../../components/admin/attachment-card.vue'
 
 export default {
+  components: {
+    FreyjaAttachmentCard,
+    ElIconUpload,
+  },
   name: 'FreyjaAttachmentList',
-  components: {FreyjaAttachmentCard},
   data() {
     return {
       attachments: [],
@@ -64,17 +63,18 @@ export default {
   },
 }
 </script>
-<style scoped lang="scss">
-  .freyja-attachment-card {
-    width: 90%;
-    margin: 10px auto;
-  }
-  .freyja-attachment-upload {
-    border: solid #ccc 1px;
-    border-radius: 2px;
-    height: 50px;
-    width: 300px;
-    margin: 20px auto;
-    text-align: center;
-  }
+
+<style lang="scss" scoped>
+.freyja-attachment-card {
+  width: 90%;
+  margin: 10px auto;
+}
+.freyja-attachment-upload {
+  border: solid #ccc 1px;
+  border-radius: 2px;
+  height: 50px;
+  width: 300px;
+  margin: 20px auto;
+  text-align: center;
+}
 </style>

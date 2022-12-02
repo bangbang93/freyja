@@ -1,22 +1,17 @@
 <template>
   <div class="freyja-article-comment">
     <div class="freyja-article-comment-buttons">
-      <el-button
-        size="small"
-        @click="toggleEditor"
-      >
+      <el-button size="small" @click="toggleEditor">
         <i class="fa fa-comment" /> 发表评论
       </el-button>
     </div>
     <transition-group
+      tag="span"
       appear
       name="custom-classes-transition"
       appear-active-class="animated slideInLeft"
     >
-      <div
-        v-for="comment in comments"
-        :key="comment._id"
-      >
+      <div v-for="comment in comments" :key="comment._id">
         <freyja-article-comment-item
           :comment="comment"
           @reply-clicked="onReplyClicked"
@@ -39,9 +34,13 @@
     </transition>
   </div>
 </template>
+
 <script>
 import FreyjaCommentEditor from './comment-editor.vue'
-import {Button, Notification} from 'element-ui'
+import {
+  ElButton as Button,
+  ElNotification as Notification,
+} from 'element-plus'
 import FreyjaArticleCommentItem from './article-comment-item.vue'
 
 export default {
@@ -79,7 +78,7 @@ export default {
       this.showEditor = false
       this.replying = null
     },
-    async onSubmitComment({publisher, content}) {
+    async onSubmitComment({ publisher, content }) {
       const data = {
         content,
         articleId: this.articleId,
@@ -116,10 +115,11 @@ export default {
   },
 }
 </script>
+
 <style lang="scss">
-  .freyja-article-comment {
-    .freyja-article-comment-buttons {
-      margin-bottom: 20px;
-    }
+.freyja-article-comment {
+  .freyja-article-comment-buttons {
+    margin-bottom: 20px;
   }
+}
 </style>

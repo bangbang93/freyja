@@ -2,14 +2,14 @@
  * Created by bangbang93 on 16/9/20.
  */
 'use strict'
-/* eslint-disable @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires */
-const path = require('path')
-const projectRoot = path.resolve(__dirname, './src')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+import MiniCssExtractPlugin from 'mini-css-extract-plugin'
+import path, {join} from 'path'
+import {Configuration} from 'webpack'
 
+const projectRoot = path.resolve(__dirname, '../../client/src')
 const IS_PRODUCTION = process.env.NODE_ENV === 'production'
 
-module.exports = {
+export default {
   devtool: IS_PRODUCTION ? false : 'source-map',
   mode: IS_PRODUCTION ? 'production' : 'development',
   name: 'freyja',
@@ -20,14 +20,9 @@ module.exports = {
     filename: IS_PRODUCTION ? 'js/[name].[chunkhash:8].js' : 'js/[name].js',
   },
   resolve: {
-    modules: [
-      path.join(__dirname, 'src'),
-      path.join(__dirname, '../node_modules'),
-    ],
     extensions: ['.js', '.json', '.ts', '.vue'],
     alias: {
       url: require.resolve('url/'),
-      vue$: 'vue/dist/vue.esm.js',
     },
   },
   module: {
@@ -90,9 +85,9 @@ module.exports = {
       },
     ],
   },
-}
+} as Configuration
 
-function assetsPath(_path) {
+function assetsPath(path: string): string {
   const assetsSubDirectory = 'static'
-  return path.join(assetsSubDirectory, _path)
+  return join(assetsSubDirectory, path)
 }

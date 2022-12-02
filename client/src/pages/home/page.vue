@@ -6,7 +6,7 @@
     <!--<div class="freyja-article-time">-->
     <!--<span><i class="el-icon-time"></i> {{page.createdAt | time}}</span>-->
     <!--</div>-->
-    <hr class="split-line">
+    <hr class="split-line" />
     <div class="freyja-article-content">
       <div
         ref="articleContent"
@@ -20,11 +20,11 @@
     <!--</div>-->
   </div>
 </template>
-<script>
 
+<script>
 export default {
   name: 'HomePage',
-  asyncData({store, route}) {
+  asyncData({ store, route }) {
     return store.dispatch('page/get', route.params.name)
   },
   data() {
@@ -51,12 +51,18 @@ export default {
   },
 }
 </script>
+
 <style scoped>
-  .split-line {
-    border: 0;
-    height: 1px;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
-    width: 40%;
-    margin-left: 0;
-  }
+.split-line {
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 0.75),
+    rgba(0, 0, 0, 0)
+  );
+  width: 40%;
+  margin-left: 0;
+}
 </style>

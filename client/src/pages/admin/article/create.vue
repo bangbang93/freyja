@@ -9,7 +9,7 @@
       </el-form-item>
       <el-form-item class="editor-container">
         <freyja-md-editor
-          v-model="article.content"
+          v-model:value="article.content"
           @attachAdd="onAttachAdd"
         />
       </el-form-item>
@@ -24,10 +24,7 @@
             highlight-current
           />
         </el-col>
-        <el-col
-          :span="15"
-          :offset="1"
-        >
+        <el-col :span="15" :offset="1">
           <el-form-item label="标签">
             <freyja-tag-editor
               :tags="tags"
@@ -37,18 +34,14 @@
             />
           </el-form-item>
           <el-form-item style="margin-top: 10px">
-            <el-button
-              type="primary"
-              @click="submit"
-            >
-              发布
-            </el-button>
+            <el-button type="primary" @click="submit"> 发布 </el-button>
           </el-form-item>
         </el-col>
       </el-row>
     </el-form>
   </div>
 </template>
+
 <script lang="ts">
 import FreyjaMdEditor from '../../../components/admin/md-editor.vue'
 import FreyjaTagEditor from '../../../components/admin/tag-editor.vue'
@@ -111,17 +104,17 @@ export default {
     async initData() {
       let resp = await this.$fetch.get('/api/admin/tag')
       if (resp.status !== 200) {
-        this.$message({message: '获取tag失败', type: 'error'})
+        this.$message({ message: '获取tag失败', type: 'error' })
       }
       const body = await resp.json()
       this.tags = body.map((tag) => tag.title)
       resp = await this.$fetch.get('/api/category/tree')
       if (resp.status !== 200) {
-        this.$message({message: '获取分类失败', type: 'error'})
+        this.$message({ message: '获取分类失败', type: 'error' })
       }
       this.categories = await resp.json()
     },
-    async initEdit({id}) {
+    async initEdit({ id }) {
       const resp = await this.$fetch.get(`/api/admin/article/${id}`)
       const article = await resp.json()
       article.tags = article.tags || []
@@ -130,7 +123,7 @@ export default {
       this.$refs.categories.setCheckedKeys(article.categories)
     },
     async submit() {
-      const data = {...this.article}
+      const data = { ...this.article }
       data.attachments = this.attachments
       data.categories = this.$refs.categories.getCheckedKeys()
       let resp
@@ -141,13 +134,13 @@ export default {
       }
       if (resp.status === 201 || resp.status === 200) {
         this.$alert('保存成功', 'Freyja')
-        this.$router.push({name: 'article.list'})
+        this.$router.push({ name: 'article.list' })
       } else {
         const body = await resp.json()
         this.$alert(body.msg || body.message, 'Freyja')
       }
     },
-    onAttachAdd({id}) {
+    onAttachAdd({ id }) {
       this.attachments.push(id)
     },
     onTagClose(tag) {
@@ -157,16 +150,17 @@ export default {
     async onTagAdd(value) {
       const resp = await this.$fetch.put(`/api/admin/tag/${value}`)
       if (resp.status !== 201 && resp.status !== 200) {
-        this.$message({message: '创建tag失败', type: 'error'})
+        this.$message({ message: '创建tag失败', type: 'error' })
       }
       this.article.tags.push(value)
     },
   },
 }
 </script>
-<style scoped lang="scss">
-  .freyja-article-create {
-    margin-left: 10px;
-    margin-right: 10px;
-  }
+
+<style lang="scss" scoped>
+.freyja-article-create {
+  margin-left: 10px;
+  margin-right: 10px;
+}
 </style>
