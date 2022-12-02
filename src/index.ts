@@ -17,6 +17,7 @@ import path, {join} from 'path'
 import favicon from 'serve-favicon'
 import {AppModule} from './app.module'
 import serverRender from './middleware/server-render'
+import {setupDevServer} from './setup-dev-server'
 
 export async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule)
@@ -63,20 +64,17 @@ export async function bootstrap(): Promise<void> {
   /* eslint-disable @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires */
   if (configService.get('NODE_ENV') === 'production') {
     const appPath = join(__dirname, '../client/dist/server/entry-server.js')
-    const app = await import(appPath)
+    const clientApp = await import(appPath)
     app.use(cacheControl({
       '/': 3600,
       '/article/**': 3600,
     }))
-    eApp.get('*', (req, res, next) => serverRender(app, port)(req, res, next))
+    eApp.get('*', (req, res, next) => serverRender(clientApp, port)(req, res, next))
 
     app.use(express.static(path.join(__dirname, 'client/dist')))
   } else {
-    // const renderPromise = await setupDevServer(eApp)
-    // const renderer = serverRender(createRenderer(renderPromise.bundle, renderPromise.options), port)
-    // eApp.get('*', (req, res, next) => {
-    //   renderer(req, res, next)
-    // })
+    const createSSRClient = await setupDevServer(eApp)
+    eApp.get('*', (req, res, next) => serverRender(createSSRClient, port)(req, res, next))
   }
 
   if (configService.get('freyja.fundebug.enable')) {

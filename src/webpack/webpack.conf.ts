@@ -59,7 +59,7 @@ if (IS_PRODUCTION) {
   })
 }
 
-module.exports = merge(config, {
+export default merge(config, {
   entry,
   plugins,
 })

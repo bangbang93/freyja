@@ -59,12 +59,12 @@ if (IS_PRODUCTION) {
   })
 }
 
-module.exports = merge(config, {
+export default merge(config, {
   name: 'admin',
   entry,
   plugins,
   output: {
-    path: path.resolve(__dirname, './dist/admin'),
+    path: path.resolve(__dirname, '../../client/dist/admin'),
     publicPath: '/admin/',
     filename: 'js/[name].[hash].js',
   },

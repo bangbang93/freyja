@@ -1,6 +1,10 @@
 <template>
   <div>
-    <el-col v-if="menuWidth !== 1" :span="menuWidth" class="freyja-left-nav">
+    <el-col
+      v-if="menuWidth !== 1"
+      :span="menuWidth"
+      class="freyja-left-nav"
+    >
       <transition
         name="custom-classes-transition"
         enter-active-class="animated slideInLeft"
@@ -8,7 +12,10 @@
         <freyja-nav-menu v-show="isShowMenu" />
       </transition>
     </el-col>
-    <el-col :span="containerWidth" :offset="menuWidth">
+    <el-col
+      :span="containerWidth"
+      :offset="menuWidth"
+    >
       <div class="container">
         <div class="header">
           <h1 class="no-link">
@@ -25,12 +32,12 @@
               leave-active-class="animated fadeOut"
               mode="out-in"
             >
-              <component :is="Component"></component>
+              <component :is="Component" />
             </transition>
           </router-view>
         </div>
         <div class="footer">
-          <hr />
+          <hr>
           <div class="no-link">
             Powered by
             <a href="https://github.com/bangbang93/freyja">Freyja</a>.
@@ -44,7 +51,7 @@
 
 <script>
 import 'animate.css'
-import { ElCol as Col } from 'element-plus'
+import {ElCol as Col} from 'element-plus'
 import FreyjaNavMenu from '../components/home/nav-menu.vue'
 
 export default {

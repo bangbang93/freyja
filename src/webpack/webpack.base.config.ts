@@ -15,7 +15,7 @@ export default {
   name: 'freyja',
   bail: true,
   output: {
-    path: path.resolve(__dirname, './dist'),
+    path: path.resolve(__dirname, '../../client/dist'),
     publicPath: '/',
     filename: IS_PRODUCTION ? 'js/[name].[chunkhash:8].js' : 'js/[name].js',
   },

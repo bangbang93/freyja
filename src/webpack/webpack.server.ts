@@ -11,22 +11,19 @@ import baseConfig from './webpack.base.config'
 
 
 const config = merge(baseConfig, {
-  entry: path.join(__dirname, '../../client/src/entries/entry-server.ts'),
+  entry: {
+    server: path.join(__dirname, '../../client/src/entries/entry-server.ts'),
+  },
   target: 'node',
   output: {
     libraryTarget: 'commonjs2',
+    path: path.resolve(__dirname, '../../client/dist/server'),
   },
   externals: nodeExternals({
     allowlist: /\.(?:css|scss)$/,
   }),
   plugins: [
     new VueLoaderPlugin(),
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: 'client/src/html/index.html',
-      inject: true,
-      chunks: ['main', 'vendor.js'],
-    }),
   ],
 })
 
@@ -44,4 +41,4 @@ config.module?.rules?.forEach((rule) => {
   }
 })
 
-module.exports = config
+export default config

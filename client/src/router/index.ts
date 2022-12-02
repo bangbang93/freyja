@@ -2,7 +2,9 @@
  * Created by bangbang93 on 2017/8/25.
  */
 'use strict'
-import {createRouter, createWebHistory, Router} from 'vue-router'
+import is from '@sindresorhus/is'
+import {createMemoryHistory, createRouter, createWebHistory, Router} from 'vue-router'
+import undefined = is.undefined
 
 /* eslint-disable @typescript-eslint/no-require-imports */
 export function createHomeRouter(): Router {
@@ -51,7 +53,7 @@ export function createHomeRouter(): Router {
   // })
 
   return createRouter({
-    history: createWebHistory('/'),
+    history: typeof window === 'undefined' ? createMemoryHistory('/') : createWebHistory('/'),
     routes,
     scrollBehavior(to, from, savedPosition) {
       if (savedPosition) {

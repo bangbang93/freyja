@@ -6,11 +6,11 @@
 
 import ora from 'ora'
 import webpack from 'webpack'
+import webpackAdminConfig from '../webpack/webpack.admin'
+import webpackClientConfig from '../webpack/webpack.conf'
+import webpackServerConfig from '../webpack/webpack.server'
 
 process.env.NODE_ENV = 'production'
-const webpackClientConfig = require('../webpack/webpack.conf')
-const webpackServerConfig = require('../webpack/webpack.server')
-const webpackAdminConfig = require('../webpack/webpack.admin')
 
 console.log('  Tip:\n'
   + '  Built files are meant to be served over an HTTP server.\n'

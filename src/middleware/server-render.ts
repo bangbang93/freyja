@@ -14,7 +14,7 @@ const isCacheable = (req: Request) => {
 }
 
 export default function serverRender(
-  app: App,
+  createApp: (context: Record<string, unknown>) => Promise<App>,
   port: number,
 ): (req: Request, res: Response, next: any) => any {
   return async function render(req, res, next) {
@@ -41,6 +41,8 @@ export default function serverRender(
       status: null,
     }
     try {
+      const app = await createApp(context)
+      console.log(app)
       const html = await renderToString(app, context)
       if (context.status) {
         res.status(context.status)
