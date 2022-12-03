@@ -111,7 +111,7 @@
     "url": "^0.11.0",
     "url-loader": "^4.0.0",
     "vue": "^2.6.11",
-    "vue-fetch": "^1.1.2",
+    "vue-fetch": "^2.0.0",
     "vue-loader": "^15.9.1",
     "vue-router": "^3.1.6",
     "vue-server-renderer": "^2.6.14",
