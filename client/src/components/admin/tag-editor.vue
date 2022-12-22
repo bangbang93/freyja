@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
+import {$emit, $off, $on, $once} from '../../utils/gogocodeTransfer'
 export default {
   name: 'FreyjaTagEditor',
   props: {
@@ -45,6 +45,7 @@ export default {
       required: true,
     },
   },
+  emits: ['tag-add', 'tag-close'],
   data() {
     return {
       tagInput: '',
@@ -68,14 +69,13 @@ export default {
       cb(
         this.tags
           .filter((tag) => tag.includes(query))
-          .map((tag) => ({ value: tag }))
+          .map((tag) => ({value: tag})),
       )
     },
     onClose(tag) {
       $emit(this, 'tag-close', tag)
     },
   },
-  emits: ['tag-add', 'tag-close'],
 }
 </script>
 

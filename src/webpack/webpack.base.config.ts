@@ -9,7 +9,7 @@ import {Configuration} from 'webpack'
 const projectRoot = path.resolve(__dirname, '../../client/src')
 const IS_PRODUCTION = process.env.NODE_ENV === 'production'
 
-export default {
+const config: Configuration = {
   devtool: IS_PRODUCTION ? false : 'source-map',
   mode: IS_PRODUCTION ? 'production' : 'development',
   name: 'freyja',
@@ -68,7 +68,7 @@ export default {
         loader: 'html-loader',
       },
       {
-        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        test: /\.(?:png|jpe?g|gif|svg)(?:\?.*)?$/,
         loader: 'url-loader',
         options: {
           limit: 10000,
@@ -76,7 +76,7 @@ export default {
         },
       },
       {
-        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+        test: /\.(?:woff2?|eot|ttf|otf)(?:\?.*)?$/,
         loader: 'url-loader',
         options: {
           limit: 10000,
@@ -85,7 +85,8 @@ export default {
       },
     ],
   },
-} as Configuration
+}
+export default config
 
 function assetsPath(path: string): string {
   const assetsSubDirectory = 'static'

@@ -1,5 +1,8 @@
 <template>
-  <div class="freyja-comment-editor" :style="{ height: height + 'px' }">
+  <div
+    class="freyja-comment-editor"
+    :style="{ height: height + 'px' }"
+  >
     <el-button
       v-if="false"
       type="info"
@@ -10,13 +13,25 @@
     >
       <el-icon><el-icon-d-caret /></el-icon>
     </el-button>
-    <el-button type="success" class="btn-editor" @click="onSubmit">
+    <el-button
+      type="success"
+      class="btn-editor"
+      @click="onSubmit"
+    >
       <el-icon><el-icon-check /></el-icon>
     </el-button>
-    <el-button type="danger" class="btn-editor" @click="onClose">
+    <el-button
+      type="danger"
+      class="btn-editor"
+      @click="onClose"
+    >
       <el-icon><el-icon-close /></el-icon>
     </el-button>
-    <el-form ref="commentForm" :rules="commentRules" :model="comment">
+    <el-form
+      ref="commentForm"
+      :rules="commentRules"
+      :model="comment"
+    >
       <el-col :span="8">
         <el-form-item
           label="昵称"
@@ -40,9 +55,17 @@
           <el-input v-model="comment.publisher.website" />
         </el-form-item>
       </el-col>
-      <el-col :offset="1" :span="15">
-        <el-form-item label="评论" prop="content">
-          <div v-if="reply">正在回复{{ reply.publisher.name }}</div>
+      <el-col
+        :offset="1"
+        :span="15"
+      >
+        <el-form-item
+          label="评论"
+          prop="content"
+        >
+          <div v-if="reply">
+            正在回复{{ reply.publisher.name }}
+          </div>
           <el-input
             v-model="comment.content"
             type="textarea"
@@ -56,11 +79,11 @@
 
 <script>
 import {
-  DCaret as ElIconDCaret,
   Check as ElIconCheck,
   Close as ElIconClose,
+  DCaret as ElIconDCaret,
 } from '@element-plus/icons-vue'
-import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
+import {$emit, $off, $on, $once} from '../../utils/gogocodeTransfer'
 import {
   ElButton as Button,
   ElCol as Col,
@@ -72,6 +95,7 @@ import {
 const defaultHeight = 300
 
 export default {
+  name: 'FreyjaCommentEditor',
   components: {
     ElButton: Button,
     ElForm: Form,
@@ -82,12 +106,12 @@ export default {
     ElIconCheck,
     ElIconClose,
   },
-  name: 'FreyjaCommentEditor',
   props: {
     display: Boolean,
     publisher: Object,
     reply: Object,
   },
+  emits: ['submit', 'close'],
   data() {
     return {
       beforeHeight: 0,
@@ -144,7 +168,6 @@ export default {
       })
     },
   },
-  emits: ['submit', 'close'],
 }
 </script>
 

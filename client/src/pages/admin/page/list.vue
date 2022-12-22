@@ -1,12 +1,24 @@
 <template>
   <div class="freyja-article-list">
     <el-table :data="pages">
-      <el-table-column label="标题" prop="title" />
-      <el-table-column label="作者" prop="author.username" />
-      <el-table-column label="发布时间" prop="createdAt" />
+      <el-table-column
+        label="标题"
+        prop="title"
+      />
+      <el-table-column
+        label="作者"
+        prop="author.username"
+      />
+      <el-table-column
+        label="发布时间"
+        prop="createdAt"
+      />
       <el-table-column label="操作">
-        <template v-slot="scope">
-          <el-button size="small" @click="handleEdit(scope.$index, scope.row)">
+        <template #default="scope">
+          <el-button
+            size="small"
+            @click="handleEdit(scope.$index, scope.row)"
+          >
             编辑
           </el-button>
           <el-button
@@ -24,7 +36,9 @@
       :total="total"
       :current-page="currentPage"
     />
-    <el-button @click="onRerenderAllClick"> 重新渲染所有文章 </el-button>
+    <el-button @click="onRerenderAllClick">
+      重新渲染所有文章
+    </el-button>
   </div>
 </template>
 

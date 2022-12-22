@@ -14,13 +14,21 @@
         <el-input v-model="database.user" />
       </el-form-item>
       <el-form-item label="password">
-        <el-input v-model="database.password" type="password" />
+        <el-input
+          v-model="database.password"
+          type="password"
+        />
       </el-form-item>
       <el-form-item label="tablePrefix">
         <el-input v-model="database.prefix" />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit"> 导入 </el-button>
+        <el-button
+          type="primary"
+          @click="onSubmit"
+        >
+          导入
+        </el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -48,7 +56,7 @@ export default {
       })
       if (resp.status === 200) {
         this.$alert('导入成功')
-        this.$router.push({ name: 'article.list' })
+        this.$router.push({name: 'article.list'})
       } else {
         const body = await resp.json()
         this.$alert(body.msg || body.message)

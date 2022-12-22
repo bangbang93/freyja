@@ -3,7 +3,10 @@
     :body-style="{ margin: 'auto', textAlign: 'center', height: '130px' }"
     @click="view(attachment.path)"
   >
-    <img :src="attachment.path" class="image" />
+    <img
+      :src="attachment.path"
+      class="image"
+    >
     <div>
       {{ attachment.filename }}
     </div>

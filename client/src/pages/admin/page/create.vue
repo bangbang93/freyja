@@ -6,7 +6,7 @@
       </el-form-item>
       <el-form-item class="editor-container">
         <freyja-md-editor
-          v-model:value="page.content"
+          v-model="page.content"
           @attachAdd="onAttachAdd"
         />
       </el-form-item>
@@ -14,7 +14,12 @@
         <el-input v-model="page.name" />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submit"> 发布 </el-button>
+        <el-button
+          type="primary"
+          @click="submit"
+        >
+          发布
+        </el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -56,14 +61,14 @@ export default {
     }
   },
   methods: {
-    async initEdit({ id }) {
+    async initEdit({id}) {
       const resp = await this.$fetch.get(`/api/admin/page/${id}`)
       const page = await resp.json()
       this.page = page
       this.edit.id = page._id
     },
     async submit() {
-      const data = { ...this.page }
+      const data = {...this.page}
       data.attachments = this.attachments
       let resp
       if (this.edit.id) {
@@ -73,13 +78,13 @@ export default {
       }
       if (resp.status === 201 || resp.status === 200) {
         this.$alert('保存成功', 'Freyja')
-        this.$router.push({ name: 'page.list' })
+        this.$router.push({name: 'page.list'})
       } else {
         const body = await resp.json()
         this.$alert(body.msg, 'Freyja')
       }
     },
-    onAttachAdd({ id }) {
+    onAttachAdd({id}) {
       this.attachments.push(id)
     },
   },

@@ -1,10 +1,17 @@
 <template>
   <div>
     <ul>
-      <li v-for="link in links" :key="link.name" class="no-link link-item">
-        <a v-once :href="link.href" target="_blank" rel="nofollow"
-          >{{ link.name }} <i class="fa fa-external-link-square"
-        /></a>
+      <li
+        v-for="link in links"
+        :key="link.name"
+        class="no-link link-item"
+      >
+        <a
+          v-once
+          :href="link.href"
+          target="_blank"
+          rel="nofollow"
+        >{{ link.name }} <i class="fa fa-external-link-square" /></a>
       </li>
     </ul>
   </div>
@@ -13,7 +20,7 @@
 <script>
 export default {
   name: 'HomeLink',
-  asyncData({ store }) {
+  asyncData({store}) {
     return store.dispatch('link/getLinks')
   },
   data() {

@@ -2,7 +2,7 @@
  * Created by bangbang93 on 2017/9/20.
  */
 'use strict'
-import { Fetch } from './index'
+import {Fetch} from './index'
 
 export default {
   namespaced: true,
@@ -18,7 +18,7 @@ export default {
     },
   },
   actions: {
-    async getLinks({ commit, rootState }) {
+    async getLinks({commit, rootState}) {
       const resp = await Fetch.get(`${rootState.origin}/api/link`)
       commit('setLinks', await resp.json())
     },

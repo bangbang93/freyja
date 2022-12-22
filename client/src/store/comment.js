@@ -2,7 +2,7 @@
  * Created by bangbang93 on 2017/9/6.
  */
 'use strict'
-import { Fetch } from './index'
+import {Fetch} from './index'
 
 export default {
   namespaced: true,
@@ -39,7 +39,7 @@ export default {
       state.publisher = Object.assign(state.publisher, publisher)
       localStorage?.setItem('freyja:publisher', JSON.stringify(publisher))
     },
-    reply(state, { replyId, newComment }) {
+    reply(state, {replyId, newComment}) {
       return walk(state.comments)
       function walk(comments) {
         for (const comment of comments) {
@@ -56,7 +56,7 @@ export default {
     },
   },
   actions: {
-    async create({ commit }, { content, articleId, publisher, reply }) {
+    async create({commit}, {content, articleId, publisher, reply}) {
       const resp = await Fetch.post(`/api/comment/article/${articleId}`, {
         content,
         publisher,
@@ -72,14 +72,14 @@ export default {
       const comment = await resp.json()
 
       if (reply) {
-        commit('reply', { replyId: reply, newComment: comment })
+        commit('reply', {replyId: reply, newComment: comment})
       } else {
         commit('create', comment)
       }
       commit('savePublisher', comment.publisher)
       return comment
     },
-    async list({ commit }, { articleId, page }) {
+    async list({commit}, {articleId, page}) {
       const resp = await Fetch.get(`/api/comment/article/${articleId}`, {
         page,
       })
@@ -92,7 +92,7 @@ export default {
       commit('set', comments)
       return comments
     },
-    async reply({ dispatch }, { comment, replyCommentId }) {
+    async reply({dispatch}, {comment, replyCommentId}) {
       comment.reply = replyCommentId
       return dispatch('create', comment)
     },

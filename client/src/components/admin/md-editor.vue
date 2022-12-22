@@ -2,7 +2,7 @@
   <div class="freyja-md-editor">
     <mavon-editor
       ref="editor"
-      v-model:value="content"
+      v-model="content"
       :ishljs="true"
       @change="onChange"
       @imgAdd="onImgAdd"
@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
-import { mavonEditor } from 'mavon-editor'
+import {$emit, $off, $on, $once} from '../../utils/gogocodeTransfer'
+import {mavonEditor} from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 
 export default {
@@ -23,6 +23,7 @@ export default {
   props: {
     value: String,
   },
+  emits: ['update:value', 'attachAdd'],
   data() {
     return {
       content: this.value,
@@ -46,7 +47,7 @@ export default {
       this.$refs['editor'].$img2Url(filename, body.path)
       this.$refs['editor'].$refs['toolbar_left'].$imgUpdateByFilename(
         filename,
-        body.path
+        body.path,
       )
       $emit(this, 'attachAdd', {
         id: body._id,
@@ -55,7 +56,6 @@ export default {
       })
     },
   },
-  emits: ['update:value', 'attachAdd'],
 }
 </script>
 

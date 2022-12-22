@@ -1,6 +1,10 @@
 <template>
   <div class="freyja-tag-list">
-    <freyja-tag-editor :tags="tags" :selected-tags="tags" @tag-add="onTagAdd" />
+    <freyja-tag-editor
+      :tags="tags"
+      :selected-tags="tags"
+      @tag-add="onTagAdd"
+    />
   </div>
 </template>
 

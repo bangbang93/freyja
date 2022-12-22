@@ -1,7 +1,10 @@
 <template>
   <div class="freyja-article-comment">
     <div class="freyja-article-comment-buttons">
-      <el-button size="small" @click="toggleEditor">
+      <el-button
+        size="small"
+        @click="toggleEditor"
+      >
         <i class="fa fa-comment" /> 发表评论
       </el-button>
     </div>
@@ -11,7 +14,10 @@
       name="custom-classes-transition"
       appear-active-class="animated slideInLeft"
     >
-      <div v-for="comment in comments" :key="comment._id">
+      <div
+        v-for="comment in comments"
+        :key="comment._id"
+      >
         <freyja-article-comment-item
           :comment="comment"
           @reply-clicked="onReplyClicked"
@@ -78,7 +84,7 @@ export default {
       this.showEditor = false
       this.replying = null
     },
-    async onSubmitComment({ publisher, content }) {
+    async onSubmitComment({publisher, content}) {
       const data = {
         content,
         articleId: this.articleId,

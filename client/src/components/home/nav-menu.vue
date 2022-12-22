@@ -3,15 +3,15 @@
     <img
       src="https://tva3.sinaimg.cn/crop.0.0.200.200.200/56e0fc78jw1e8qgp5bmzyj2050050aa8.jpg"
       class="freyja-my-avatar freyja-avatar-animation"
-    />
-    <hr />
+    >
+    <hr>
     <div class="freyja-nav-menu-item-group">
       <div class="freyja-nav-menu-item no-link">
         <router-link :to="{ name: 'home' }">
           <i class="fa fa-home" />&nbsp;首页
         </router-link>
       </div>
-      <hr />
+      <hr>
       <!--<div class="freyja-nav-menu-item no-link">-->
       <!--<freyja-menu-category><i class="fa fa-sitemap"></i>&nbsp;分类</freyja-menu-category>-->
       <!--</div>-->
@@ -25,32 +25,31 @@
           <i class="fa fa-link" />&nbsp;友联
         </router-link>
       </div>
-      <hr />
+      <hr>
       <div class="freyja-nav-menu-item no-link">
         <router-link to="/page/i">
           <i class="fa fa-id-card" />&nbsp;我
         </router-link>
       </div>
-      <hr />
+      <hr>
       <div class="freyja-nav-menu-item no-link">
-        <a href="https://blog-old.bangbang93.com/"
-          ><i class="fa fa-archive" />&nbsp;旧博客存档</a
-        >
+        <a href="https://blog-old.bangbang93.com/"><i class="fa fa-archive" />&nbsp;旧博客存档</a>
       </div>
-      <hr />
+      <hr>
       <div class="freyja-nav-menu-item no-link">
-        <label
-          ><i class="fa fa-search" /> 搜索
+        <label><i class="fa fa-search" /> 搜索
           <input
             v-model="keyword"
             class="search-box"
             title="搜索"
             @keydown.enter="onSearch"
-        /></label>
+          ></label>
       </div>
-      <hr />
+      <hr>
     </div>
-    <div class="me">@bangbang93</div>
+    <div class="me">
+      @bangbang93
+    </div>
   </div>
 </template>
 

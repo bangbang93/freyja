@@ -1,2 +1,2 @@
-client/dist
-src/lib
+/client/dist
+/dist

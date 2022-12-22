@@ -9,11 +9,17 @@
         class="freyja-attachment-upload"
       >
         <el-icon><el-icon-upload /></el-icon>
-        <div class="">将文件拖到此处，或<em>点击上传</em></div>
+        <div class="">
+          将文件拖到此处，或<em>点击上传</em>
+        </div>
       </el-upload>
     </el-row>
     <el-row>
-      <el-col v-for="attachment in attachments" :key="attachment._id" :span="6">
+      <el-col
+        v-for="attachment in attachments"
+        :key="attachment._id"
+        :span="6"
+      >
         <freyja-attachment-card
           class="freyja-attachment-card"
           :attachment="attachment"
@@ -31,15 +37,15 @@
 </template>
 
 <script>
-import { Upload as ElIconUpload } from '@element-plus/icons-vue'
+import {Upload as ElIconUpload} from '@element-plus/icons-vue'
 import FreyjaAttachmentCard from '../../../components/admin/attachment-card.vue'
 
 export default {
+  name: 'FreyjaAttachmentList',
   components: {
     FreyjaAttachmentCard,
     ElIconUpload,
   },
-  name: 'FreyjaAttachmentList',
   data() {
     return {
       attachments: [],

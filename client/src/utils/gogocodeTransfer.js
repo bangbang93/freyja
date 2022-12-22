@@ -2,7 +2,7 @@ const eventRegistryMap = new WeakMap()
 function getRegistry(instance) {
   let events = eventRegistryMap.get(instance)
   if (!events) {
-    eventRegistryMap.set(instance, (events = Object.create(null)))
+    eventRegistryMap.set(instance, events = Object.create(null))
   }
   return events
 }
@@ -50,7 +50,7 @@ export function $off(instance, event, fn) {
   return vm
 }
 export function $emit(instance, event, ...args) {
-  instance && instance.$emit && instance.$emit(event, ...args)
+  instance?.$emit?.(event, ...args)
   const cbs = getRegistry(instance)[event]
   if (cbs) {
     cbs.map((cb) => cb.apply(instance, args))
