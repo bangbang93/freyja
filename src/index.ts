@@ -16,7 +16,7 @@ import morgan from 'morgan'
 import path, {join} from 'path'
 import favicon from 'serve-favicon'
 import {AppModule} from './app.module'
-import serverRender from './middleware/server-render'
+import {createServerRender} from './middleware/create-server-render'
 import {setupDevServer} from './setup-dev-server'
 
 export async function bootstrap(): Promise<void> {
@@ -69,12 +69,14 @@ export async function bootstrap(): Promise<void> {
       '/': 3600,
       '/article/**': 3600,
     }))
-    eApp.get('*', (req, res, next) => serverRender(clientApp, port)(req, res, next))
+    const serverRender = await createServerRender(clientApp, port)
+    eApp.get('*', (req, res, next) => serverRender(req, res, next))
 
     app.use(express.static(path.join(__dirname, 'client/dist')))
   } else {
     const createSSRClient = await setupDevServer(eApp)
-    eApp.get('*', (req, res, next) => serverRender(createSSRClient, port)(req, res, next))
+    const serverRender = await createServerRender(createSSRClient, port)
+    eApp.get('*', (req, res, next) => serverRender(req, res, next))
   }
 
   if (configService.get('freyja.fundebug.enable')) {

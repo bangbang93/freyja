@@ -1,7 +1,9 @@
 import {renderToString} from '@vue/server-renderer'
-import {Request, Response} from 'express'
+import {NextFunction, Request, Response} from 'express'
+import {readFile} from 'fs/promises'
 import {NotFound} from 'http-errors'
 import LRU from 'lru-cache'
+import {join} from 'path'
 import {App} from 'vue'
 import ms = require('ms')
 
@@ -14,10 +16,11 @@ const isCacheable = (req: Request) => {
   return req.app.get('env') === 'production'
 }
 
-export default function serverRender(
+export async function createServerRender(
   createApp: (context: Record<string, unknown>) => Promise<App>,
   port: number,
-): (req: Request, res: Response, next: any) => any {
+): Promise<(req: Request, res: Response, next: NextFunction) => void> {
+  const template = await readFile(join(__dirname, '../../client/dist/index.html'), 'utf8')
   return async function render(req, res, next) {
     const s = Date.now()
 
@@ -43,7 +46,8 @@ export default function serverRender(
     }
     try {
       const app = await createApp(context)
-      const html = await renderToString(app, context)
+      const body = await renderToString(app, context)
+      const html = template.replace('<!--vue-ssr-outlet-->', body)
       if (context.status) {
         res.status(context.status)
       }
