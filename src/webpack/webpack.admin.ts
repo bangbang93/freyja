@@ -28,7 +28,7 @@ if (IS_PRODUCTION) {
       minimize: true,
     }),
     new MiniCssExtractPlugin({
-      filename: 'css/[name].[hash].css',
+      filename: 'css/[name].[fullhash].css',
       chunkFilename: 'css/[id].css',
     }),
   )
@@ -66,6 +66,6 @@ export default merge(config, {
   output: {
     path: path.resolve(__dirname, '../../client/dist/admin'),
     publicPath: '/admin/',
-    filename: 'js/[name].[hash].js',
+    filename: 'js/[name].[fullhash].js',
   },
 })
