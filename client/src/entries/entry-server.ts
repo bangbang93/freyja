@@ -11,7 +11,12 @@ export default async function createSSRClient(context: Record<string, unknown>):
   await router.push(context.url as string)
 
   await router.isReady()
-  const matchedComponents = router.currentRoute.value.matched.flatMap((e) => e.components)
+  const matchedComponents = router.currentRoute.value.matched.flatMap((e) => {
+    if (e.components) {
+      return Object.values(e.components)
+    }
+    return []
+  })
   if (!matchedComponents.length) {
     throw new NotFound('no such route')
   }

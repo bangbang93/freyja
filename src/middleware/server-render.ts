@@ -1,5 +1,6 @@
 import {renderToString} from '@vue/server-renderer'
 import {Request, Response} from 'express'
+import {NotFound} from 'http-errors'
 import LRU from 'lru-cache'
 import {App} from 'vue'
 import ms = require('ms')
@@ -42,7 +43,6 @@ export default function serverRender(
     }
     try {
       const app = await createApp(context)
-      console.log(app)
       const html = await renderToString(app, context)
       if (context.status) {
         res.status(context.status)
@@ -62,6 +62,9 @@ export default function serverRender(
       res.set('x-ssr-time', time.toString())
       res.end(html)
     } catch (err: any) {
+      if (err instanceof NotFound) {
+        return next()
+      }
       const time = Date.now() - s
       res.set('x-ssr-time', time.toString())
       if (err.url) {
