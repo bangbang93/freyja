@@ -121,13 +121,15 @@ export default defineComponent({
       this.keyword = this.$route.query.keyword?.toString() ?? ''
     },
   },
-  async mounted() {
-    await this.highlight()
-    const lozad = await import('lozad')
-    lozad.default().observe()
+  mounted() {
+    this.highlight()
+    import('lozad').then((lozad) => {
+      const observer = lozad.default()
+      observer.observe()
+    })
   },
   async updated() {
-    this.highlight()
+    await this.highlight()
     const lozad = await import('lozad')
     lozad.default().observe()
   },

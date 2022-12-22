@@ -3,16 +3,16 @@ import {NextFunction, Request, Response} from 'express'
 import {readFile} from 'fs/promises'
 import {NotFound} from 'http-errors'
 import LRU from 'lru-cache'
+import ms from 'ms'
 import {join} from 'path'
 import {App} from 'vue'
-import ms = require('ms')
 
 const microCache = new LRU({
   max: 1000,
   maxAge: ms('30s'),
 })
 
-const isCacheable = (req: Request) => {
+const isCacheable = (req: Request): boolean => {
   return req.app.get('env') === 'production'
 }
 
@@ -21,6 +21,7 @@ export async function createServerRender(
   port: number,
 ): Promise<(req: Request, res: Response, next: NextFunction) => void> {
   const template = await readFile(join(__dirname, '../../client/dist/index.html'), 'utf8')
+  const devalue = await eval('import("devalue")')
   return async function render(req, res, next) {
     const s = Date.now()
 
@@ -43,11 +44,13 @@ export async function createServerRender(
       origin,
       referer: `${req.protocol}://${req.hostname}${req.url}`,
       status: null,
+      state: undefined,
     }
     try {
       const app = await createApp(context)
       const body = await renderToString(app, context)
       const html = template.replace('<!--vue-ssr-outlet-->', body)
+        .replace('<!--vue-ssr-state-->', `<script>window.__INITIAL_STATE__=${devalue.uneval(context.state)}</script>`)
       if (context.status) {
         res.status(context.status)
       }
@@ -56,13 +59,6 @@ export async function createServerRender(
         microCache.set(req.url, html)
       }
       const time = Date.now() - s
-      if (req.app.get('env') !== 'production') {
-        if (time < 1000) {
-          // req.logger.debug(`whole request: ${time}ms`)
-        } else {
-          // req.logger.warn(`whole request: ${time}ms`)
-        }
-      }
       res.set('x-ssr-time', time.toString())
       res.end(html)
     } catch (err: any) {

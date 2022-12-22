@@ -22,7 +22,7 @@ const isSSR = typeof window === 'undefined'
 export function createHome(): ICreateHome {
   const router = createHomeRouter()
   const store = createStore()
-  const app = isSSR ? createSSRApp(App) : createApp(App)
+  const app = createSSRApp(App)
   app.use(router)
   app.use(store)
 

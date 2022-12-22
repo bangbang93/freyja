@@ -23,7 +23,7 @@ export default async function createSSRClient(context: Record<string, unknown>):
   await Promise.all(
     matchedComponents.map((Component) => {
       if (!Component) return Promise.resolve()
-      if ('asyncData' in Component) {
+      if ('asyncData' in Component && Component.asyncData) {
         store.commit('setOrigin', context.origin)
         store.commit('setReferer', context.referer)
         return Component.asyncData({
