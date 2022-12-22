@@ -59,7 +59,7 @@ import {
   DCaret as ElIconDCaret,
   Check as ElIconCheck,
   Close as ElIconClose,
-} from '@element-plus/icons'
+} from '@element-plus/icons-vue'
 import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import {
   ElButton as Button,

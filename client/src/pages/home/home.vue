@@ -21,7 +21,7 @@
         </h3>
         <div class="freyja-article-info freyja-article-time">
           <hr>
-          <span class="time"><i class="el-icon-time" /> {{ article.createdAt | time }}</span>
+          <span class="time"><i class="el-icon-time" /> {{ formatDate(article.createdAt) }}</span>
           <span class="comments">
             <i
               v-if="article.commentCount === 0"
@@ -63,7 +63,6 @@
 <script lang="ts">
 import {ElButton} from 'element-plus'
 import {defineComponent} from 'vue'
-import 'prismjs/themes/prism-okaidia.css'
 
 
 export default defineComponent({
@@ -114,13 +113,6 @@ export default defineComponent({
       return this.$store.getters['home/articleCount'] === 20
     },
   },
-  watch: {
-    $route() {
-      this.page = Number(this.$route.query.page) || 1
-      this.asyncData({store: this.$store, route: this.$route})
-      this.keyword = this.$route.query.keyword?.toString() ?? ''
-    },
-  },
   mounted() {
     this.highlight()
     import('lozad').then((lozad) => {
@@ -137,6 +129,12 @@ export default defineComponent({
     async highlight() {
       const prismjs = await import('prismjs')
       prismjs.highlightAll()
+    },
+    formatDate(date: Date | string): string {
+      if (typeof date === 'string') {
+        date = new Date(date)
+      }
+      return date.toLocaleString()
     },
   },
 })

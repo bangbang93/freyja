@@ -2,6 +2,7 @@
   <div class="freyja-article-comment-item">
     <div class="freyja-comment-avatar freyja-avatar-animation">
       <img
+        :alt="`${comment.publisher.name} avatar`"
         :src="`https://gravatar.933.moe/avatar/${comment.publisher.hash}?s=100&d=retro`"
         @click="onReplyClicked(comment)"
       >
@@ -9,8 +10,8 @@
     <div class="freyja-comment-panel">
       <div class="freyja-comment-publisher">
         <div class="freyja-comment-time freyja-comment-publisher-fields">
-          <el-icon><el-icon-time /></el-icon>
-          {{ $filters.time(comment.createdAt) }}
+          <i class="fa-clock-o fa" />
+          {{ formatDate(comment.createdAt) }}
         </div>
         <div class="freyja-comment-name freyja-comment-publisher-fields">
           <i class="fa fa-user" />
@@ -34,21 +35,27 @@
   </div>
 </template>
 
-<script>
-import {Timer} from '@element-plus/icons'
-import {$emit, $off, $on, $once} from '../../utils/gogocodeTransfer'
+<script lang="ts">
+import {$emit} from '../../utils/gogocodeTransfer'
+
 export default {
   name: 'FreyjaArticleCommentItem',
-  components: {
-    ElIconTime: Timer,
-  },
   props: {
-    comment: Object,
+    comment: {
+      type: Object,
+      required: true,
+    },
   },
   emits: ['reply-clicked'],
   methods: {
-    onReplyClicked(comment) {
+    onReplyClicked(comment: object) {
       $emit(this, 'reply-clicked', comment)
+    },
+    formatDate(date: Date | string): string {
+      if (typeof date === 'string') {
+        date = new Date(date)
+      }
+      return date.toLocaleString()
     },
   },
 }

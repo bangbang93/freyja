@@ -4,7 +4,7 @@
       <h3>{{ article.title }}</h3>
     </div>
     <div class="freyja-article-time">
-      <span><i class="el-icon-time" /> {{ article.createdAt | time }}</span>
+      <span><i class="el-icon-time" /> {{ article.createdAt }}</span>
     </div>
     <hr class="split-line">
     <div class="freyja-article-content">
@@ -33,16 +33,17 @@
     </div>
   </div>
 </template>
-<script>
+<script lang="ts">
+import {defineComponent} from 'vue'
 import FreyjaArticleComment from '../../components/home/article-comment.vue'
 
-export default {
+export default defineComponent({
   name: 'HomeArticle',
   components: {
     FreyjaArticleComment,
   },
-  asyncData({store, route}) {
-    return store.dispatch('article/get', route.params.id)
+  async asyncData({store, route}) {
+    await store.dispatch('article/get', route.params.id)
   },
   data() {
     return {
@@ -51,6 +52,7 @@ export default {
     }
   },
   mounted() {
+    this.highlight()
     const articleId = this.$route.params.id
     this.$store.dispatch('comment/list', {articleId, page: 1})
   },
@@ -61,12 +63,16 @@ export default {
   methods: {
     async highlight() {
       const prismjs = await import('prismjs')
-      await import('prismjs/themes/prism-okaidia.css')
-      await import('prismjs/components/prism-typescript')
       prismjs.highlightAll()
     },
+    formatDate(date: Date | string): string {
+      if (typeof date === 'string') {
+        date = new Date(date)
+      }
+      return date.toLocaleString()
+    },
   },
-}
+})
 </script>
 <style scoped lang="scss">
   .split-line {

@@ -2,9 +2,11 @@
  * Created by bangbang93 on 2017/8/25.
  */
 'use strict'
-import {compact} from 'lodash'
 import {App} from 'vue'
 import {createHome} from './index'
+
+import '../utils/prism'
+import 'prismjs/themes/prism-okaidia.css'
 
 export async function createClient(): Promise<App> {
   const {app, router, store} = createHome()
@@ -14,7 +16,12 @@ export async function createClient(): Promise<App> {
   }
   await router.isReady()
   router.beforeResolve((to, from, next) => {
-    const matched = compact(router.currentRoute.value.matched.flatMap((e) => e.components))
+    const matched = to.matched.flatMap((e) => {
+      if (e.components) {
+        return Object.values(e.components)
+      }
+      return []
+    })
     // 这里如果有加载指示器(loading indicator)，就触发
     Promise.all(
       matched.map((c) => {
