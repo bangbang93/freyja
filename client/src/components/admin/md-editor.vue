@@ -9,54 +9,47 @@
     />
   </div>
 </template>
-
-<script>
-import {$emit, $off, $on, $once} from '../../utils/gogocodeTransfer'
-import {mavonEditor} from 'mavon-editor'
+<script setup lang="ts">
+import ky from 'ky'
+import VueMavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
+import {ref, unref} from 'vue'
 
-export default {
-  name: 'FreyjaMdEditor',
-  components: {
-    mavonEditor,
+const MavonEditor = VueMavonEditor.mavonEditor
+const props = defineProps({
+  value: {
+    type: String,
+    default: '',
   },
-  props: {
-    value: String,
-  },
-  emits: ['update:value', 'attachAdd'],
-  data() {
-    return {
-      content: this.value,
-    }
-  },
-  watch: {
-    value() {
-      this.content = this.value
-    },
-  },
-  methods: {
-    onChange(val, render) {
-      $emit(this, 'update:value', val, render)
-    },
-    async onImgAdd(filename, file) {
-      const formData = new FormData()
-      formData.append('filename', filename)
-      formData.append('file', file)
-      const resp = await this.$fetch.post('/api/admin/attachment', formData)
-      const body = await resp.json()
-      this.$refs['editor'].$img2Url(filename, body.path)
-      this.$refs['editor'].$refs['toolbar_left'].$imgUpdateByFilename(
-        filename,
-        body.path,
-      )
-      $emit(this, 'attachAdd', {
-        id: body._id,
-        url: body.path,
-        filename: file.name,
-      })
-    },
-  },
+})
+const emit = defineEmits(['update:modelValue', 'attachAdd'])
+const content = ref(props.value)
+const editor = ref<any>(null)
+
+function onChange(val: string): void {
+  emit('update:modelValue', val)
 }
+
+async function onImgAdd(filename: string, file: File): Promise<void> {
+  const formData = new FormData()
+  formData.append('filename', filename)
+  formData.append('file', file)
+  const resp = await ky.post('/api/admin/attachment', {
+    body: formData,
+  })
+  const body = await resp.json<any>()
+  editor.value?.$img2Url(filename, body.path)
+  unref(editor)?.$refs['toolbar_left'].$imgUpdateByFilename(
+    filename,
+    body.path,
+  )
+  emit('attachAdd', {
+    id: body._id,
+    path: body.path,
+    filename: file.name,
+  })
+}
+
 </script>
 
 <style>

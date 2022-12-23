@@ -118,7 +118,7 @@ export default {
   async mounted() {
     const resp = await this.$fetch.get('/api/admin/user/login')
     if (resp.status !== 200) {
-      window.location.href = '/admin/login'
+      window.location.href = '/admin/login.html'
     }
   },
   methods: {

@@ -70,13 +70,13 @@ export async function bootstrap(): Promise<void> {
       '/article/**': 3600,
     }))
     const serverRender = await createServerRender(clientApp, port)
-    eApp.get(/^(?!\/api\/)./, (req, res, next) => serverRender(req, res, next))
+    eApp.get(/^\/(?!api|admin)\/./, (req, res, next) => serverRender(req, res, next))
 
     app.use(express.static(path.join(__dirname, 'client/dist')))
   } else {
     const createSSRClient = await setupDevServer(eApp)
     const serverRender = await createServerRender(createSSRClient, port)
-    eApp.get(/^(?!\/api\/)./, (req, res, next) => serverRender(req, res, next))
+    eApp.get(/^(?!\/api|admin\/)./, (req, res, next) => serverRender(req, res, next))
   }
 
   if (configService.get('freyja.fundebug.enable')) {

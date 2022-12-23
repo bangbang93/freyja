@@ -6,7 +6,6 @@ import wdm from 'webpack-dev-middleware'
 const path = require('path')
 
 export async function setupDevServer(app: Application): Promise<(args: unknown) => Promise<App>> {
-  let bundle: (args: unknown) => Promise<App>
   const [clientConfig, adminConfig, serverConfig] = await Promise.all([
     import('./webpack/webpack.conf').then((m) => m.default),
     import('./webpack/webpack.admin').then((m) => m.default),

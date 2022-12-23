@@ -51,10 +51,11 @@
 </template>
 
 <script lang="ts">
+import {defineComponent} from 'vue'
 import FreyjaMdEditor from '../../../components/admin/md-editor.vue'
 import FreyjaTagEditor from '../../../components/admin/tag-editor.vue'
 
-export default {
+export default defineComponent({
   name: 'FreyjaArticleCreate',
   components: {
     FreyjaTagEditor,
@@ -163,7 +164,7 @@ export default {
       this.article.tags.push(value)
     },
   },
-}
+})
 </script>
 
 <style lang="scss" scoped>

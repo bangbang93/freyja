@@ -10,12 +10,6 @@ export class AdminController implements OnModuleInit {
   @InjectLogger() private readonly logger!: Logger
   private hash?: string
 
-  @Get('login')
-  @Redirect('/admin/login.html')
-  public login(): void {
-    // noop
-  }
-
   @Get('/:type/js/hljs.:lang.js')
   @Redirect()
   public getHljs(@Param('type') type: string, @Param('lang') lang: string): RedirectResponse {

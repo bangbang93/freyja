@@ -3,6 +3,7 @@
  */
 'use strict'
 import Element from 'element-plus'
+import 'element-plus/dist/index.css'
 import 'font-awesome/scss/font-awesome.scss'
 import {createApp} from 'vue'
 import VueFetch from 'vue-fetch'
