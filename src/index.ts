@@ -63,7 +63,7 @@ export async function bootstrap(): Promise<void> {
 
   /* eslint-disable @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires */
   if (configService.get('NODE_ENV') === 'production') {
-    const appPath = join(__dirname, '../client/dist/server/js/server.js')
+    const appPath = join(__dirname, '../client/dist/server/server.js')
     const clientApp = (await import(appPath)).default
     app.use(cacheControl({
       '/': 3600,

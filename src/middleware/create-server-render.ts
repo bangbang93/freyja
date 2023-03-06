@@ -49,8 +49,9 @@ export async function createServerRender(
     try {
       const app = await createApp(context)
       const body = await renderToString(app, context)
-      const html = template.replace('<!--vue-ssr-outlet-->', body)
-        .replace('<!--vue-ssr-state-->', `<script>window.__INITIAL_STATE__=${devalue.uneval(context.state)}</script>`)
+      const html = template.replace('<app id="app"></app>', `<app id="app">${body}</app>`)
+        .replace('<script id="ssr-state"></script>',
+          `<script>window.__INITIAL_STATE__=${devalue.uneval(context.state)}</script>`)
       if (context.status) {
         res.status(context.status)
       }

@@ -32,14 +32,6 @@ if (IS_PRODUCTION) {
       chunkFilename: 'css/[id].[chunkhash:8].css',
     }),
   )
-  entries.forEach((entry) => {
-    plugins.push(new HtmlWebpackPlugin({
-      filename: `${entry}.html`,
-      template: `client/src/html/${entry}.html`,
-      inject: true,
-      chunks: [entry],
-    }))
-  })
 } else {
 // add hot-reload related code to entry chunks
   for (const name of Object.keys(entry)) {
@@ -48,18 +40,23 @@ if (IS_PRODUCTION) {
   plugins.push(
     new webpack.HotModuleReplacementPlugin(),
   )
-
-  entries.forEach((entry) => {
-    plugins.push(new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: 'client/src/html/index.html',
-      inject: true,
-      chunks: [entry],
-    }))
-  })
 }
 
+entries.forEach((entry) => {
+  plugins.push(new HtmlWebpackPlugin({
+    filename: 'index.html',
+    template: 'client/src/html/index.html',
+    inject: true,
+    chunks: [entry],
+  }))
+})
+
 export default merge(config, {
+  output: {
+    path: path.resolve(__dirname, '../../client/dist'),
+    publicPath: '/',
+    filename: IS_PRODUCTION ? 'js/[name].[chunkhash:8].js' : 'js/[name].js',
+  },
   entry,
   plugins,
 })
