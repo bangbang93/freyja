@@ -2,7 +2,6 @@
  * Created by bangbang93 on 2017/8/25.
  */
 'use strict'
-import HtmlWebpackPlugin from 'html-webpack-plugin'
 import path from 'path'
 import {VueLoaderPlugin} from 'vue-loader'
 import merge from 'webpack-merge'
@@ -17,7 +16,7 @@ const config = merge(baseConfig, {
   target: 'node',
   output: {
     libraryTarget: 'commonjs2',
-    path: path.resolve(__dirname, '../../client/dist/entry-server.js'),
+    path: path.resolve(__dirname, '../../client/dist/server'),
   },
   externals: nodeExternals({
     allowlist: /\.(?:css|scss)$/,
