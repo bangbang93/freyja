@@ -1,7 +1,7 @@
 {
   "apps":[{
     "name": "freyja",
-    "script": "bin/www",
+    "script": "dist/main.js",
     "env":{
       "PORT": 4004,
       "NODE_ENV": "production"

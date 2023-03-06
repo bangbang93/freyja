@@ -25,7 +25,7 @@ export async function bootstrap(): Promise<void> {
 
   await mongoose.connect(configService.getOrThrow('database.mongodb.uri'))
 
-  const redis = new Redis(configService.get('redis') as RedisOptions)
+  const redis = new Redis(configService.get('database.redis') as RedisOptions)
 
   const eApp = app.getHttpAdapter() as unknown as Application
 
@@ -58,6 +58,7 @@ export async function bootstrap(): Promise<void> {
 
   app.use('/admin', historyApiFallback())
   app.use(express.static(path.join(__dirname, '..', 'public')))
+  app.use(express.static(path.join(__dirname, '..', 'client/dist')))
 
   const port = parseInt(configService.get('PORT', '3000'), 10)
 
