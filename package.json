@@ -9,7 +9,7 @@
     "start": "nest start",
     "dev": "nest start --watch",
     "pm2": "pm2 startOrReload process.json",
-    "build": "npm run build:nest && npm run build:client",
+    "build": "npm run build:server && npm run build:client",
     "build:server": "nest build",
     "build:client": "node script/build",
     "update": "npm run build && npm run pm2",
