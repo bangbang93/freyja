@@ -60,6 +60,7 @@ export async function bootstrap(): Promise<void> {
 
   app.use('/admin', historyApiFallback())
   app.use(express.static(path.join(__dirname, '..', 'public')))
+  app.use(express.static(path.join(__dirname, '..', 'client/dist')))
 
   const port = parseInt(configService.get('PORT', '3000'), 10)
 
