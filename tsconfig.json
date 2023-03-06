@@ -5,7 +5,8 @@
     "allowJs": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "importHelpers": true
+    "importHelpers": true,
+    "outDir": "dist"
   },
   "exclude": [
     "node_modules",
