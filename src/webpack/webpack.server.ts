@@ -17,7 +17,7 @@ const config = merge(baseConfig, {
   target: 'node',
   output: {
     libraryTarget: 'commonjs2',
-    path: path.resolve(__dirname, '../../client/dist/server'),
+    path: path.resolve(__dirname, '../../client/dist/entry-server.js'),
   },
   externals: nodeExternals({
     allowlist: /\.(?:css|scss)$/,
