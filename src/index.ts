@@ -1,3 +1,4 @@
+import {ValidationPipe} from '@nestjs/common'
 import {ConfigService} from '@nestjs/config'
 import {NestFactory} from '@nestjs/core'
 import {NestExpressApplication} from '@nestjs/platform-express'
@@ -22,6 +23,13 @@ import {setupDevServer} from './setup-dev-server'
 export async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule)
   const configService = app.get(ConfigService)
+
+  app.useGlobalPipes(new ValidationPipe({
+    transform: true,
+    transformOptions: {
+      enableImplicitConversion: true,
+    },
+  }))
 
   await mongoose.connect(configService.getOrThrow('database.mongodb.uri'))
 
@@ -71,12 +79,12 @@ export async function bootstrap(): Promise<void> {
     }))
     const serverRender = await createServerRender(clientApp, port)
     eApp.get(/^(?!\/api|admin\/)./, (req, res, next) => serverRender(req, res, next))
-    eApp.get('*', express.static(path.join(__dirname, '..', 'client/dist')))
   } else {
     const createSSRClient = await setupDevServer(eApp)
     const serverRender = await createServerRender(createSSRClient, port)
     eApp.get(/^(?!\/api|admin\/)./, (req, res, next) => serverRender(req, res, next))
   }
+  eApp.get('*', express.static(path.join(__dirname, '..', 'client/dist')))
 
   if (configService.get('freyja.fundebug.enable')) {
     // eslint-disable-next-line @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires

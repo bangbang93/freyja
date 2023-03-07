@@ -38,7 +38,7 @@ export async function setupDevServer(app: Application): Promise<(args: unknown) 
       statJson?.warnings?.forEach((err) => console.warn(err))
       if (statJson?.errors?.length) return reject(statJson.errors)
 
-      import(path.join(clientConfig.output?.path, 'server/js/server.js'))
+      import(path.join(clientConfig.output?.path, 'server/server.js'))
         .then((e) => resolve(e.default))
         .catch(reject)
     })

@@ -18,7 +18,7 @@
     "snyk-protect": "snyk protect"
   },
   "dependencies": {
-    "@bangbang93/utils": "^5.3.0",
+    "@bangbang93/utils": "^5.5.0",
     "@element-plus/icons-vue": "^2.0.10",
     "@nestjs/common": "^9.2.0",
     "@nestjs/config": "^2.2.0",
