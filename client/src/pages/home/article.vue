@@ -55,6 +55,7 @@ export default defineComponent({
     this.highlight()
     const articleId = this.$route.params.id
     this.$store.dispatch('comment/list', {articleId, page: 1})
+    import('lozad').then((lozad) => lozad.default().observe())
   },
   updated() {
     this.highlight()
