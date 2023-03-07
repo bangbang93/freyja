@@ -1,8 +1,9 @@
 <template>
   <div class="freyja-nav-menu">
     <img
-      src="https://tva3.sinaimg.cn/crop.0.0.200.200.200/56e0fc78jw1e8qgp5bmzyj2050050aa8.jpg"
+      src="../../assets/avatar.jpg"
       class="freyja-my-avatar freyja-avatar-animation"
+      alt="avatar"
     >
     <hr>
     <div class="freyja-nav-menu-item-group">

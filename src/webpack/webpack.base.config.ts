@@ -84,6 +84,6 @@ const config: Configuration = {
 export default config
 
 function assetsPath(path: string): string {
-  const assetsSubDirectory = 'static'
+  const assetsSubDirectory = '/static'
   return join(assetsSubDirectory, path)
 }
