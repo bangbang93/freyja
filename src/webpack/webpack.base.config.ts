@@ -20,6 +20,9 @@ const config: Configuration = {
       url: require.resolve('url/'),
     },
   },
+  output: {
+    publicPath: '/',
+  },
   module: {
     rules: [
       {
@@ -67,7 +70,7 @@ const config: Configuration = {
         loader: 'file-loader',
         options: {
           limit: 10000,
-          name: assetsPath('img/[name].[hash:7].[ext]'),
+          name: assetsPath(IS_PRODUCTION ? 'img/[name].[hash:7].[ext]' : 'img/[name].[ext]'),
         },
       },
       {
@@ -75,7 +78,7 @@ const config: Configuration = {
         loader: 'file-loader',
         options: {
           limit: 10000,
-          name: assetsPath('fonts/[name].[hash:7].[ext]'),
+          name: assetsPath(IS_PRODUCTION ? 'fonts/[name].[hash:7].[ext]' : 'fonts/[name].[ext]'),
         },
       },
     ],
@@ -84,6 +87,6 @@ const config: Configuration = {
 export default config
 
 function assetsPath(path: string): string {
-  const assetsSubDirectory = '/static'
+  const assetsSubDirectory = 'static'
   return join(assetsSubDirectory, path)
 }

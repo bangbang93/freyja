@@ -4,9 +4,11 @@
 'use strict'
 import {App} from 'vue'
 import {createHome} from './index'
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 import '../utils/prism'
 import 'prismjs/themes/prism-okaidia.css'
+import 'element-plus/dist/index.css'
 
 export async function createClient(): Promise<App> {
   const {app, router, store} = createHome()
@@ -37,6 +39,10 @@ export async function createClient(): Promise<App> {
       })
       .catch(next)
   })
+
+  for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+    app.component(key, component)
+  }
 
   app.mount('app')
   return app

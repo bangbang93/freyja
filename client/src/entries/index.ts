@@ -3,13 +3,13 @@
  */
 'use strict'
 import 'font-awesome/scss/font-awesome.scss'
+import 'prismjs'
 import {createSSRApp, App as VueApp} from 'vue'
 import VueFetch from 'vue-fetch'
 import App from '../pages/index.vue'
 import {createHomeRouter} from '../router'
 import '../scss/style.scss'
 import {createStore} from '../store'
-import 'prismjs'
 
 interface ICreateHome {
   app: VueApp
