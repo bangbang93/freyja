@@ -64,7 +64,7 @@ const config: Configuration = {
       },
       {
         test: /\.(?:png|jpe?g|gif|svg)(?:\?.*)?$/,
-        loader: 'url-loader',
+        loader: 'file-loader',
         options: {
           limit: 10000,
           name: assetsPath('img/[name].[hash:7].[ext]'),
@@ -72,7 +72,7 @@ const config: Configuration = {
       },
       {
         test: /\.(?:woff2?|eot|ttf|otf)(?:\?.*)?$/,
-        loader: 'url-loader',
+        loader: 'file-loader',
         options: {
           limit: 10000,
           name: assetsPath('fonts/[name].[hash:7].[ext]'),
