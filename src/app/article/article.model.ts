@@ -1,7 +1,6 @@
 import {IdType} from '@bangbang93/utils/mongodb'
 import {
-  array, DocumentType, getModel, id, index, model, ModelType, ObjectId, prop, Ref, ref, RichModelType, statics,
-  subModel,
+  array, DocumentType, getModel, id, index, model, ObjectId, prop, Ref, ref, RichModelType, statics, subModel,
 } from 'mongoose-typescript'
 import {Admin} from '../admin/admin.model'
 import {Attachment} from '../attachment/attachment.model'

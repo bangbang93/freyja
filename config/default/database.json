@@ -5,5 +5,9 @@
   "redis": {
     "host": "localhost",
     "port": 6379
+  },
+  "meilisearch": {
+    "host": "localhost",
+    "apiKey": "apiKey"
   }
 }
