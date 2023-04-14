@@ -18,6 +18,9 @@ export async function up(args: MigrateArguments): Promise<void> {
     searchableAttributes: [
       'content', 'summary', 'title',
     ],
+    sortableAttributes: [
+      'createdAt',
+    ],
   })
 
 
@@ -25,7 +28,10 @@ export async function up(args: MigrateArguments): Promise<void> {
 
   const docs = []
   for await (const article of articles) {
-    docs.push(article)
+    docs.push({
+      ...article,
+      createdAt: article.createdAt.getTime(),
+    })
 
     if (docs.length >= 1000) {
       await index.addDocuments(docs)
