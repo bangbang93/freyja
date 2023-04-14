@@ -15,20 +15,23 @@ export class ArticleSearchService {
   public async search(keyword: string, skip : number, limit: number): Promise<SearchResponse<IArticleSchema>> {
     return this.index.search(keyword, {
       offset: skip, limit,
+      sort: [
+        'createdAt:desc',
+      ],
     })
   }
 
   public async add(article: IArticleSchema): Promise<void> {
     await this.index.addDocuments([{
-      id: article._id,
       ...article,
+      createdAt: article.createdAt.getTime(),
     }])
   }
 
   public async update(article: IArticleSchema): Promise<void> {
     await this.index.updateDocuments([{
-      id: article._id,
       ...article,
+      createdAt: article.createdAt.getTime(),
     }])
   }
 
