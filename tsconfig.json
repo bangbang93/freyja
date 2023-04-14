@@ -6,7 +6,8 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
-    "noEmit": true
+    "noEmit": true,
+    "incremental": true
   },
   "exclude": [
     "node_modules",
