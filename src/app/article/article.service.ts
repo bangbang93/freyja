@@ -6,6 +6,7 @@ import htmlSubstring from 'html-substring'
 import {ObjectId} from 'mongoose-typescript'
 import {CategoryModel} from '../category/category.model'
 import {CommentModel} from '../comment/comment.model'
+import {ArticleSearchService} from '../meilisearch/article-search.service'
 import {MarkdownService} from '../util/markdown.service'
 import {Article, IArticleDocument, IArticleModel, IArticleSchema} from './article.model'
 
@@ -39,14 +40,17 @@ export class ArticleService {
   constructor(
     @InjectModel(Article) private readonly articleModel: IArticleModel,
     private readonly markdownService: MarkdownService,
+    private readonly articleSearchService: ArticleSearchService,
   ) {}
 
   public async create(data: ICreate): Promise<IArticleDocument> {
     const html = this.markdownService.render(data.content)
     const summary = htmlSubstring(html, SUMMARY_LENGTH)
-    return this.articleModel.create({
+    const article = await this.articleModel.create({
       title: data.title, content: data.content, tags: data.tags, author: data.author, summary, html,
     })
+    await this.articleSearchService.add(article.toObject())
+    return article
   }
 
   public async getById(id: IdType): Promise<IArticleDocument | null> {
@@ -108,7 +112,9 @@ export class ArticleService {
 
   public async search(keyword: string, page: number, limit = 20): Promise<IArticleDocument[]> {
     const skip = (page - 1) * limit
-    return this.articleModel.search(keyword, skip, limit)
+    const search = await this.articleSearchService.search(keyword, skip, limit)
+    const ids = search.hits.map((e) => e._id)
+    return this.articleModel.find({_id: {$in: ids}})
   }
 
   public async update(id: IdType, data: IUpdate): Promise<IArticleDocument> {
@@ -118,11 +124,14 @@ export class ArticleService {
     const summary = htmlSubstring(html, SUMMARY_LENGTH)
     article.html = html
     article.summary = summary
-    return article.save()
+    await article.save()
+    await this.articleSearchService.update(article.toObject())
+    return article
   }
 
   public async delete(id: IdType): Promise<void> {
     await this.articleModel.deleteOne({_id: id})
+    await this.articleSearchService.delete(id)
   }
 
   public async count(): Promise<number> {

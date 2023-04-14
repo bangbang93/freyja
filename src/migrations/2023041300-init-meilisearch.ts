@@ -10,7 +10,8 @@ export async function up(args: MigrateArguments): Promise<void> {
   const articleModel = app.get<IArticleModel>(getModelToken(getModelName(Article)))
   const meilisearch = app.get(MeiliSearch)
 
-  await meilisearch.createIndex('article')
+  const task = await meilisearch.createIndex('article')
+  await meilisearch.waitForTask(task.taskUid)
 
   const index = await meilisearch.getIndex('article')
   await index.updateSettings({
@@ -24,10 +25,7 @@ export async function up(args: MigrateArguments): Promise<void> {
 
   const docs = []
   for await (const article of articles) {
-    docs.push({
-      id: article._id,
-      ...article,
-    })
+    docs.push(article)
 
     if (docs.length >= 1000) {
       await index.addDocuments(docs)

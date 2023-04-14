@@ -15,7 +15,8 @@
     "update": "npm run build && npm run pm2",
     "test": "npm run lint && npm run build",
     "lint": "eslint --ext .js,.ts,.vue .",
-    "snyk-protect": "snyk protect"
+    "snyk-protect": "snyk protect",
+    "migrate": "node dist/script/migrate.js"
   },
   "dependencies": {
     "@bangbang93/utils": "^5.5.0",
