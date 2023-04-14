@@ -1,6 +1,7 @@
 import {Module} from '@nestjs/common'
 import {ConfigService} from '@nestjs/config'
 import {MeiliSearch} from 'meilisearch'
+import {ArticleSearchService} from './article-search.service'
 
 @Module({
   providers: [
@@ -14,6 +15,10 @@ import {MeiliSearch} from 'meilisearch'
         })
       },
     },
+    ArticleSearchService,
+  ],
+  exports: [
+    ArticleSearchService,
   ],
 })
 export class MeilisearchModule {}
