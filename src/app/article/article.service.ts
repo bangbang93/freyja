@@ -3,6 +3,7 @@ import {InjectModel} from '@bangbang93/utils/nest-mongo'
 import {Injectable, NotFoundException} from '@nestjs/common'
 import Bluebird from 'bluebird'
 import htmlSubstring from 'html-substring'
+import {compact} from 'lodash'
 import {ObjectId} from 'mongoose-typescript'
 import {CategoryModel} from '../category/category.model'
 import {CommentModel} from '../comment/comment.model'
@@ -114,7 +115,8 @@ export class ArticleService {
     const skip = (page - 1) * limit
     const search = await this.articleSearchService.search(keyword, skip, limit)
     const ids = search.hits.map((e) => e._id)
-    return this.articleModel.find({_id: {$in: ids}})
+    const articles = await this.articleModel.find({_id: {$in: ids}})
+    return compact(ids.map((e) => articles.find((a) => a._id.equals(e))))
   }
 
   public async update(id: IdType, data: IUpdate): Promise<IArticleDocument> {
