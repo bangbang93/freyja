@@ -9,7 +9,7 @@ export class ArticleSearchService {
   constructor(
     private readonly meilisearch: MeiliSearch,
   ) {
-    this.index = this.meilisearch.index<IArticleSchema>('articles')
+    this.index = this.meilisearch.index<IArticleSchema>('article')
   }
 
   public async search(keyword: string, skip : number, limit: number): Promise<SearchResponse<IArticleSchema>> {
