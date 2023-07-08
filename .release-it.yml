@@ -1,0 +1,9 @@
+npm:
+  publish: false
+git:
+  commit: true
+  push: true
+  tag: true
+  tagName: v${version}
+hooks:
+  after:version:bump: auto-changelog -p
