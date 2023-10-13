@@ -1,11 +1,11 @@
 import {Application} from 'express'
+import {join} from 'path'
 import {App} from 'vue'
 import webpack from 'webpack'
-import wdm from 'webpack-dev-middleware'
 
-const path = require('path')
 
 export async function setupDevServer(app: Application): Promise<(args: unknown) => Promise<App>> {
+  const wdm = require('webpack-dev-middleware')
   const [clientConfig, adminConfig, serverConfig] = await Promise.all([
     import('./webpack/webpack.conf').then((m) => m.default),
     import('./webpack/webpack.admin').then((m) => m.default),
@@ -38,7 +38,7 @@ export async function setupDevServer(app: Application): Promise<(args: unknown) 
       statJson?.warnings?.forEach((err) => console.warn(err))
       if (statJson?.errors?.length) return reject(statJson.errors)
 
-      import(path.join(clientConfig.output?.path, 'server/server.js'))
+      import(join(clientConfig.output?.path ?? '', 'server/server.js'))
         .then((e) => resolve(e.default))
         .catch(reject)
     })
