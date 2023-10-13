@@ -6,11 +6,11 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
 
-COPY client ./client
-RUN npm run build:client
 COPY src ./src
 COPY tsconfig.* nest-cli.json ./
 RUN npm run build:server
+COPY client ./client
+RUN npm run build:client
 
 
 FROM $BASE_IMAGE AS dependencies
