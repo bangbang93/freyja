@@ -1,11 +1,10 @@
 import {Application} from 'express'
 import {join} from 'path'
 import {App} from 'vue'
-import webpack from 'webpack'
-
 
 export async function setupDevServer(app: Application): Promise<(args: unknown) => Promise<App>> {
   const wdm = require('webpack-dev-middleware')
+  const webpack: typeof import('webpack') = require('webpack')
   const [clientConfig, adminConfig, serverConfig] = await Promise.all([
     import('./webpack/webpack.conf').then((m) => m.default),
     import('./webpack/webpack.admin').then((m) => m.default),
