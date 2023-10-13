@@ -1,6 +1,6 @@
 {
   "mongodb": {
-    "uri": "mongodb://localhost:27017/freyja"
+    "uri": "mongodb://172.16.11.3:27017/freyja"
   },
   "redis": {
     "host": "localhost",
