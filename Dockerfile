@@ -6,6 +6,8 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
 
+ENV NODE_ENV=production
+
 COPY src ./src
 COPY tsconfig.* nest-cli.json ./
 RUN npm run build:server
