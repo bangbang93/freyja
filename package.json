@@ -16,7 +16,8 @@
     "test": "npm run lint && npm run build",
     "lint": "eslint --ext .js,.ts,.vue .",
     "snyk-protect": "snyk protect",
-    "migrate": "node dist/script/migrate.js"
+    "migrate": "node dist/script/migrate.js",
+    "update-browserlist-db": "npx update-browserslist-db@latest"
   },
   "dependencies": {
     "@babel/runtime": "^7.23.2",
