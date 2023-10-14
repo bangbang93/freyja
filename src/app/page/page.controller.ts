@@ -1,6 +1,6 @@
 import {MongoIdParam} from '@bangbang93/utils/nest-mongo'
 import {PagedDto} from '@bangbang93/utils/nestjs'
-import {Controller, Get, NotFoundException, Query} from '@nestjs/common'
+import {Controller, Get, NotFoundException, Param, Query} from '@nestjs/common'
 import {IPageSchema} from './page.model'
 import {PageService} from './page.service'
 
@@ -20,7 +20,7 @@ export class PageController {
   }
 
   @Get(':name')
-  public async getByName(@MongoIdParam('name') name: string): Promise<IPageSchema> {
+  public async getByName(@Param('name') name: string): Promise<IPageSchema> {
     const page = await this.pageService.getByName(name)
     if (!page) {
       throw new NotFoundException('page not found')
