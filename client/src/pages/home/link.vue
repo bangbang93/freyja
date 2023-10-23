@@ -7,7 +7,6 @@
         class="no-link link-item"
       >
         <a
-          v-once
           :href="link.href"
           target="_blank"
           rel="nofollow"
