@@ -34,10 +34,6 @@
       </div>
       <hr>
       <div class="freyja-nav-menu-item no-link">
-        <a href="https://blog-old.bangbang93.com/"><i class="fa fa-archive" />&nbsp;旧博客存档</a>
-      </div>
-      <hr>
-      <div class="freyja-nav-menu-item no-link">
         <label><i class="fa fa-search" /> 搜索
           <input
             v-model="keyword"
