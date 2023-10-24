@@ -24,6 +24,7 @@ const props = defineProps({
 })
 const emit = defineEmits(['update:modelValue', 'attachAdd'])
 const content = ref(props.value)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-assignment
 const editor = ref<any>(null)
 
 function onChange(val: string): void {
@@ -37,8 +38,10 @@ async function onImgAdd(filename: string, file: File): Promise<void> {
   const resp = await ky.post('/api/admin/attachment', {
     body: formData,
   })
-  const body = await resp.json<any>()
-  editor.value?.$img2Url(filename, body.path)
+  const body = await resp.json<{path: string;_id: string}>()
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
+  editor?.value?.$img2Url(filename, body.path)
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
   unref(editor)?.$refs['toolbar_left'].$imgUpdateByFilename(
     filename,
     body.path,

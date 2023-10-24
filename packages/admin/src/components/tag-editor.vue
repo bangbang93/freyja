@@ -31,9 +31,11 @@
   </div>
 </template>
 
-<script>
-import {$emit, $off, $on, $once} from '../../../home/src/utils/gogocodeTransfer'
-export default {
+<script lang="ts">
+import {defineComponent} from 'vue'
+import {$emit} from '../utils/gogocodeTransfer'
+
+export default defineComponent({
   name: 'FreyjaTagEditor',
   props: {
     tags: {
@@ -59,24 +61,24 @@ export default {
     hideInput() {
       this.isInputVisible = false
     },
-    onSelectTag(tagInput) {
-      tagInput = tagInput.value || tagInput
+    onSelectTag(tagInput: {value: string} | string) {
+      tagInput = typeof tagInput === 'object' ? tagInput.value : tagInput
       if (!tagInput) return
       $emit(this, 'tag-add', tagInput)
       this.tagInput = ''
     },
-    searchTag(query, cb) {
+    searchTag(query: string, cb: (tags: {value: string}[]) => void) {
       cb(
-        this.tags
-          .filter((tag) => tag.includes(query))
+        (this.tags as string[])
+          .filter((tag: string) => tag.includes(query))
           .map((tag) => ({value: tag})),
       )
     },
-    onClose(tag) {
+    onClose(tag: string) {
       $emit(this, 'tag-close', tag)
     },
   },
-}
+})
 </script>
 
 <style lang="scss" scoped>

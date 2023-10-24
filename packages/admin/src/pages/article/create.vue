@@ -72,6 +72,7 @@
 <script lang="ts">
 import {ElMessageBox, ElTree} from 'element-plus'
 import {defineComponent} from 'vue'
+import {RouteParams} from 'vue-router'
 import FreyjaMdEditor from '../../components/md-editor.vue'
 import FreyjaTagEditor from '../../components/tag-editor.vue'
 
@@ -92,13 +93,23 @@ class TagResDto {
   title!: string
 }
 
+class AttachmentResDto {
+  _id!: string
+  tags!: string[]
+  categories!: string[]
+  title!: string
+  slug!: string
+  attachments!: string[]
+  content!: string
+}
+
 export default defineComponent({
   name: 'FreyjaArticleCreate',
   components: {
     FreyjaTagEditor,
     FreyjaMdEditor,
   },
-  beforeRouteLeave(to, from, next) {
+  beforeRouteLeave(_, __, next) {
     if (this.article.title || this.article.content) {
       ElMessageBox.confirm('文章没有保存，是否离开')
         .then(() => next())
@@ -114,16 +125,16 @@ export default defineComponent({
         content: '',
         slug: '',
         tags: [] as string[],
-        categories: [],
+        categories: [] as string[],
         attachments: [] as string[],
       },
       attachments: [] as string[],
-      tags: [],
+      tags: [] as string[],
       tagInput: '',
       edit: {
         id: '',
       },
-      categories: [],
+      categories: [] as CategoryResDto[],
     }
   },
   computed: {
@@ -143,10 +154,10 @@ export default defineComponent({
       }
     },
   },
-  async mounted() {
-    await this.initData()
+  mounted() {
+    this.initData()
     if (this.$route.name === 'article.edit') {
-      await this.initEdit(this.$route.params)
+      this.initEdit(this.$route.params)
     }
   },
   methods: {
@@ -155,17 +166,17 @@ export default defineComponent({
       if (resp.status !== 200) {
         await ElMessageBox.alert('获取tag失败', 'Freyja', {type: 'error'})
       }
-      const body = await resp.json()
+      const body = await resp.json() as TagResDto[]
       this.tags = body.map((tag: TagResDto) => tag.title)
       resp = await this.$fetch.get('/api/category/tree')
       if (resp.status !== 200) {
         await ElMessageBox.alert('获取分类失败', 'Freyja', {type: 'error'})
       }
-      this.categories = await resp.json()
+      this.categories = await resp.json() as CategoryResDto[]
     },
-    async initEdit(routeParams: Record<string, unknown>) {
-      const resp = await this.$fetch.get(`/api/admin/article/${routeParams['id']}`)
-      const article = await resp.json()
+    async initEdit(routeParams: RouteParams) {
+      const resp = await this.$fetch.get(`/api/admin/article/${routeParams['id'].toString()}`)
+      const article = await resp.json() as AttachmentResDto
       article.tags = article.tags || []
       this.article = article
       this.edit.id = article._id
@@ -174,7 +185,7 @@ export default defineComponent({
     async submit() {
       const data = {...this.article}
       data.attachments = this.attachments
-      data.categories = (this.$refs.categories as typeof ElTree).getCheckedKeys()
+      data.categories = (this.$refs.categories as typeof ElTree).getCheckedKeys() as string[]
       let resp
       if (this.edit.id) {
         resp = await this.$fetch.put(`/api/admin/article/${this.edit.id}`, data)
@@ -185,7 +196,7 @@ export default defineComponent({
         await ElMessageBox.alert('保存成功', 'Freyja')
         await this.$router.push({name: 'article.list'})
       } else {
-        const body = await resp.json()
+        const body = await resp.json() as {message?: string; msg?: string}
         await ElMessageBox.alert(body.msg || body.message, 'Freyja')
       }
     },
