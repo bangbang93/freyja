@@ -29,8 +29,6 @@ export class ArticleWordpress {
 }
 
 @model('article', {timestamps: true})
-// eslint-disable-next-line camelcase
-@index({content: 'text'}, {default_language: 'ngram'})
 export class Article implements IArticleSchema {
   @id() public _id!: ObjectId
   @prop() public title!: string
@@ -125,19 +123,6 @@ export class Article implements IArticleSchema {
     return this.find({
       category: categoryId,
     })
-      .skip(skip)
-      .limit(limit)
-  }
-
-  @statics()
-  public static async search(this: IArticleModel, keyword: string, skip: number,
-    limit: number): Promise<IArticleDocument[]> {
-    return this.find({
-      $text: {
-        $search: keyword,
-      },
-    })
-      .sort({_id: -1})
       .skip(skip)
       .limit(limit)
   }
