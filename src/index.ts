@@ -18,7 +18,6 @@ import path, {join} from 'path'
 import favicon from 'serve-favicon'
 import {AppModule} from './app.module'
 import {createServerRender} from './middleware/create-server-render'
-import {setupDevServer} from './setup-dev-server'
 
 export async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule)
@@ -71,16 +70,12 @@ export async function bootstrap(): Promise<void> {
 
   if (configService.get('NODE_ENV') === 'production') {
     const appPath = join(__dirname, '../client/dist/server/server.js')
-    const clientApp = (await import(appPath) as typeof import('../client/src/entries/entry-server')).default
+    const clientApp = (await import(appPath) as typeof import('../packages/home/src/entries/entry-server')).default
     app.use(cacheControl({
       '/': 3600,
       '/article/**': 3600,
     }))
     const serverRender = await createServerRender(clientApp, port)
-    eApp.get(/^(?!\/api|admin\/)./, (req, res, next) => serverRender(req, res, next))
-  } else {
-    const createSSRClient = await setupDevServer(eApp)
-    const serverRender = await createServerRender(createSSRClient, port)
     eApp.get(/^(?!\/api|admin\/)./, (req, res, next) => serverRender(req, res, next))
   }
   eApp.get('*', express.static(path.join(__dirname, '..', 'client/dist')))

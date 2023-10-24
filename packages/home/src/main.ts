@@ -3,10 +3,10 @@
  */
 'use strict'
 import {App} from 'vue'
-import {createHome} from './index'
+import {createHome} from './entries'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
-import '../utils/prism'
+import './utils/prism.ts'
 import 'prismjs/themes/prism-okaidia.css'
 import 'element-plus/dist/index.css'
 
@@ -17,7 +17,7 @@ export async function createClient(): Promise<App> {
     store.replaceState(window.__INITIAL_STATE__)
   }
   await router.isReady()
-  router.beforeResolve((to, from, next) => {
+  router.beforeResolve((to, _, next) => {
     const matched = to.matched.flatMap((e) => {
       if (e.components) {
         return Object.values(e.components)

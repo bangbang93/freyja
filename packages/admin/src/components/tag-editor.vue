@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import {$emit, $off, $on, $once} from '../../../../client/src/utils/gogocodeTransfer'
+import {$emit, $off, $on, $once} from '../../../home/src/utils/gogocodeTransfer'
 export default {
   name: 'FreyjaTagEditor',
   props: {

@@ -2,46 +2,43 @@
  * Created by bangbang93 on 2017/8/25.
  */
 'use strict'
-import is from '@sindresorhus/is'
 import {createMemoryHistory, createRouter, createWebHistory, Router} from 'vue-router'
-import undefined = is.undefined
 
-/* eslint-disable @typescript-eslint/no-require-imports */
 export function createHomeRouter(): Router {
   const routes = [
     {
       path: '/',
-      component: require('../pages/home/home.vue').default,
+      component: import('../pages/home/home.vue'),
       name: 'home',
     },
     {
       path: '/article/:id',
-      component: require('../pages/home/article.vue').default,
+      component: import('../pages/home/article.vue'),
       name: 'article',
     },
     {
       path: '/page/link',
-      component: require('../pages/home/link.vue').default,
+      component: import('../pages/home/link.vue'),
       name: 'link',
     },
     {
       path: '/page/:name',
-      component: require('../pages/home/page.vue').default,
+      component: import('../pages/home/page.vue'),
       name: 'general-page',
     },
     {
       path: '/tag/:tag',
-      component: require('../pages/home/home.vue').default,
+      component: import('../pages/home/home.vue'),
       name: 'tag',
     },
     {
       path: '/category/:category',
-      component: require('../pages/home/home.vue').default,
+      component: import('../pages/home/home.vue'),
       name: 'category',
     },
     {
       path: '/search',
-      component: require('../pages/home/home.vue').default,
+      component: import('../pages/home/home.vue'),
       name: 'search',
     },
   ]
@@ -49,13 +46,13 @@ export function createHomeRouter(): Router {
   // routes.push({
   //   path: '*',
   //   meta: {status: 404},
-  //   component: require('../components/home/not-found.vue').default,
+  //   component: import('../components/home/not-found.vue'),
   // })
 
   return createRouter({
     history: typeof window === 'undefined' ? createMemoryHistory('/') : createWebHistory('/'),
     routes,
-    scrollBehavior(to, from, savedPosition) {
+    scrollBehavior(_, __, savedPosition) {
       if (savedPosition) {
         return savedPosition
       }

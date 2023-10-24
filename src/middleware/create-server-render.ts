@@ -19,10 +19,10 @@ const isCacheable = (req: Request): boolean => {
 export async function createServerRender(
   createApp: (context: Record<string, unknown>) => Promise<App>,
   port: number,
-): Promise<(req: Request, res: Response, next: NextFunction) => void> {
+): Promise<(req: Request, res: Response, next: NextFunction) => Promise<void>> {
   const template = await readFile(join(__dirname, '../../client/dist/index.html'), 'utf8')
-  const devalue = await eval('import("devalue")')
-  return async function render(req, res, next) {
+  const devalue = await eval('import("devalue")') as typeof import('devalue')
+  return async function render(req, res, next): Promise<void | Response> {
     const s = Date.now()
 
     const cacheable = isCacheable(req)

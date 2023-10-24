@@ -4,11 +4,11 @@
 'use strict'
 import * as Vuex from 'vuex'
 import VueFetch from 'vue-fetch'
-import ArticleStore from './article'
-import CommentStore from './comment'
-import HomeStore from './home'
-import LinkStore from './link'
-import PageStore from './page'
+import ArticleStore from './article.js'
+import CommentStore from './comment.js'
+import HomeStore from './home.js'
+import LinkStore from './link.js'
+import PageStore from './page.js'
 
 export const Fetch = VueFetch()
 

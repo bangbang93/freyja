@@ -1,0 +1,29 @@
+{
+  "name": "@bangbang93/freyja-home",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.4.0",
+    "sass": "^1.69.4",
+    "typescript": "^5.2.2",
+    "vite": "^4.5.0",
+    "vue-tsc": "^1.8.20"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.1.0",
+    "@sindresorhus/is": "^6.0.1",
+    "element-plus": "^2.4.1",
+    "font-awesome": "^4.7.0",
+    "prismjs": "^1.29.0",
+    "vue": "^3.2.45",
+    "vue-fetch": "^2.0.0",
+    "vue-router": "^4.2.5",
+    "vuex": "^4.1.0"
+  }
+}

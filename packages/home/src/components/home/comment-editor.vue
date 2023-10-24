@@ -83,7 +83,7 @@ import {
   Close as ElIconClose,
   DCaret as ElIconDCaret,
 } from '@element-plus/icons-vue'
-import {$emit, $off, $on, $once} from '../../utils/gogocodeTransfer'
+import {$emit, $off, $on, $once} from '../../utils/gogocodeTransfer.js'
 import {
   ElButton as Button,
   ElCol as Col,
