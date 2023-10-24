@@ -8,7 +8,7 @@ RUN npm ci
 
 ENV NODE_ENV=production
 
-COPY src ./src
+COPY packages/server/src ./src
 COPY tsconfig.* nest-cli.json ./
 RUN npm run build:server
 COPY client ./client

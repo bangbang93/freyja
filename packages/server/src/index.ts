@@ -70,7 +70,7 @@ export async function bootstrap(): Promise<void> {
 
   if (configService.get('NODE_ENV') === 'production') {
     const appPath = join(__dirname, '../client/dist/server/server.js')
-    const clientApp = (await import(appPath) as typeof import('../packages/home/src/entries/entry-server')).default
+    const clientApp = (await import(appPath) as typeof import('@bangbang93/freyja-home/src/entries/entry-server')).default
     app.use(cacheControl({
       '/': 3600,
       '/article/**': 3600,
