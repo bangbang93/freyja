@@ -36,8 +36,11 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import {ElMessageBox} from 'element-plus'
+import {defineComponent} from 'vue'
+
+export default defineComponent({
   name: 'FreyjaAdminLogin',
   data() {
     return {
@@ -54,16 +57,15 @@ export default {
         this.loginForm,
       )
       if (res.status === 200) {
-        location.href = '/admin/home'
+        await this.$router.push({name: 'dashboard'})
       } else {
-        this.$message({
-          message: '用户名或密码错误',
+        await ElMessageBox.alert('用户名或密码错误', 'Freyja', {
           type: 'error',
         })
       }
     },
   },
-}
+})
 </script>
 
 <style lang="scss" scoped>

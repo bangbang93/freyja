@@ -6,7 +6,6 @@
 
 import ora from 'ora'
 import webpack from 'webpack'
-import webpackAdminConfig from '../webpack/webpack.admin'
 import webpackClientConfig from '../webpack/webpack.conf'
 import webpackServerConfig from '../webpack/webpack.server'
 
@@ -19,7 +18,7 @@ console.log('  Tip:\n'
 const spinner = ora('building for production...')
 spinner.start()
 
-webpack([webpackClientConfig, webpackServerConfig, webpackAdminConfig], (err, stats) => {
+webpack([webpackClientConfig, webpackServerConfig], (err, stats) => {
   spinner.stop()
   if (err) {
     console.log(err)

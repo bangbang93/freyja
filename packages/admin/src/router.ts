@@ -3,9 +3,9 @@
  */
 
 'use strict'
-import {createRouter, createWebHistory} from 'vue-router'
+import {createRouter, createWebHistory, RouteRecordRaw} from 'vue-router'
 
-const routes = [
+const AdminRoutes: RouteRecordRaw[] = [
   {
     path: '/home',
     component: import('./pages/dashboard.vue'),
@@ -60,6 +60,19 @@ const routes = [
     path: '/page/:id',
     component: import('./pages/page/create.vue'),
     name: 'page.edit',
+  },
+]
+
+const routes: RouteRecordRaw[] = [
+  {
+    path: '/',
+    redirect: '/home',
+    component: import('./pages/index.vue'),
+    children: AdminRoutes,
+  },
+  {
+    path: '/login',
+    component: import('./pages/login.vue'),
   },
 ]
 

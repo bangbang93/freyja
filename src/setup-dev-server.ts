@@ -5,14 +5,13 @@ import {App} from 'vue'
 export async function setupDevServer(app: Application): Promise<(args: unknown) => Promise<App>> {
   const wdm = require('webpack-dev-middleware')
   const webpack: typeof import('webpack') = require('webpack')
-  const [clientConfig, adminConfig, serverConfig] = await Promise.all([
+  const [clientConfig, serverConfig] = await Promise.all([
     import('./webpack/webpack.conf').then((m) => m.default),
-    import('./webpack/webpack.admin').then((m) => m.default),
     import('./webpack/webpack.server').then((m) => m.default),
   ])
 
   return new Promise((resolve, reject) => {
-    const clientCompiler = webpack([clientConfig, adminConfig])
+    const clientCompiler = webpack([clientConfig])
     const devMiddleware = wdm(clientCompiler, {
       publicPath: clientConfig.output?.publicPath,
       serverSideRender: true,
