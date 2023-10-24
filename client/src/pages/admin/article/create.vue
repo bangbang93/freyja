@@ -4,15 +4,34 @@
       <!--<el-form-item style="float: right">-->
       <!--<el-button type="primary" @click="submit">发布</el-button>-->
       <!--</el-form-item>-->
-      <el-form-item label="标题">
-        <el-input v-model="article.title" />
-      </el-form-item>
-      <el-form-item class="editor-container">
-        <freyja-md-editor
-          v-model="article.content"
-          @attachAdd="onAttachAdd"
-        />
-      </el-form-item>
+      <el-row>
+        <el-col :span="12">
+          <el-form-item label="标题">
+            <el-input
+              v-model="article.title"
+              placeholder="请输入标题"
+            />
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="别名">
+            <el-input
+              v-model="article.slug"
+              placeholder="请输入别名"
+            />
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
+          <el-form-item class="editor-container">
+            <freyja-md-editor
+              v-model="article.content"
+              @attachAdd="onAttachAdd"
+            />
+          </el-form-item>
+        </el-col>
+      </el-row>
       <el-row>
         <el-col :span="8">
           <el-tree
@@ -51,9 +70,27 @@
 </template>
 
 <script lang="ts">
+import {ElMessageBox, ElTree} from 'element-plus'
 import {defineComponent} from 'vue'
 import FreyjaMdEditor from '../../../components/admin/md-editor.vue'
 import FreyjaTagEditor from '../../../components/admin/tag-editor.vue'
+
+interface Tree {
+  id: string
+  label: string
+  children?: Tree[]
+}
+
+class CategoryResDto {
+  _id!: string
+  name!: string
+  children!: CategoryResDto[]
+}
+
+class TagResDto {
+  _id!: string
+  title!: string
+}
 
 export default defineComponent({
   name: 'FreyjaArticleCreate',
@@ -63,7 +100,7 @@ export default defineComponent({
   },
   beforeRouteLeave(to, from, next) {
     if (this.article.title || this.article.content) {
-      this.$confirm('文章没有保存，是否离开')
+      ElMessageBox.confirm('文章没有保存，是否离开')
         .then(() => next())
         .catch(() => next(false))
     } else {
@@ -75,9 +112,12 @@ export default defineComponent({
       article: {
         title: '',
         content: '',
-        tags: [],
+        slug: '',
+        tags: [] as string[],
+        categories: [],
+        attachments: [] as string[],
       },
-      attachments: [],
+      attachments: [] as string[],
       tags: [],
       tagInput: '',
       edit: {
@@ -90,11 +130,11 @@ export default defineComponent({
     categoriesTree() {
       return this.categories.map(walk)
 
-      function walk(root) {
-        const node = {
+      function walk(root: CategoryResDto): Tree {
+        const node: Tree = {
           label: root.name,
           id: root._id,
-          children: null,
+          children: [],
         }
         if (root.children) {
           node.children = root.children.map(walk)
@@ -103,38 +143,38 @@ export default defineComponent({
       }
     },
   },
-  mounted() {
-    this.initData()
+  async mounted() {
+    await this.initData()
     if (this.$route.name === 'article.edit') {
-      this.initEdit(this.$route.params)
+      await this.initEdit(this.$route.params)
     }
   },
   methods: {
     async initData() {
       let resp = await this.$fetch.get('/api/admin/tag')
       if (resp.status !== 200) {
-        this.$message({message: '获取tag失败', type: 'error'})
+        await ElMessageBox.alert('获取tag失败', 'Freyja', {type: 'error'})
       }
       const body = await resp.json()
-      this.tags = body.map((tag) => tag.title)
+      this.tags = body.map((tag: TagResDto) => tag.title)
       resp = await this.$fetch.get('/api/category/tree')
       if (resp.status !== 200) {
-        this.$message({message: '获取分类失败', type: 'error'})
+        await ElMessageBox.alert('获取分类失败', 'Freyja', {type: 'error'})
       }
       this.categories = await resp.json()
     },
-    async initEdit({id}) {
-      const resp = await this.$fetch.get(`/api/admin/article/${id}`)
+    async initEdit(routeParams: Record<string, unknown>) {
+      const resp = await this.$fetch.get(`/api/admin/article/${routeParams['id']}`)
       const article = await resp.json()
       article.tags = article.tags || []
       this.article = article
       this.edit.id = article._id
-      this.$refs.categories.setCheckedKeys(article.categories)
+      ;(this.$refs.categories as typeof ElTree).setCheckedKeys(article.categories)
     },
     async submit() {
       const data = {...this.article}
       data.attachments = this.attachments
-      data.categories = this.$refs.categories.getCheckedKeys()
+      data.categories = (this.$refs.categories as typeof ElTree).getCheckedKeys()
       let resp
       if (this.edit.id) {
         resp = await this.$fetch.put(`/api/admin/article/${this.edit.id}`, data)
@@ -142,24 +182,24 @@ export default defineComponent({
         resp = await this.$fetch.post('/api/admin/article', data)
       }
       if (resp.status === 201 || resp.status === 200) {
-        this.$alert('保存成功', 'Freyja')
-        this.$router.push({name: 'article.list'})
+        await ElMessageBox.alert('保存成功', 'Freyja')
+        await this.$router.push({name: 'article.list'})
       } else {
         const body = await resp.json()
-        this.$alert(body.msg || body.message, 'Freyja')
+        await ElMessageBox.alert(body.msg || body.message, 'Freyja')
       }
     },
-    onAttachAdd({id}) {
+    onAttachAdd({id}: {id: string}) {
       this.attachments.push(id)
     },
-    onTagClose(tag) {
+    onTagClose(tag: string) {
       const index = this.article.tags.indexOf(tag)
       this.article.tags.splice(index, 1)
     },
-    async onTagAdd(value) {
+    async onTagAdd(value: string) {
       const resp = await this.$fetch.put(`/api/admin/tag/${value}`)
       if (resp.status !== 201 && resp.status !== 200) {
-        this.$message({message: '创建tag失败', type: 'error'})
+        await ElMessageBox.alert('添加tag失败', 'Freyja', {type: 'error'})
       }
       this.article.tags.push(value)
     },

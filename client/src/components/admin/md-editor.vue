@@ -55,5 +55,7 @@ async function onImgAdd(filename: string, file: File): Promise<void> {
 <style>
 .freyja-md-editor {
   height: 100%;
+  width: 100%;
+  min-height: 500px;
 }
 </style>

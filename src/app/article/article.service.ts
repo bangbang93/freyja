@@ -26,6 +26,7 @@ interface ICreate {
   title: string
   content: string
   tags: string[]
+  slug: string
 }
 
 interface IUpdate {

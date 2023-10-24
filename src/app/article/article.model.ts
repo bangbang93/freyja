@@ -1,6 +1,8 @@
 import {IdType} from '@bangbang93/utils/mongodb'
 import {
-  array, DocumentType, getModel, id, index, model, ObjectId, prop, Ref, ref, RichModelType, statics, subModel,
+  array, DocumentType, getModel, id, model, ObjectId, prop, Ref, ref, refArray, required, RichModelType, statics,
+  subModel,
+  unique,
 } from 'mongoose-typescript'
 import {Admin} from '../admin/admin.model'
 import {Attachment} from '../attachment/attachment.model'
@@ -8,6 +10,7 @@ import {Category} from '../category/category.model'
 
 export interface IArticleSchema {
   _id: ObjectId
+  slug: string
   title: string
   content: string
   html: string
@@ -17,8 +20,7 @@ export interface IArticleSchema {
   author: Ref<Admin>
   createdAt: Date
   attachments: Ref<Attachment>[]
-  wordpress: ArticleWordpress
-  slug: string
+  wordpress?: ArticleWordpress
 }
 
 @subModel()
@@ -31,16 +33,16 @@ export class ArticleWordpress {
 @model('article', {timestamps: true})
 export class Article implements IArticleSchema {
   @id() public _id!: ObjectId
-  @prop() public title!: string
-  @prop() public content!: string
-  @prop() public html!: string
-  @prop() public summary!: string
-  @array() @ref(Category) public categories!: Ref<Category>[]
+  @prop() @required() @unique() public slug!: string
+  @prop() @required() public title!: string
+  @prop() @required() public content!: string
+  @prop() @required() public html!: string
+  @prop() @required() public summary!: string
+  @refArray(Category, ObjectId) public categories!: Ref<Category>[]
   @array(String) public tags!: string[]
   @prop() @ref(Admin) public author!: Ref<Admin>
-  @array() @ref(Attachment) public attachments!: Ref<Attachment>[]
-  @prop() public wordpress!: ArticleWordpress
-  @prop() public slug!: string
+  @refArray(Attachment, ObjectId) public attachments!: Ref<Attachment>[]
+  @prop() public wordpress?: ArticleWordpress
 
   public createdAt!: Date
 

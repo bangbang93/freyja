@@ -154,5 +154,8 @@
     "webpack-hot-middleware": "^2.25.0",
     "webpack-merge": "^5.8.0"
   },
-  "snyk": true
+  "snyk": true,
+  "workspaces": [
+    "packages/*"
+  ]
 }
