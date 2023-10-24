@@ -9,11 +9,11 @@
     "start": "nest start",
     "dev": "npm -w @bangbang93/freyja-server run dev",
     "pm2": "pm2 startOrReload process.json",
-    "build": "npm -ws run build",
+    "build": "npm -ws run build --if-present",
     "test": "npm run lint && npm run build",
     "lint": "eslint --ext .js,.ts,.vue .",
     "snyk-protect": "snyk protect",
-    "migrate": "node dist/script/migrate.js",
+    "migrate": "node packages/server/dist/script/migrate.js",
     "update-browserlist-db": "npx update-browserslist-db@latest"
   },
   "dependencies": {
