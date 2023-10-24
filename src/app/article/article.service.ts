@@ -59,6 +59,10 @@ export class ArticleService {
     return this.articleModel.findById(id)
   }
 
+  public async getBySlug(slug: string): Promise<IArticleDocument | null> {
+    return this.articleModel.findOne({slug})
+  }
+
   public async list(page: number, limit = 20): Promise<IArticleListItem[]> {
     const skip = (page - 1) * limit
     const articles = await this.articleModel.listByPage({skip, limit})
