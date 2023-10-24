@@ -56,7 +56,7 @@ export async function bootstrap(): Promise<void> {
     secret: sessionConfig.secret,
   }))
 
-  app.use(favicon(path.join(__dirname, '../public', 'favicon.ico')))
+  app.use(favicon(path.join(__dirname, '../../../public', 'favicon.ico')))
   app.use(bodyParser.json())
   app.use(bodyParser.urlencoded({extended: false}))
   app.use(helmet({
@@ -68,17 +68,30 @@ export async function bootstrap(): Promise<void> {
 
   const port = parseInt(configService.get('PORT', '3000'), 10)
 
+  const homeRoot = join(__dirname, '..', '..', 'home')
+
   if (configService.get('NODE_ENV') === 'production') {
-    const appPath = join(__dirname, '../client/dist/server/server.js')
-    const clientApp = (await import(appPath) as typeof import('@bangbang93/freyja-home/src/entries/entry-server')).default
     app.use(cacheControl({
       '/': 3600,
       '/article/**': 3600,
     }))
-    const serverRender = await createServerRender(clientApp, port)
-    eApp.get(/^(?!\/api|admin\/)./, (req, res, next) => serverRender(req, res, next))
+    eApp.get('*', express.static(path.join(homeRoot, 'dist')))
+  } else {
+    const vite = await import('vite')
+    const viteDevMiddleware = (
+      await vite.createServer({
+        root: homeRoot,
+        server: {middlewareMode: true},
+      })
+    ).middlewares
+    app.use(viteDevMiddleware)
+    eApp.get('*', express.static(path.join(homeRoot, 'src')))
   }
-  eApp.get('*', express.static(path.join(__dirname, '..', 'client/dist')))
+
+  const serverRender = await createServerRender(port)
+  eApp.get(/^(?!\/api|admin\/)./, (req, res, next) => {
+    serverRender(req, res, next).catch(next)
+  })
 
   // if (configService.get('freyja.fundebug.enable')) {
   //   // eslint-disable-next-line @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires

@@ -2,7 +2,7 @@ import {Module} from '@nestjs/common'
 import {ConfigModule, ConfigService} from '@nestjs/config'
 import {MongooseModule} from '@nestjs/mongoose'
 import * as Mongoose from 'mongoose'
-import {BunyanLogger, BunyanLoggerModule} from 'nestjs-bunyan'
+import {BunyanLoggerModule} from 'nestjs-bunyan'
 import {FreyjaModule} from './app/freyja.module'
 
 @Module({
@@ -11,8 +11,8 @@ import {FreyjaModule} from './app/freyja.module'
       isGlobal: true,
       envFilePath: '.env',
       load: [() => {
-        // eslint-disable-next-line no-useless-concat
-        return require('../config' + '')
+        // eslint-disable-next-line no-useless-concat,@typescript-eslint/no-unsafe-return
+        return require('../../../config')
       }],
     }),
     MongooseModule.forRootAsync({
@@ -22,7 +22,7 @@ import {FreyjaModule} from './app/freyja.module'
           Mongoose.set('debug', true)
         }
         return {
-          uri: configService.getOrThrow('database.mongodb.uri'),
+          uri: configService.getOrThrow<string>('database.mongodb.uri'),
         }
       },
     }),

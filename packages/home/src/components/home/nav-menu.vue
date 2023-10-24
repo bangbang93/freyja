@@ -50,8 +50,10 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import {defineComponent} from 'vue'
+
+export default defineComponent({
   name: 'FreyjaNavMenu',
   data() {
     return {
@@ -59,8 +61,8 @@ export default {
     }
   },
   methods: {
-    onSearch() {
-      this.$router.push({
+    async onSearch() {
+      return this.$router.push({
         name: 'search',
         query: {
           keyword: this.keyword,
@@ -69,7 +71,7 @@ export default {
       })
     },
   },
-}
+})
 </script>
 
 <style lang="scss">

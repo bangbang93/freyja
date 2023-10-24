@@ -7,7 +7,7 @@
   },
   "scripts": {
     "start": "nest start",
-    "dev": "nest start --watch",
+    "dev": "npm -w @bangbang93/freyja-server run dev",
     "pm2": "pm2 startOrReload process.json",
     "build": "npm run build:server && npm run build:client",
     "build:server": "nest build",

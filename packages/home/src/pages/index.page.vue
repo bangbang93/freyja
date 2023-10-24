@@ -49,12 +49,13 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import 'animate.css'
 import {ElCol as Col} from 'element-plus'
+import {defineComponent} from 'vue'
 import FreyjaNavMenu from '../components/home/nav-menu.vue'
 
-export default {
+export default defineComponent({
   name: 'PageIndex',
   components: {
     FreyjaNavMenu,
@@ -77,13 +78,13 @@ export default {
   },
   mounted() {
     const mq = window.matchMedia('(max-width: 999px)')
-    mq.addListener(this.onWidthChange.bind(this))
+    mq.addEventListener('change', this.onWidthChange.bind(this))
     this.onWidthChange(mq)
     this.isShowMenu = true
     this.$store.state.origin = ''
   },
   methods: {
-    onWidthChange(mq) {
+    onWidthChange(mq: MediaQueryListEvent | MediaQueryList) {
       if (mq.matches) {
         this.menuWidth = 1
       } else {
@@ -91,7 +92,7 @@ export default {
       }
     },
   },
-}
+})
 </script>
 
 <style>

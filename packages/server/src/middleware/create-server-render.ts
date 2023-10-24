@@ -1,11 +1,9 @@
-import {renderToString} from '@vue/server-renderer'
+import is from '@sindresorhus/is'
 import {NextFunction, Request, Response} from 'express'
-import {readFile} from 'fs/promises'
 import {NotFound} from 'http-errors'
 import LRU from 'lru-cache'
 import ms from 'ms'
-import {join} from 'path'
-import {App} from 'vue'
+import {renderPage} from 'vike/server'
 
 const microCache = new LRU({
   max: 1000,
@@ -16,12 +14,12 @@ const isCacheable = (req: Request): boolean => {
   return req.app.get('env') === 'production'
 }
 
+// eslint-disable-next-line @typescript-eslint/require-await
 export async function createServerRender(
-  createApp: (context: Record<string, unknown>) => Promise<App>,
   port: number,
-): Promise<(req: Request, res: Response, next: NextFunction) => Promise<void>> {
-  const template = await readFile(join(__dirname, '../../client/dist/index.html'), 'utf8')
-  const devalue = await eval('import("devalue")') as typeof import('devalue')
+): Promise<(req: Request, res: Response, next: NextFunction) => Promise<void | Response>> {
+  // eslint-disable-next-line no-useless-concat
+  await import('../../../home/dist/server/importBuild.cjs' + '')
   return async function render(req, res, next): Promise<void | Response> {
     const s = Date.now()
 
@@ -40,41 +38,48 @@ export async function createServerRender(
 
     const context = {
       title: 'Freyja', // default title
-      url: req.url,
+      urlOriginal: req.url,
       origin,
       referer: `${req.protocol}://${req.hostname}${req.url}`,
       status: null,
       state: undefined,
     }
     try {
-      const app = await createApp(context)
-      const body = await renderToString(app, context)
-      const html = template.replace('<app id="app"></app>', `<app id="app">${body}</app>`)
-        .replace('<script id="ssr-state"></script>',
-          `<script>window.__INITIAL_STATE__=${devalue.uneval(context.state)}</script>`)
-      if (context.status) {
-        res.status(context.status)
+      const pageContext = await renderPage(context)
+      const {httpResponse} = pageContext
+      if (!httpResponse) {
+        return next()
+      } else {
+        const {body, statusCode, headers, earlyHints} = httpResponse
+        if (res.writeEarlyHints) res.writeEarlyHints({link: earlyHints.map((e) => e.earlyHintLink)})
+        headers.forEach(([name, value]) => res.setHeader(name, value))
+        res.status(statusCode)
+        res.set('Content-Type', 'text/html')
+        if (cacheable) {
+          microCache.set(req.url, body)
+        }
+        const time = Date.now() - s
+        res.set('x-ssr-time', time.toString())
+        // For HTTP streams use httpResponse.pipe() instead, see https://vike.dev/stream
+        res.send(body)
       }
-      res.set('Content-Type', 'text/html')
-      if (cacheable) {
-        microCache.set(req.url, html)
-      }
-      const time = Date.now() - s
-      res.set('x-ssr-time', time.toString())
-      res.end(html)
-    } catch (err: any) {
+    } catch (err) {
       if (err instanceof NotFound) {
         return next()
       }
       const time = Date.now() - s
       res.set('x-ssr-time', time.toString())
-      if (err.url) {
-        res.redirect(err.url as string)
-      } else if (err.code === 404) {
-        return next()
+      if (is.object(err) && err !== null && 'url' in err) {
+        if (err.url) {
+          res.redirect(err.url as string)
+        } else if ('code' in err && err.code === 404) {
+          return next()
+        } else {
+          // Render Error Page or Redirect
+          return next(err)
+        }
       } else {
-        // Render Error Page or Redirect
-        return next(err)
+        throw err
       }
     }
   }
