@@ -44,13 +44,13 @@ export async function bootstrap(): Promise<void> {
   } else {
     app.use(morgan('combined'))
   }
-  const RedisStore = connectRedis(session)
+  const redisStore = connectRedis(session)
 
   app.use(cookieParser())
-  const sessionConfig = configService.get('session')
+  const sessionConfig = configService.get('session') as Record<string, string>
   app.use(session({
     name: 'freyja.sid',
-    store: new RedisStore({
+    store: new redisStore({
       client: redis,
       prefix: 'freyja:session:',
     }),
@@ -69,10 +69,9 @@ export async function bootstrap(): Promise<void> {
 
   const port = parseInt(configService.get('PORT', '3000'), 10)
 
-  /* eslint-disable @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires */
   if (configService.get('NODE_ENV') === 'production') {
     const appPath = join(__dirname, '../client/dist/server/server.js')
-    const clientApp = (await import(appPath)).default
+    const clientApp = (await import(appPath) as typeof import('../client/src/entries/entry-server')).default
     app.use(cacheControl({
       '/': 3600,
       '/article/**': 3600,
@@ -86,12 +85,12 @@ export async function bootstrap(): Promise<void> {
   }
   eApp.get('*', express.static(path.join(__dirname, '..', 'client/dist')))
 
-  if (configService.get('freyja.fundebug.enable')) {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires
-    const fundebug = require('fundebug-nodejs')
-    fundebug.apikey = configService.get('freyja.fundebug.apikey')
-    app.use(fundebug.ExpressErrorHandler)
-  }
+  // if (configService.get('freyja.fundebug.enable')) {
+  //   // eslint-disable-next-line @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires
+  //   const fundebug = require('fundebug-nodejs')
+  //   fundebug.apikey = configService.get('freyja.fundebug.apikey')
+  //   app.use(fundebug.ExpressErrorHandler)
+  // }
 
   await app.listen(port)
 }
