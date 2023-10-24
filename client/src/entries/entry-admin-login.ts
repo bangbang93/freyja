@@ -6,7 +6,7 @@ import Element from 'element-plus'
 import 'element-plus/dist/index.css'
 import {createApp} from 'vue'
 import VueFetch from 'vue-fetch'
-import App from '../pages/admin/login.vue'
+import App from '@bangbang93/freyja-admin/src/pages/login.vue'
 
 export const app = createApp(App)
 

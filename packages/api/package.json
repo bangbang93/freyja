@@ -1,5 +1,5 @@
 {
-  "name": "@bangbang93/freyja-types",
+  "name": "@bangbang93/freyja-api",
   "version": "0.0.0",
   "private": true,
   "dependencies": {

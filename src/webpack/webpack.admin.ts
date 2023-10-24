@@ -13,7 +13,6 @@ import config from './webpack.base.config'
 const IS_PRODUCTION = process.env.NODE_ENV === 'production'
 
 const entry: Configuration['entry'] = {
-  index: path.resolve(__dirname, '../../client/src/entries/entry-admin.ts'),
   login: path.resolve(__dirname, '../../client/src/entries/entry-admin-login.ts'),
 }
 const entries = Object.keys(entry)

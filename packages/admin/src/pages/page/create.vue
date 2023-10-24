@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import FreyjaMdEditor from '../../../components/admin/md-editor.vue'
+import FreyjaMdEditor from '../../components/md-editor.vue'
 
 export default {
   name: 'FreyjaPageCreate',

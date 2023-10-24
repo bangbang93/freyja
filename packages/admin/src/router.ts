@@ -5,61 +5,60 @@
 'use strict'
 import {createRouter, createWebHistory} from 'vue-router'
 
-/* eslint-disable @typescript-eslint/no-require-imports */
 const routes = [
   {
     path: '/home',
-    component: require('../pages/admin/dashboard.vue').default,
+    component: import('./pages/dashboard.vue'),
     name: 'dashboard',
   },
   {
     path: '/article/create',
-    component: require('../pages/admin/article/create.vue').default,
+    component: import('./pages/article/create.vue'),
     name: 'article.create',
   },
   {
     path: '/articles',
-    component: require('../pages/admin/article/list.vue').default,
+    component: import('./pages/article/list.vue'),
     name: 'article.list',
   },
   {
     path: '/article/:id',
-    component: require('../pages/admin/article/create.vue').default,
+    component: import('./pages/article/create.vue'),
     name: 'article.edit',
   },
   {
     path: '/attachment',
-    component: require('../pages/admin/attachment/list.vue').default,
+    component: import('./pages/attachment/list.vue'),
     name: 'attachment.list',
   },
   {
     path: '/tag',
-    component: require('../pages/admin/tag/list.vue').default,
+    component: import('./pages/tag/list.vue'),
     name: 'tag.list',
   },
   {
     path: '/comment',
-    component: require('../pages/admin/comment/list.vue').default,
+    component: import('./pages/comment/list.vue'),
     name: 'comment.list',
   },
   {
     path: '/import/wordpress',
-    component: require('../pages/admin/import/wordpress.vue').default,
+    component: import('./pages/import/wordpress.vue'),
     name: 'import.wordpress',
   },
   {
     path: '/page/create',
-    component: require('../pages/admin/page/create.vue').default,
+    component: import('./pages/page/create.vue'),
     name: 'page.create',
   },
   {
     path: '/page',
-    component: require('../pages/admin/page/list.vue').default,
+    component: import('./pages/page/list.vue'),
     name: 'page.list',
   },
   {
     path: '/page/:id',
-    component: require('../pages/admin/page/create.vue').default,
+    component: import('./pages/page/create.vue'),
     name: 'page.edit',
   },
 ]

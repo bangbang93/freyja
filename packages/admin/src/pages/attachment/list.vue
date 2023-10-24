@@ -38,7 +38,7 @@
 
 <script>
 import {Upload as ElIconUpload} from '@element-plus/icons-vue'
-import FreyjaAttachmentCard from '../../../components/admin/attachment-card.vue'
+import FreyjaAttachmentCard from '../../components/attachment-card.vue'
 
 export default {
   name: 'FreyjaAttachmentList',

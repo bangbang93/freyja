@@ -72,8 +72,8 @@
 <script lang="ts">
 import {ElMessageBox, ElTree} from 'element-plus'
 import {defineComponent} from 'vue'
-import FreyjaMdEditor from '../../../components/admin/md-editor.vue'
-import FreyjaTagEditor from '../../../components/admin/tag-editor.vue'
+import FreyjaMdEditor from '../../components/md-editor.vue'
+import FreyjaTagEditor from '../../components/tag-editor.vue'
 
 interface Tree {
   id: string

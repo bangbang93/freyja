@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import FreyjaTagEditor from '../../../components/admin/tag-editor.vue'
+import FreyjaTagEditor from '../../components/tag-editor.vue'
 
 export default {
   name: 'TagList',
