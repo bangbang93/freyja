@@ -64,34 +64,43 @@ export async function bootstrap(): Promise<void> {
   }))
 
   app.use('/admin', historyApiFallback())
-  app.use(express.static(path.join(__dirname, '..', 'public')))
 
   const port = parseInt(configService.get('PORT', '3000'), 10)
 
   const homeRoot = join(__dirname, '..', '..', 'home')
+  const adminRoot = join(__dirname, '..', '..', 'admin')
 
   if (configService.get('NODE_ENV') === 'production') {
     app.use(cacheControl({
       '/': 3600,
       '/article/**': 3600,
     }))
+    eApp.get('/admin', express.static(path.join(adminRoot, 'dist')))
     eApp.get('*', express.static(path.join(homeRoot, 'dist')))
   } else {
     const vite = await import('vite')
-    const viteDevMiddleware = (
+    const homeViteDevMiddleware = (
       await vite.createServer({
         root: homeRoot,
         server: {middlewareMode: true},
       })
     ).middlewares
-    app.use(viteDevMiddleware)
-    eApp.get('*', express.static(path.join(homeRoot, 'src')))
+    // const adminViteDevMiddleware = (
+    //   await vite.createServer({
+    //     root: adminRoot,
+    //     server: {middlewareMode: true},
+    //   })
+    // ).middlewares
+    // app.use('/admin', adminViteDevMiddleware)
+    app.use(homeViteDevMiddleware)
   }
 
-  const serverRender = await createServerRender(port)
+  const serverRender = await createServerRender(port, configService.get('NODE_ENV'))
   eApp.get(/^(?!\/api|admin\/)./, (req, res, next) => {
     serverRender(req, res, next).catch(next)
   })
+
+  app.use(express.static(path.join(__dirname, '..', 'public')))
 
   // if (configService.get('freyja.fundebug.enable')) {
   //   // eslint-disable-next-line @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires

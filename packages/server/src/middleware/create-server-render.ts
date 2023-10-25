@@ -17,9 +17,12 @@ const isCacheable = (req: Request): boolean => {
 // eslint-disable-next-line @typescript-eslint/require-await
 export async function createServerRender(
   port: number,
+  env?: string,
 ): Promise<(req: Request, res: Response, next: NextFunction) => Promise<void | Response>> {
-  // eslint-disable-next-line no-useless-concat
-  await import('../../../home/dist/server/importBuild.cjs' + '')
+  if (env === 'production') {
+    // eslint-disable-next-line no-useless-concat
+    await import('../../../home/dist/server/importBuild.cjs' + '')
+  }
   return async function render(req, res, next): Promise<void | Response> {
     const s = Date.now()
 
