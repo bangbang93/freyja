@@ -1,5 +1,6 @@
 /// <reference types="vite/client" />
 
+import {PageContext} from 'vike/types'
 import {RouteLocationNormalizedLoaded} from 'vue-router'
 import {Store} from 'vuex'
 
@@ -15,6 +16,7 @@ declare module 'vue' {
 
   interface ComponentCustomProperties {
     $store: Store<object>
+    $pageContext: PageContext
   }
 }
 

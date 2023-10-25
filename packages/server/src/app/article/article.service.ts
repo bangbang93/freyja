@@ -103,7 +103,6 @@ export class ArticleService {
   }
 
   public async findByCategory(categoryName: string, page: number, limit = 20): Promise<IArticleDocument[]> {
-    const skip = (page - 1) * limit
     const category = await CategoryModel.getByName(categoryName)
     if (!category) {
       throw new NotFoundException('category not found')

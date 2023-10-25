@@ -1,4 +1,4 @@
-import {DocumentType, getModel, id, model, ObjectId, prop, required, RichModelType, unique} from 'mongoose-typescript'
+import {DocumentType, id, model, ObjectId, prop, required, RichModelType, unique} from 'mongoose-typescript'
 
 export interface ILinkSchema {
   _id: ObjectId

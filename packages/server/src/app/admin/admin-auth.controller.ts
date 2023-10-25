@@ -21,7 +21,7 @@ export class AdminAuthController {
 
   @Get('login')
   @UseGuards(AdminGuard)
-  public async checkLogin(@Req() req: Request): Promise<Partial<IAdminSchema> | undefined> {
+  public checkLogin(@Req() req: Request): Partial<IAdminSchema> | undefined {
     return req.session.user
   }
 }

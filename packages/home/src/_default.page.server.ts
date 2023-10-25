@@ -23,6 +23,8 @@ declare global {
 
 export async function render(pageContext: PageContext) {
   const {app, router, store} = createHome()
+  app.config.globalProperties.$pageContext = pageContext
+
   await router.push(pageContext.urlOriginal)
 
   await router.isReady()
@@ -57,8 +59,8 @@ export async function render(pageContext: PageContext) {
 
   const appHtml = await renderToString(app)
   const documentProps = pageContext.exports.documentProps as Record<string, string | undefined>
-  const title = documentProps?.title || 'Vite SSR app'
-  const desc = documentProps?.description || 'App using Vite + Vike'
+  const title = documentProps?.title || 'bangbang93.blog()'
+  const desc = documentProps?.description || 'bangbang93.blog()'
 
   const documentHtml = escapeInject`<!DOCTYPE html>
     <html lang="en">
@@ -86,3 +88,5 @@ export async function render(pageContext: PageContext) {
     },
   }
 }
+
+export const passToClient = ['documentProps', 'pageProps']

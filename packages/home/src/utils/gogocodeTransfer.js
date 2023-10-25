@@ -1,3 +1,5 @@
+/* eslint-disable eslint-comments/no-unlimited-disable */
+/* eslint-disable */
 const eventRegistryMap = new WeakMap()
 function getRegistry(instance) {
   let events = eventRegistryMap.get(instance)

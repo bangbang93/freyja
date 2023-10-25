@@ -37,8 +37,8 @@ export class FeedService {
       await article.populate('author')
       feed.addItem({
         title: article.title,
-        id: `${baseUrl}/article/${article._id}`,
-        link: `${baseUrl}/article/${article._id}`,
+        id: `${baseUrl}/article/${article._id.toString()}`,
+        link: `${baseUrl}/article/${article._id.toString()}`,
         description: article.summary,
         content: article.html,
         author: [

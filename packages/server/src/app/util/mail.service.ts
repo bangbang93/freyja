@@ -25,7 +25,7 @@ bangbang93.forum()
 ---
 您在bangbang93.forum()的文章《${article.title}》收到了新的回复
 查看链接
-<https://blog.bangbang93.com/article/${article._id}>
+<https://blog.bangbang93.com/article/${article._id.toString()}>
 `
     const html = this.markdownService.render(content)
     return this.transporter.sendMail({
@@ -43,7 +43,7 @@ bangbang93.form()
 ---
 文章《${article.title}》有新评论
 查看链接
-<https://blog.bangbang93.com/article/${article._id}>
+<https://blog.bangbang93.com/article/${article._id.toString()}>
 `
     const html = this.markdownService.render(content)
     return this.transporter.sendMail({

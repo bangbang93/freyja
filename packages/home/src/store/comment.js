@@ -92,7 +92,7 @@ export default {
       commit('set', comments)
       return comments
     },
-    async reply({dispatch}, {comment, replyCommentId}) {
+    reply({dispatch}, {comment, replyCommentId}) {
       comment.reply = replyCommentId
       return dispatch('create', comment)
     },

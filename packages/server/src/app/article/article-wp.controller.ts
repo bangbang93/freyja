@@ -1,5 +1,4 @@
 import {Controller, Get, HttpStatus, Next, Param, Query, Redirect, Res} from '@nestjs/common'
-import {RedirectResponse} from '@nestjs/core/router/router-response-controller'
 import {isNumberString} from 'class-validator'
 import {NextFunction, Response} from 'express'
 import {ArticleService} from './article.service'
@@ -15,7 +14,7 @@ export class ArticleWpController {
     @Res() res: Response): Promise<void> {
     const article = await this.articleService.getByWordpress({postName})
     if (!article) return next()
-    res.redirect(HttpStatus.PERMANENT_REDIRECT, `/article/${article._id}`)
+    res.redirect(HttpStatus.PERMANENT_REDIRECT, `/article/${article._id.toString()}`)
   }
 
   @Get()
@@ -26,7 +25,7 @@ export class ArticleWpController {
 
     const article = await this.articleService.getByWordpress({id: parseInt(query.p, 10)})
     if (!article) return next()
-    res.redirect(HttpStatus.PERMANENT_REDIRECT, `/article/${article._id}`)
+    res.redirect(HttpStatus.PERMANENT_REDIRECT, `/article/${article._id.toString()}`)
   }
 
   @Get('about')

@@ -95,9 +95,10 @@ export class Article implements IArticleSchema {
   @statics()
   public static async getByWordpress(this: IArticleModel, key: string | Record<string, unknown>,
     value?: unknown): Promise<IArticleDocument | null> {
-    if (arguments.length === 1) {
-      const keys = Object.keys(key as Record<string, unknown>)
-      value = (key as Record<string, unknown>)[keys[0]]
+    if (typeof key === 'object') {
+      const keys = Object.keys(key)
+      value = key[keys[0]]
+      key = keys[0]
     }
     return this.findOne({
       [`wordpress.${key}`]: value,

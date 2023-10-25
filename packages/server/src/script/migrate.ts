@@ -38,7 +38,7 @@ async function main(): Promise<void> {
   })
 
   await umzug.runAsCLI()
-  process.exit(0)
+  await app.close()
 }
 
-main()
+void main()

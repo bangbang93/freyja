@@ -5,12 +5,14 @@
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import 'element-plus/dist/index.css'
 import 'prismjs/themes/prism-okaidia.css'
+import {PageContext} from 'vike/types'
 import {createHome} from './entries'
 
 import './utils/prism.ts'
 
-export async function render(): Promise<void> {
+export async function render(pageContext: PageContext): Promise<void> {
   const {app, router, store} = createHome()
+  app.config.globalProperties.$pageContext = pageContext
   if (window.__INITIAL_STATE__) {
     // We initialize the store state with the data injected from the server
     store.replaceState(window.__INITIAL_STATE__)
@@ -45,3 +47,4 @@ export async function render(): Promise<void> {
 
   app.mount('#app')
 }
+

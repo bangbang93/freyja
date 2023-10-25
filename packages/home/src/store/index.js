@@ -31,7 +31,7 @@ export function createRootStore() {
       },
     },
     actions: {
-      fetchLatest(ctx) {
+      async fetchLatest(ctx) {
         return Fetch.get('https://api.bangbang93.com/oxygenbbs/oni-alpha')
           .then((res) => {
             return res.text()

@@ -52,6 +52,7 @@ export default defineComponent({
     }
   },
   mounted() {
+    this.$pageContext.exports.title = this.$store.state.article.article.title
     this.highlight()
     const articleId = this.$route.params.id
     this.$store.dispatch('comment/list', {articleId, page: 1})

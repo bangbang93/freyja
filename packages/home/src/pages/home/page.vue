@@ -21,10 +21,12 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import {defineComponent} from 'vue'
+
+export default defineComponent({
   name: 'HomePage',
-  asyncData({store, route}) {
+  async asyncData({store, route}) {
     return store.dispatch('page/get', route.params.name)
   },
   data() {
@@ -49,7 +51,7 @@ export default {
       prismjs.highlightAll()
     },
   },
-}
+})
 </script>
 
 <style scoped>
