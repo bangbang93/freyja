@@ -2,43 +2,43 @@
  * Created by bangbang93 on 2017/8/25.
  */
 'use strict'
-import {createMemoryHistory, createRouter, createWebHistory, Router} from 'vue-router'
+import {createMemoryHistory, createRouter, createWebHistory, Router, RouteRecordRaw} from 'vue-router'
 
 export function createHomeRouter(): Router {
-  const routes = [
+  const routes: RouteRecordRaw[] = [
     {
       path: '/',
-      component: import('../pages/home/home.vue'),
+      component: () => import('../pages/home/home.vue'),
       name: 'home',
     },
     {
       path: '/article/:id',
-      component: import('../pages/home/article.vue'),
+      component: () => import('../pages/home/article.vue'),
       name: 'article',
     },
     {
       path: '/page/link',
-      component: import('../pages/home/link.vue'),
+      component: () => import('../pages/home/link.vue'),
       name: 'link',
     },
     {
       path: '/page/:name',
-      component: import('../pages/home/page.vue'),
+      component: () => import('../pages/home/page.vue'),
       name: 'general-page',
     },
     {
       path: '/tag/:tag',
-      component: import('../pages/home/home.vue'),
+      component: () => import('../pages/home/home.vue'),
       name: 'tag',
     },
     {
       path: '/category/:category',
-      component: import('../pages/home/home.vue'),
+      component: () => import('../pages/home/home.vue'),
       name: 'category',
     },
     {
       path: '/search',
-      component: import('../pages/home/home.vue'),
+      component: () => import('../pages/home/home.vue'),
       name: 'search',
     },
   ]
@@ -46,7 +46,7 @@ export function createHomeRouter(): Router {
   // routes.push({
   //   path: '*',
   //   meta: {status: 404},
-  //   component: import('../components/home/not-found.vue'),
+  //   component: () => import('../components/home/not-found.vue'),
   // })
 
   return createRouter({

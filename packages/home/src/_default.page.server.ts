@@ -3,8 +3,9 @@
  */
 'use strict'
 import {renderToString} from '@vue/server-renderer'
+import * as devalue from 'devalue'
 import * as HttpErrors from 'http-errors'
-import {dangerouslySkipEscape, escapeInject} from 'vike'
+import {dangerouslySkipEscape, escapeInject} from 'vike/server'
 import {PageContext} from 'vike/types'
 import {createHome} from './entries'
 
@@ -35,12 +36,12 @@ export async function render(pageContext: PageContext) {
     throw new HttpErrors.NotFound('no such route')
   }
   await Promise.all(
-    matchedComponents.map((Component) => {
-      if (!Component) return Promise.resolve()
-      if ('asyncData' in Component && Component.asyncData) {
+    matchedComponents.map(async (component) => {
+      if (!component) return null
+      if ('asyncData' in component && component.asyncData) {
         store.commit('setOrigin', pageContext.origin)
         store.commit('setReferer', pageContext.referer)
-        return Component.asyncData({
+        return component.asyncData({
           store,
           route: router.currentRoute.value,
         })
@@ -67,6 +68,9 @@ export async function render(pageContext: PageContext) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="description" content="${desc}" />
         <title>${title}</title>
+        <script>
+          window.__INITIAL_STATE__ = ${dangerouslySkipEscape(devalue.uneval(pageContext.state))}
+        </script>
       </head>
       <body>
         <div id="app">${dangerouslySkipEscape(appHtml)}</div>

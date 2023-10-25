@@ -9,17 +9,17 @@ import VueFetch from 'vue-fetch'
 import App from '../pages/index.page.vue'
 import {createHomeRouter} from '../router'
 import '../scss/style.scss'
-import {createStore} from '../store'
+import {createRootStore} from '../store'
 
 interface ICreateHome {
   app: VueApp
   router: ReturnType<typeof createHomeRouter>
-  store: ReturnType<typeof createStore>
+  store: ReturnType<typeof createRootStore>
 }
 
 export function createHome(): ICreateHome {
   const router = createHomeRouter()
-  const store = createStore()
+  const store = createRootStore()
   const app = createSSRApp(App)
   app.use(router)
   app.use(store)

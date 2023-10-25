@@ -6,7 +6,7 @@
     "node": ">=16.0.0 <21.0.0"
   },
   "scripts": {
-    "start": "nest start",
+    "start": "node packages/server/dist/main.js",
     "dev": "npm -w @bangbang93/freyja-server run dev",
     "pm2": "pm2 startOrReload process.json",
     "build": "npm -ws run build --if-present",

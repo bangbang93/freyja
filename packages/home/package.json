@@ -25,6 +25,7 @@
     "@vue/shared": "^3.3.4",
     "animate.css": "^3.7.2",
     "core-js": "^3.8.3",
+    "devalue": "^4.3.2",
     "element-plus": "^2.4.1",
     "font-awesome": "^4.7.0",
     "http-errors": "^2.0.0",
@@ -35,7 +36,7 @@
     "mavon-editor": "^3.0.0-beta",
     "prismjs": "^1.29.0",
     "vue": "^3.2.45",
-    "vue-fetch": "^2.0.0",
+    "vue-fetch": "^3.0.0-2",
     "vue-router": "^4.2.5",
     "vuex": "^4.1.0"
   }

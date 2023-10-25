@@ -2,15 +2,14 @@
  * Created by bangbang93 on 2017/8/25.
  */
 'use strict'
-import {App} from 'vue'
-import {createHome} from './entries'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+import 'element-plus/dist/index.css'
+import 'prismjs/themes/prism-okaidia.css'
+import {createHome} from './entries'
 
 import './utils/prism.ts'
-import 'prismjs/themes/prism-okaidia.css'
-import 'element-plus/dist/index.css'
 
-export async function render(): Promise<App> {
+export async function render(): Promise<void> {
   const {app, router, store} = createHome()
   if (window.__INITIAL_STATE__) {
     // We initialize the store state with the data injected from the server
@@ -44,6 +43,5 @@ export async function render(): Promise<App> {
     app.component(key, component)
   }
 
-  app.mount('app')
-  return app
+  app.mount('#app')
 }
