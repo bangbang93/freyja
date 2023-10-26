@@ -75,7 +75,6 @@ export async function render(pageContext: PageContext) {
         <title>${title}</title>
         <script>
           window.__INITIAL_STATE__ = ${devalue(pageContext.state)}
-          window.__pinia = ${devalue(pinia.state.value)}
         </script>
       </head>
       <body>
@@ -86,6 +85,7 @@ export async function render(pageContext: PageContext) {
   return {
     documentHtml,
     pageContext: {
+      initialStoreState: pinia.state.value,
       // We can add some `pageContext` here,
       // which is useful if we want to do page redirection
       // https://vike.dev/page-redirection
@@ -93,4 +93,4 @@ export async function render(pageContext: PageContext) {
   }
 }
 
-export const passToClient = ['documentProps', 'pageProps']
+export const passToClient = ['documentProps', 'pageProps', 'initialStoreState']

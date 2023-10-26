@@ -5,16 +5,17 @@
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import 'element-plus/dist/index.css'
 import 'prismjs/themes/prism-okaidia.css'
+import {StateTree} from 'pinia'
 import {PageContext} from 'vike/types'
 import {createHome} from './entries'
 
 import './utils/prism.ts'
 
-export async function render(pageContext: PageContext): Promise<void> {
+export async function render(pageContext: PageContext & {initialStoreState: Record<string, StateTree>}): Promise<void> {
   const {app, router, store, pinia} = createHome()
   app.provide('pageContext', pageContext)
-  if (window.__pinia) {
-    pinia.state.value = window.__pinia
+  if (pageContext.initialStoreState) {
+    pinia.state.value = pageContext.initialStoreState
   }
   app.config.globalProperties.$pageContext = pageContext
   if (window.__INITIAL_STATE__) {
