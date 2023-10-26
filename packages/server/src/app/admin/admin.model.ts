@@ -1,4 +1,4 @@
-import {DocumentType, getModel, id, model, ObjectId, prop, RichModelType, statics, unique} from 'mongoose-typescript'
+import {DocumentType, id, model, ObjectId, prop, RichModelType, statics, unique} from 'mongoose-typescript'
 
 export interface IAdminSchema {
   _id: ObjectId
@@ -35,5 +35,3 @@ export class Admin implements IAdminSchema {
 
 export type IAdminDocument = DocumentType<Admin>
 export type IAdminModel = RichModelType<typeof Admin>
-
-export const AdminModel: IAdminModel = getModel(Admin)

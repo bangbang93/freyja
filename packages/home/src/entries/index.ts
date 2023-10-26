@@ -3,6 +3,7 @@
  */
 'use strict'
 import 'font-awesome/scss/font-awesome.scss'
+import {createPinia} from 'pinia'
 import 'prismjs'
 import {createSSRApp, App as VueApp} from 'vue'
 import VueFetch from 'vue-fetch'
@@ -15,16 +16,19 @@ interface ICreateHome {
   app: VueApp
   router: ReturnType<typeof createHomeRouter>
   store: ReturnType<typeof createRootStore>
+  pinia: ReturnType<typeof createPinia>
 }
 
 export function createHome(): ICreateHome {
   const router = createHomeRouter()
+  const pinia = createPinia()
   const store = createRootStore()
   const app = createSSRApp(App)
   app.use(router)
+  app.use(pinia)
   app.use(store)
 
   app.use(VueFetch)
 
-  return {app, router, store}
+  return {app, router, store, pinia}
 }

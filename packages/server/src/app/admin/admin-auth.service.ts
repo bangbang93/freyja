@@ -1,7 +1,7 @@
 import {InjectModel} from '@bangbang93/utils/nest-mongo'
 import {ForbiddenException, Injectable} from '@nestjs/common'
 import {compare, hash} from 'bcrypt'
-import {Admin, IAdminDocument, IAdminModel, IAdminSchema} from './admin.model'
+import {Admin, IAdminModel, IAdminSchema} from './admin.model'
 
 @Injectable()
 export class AdminAuthService {
@@ -10,11 +10,12 @@ export class AdminAuthService {
   ) {}
 
   public async login(username: string, password: string): Promise<Partial<IAdminSchema>> {
-    const admin = await this.adminModel.findOne({username}) as IAdminDocument
+    const admin = await this.adminModel.findOne({username})
     if (!admin) throw new ForbiddenException('用户名或密码错误')
     const compareResult = await compare(password, admin.password)
     if (!compareResult) throw new ForbiddenException('用户名或密码错误')
     return {
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       ...admin.toObject(),
       password: undefined,
     }

@@ -2,7 +2,7 @@
  * Created by bangbang93 on 2017/9/6.
  */
 'use strict'
-import {Fetch} from './index.js'
+import {Fetch, useRootStore} from './index.ts'
 
 export default {
   namespaced: true,
@@ -43,7 +43,8 @@ export default {
     },
   },
   actions: {
-    async getArticles({commit, rootState}, {page, tag, category}) {
+    async getArticles({commit}, {page, tag, category}) {
+      const rootState = useRootStore()
       let resp
       if (tag) {
         resp = await Fetch.get(

@@ -3,9 +3,10 @@
 import {PageContext} from 'vike/types'
 import {RouteLocationNormalizedLoaded} from 'vue-router'
 import {Store} from 'vuex'
+import {State} from './src/store'
 
 export interface IAsyncDataOptions {
-  store: Store<object>
+  store: Store<State>
   route: RouteLocationNormalizedLoaded
 }
 
@@ -15,7 +16,7 @@ declare module 'vue' {
   }
 
   interface ComponentCustomProperties {
-    $store: Store<object>
+    $store: Store<State>
     $pageContext: PageContext
   }
 }
@@ -24,4 +25,11 @@ declare global {
   interface Window {
     __INITIAL_STATE__: object
   }
+}
+
+declare module 'vuex' {
+  export * from 'vuex/types/index.d.ts'
+  export * from 'vuex/types/helpers.d.ts'
+  export * from 'vuex/types/logger.d.ts'
+  export * from 'vuex/types/vue.d.ts'
 }

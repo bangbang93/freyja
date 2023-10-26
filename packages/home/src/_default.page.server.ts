@@ -8,6 +8,7 @@ import * as HttpErrors from 'http-errors'
 import {dangerouslySkipEscape, escapeInject} from 'vike/server'
 import {PageContext} from 'vike/types'
 import {createHome} from './entries'
+import {useRootStore} from './store'
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -22,7 +23,7 @@ declare global {
 }
 
 export async function render(pageContext: PageContext) {
-  const {app, router, store} = createHome()
+  const {app, router, store, pinia} = createHome()
   app.config.globalProperties.$pageContext = pageContext
 
   await router.push(pageContext.urlOriginal)
@@ -37,12 +38,13 @@ export async function render(pageContext: PageContext) {
   if (!matchedComponents.length) {
     throw new HttpErrors.NotFound('no such route')
   }
+  const rootState = useRootStore(pinia)
   await Promise.all(
     matchedComponents.map(async (component) => {
       if (!component) return null
       if ('asyncData' in component && component.asyncData) {
-        store.commit('setOrigin', pageContext.origin)
-        store.commit('setReferer', pageContext.referer)
+        rootState.setOrigin(pageContext.origin)
+        rootState.setReferer(pageContext.referer)
         return component.asyncData({
           store,
           route: router.currentRoute.value,

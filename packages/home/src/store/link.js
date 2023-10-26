@@ -2,7 +2,7 @@
  * Created by bangbang93 on 2017/9/20.
  */
 'use strict'
-import {Fetch} from './index.js'
+import {Fetch} from './index.ts'
 
 export default {
   namespaced: true,
