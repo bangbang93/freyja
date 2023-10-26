@@ -12,6 +12,7 @@ import './utils/prism.ts'
 
 export async function render(pageContext: PageContext): Promise<void> {
   const {app, router, store, pinia} = createHome()
+  app.provide('pageContext', pageContext)
   if (window.__pinia) {
     pinia.state.value = window.__pinia
   }

@@ -6,7 +6,6 @@ import {defineStore} from 'pinia'
 // @ts-expect-error vuex type error
 import {createStore} from 'vuex'
 import {Fetch} from '../utils/fetch.ts'
-import ArticleStore from './article.js'
 import CommentStore from './comment.js'
 
 
@@ -35,7 +34,6 @@ export function createRootStore() {
   return createStore({
     state: {},
     modules: {
-      article: ArticleStore,
       comment: CommentStore,
     },
   })

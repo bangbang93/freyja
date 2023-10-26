@@ -24,6 +24,7 @@ declare global {
 
 export async function render(pageContext: PageContext) {
   const {app, router, store, pinia} = createHome()
+  app.provide('pageContext', pageContext)
   app.config.globalProperties.$pageContext = pageContext
 
   await router.push(pageContext.urlOriginal)

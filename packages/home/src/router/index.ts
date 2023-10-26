@@ -13,7 +13,7 @@ export function createHomeRouter(): Router {
     },
     {
       path: '/article/:id',
-      component: () => import('../pages/home/article.vue'),
+      component: () => import('../pages/home/HomeArticle.vue'),
       name: 'article',
     },
     {

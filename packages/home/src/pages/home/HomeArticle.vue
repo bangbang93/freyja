@@ -4,7 +4,7 @@
       <h3>{{ article.title }}</h3>
     </div>
     <div class="freyja-article-time">
-      <span><i class="el-icon-time" /> {{ article.createdAt }}</span>
+      <span><i class="el-icon-time" /> {{ formatDate(article.createdAt) }}</span>
     </div>
     <hr class="split-line">
     <div class="freyja-article-content">
@@ -33,48 +33,39 @@
     </div>
   </div>
 </template>
-<script lang="ts">
-import {defineComponent} from 'vue'
+<script lang="ts" setup>
+import lozad from 'lozad'
+import prismjs from 'prismjs'
+import {PageContext} from 'vike/types'
+import {inject, onMounted, ref} from 'vue'
+import {useRoute} from 'vue-router'
 import FreyjaArticleComment from '../../components/home/article-comment.vue'
+import {useArticleStore} from '../../store/article.ts'
 
-export default defineComponent({
-  name: 'HomeArticle',
-  components: {
-    FreyjaArticleComment,
-  },
-  async asyncData({store, route}) {
-    await store.dispatch('article/get', route.params.id)
-  },
-  data() {
-    return {
-      article: this.$store.state.article.article,
-      comments: this.$store.state.comment.comments,
-    }
-  },
-  mounted() {
-    this.$pageContext.exports.title = this.$store.state.article.article.title
-    this.highlight()
-    const articleId = this.$route.params.id
-    this.$store.dispatch('comment/list', {articleId, page: 1})
-    import('lozad').then((lozad) => lozad.default().observe())
-  },
-  updated() {
-    this.highlight()
-    import('lozad').then((lozad) => lozad.default().observe())
-  },
-  methods: {
-    async highlight() {
-      const prismjs = await import('prismjs')
-      prismjs.highlightAll()
-    },
-    formatDate(date: Date | string): string {
-      if (typeof date === 'string') {
-        date = new Date(date)
-      }
-      return date.toLocaleString()
-    },
-  },
+const articleStore = useArticleStore()
+const route = useRoute()
+
+onMounted(() => {
+  prismjs.highlightAll()
+  lozad().observe()
 })
+
+const pageContext = inject<PageContext>('pageContext')
+const articleId = route.params.id as string
+await articleStore.get(articleId)
+// this.$store.dispatch('comment/list', {articleId, page: 1})
+const article = articleStore.article
+const comments = ref([])
+if (pageContext) {
+  pageContext.exports.title = article.title
+}
+
+function formatDate(date: Date | string): string {
+  if (typeof date === 'string') {
+    date = new Date(date)
+  }
+  return date.toLocaleString()
+}
 </script>
 <style scoped lang="scss">
   .split-line {
