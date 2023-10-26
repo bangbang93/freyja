@@ -80,7 +80,6 @@ import {reactive, ref} from 'vue'
 
 const emits = defineEmits(['submit', 'close'])
 const props = defineProps<{
-  display: boolean
   publisher: {name: string; email: string; website: string}
   reply: {publisher: {name: string; email: string; website: string}; content: string}
 }>()
