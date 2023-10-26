@@ -18,7 +18,7 @@ export function createHomeRouter(): Router {
     },
     {
       path: '/page/link',
-      component: () => import('../pages/home/link.vue'),
+      component: () => import('../pages/home/HomeLink.vue'),
       name: 'link',
     },
     {

@@ -2,7 +2,7 @@
   <div>
     <ul>
       <li
-        v-for="link in links"
+        v-for="link in linkStore.links"
         :key="link.name"
         class="no-link link-item"
       >
@@ -15,22 +15,14 @@
     </ul>
   </div>
 </template>
+<script lang="ts" setup>
+import {useLinkStore} from '../../store/link.ts'
 
-<script>
-export default {
-  name: 'HomeLink',
-  asyncData({store}) {
-    return store.dispatch('link/getLinks')
-  },
-  data() {
-    return {
-      links: this.$store.state.link.links,
-    }
-  },
-}
+const linkStore = useLinkStore()
+await linkStore.getLinks()
 </script>
 
-<style lang="scss" scoped="scoped">
+<style lang="scss" scoped>
 .link-item {
   line-height: 30px;
   a {

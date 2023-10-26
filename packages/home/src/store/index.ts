@@ -8,7 +8,6 @@ import {createStore} from 'vuex'
 import {Fetch} from '../utils/fetch.ts'
 import ArticleStore from './article.js'
 import CommentStore from './comment.js'
-import LinkStore from './link.js'
 
 
 export interface State {
@@ -38,7 +37,6 @@ export function createRootStore() {
     modules: {
       article: ArticleStore,
       comment: CommentStore,
-      link: LinkStore,
     },
   })
 }
