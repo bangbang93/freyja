@@ -37,25 +37,28 @@
 import lozad from 'lozad'
 import prismjs from 'prismjs'
 import {PageContext} from 'vike/types'
-import {inject, onMounted, ref} from 'vue'
+import {inject, onMounted} from 'vue'
 import {useRoute} from 'vue-router'
 import FreyjaArticleComment from '../../components/home/article-comment.vue'
 import {useArticleStore} from '../../store/article.ts'
+import {useCommentStore} from '../../store/comment.ts'
 
 const articleStore = useArticleStore()
+const commentStore = useCommentStore()
 const route = useRoute()
 
-onMounted(() => {
+const articleId = route.params.id as string
+
+onMounted(async () => {
   prismjs.highlightAll()
   lozad().observe()
+  await commentStore.list(articleId, 1)
 })
 
 const pageContext = inject<PageContext>('pageContext')
-const articleId = route.params.id as string
 await articleStore.get(articleId)
-// this.$store.dispatch('comment/list', {articleId, page: 1})
 const article = articleStore.article
-const comments = ref([])
+const comments = commentStore.comments
 if (pageContext) {
   pageContext.exports.title = article.title
 }
