@@ -69,7 +69,7 @@ export default {
   data() {
     return {
       showEditor: false,
-      publisher: this.$store.getters['comment/publisher'],
+      publisher: {},
       replying: null,
     }
   },

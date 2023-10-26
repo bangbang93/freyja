@@ -4,20 +4,10 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'FreyjaMenuCategory',
-  data() {
-    this.$store.dispatch('home/getCategories')
-    return {
-      categories: this.$store.state.home.categories,
-    }
-  },
-  methods: {
-    onMouseEnter() {
-      // eslint-disable-next-line no-console
-      console.log('213')
-    },
-  },
-}
+<script lang="ts" setup>
+import {useHomeStore} from '../../store/home.ts'
+
+const homeStore = useHomeStore()
+
+await homeStore.getCategories()
 </script>

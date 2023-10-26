@@ -67,6 +67,7 @@ export const useCommentStore = defineStore('comment', {
       }
 
       this.comments = await resp.json() as IComment[]
+      return this.comments
     },
     savePublisher(publisher: ICommentState['publisher']) {
       this.publisher = publisher
