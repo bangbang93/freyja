@@ -3,7 +3,7 @@
  */
 'use strict'
 import {renderToString} from '@vue/server-renderer'
-import * as devalue from 'devalue'
+import devalue from '@nuxt/devalue'
 import * as HttpErrors from 'http-errors'
 import {dangerouslySkipEscape, escapeInject} from 'vike/server'
 import {PageContext} from 'vike/types'
@@ -39,12 +39,12 @@ export async function render(pageContext: PageContext) {
     throw new HttpErrors.NotFound('no such route')
   }
   const rootState = useRootStore(pinia)
+  rootState.setOrigin(pageContext.origin)
+  rootState.setReferer(pageContext.referer)
   await Promise.all(
     matchedComponents.map(async (component) => {
       if (!component) return null
       if ('asyncData' in component && component.asyncData) {
-        rootState.setOrigin(pageContext.origin)
-        rootState.setReferer(pageContext.referer)
         return component.asyncData({
           store,
           route: router.currentRoute.value,
@@ -73,7 +73,8 @@ export async function render(pageContext: PageContext) {
         <meta name="description" content="${desc}" />
         <title>${title}</title>
         <script>
-          window.__INITIAL_STATE__ = ${dangerouslySkipEscape(devalue.uneval(pageContext.state))}
+          window.__INITIAL_STATE__ = ${devalue(pageContext.state)}
+          window.__pinia = ${devalue(pinia.state.value)}
         </script>
       </head>
       <body>

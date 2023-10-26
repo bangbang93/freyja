@@ -11,7 +11,7 @@
     </h2>
     <div class="freyja-article-list">
       <article
-        v-for="article in articles"
+        v-for="article in homeStore.articles"
         :key="article._id"
       >
         <h3 class="freyja-article-title">
@@ -60,84 +60,71 @@
     </div>
   </div>
 </template>
-<script lang="ts">
+<script lang="ts" setup>
 import {ElButton} from 'element-plus'
-import {defineComponent} from 'vue'
+import lozad from 'lozad'
+import prismjs from 'prismjs'
+import {computed, onMounted, onUpdated} from 'vue'
+import {useRoute} from 'vue-router'
+import {useHomeStore} from '../../store/home.ts'
 
+const route = useRoute()
+const homeStore = useHomeStore()
 
-export default defineComponent({
-  name: 'HomeHome',
-  components: {
-    ElButton,
-  },
-  asyncData({store, route}) {
-    switch (route.name) {
-      case 'home':
-        return store.dispatch('home/getArticles', {page: route.query.page || 1})
-      case 'category':
-        return store.dispatch('home/getArticles', {
-          page: route.query.page || 1,
-          category: route.params.category,
-        })
-      case 'tag':
-        return store.dispatch('home/getArticles', {
-          page: route.query.page || 1,
-          tag: route.params.tag,
-        })
-      case 'search':
-        return store.dispatch('home/search', {
-          keyword: route.query.keyword,
-          page: route.query.page || 1,
-        })
-      default:
-    }
-  },
-  data() {
-    const result =  {
-      articles: this.$store.state.home.articles,
-      page: Number(this.$route.query.page) || 1,
-      tag: this.$route.params.tag,
-      category: this.$route.params.category,
-      keyword: this.$route.params.keyword,
-    }
-    if (this.$route.name === 'search' && this.$route.query.keyword) {
-      result.keyword = this.$route.query.keyword.toString()
-    }
-    return result
-  },
-  computed: {
-    canGoBackward() {
-      return this.page > 1
-    },
-    canGoForward() {
-      return this.$store.getters['home/articleCount'] === 20
-    },
-  },
-  mounted() {
-    this.highlight()
-    import('lozad').then((lozad) => {
-      const observer = lozad.default()
-      observer.observe()
+const page = typeof route.query.page === 'string' ? parseInt(route.query.page, 10) : 1
+const tag = route.params.tag as string | undefined
+const category = route.params.category as string | undefined
+const keyword = route.params.keyword as string | undefined
+
+switch (route.name) {
+  case 'home':
+    await homeStore.getArticles({page})
+    break
+  case 'category':
+    await homeStore.getArticles({
+      page,
+      category,
     })
-  },
-  async updated() {
-    await this.highlight()
-    const lozad = await import('lozad')
-    lozad.default().observe()
-  },
-  methods: {
-    async highlight() {
-      const prismjs = await import('prismjs')
-      prismjs.highlightAll()
-    },
-    formatDate(date: Date | string): string {
-      if (typeof date === 'string') {
-        date = new Date(date)
-      }
-      return date.toLocaleString()
-    },
-  },
+    break
+  case 'tag':
+    await homeStore.getArticles({
+      page,
+      tag,
+    })
+    break
+  case 'search':
+    await homeStore.search({
+      keyword: keyword ?? '',
+      page,
+    })
+    break
+  default:
+    // no default
+}
+
+const canGoBackward = computed(() => page > 1)
+const canGoForward = computed(() => homeStore.articles.length === 20)
+
+onMounted(() => {
+  highlight()
+  const observer = lozad()
+  observer.observe()
 })
+
+onUpdated(() => {
+  highlight()
+})
+
+function highlight(): void {
+  prismjs.highlightAll()
+}
+
+function formatDate(date: Date | string): string {
+  if (typeof date === 'string') {
+    date = new Date(date)
+  }
+  return date.toLocaleString()
+}
 </script>
 <style lang="scss">
   .freyja-article-pager-prev {

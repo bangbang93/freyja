@@ -1,5 +1,6 @@
 /// <reference types="vite/client" />
 
+import {StateTree} from 'pinia'
 import {PageContext} from 'vike/types'
 import {RouteLocationNormalizedLoaded} from 'vue-router'
 import {Store} from 'vuex'
@@ -24,6 +25,7 @@ declare module 'vue' {
 declare global {
   interface Window {
     __INITIAL_STATE__: object
+    __pinia: Record<string, StateTree>
   }
 }
 

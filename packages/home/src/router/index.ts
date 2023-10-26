@@ -8,7 +8,7 @@ export function createHomeRouter(): Router {
   const routes: RouteRecordRaw[] = [
     {
       path: '/',
-      component: () => import('../pages/home/home.vue'),
+      component: () => import('../pages/home/HomeIndex.vue'),
       name: 'home',
     },
     {
@@ -28,17 +28,17 @@ export function createHomeRouter(): Router {
     },
     {
       path: '/tag/:tag',
-      component: () => import('../pages/home/home.vue'),
+      component: () => import('../pages/home/HomeIndex.vue'),
       name: 'tag',
     },
     {
       path: '/category/:category',
-      component: () => import('../pages/home/home.vue'),
+      component: () => import('../pages/home/HomeIndex.vue'),
       name: 'category',
     },
     {
       path: '/search',
-      component: () => import('../pages/home/home.vue'),
+      component: () => import('../pages/home/HomeIndex.vue'),
       name: 'search',
     },
   ]

@@ -8,7 +8,6 @@ import VueFetch from 'vue-fetch'
 import {createStore} from 'vuex'
 import ArticleStore from './article.js'
 import CommentStore from './comment.js'
-import HomeStore from './home.js'
 import LinkStore from './link.js'
 import PageStore from './page.js'
 
@@ -17,16 +16,19 @@ export const Fetch = VueFetch()
 export interface State {
   origin: string
   ssrReferer: string
+  fetch: typeof Fetch
 }
 
 export const useRootStore = defineStore('root', {
   state: (): State => ({
     origin: '',
     ssrReferer: '',
+    fetch: Fetch,
   }),
   actions: {
     setReferer(referer: string) {
       Fetch.setDefaultHeader('referer', referer)
+      this.fetch.setDefaultHeader('referer', referer)
       this.ssrReferer = referer
     },
     setOrigin(origin: string) {
@@ -41,7 +43,6 @@ export function createRootStore() {
     modules: {
       article: ArticleStore,
       comment: CommentStore,
-      home: HomeStore,
       link: LinkStore,
       page: PageStore,
     },
