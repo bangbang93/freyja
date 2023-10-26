@@ -3,7 +3,8 @@
  */
 'use strict'
 import {defineStore} from 'pinia'
-import {Fetch, useRootStore} from './index.ts'
+import {Fetch} from '../utils/fetch.js'
+import {useRootStore} from './index.ts'
 
 export interface HomeState {
   articles: {

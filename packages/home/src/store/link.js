@@ -2,7 +2,8 @@
  * Created by bangbang93 on 2017/9/20.
  */
 'use strict'
-import {Fetch} from './index.ts'
+
+import {Fetch} from '../utils/fetch'
 
 export default {
   namespaced: true,

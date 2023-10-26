@@ -23,7 +23,7 @@ export function createHomeRouter(): Router {
     },
     {
       path: '/page/:name',
-      component: () => import('../pages/home/page.vue'),
+      component: () => import('../pages/home/HomePage.vue'),
       name: 'general-page',
     },
     {

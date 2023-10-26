@@ -26,14 +26,16 @@
         </div>
         <div class="view">
           <router-view v-slot="{ Component }">
-            <transition
-              name="custom-classes-transition"
-              enter-active-class="animated fadeIn"
-              leave-active-class="animated fadeOut"
-              mode="out-in"
-            >
-              <component :is="Component" />
-            </transition>
+            <Suspense>
+              <transition
+                name="custom-classes-transition"
+                enter-active-class="animated fadeIn"
+                leave-active-class="animated fadeOut"
+                mode="out-in"
+              >
+                <component :is="Component" />
+              </transition>
+            </Suspense>
           </router-view>
         </div>
         <div class="footer">
