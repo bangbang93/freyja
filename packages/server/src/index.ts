@@ -69,6 +69,7 @@ export async function bootstrap(): Promise<void> {
 
   const homeRoot = join(__dirname, '..', '..', 'home')
   const adminRoot = join(__dirname, '..', '..', 'admin')
+  const publicRoot = path.join(__dirname, '..', '..', '..', 'public')
 
   if (configService.get('NODE_ENV') === 'production') {
     app.use(cacheControl({
@@ -100,7 +101,7 @@ export async function bootstrap(): Promise<void> {
     serverRender(req, res, next).catch(next)
   })
 
-  app.use(express.static(path.join(__dirname, '..', 'public')))
+  app.use(express.static(publicRoot))
 
   // if (configService.get('freyja.fundebug.enable')) {
   //   // eslint-disable-next-line @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires
