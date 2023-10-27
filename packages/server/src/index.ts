@@ -38,7 +38,7 @@ export async function bootstrap(): Promise<void> {
 
   const eApp = app.getHttpAdapter() as unknown as Application
 
-  app.set('trust proxy', 'loopback')
+  app.set('trust proxy', true)
 
   if (configService.get('NODE_ENV') === 'development') {
     app.use(morgan('dev'))
