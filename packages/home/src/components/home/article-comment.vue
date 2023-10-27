@@ -40,85 +40,80 @@
     </transition>
   </div>
 </template>
-
-<script>
+<script lang="ts" setup>
+import {get} from 'lodash-es'
+import {reactive, ref} from 'vue'
+import {IComment, IPublisher, useCommentStore} from '../../store/comment.ts'
 import FreyjaCommentEditor from './comment-editor.vue'
 import {
-  ElButton as Button,
-  ElNotification as Notification,
+  ElButton,
+  ElNotification,
 } from 'element-plus'
 import FreyjaArticleCommentItem from './article-comment-item.vue'
 
-export default {
-  name: 'FreyjaArticleComment',
-  components: {
-    FreyjaArticleCommentItem,
-    FreyjaCommentEditor,
-    ElButton: Button,
-  },
-  props: {
-    comments: {
-      type: Array,
-      required: true,
-    },
-    articleId: {
-      type: String,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      showEditor: false,
-      publisher: {},
-      replying: null,
+const props = defineProps<{
+  comments: IComment[]
+  articleId: string
+}>()
+
+const commentStore = useCommentStore()
+
+const showEditor = ref(false)
+const publisher = reactive<IPublisher>({
+  name: '', email: '', website: '',
+})
+const replying = ref<IComment | null>(null)
+
+function toggleEditor(): void {
+  showEditor.value = !showEditor.value
+  if (!showEditor.value) {
+    replying.value = null
+  }
+}
+
+function onCloseEditor(): void {
+  showEditor.value = false
+  replying.value = null
+}
+
+async function onSubmitComment({publisher, content}: {publisher: IPublisher;content: string}): Promise<void> {
+  const data = {
+    content,
+    articleId: props.articleId,
+    publisher,
+    reply: null as string | null,
+  }
+  if (replying.value) {
+    data.reply = replying.value._id
+  }
+  try {
+    commentStore.savePublisher(publisher)
+    await commentStore.create(props.articleId, content, replying.value?._id)
+    showEditor.value = false
+  } catch (e) {
+    if (e instanceof Error) {
+      switch ('status' in e && e.status) {
+        case 403:
+          ElNotification({
+            title: 'bangbang93.blog()',
+            message: '不能使用作者邮箱',
+            type: 'error',
+          })
+          break
+        default:
+          ElNotification({
+            title: 'bangbang93.blog()',
+            message: get(e, 'body.msg') ?? get(e, 'body') ?? e.message,
+            type: 'error',
+          })
+      }
     }
-  },
-  methods: {
-    toggleEditor() {
-      this.showEditor = !this.showEditor
-      if (!this.showEditor) {
-        this.replying = null
-      }
-    },
-    onCloseEditor() {
-      this.showEditor = false
-      this.replying = null
-    },
-    async onSubmitComment({publisher, content}) {
-      const data = {
-        content,
-        articleId: this.articleId,
-        publisher,
-      }
-      if (this.replying) {
-        data.reply = this.replying._id
-      }
-      try {
-        await this.$store.dispatch('comment/create', data)
-        this.showEditor = false
-      } catch (e) {
-        switch (e.status) {
-          case 403:
-            Notification({
-              title: 'bangbang93.blog()',
-              message: '不能使用作者邮箱',
-              type: 'error',
-            })
-            break
-          default:
-            Notification({
-              title: 'bangbang93.blog()',
-              message: e.body.msg || e.body,
-              type: 'error',
-            })
-        }
-      }
-    },
-    onReplyClicked(comment) {
-      this.showEditor = true
-      this.replying = comment
-    },
-  },
+  }
+}
+
+function onReplyClicked(comment: IComment): void {
+  showEditor.value = true
+  replying.value = comment
 }
 </script>
 

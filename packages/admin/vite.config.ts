@@ -7,4 +7,9 @@ export default defineConfig({
     vuePlugin(),
   ],
   base: '/admin/',
+  server: {
+    proxy: {
+      '/api': 'http://localhost:3000',
+    },
+  },
 })

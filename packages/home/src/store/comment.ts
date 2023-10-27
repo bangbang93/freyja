@@ -9,15 +9,18 @@ import {Fetch} from '../utils/fetch'
 
 export interface IComment {
   _id: string
+  content: string
+  publisher: IPublisher
   replies?: IComment[]
+}
+export interface IPublisher {
+  name: string
+  email: string
+  website: string
 }
 export interface ICommentState {
   comments: IComment[]
-  publisher: {
-    name: string
-    email: string
-    website: string
-  }
+  publisher: IPublisher
 }
 
 export const useCommentStore = defineStore('comment', {

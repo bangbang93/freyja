@@ -77,11 +77,12 @@
 import {Check as ElIconCheck, Close as ElIconClose, DCaret as ElIconDCaret} from '@element-plus/icons-vue'
 import {ElButton, ElCol, ElForm, ElFormItem, ElInput, FormRules} from 'element-plus'
 import {reactive, ref} from 'vue'
+import {IPublisher} from '../../store/comment.ts'
 
 const emits = defineEmits(['submit', 'close'])
 const props = defineProps<{
-  publisher: {name: string; email: string; website: string}
-  reply: {publisher: {name: string; email: string; website: string}; content: string}
+  publisher: IPublisher
+  reply: {publisher: {name: string; email: string; website: string}; content: string} | null
 }>()
 
 const defaultHeight = 300
