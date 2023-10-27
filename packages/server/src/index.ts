@@ -1,3 +1,4 @@
+import {HttpExceptionFilter} from '@bangbang93/utils/nestjs/http-exception.filter'
 import {ValidationPipe} from '@nestjs/common'
 import {ConfigService} from '@nestjs/config'
 import {NestFactory} from '@nestjs/core'
@@ -29,6 +30,7 @@ export async function bootstrap(): Promise<void> {
       enableImplicitConversion: true,
     },
   }))
+  app.useGlobalFilters(app.get(HttpExceptionFilter))
 
   await mongoose.connect(configService.getOrThrow('database.mongodb.uri'))
 

@@ -1,3 +1,4 @@
+import {HttpExceptionFilter} from '@bangbang93/utils/nestjs/http-exception.filter'
 import {Module} from '@nestjs/common'
 import {ConfigModule, ConfigService} from '@nestjs/config'
 import {MongooseModule} from '@nestjs/mongoose'
@@ -34,6 +35,9 @@ import {FreyjaModule} from './app/freyja.module'
     }),
 
     FreyjaModule,
+  ],
+  providers: [
+    HttpExceptionFilter,
   ],
 })
 export class AppModule {}
