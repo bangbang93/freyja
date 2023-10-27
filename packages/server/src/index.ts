@@ -105,12 +105,5 @@ export async function bootstrap(): Promise<void> {
 
   app.use(express.static(publicRoot))
 
-  // if (configService.get('freyja.fundebug.enable')) {
-  //   // eslint-disable-next-line @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires
-  //   const fundebug = require('fundebug-nodejs')
-  //   fundebug.apikey = configService.get('freyja.fundebug.apikey')
-  //   app.use(fundebug.ExpressErrorHandler)
-  // }
-
   await app.listen(port)
 }
