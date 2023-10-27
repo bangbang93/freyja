@@ -1,0 +1,46 @@
+{
+  "name": "@bangbang93/freyja-home",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@types/lozad": "^1.16.1",
+    "@types/prismjs": "^1.26.0",
+    "@vitejs/plugin-vue": "^4.4.0",
+    "sass": "^1.69.4",
+    "unplugin-element-plus": "^0.7.0",
+    "vike": "^0.4.144",
+    "vite": "^4.5.0",
+    "vue-tsc": "^1.8.20"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.1.0",
+    "@nuxt/devalue": "^2.0.2",
+    "@sindresorhus/is": "^6.0.1",
+    "@vue/server-renderer": "^3.2.45",
+    "@vue/shared": "^3.3.4",
+    "animate.css": "^3.7.2",
+    "core-js": "^3.8.3",
+    "element-plus": "^2.4.1",
+    "font-awesome": "^4.7.0",
+    "http-errors": "^2.0.0",
+    "ky": "^0.33.0",
+    "lodash-es": "^4.17.21",
+    "lozad": "^1.14.0",
+    "markdown-it": "^12.3.2",
+    "markdown-it-lozad": "^0.2.0",
+    "mavon-editor": "^3.0.0-beta",
+    "pinia": "^2.1.7",
+    "prismjs": "^1.29.0",
+    "type-fest": "^4.6.0",
+    "vue": "^3.2.45",
+    "vue-fetch": "^3.0.0-2",
+    "vue-router": "^4.2.5",
+    "vuex": "^4.1.0"
+  }
+}

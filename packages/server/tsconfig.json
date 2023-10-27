@@ -1,0 +1,15 @@
+{
+  "extends": "@tsconfig/node16",
+  "compilerOptions": {
+    "sourceMap": true,
+    "allowJs": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "noEmit": true,
+    "incremental": true
+  },
+  "exclude": [
+    "dist"
+  ]
+}

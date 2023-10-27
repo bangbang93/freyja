@@ -9,8 +9,16 @@ plugins:
   - vue
   - '@typescript-eslint'
 parserOptions:
-  project: ./tsconfig.json
+  project: ./tsconfig.eslint.json
   parser: '@typescript-eslint/parser'
   extraFileExtensions: ['.vue']
 rules:
   '@typescript-eslint/no-var-requires': 0
+overrides:
+  - files: ['*.js']
+    rules:
+      '@typescript-eslint/no-unsafe-assignment': 0
+      '@typescript-eslint/no-unsafe-member-access': 0
+      '@typescript-eslint/no-unsafe-call': 0
+      '@typescript-eslint/no-unsafe-return': 0
+      '@typescript-eslint/no-unsafe-argument': 0
