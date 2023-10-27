@@ -34,8 +34,11 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import {ElMessageBox} from 'element-plus'
+import {defineComponent} from 'vue'
+
+export default defineComponent({
   name: 'FreyjaImportWordpress',
   data() {
     return {
@@ -55,13 +58,13 @@ export default {
         database: this.database,
       })
       if (resp.status === 200) {
-        this.$alert('导入成功')
+        await ElMessageBox.alert('导入成功')
         this.$router.push({name: 'article.list'})
       } else {
-        const body = await resp.json()
-        this.$alert(body.msg || body.message)
+        const body = await resp.json() as Record<string, string>
+        await ElMessageBox.alert(body.msg || body.message)
       }
     },
   },
-}
+})
 </script>

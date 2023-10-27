@@ -2,7 +2,6 @@
  * Created by bangbang93 on 2017/4/28.
  */
 'use strict'
-/* eslint-disable @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires */
 
 const streams = [
   {

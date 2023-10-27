@@ -42,12 +42,21 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import {ElMessageBox} from 'element-plus'
+import {defineComponent} from 'vue'
+
+interface IArticle {
+  _id: string
+  content: string
+  createdAt: string
+}
+
+export default defineComponent({
   name: 'FreyjaArticleList',
   data() {
     return {
-      articles: [],
+      articles: [] as IArticle[],
       pageSize: 20,
       total: 0,
       currentPage: 1,
@@ -61,16 +70,16 @@ export default {
       let resp = await this.$fetch.get('/api/admin/article', {
         page: this.currentPage,
       })
-      let body = await resp.json()
+      const body = await resp.json() as IArticle[]
       body.forEach((article) => {
         article.createdAt = new Date(article.createdAt).toLocaleString()
       })
       this.articles = body
       resp = await this.$fetch.get('/api/admin/article/count')
-      body = await resp.json()
-      this.total = body.count
+      const body1 = await resp.json() as {count: number}
+      this.total = body1.count
     },
-    handleEdit($index, row) {
+    handleEdit(_: number, row: IArticle) {
       this.$router.push({
         name: 'article.edit',
         params: {
@@ -78,9 +87,9 @@ export default {
         },
       })
     },
-    async handleDelete($index, row) {
+    async handleDelete(_: number, row: IArticle) {
       try {
-        const result = await this.$confirm('确定删除', 'Freyja')
+        const result = await ElMessageBox.confirm('确定删除', 'Freyja')
         if (result === 'confirm') {
           const resp = await this.$fetch.del(`/api/admin/article/${row._id}`)
           if (resp.status === 204) {
@@ -96,12 +105,12 @@ export default {
     async onRerenderAllClick() {
       const resp = await this.$fetch.get('/api/admin/article/rerender-all')
       if (resp.status === 200) {
-        this.$alert('渲染成功')
+        await ElMessageBox.alert('渲染成功')
       } else {
-        const body = await resp.json()
-        this.$alert(body.message || body.msg)
+        const body = await resp.json() as Record<string, string>
+        await ElMessageBox.alert(body.message || body.msg)
       }
     },
   },
-}
+})
 </script>

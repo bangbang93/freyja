@@ -33,12 +33,19 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import {defineComponent} from 'vue'
+
+interface IComment {
+  _id: string
+  content: string
+}
+
+export default defineComponent({
   name: 'FreyjaCommentList',
   data() {
     return {
-      comments: [],
+      comments: [] as IComment[],
       currentPage: 1,
       pageSize: 20,
       total: 0,
@@ -52,14 +59,14 @@ export default {
       const resp = await this.$fetch.get('/api/admin/comment', {
         page: this.currentPage,
       })
-      this.comments = await resp.json()
+      this.comments = await resp.json() as IComment[]
     },
-    async handleDelete(index, row) {
+    async handleDelete(_: number, row: IComment) {
       const resp = await this.$fetch.del(`/api/admin/comment/${row._id}`)
       if (resp.status === 204) {
         await this.initData()
       }
     },
   },
-}
+})
 </script>

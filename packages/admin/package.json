@@ -15,12 +15,13 @@
     "vue-tsc": "^1.8.20"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.1.0",
     "element-plus": "^2.4.1",
     "font-awesome": "^4.7.0",
     "ky": "^1.1.0",
     "mavon-editor": "^3.0.1",
     "vue": "^3.3.6",
-    "vue-fetch": "^2.0.0",
+    "vue-fetch": "^3.0.0-2",
     "vue-router": "^4.2.5"
   }
 }

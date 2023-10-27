@@ -180,12 +180,12 @@ export default defineComponent({
       article.tags = article.tags || []
       this.article = article
       this.edit.id = article._id
-      ;(this.$refs.categories as typeof ElTree).setCheckedKeys(article.categories)
+      ;(this.$refs.categories as InstanceType<typeof ElTree>).setCheckedKeys(article.categories)
     },
     async submit() {
       const data = {...this.article}
       data.attachments = this.attachments
-      data.categories = (this.$refs.categories as typeof ElTree).getCheckedKeys() as string[]
+      data.categories = (this.$refs.categories as InstanceType<typeof ElTree>).getCheckedKeys() as string[]
       let resp
       if (this.edit.id) {
         resp = await this.$fetch.put(`/api/admin/article/${this.edit.id}`, data)

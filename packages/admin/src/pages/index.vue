@@ -107,26 +107,30 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import {defineComponent} from 'vue'
+
+export default defineComponent({
   name: 'FreyjaAdminIndex',
   data() {
     return {
       current: 'dashboard',
     }
   },
-  async mounted() {
-    const resp = await this.$fetch.get('/api/admin/user/login')
-    if (resp.status !== 200) {
-      window.location.href = '/admin/login.html'
-    }
+  mounted() {
+    (async () => {
+      const resp = await this.$fetch.get('/api/admin/user/login')
+      if (resp.status !== 200) {
+        window.location.href = '/admin/login.html'
+      }
+    })()
   },
   methods: {
     goHome() {
       window.location.href = '/'
     },
   },
-}
+})
 </script>
 
 <style lang="scss">

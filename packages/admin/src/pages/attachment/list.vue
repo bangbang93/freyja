@@ -36,11 +36,16 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import {Upload as ElIconUpload} from '@element-plus/icons-vue'
+import {defineComponent} from 'vue'
 import FreyjaAttachmentCard from '../../components/attachment-card.vue'
 
-export default {
+interface IAttachment {
+  _id: string
+}
+
+export default defineComponent({
   name: 'FreyjaAttachmentList',
   components: {
     FreyjaAttachmentCard,
@@ -48,7 +53,7 @@ export default {
   },
   data() {
     return {
-      attachments: [],
+      attachments: [] as IAttachment[],
       pageSize: 20,
       total: 0,
       currentPage: 1,
@@ -60,14 +65,14 @@ export default {
   methods: {
     async initData() {
       let resp = await this.$fetch.get('/api/admin/attachment')
-      let body = await resp.json()
+      const body = await resp.json() as IAttachment[]
       this.attachments = body
       resp = await this.$fetch.get('/api/admin/attachment/count')
-      body = await resp.json()
-      this.total = body.count
+      const body1 = await resp.json() as {count: number}
+      this.total = body1.count
     },
   },
-}
+})
 </script>
 
 <style lang="scss" scoped>

@@ -8,17 +8,18 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import {defineComponent} from 'vue'
 import FreyjaTagEditor from '../../components/tag-editor.vue'
 
-export default {
+export default defineComponent({
   name: 'TagList',
   components: {
     FreyjaTagEditor,
   },
   data() {
     return {
-      tags: [],
+      tags: [] as string[],
     }
   },
   mounted() {
@@ -27,16 +28,16 @@ export default {
   methods: {
     async initData() {
       const resp = await this.$fetch.get('/api/admin/tag')
-      const body = await resp.json()
+      const body = await resp.json() as {title: string}[]
       this.tags = body.map((tag) => tag.title)
     },
-    async onTagAdd(title) {
+    async onTagAdd(title: string) {
       if (this.tags.includes(title)) return
-      const resp = await this.$fetch.put(`/api/admin/tag/${title}`)
+      await this.$fetch.put(`/api/admin/tag/${title}`)
       this.tags.push(title)
     },
   },
-}
+})
 </script>
 
 <style lang="scss" scoped>

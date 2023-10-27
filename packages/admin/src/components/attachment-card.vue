@@ -14,11 +14,23 @@
   </el-card>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import {defineComponent, PropType} from 'vue'
+
+interface IAttachment {
+  _id: string
+  path: string
+  filename: string
+  createdAt: string
+}
+
+export default defineComponent({
   name: 'FreyjaAttachmentCard',
   props: {
-    attachment: Object,
+    attachment: {
+      type: Object as PropType<IAttachment>,
+      required: true,
+    },
   },
   computed: {
     time() {
@@ -26,11 +38,11 @@ export default {
     },
   },
   methods: {
-    view(path) {
-      window.location.href = path
+    view(path: string) {
+      window.open(path)
     },
   },
-}
+})
 </script>
 
 <style lang="scss" scoped>
