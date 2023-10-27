@@ -1,6 +1,6 @@
 {
   "name": "freyja",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "engines": {
     "node": ">=16.0.0 <21.0.0"
