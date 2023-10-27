@@ -76,10 +76,13 @@ export async function createServerRender(
 function sendResponse(req: Request, res: Response, httpResponse: HttpResponse,
   cacheable: boolean, startTime: number): void {
   const {body, statusCode, headers, earlyHints} = httpResponse
-  if (res.writeEarlyHints) res.writeEarlyHints({link: earlyHints.map((e) => e.earlyHintLink)})
+
+  if (res.writeEarlyHints && process.env.ENABLE_EARLY_HINTS) {
+    res.writeEarlyHints({link: earlyHints.map((e) => e.earlyHintLink)})
+  }
+
   headers.forEach(([name, value]) => res.setHeader(name, value))
   res.status(statusCode)
-  res.set('Content-Type', 'text/html')
   if (cacheable) {
     microCache.set(req.url, httpResponse)
   }
