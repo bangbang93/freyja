@@ -41,7 +41,7 @@ import {inject, onMounted, ref} from 'vue'
 import {useRoute} from 'vue-router'
 import FreyjaArticleComment from '../../components/home/article-comment.vue'
 import {useArticleStore} from '../../store/article.ts'
-import {useCommentStore} from '../../store/comment.ts'
+import {IComment, useCommentStore} from '../../store/comment.ts'
 
 const articleStore = useArticleStore()
 const commentStore = useCommentStore()
@@ -49,7 +49,7 @@ const route = useRoute()
 
 const articleId = route.params.id as string
 
-const comments = ref([])
+const comments = ref<IComment[]>([])
 
 onMounted(async () => {
   prismjs.highlightAll()

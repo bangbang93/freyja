@@ -10,4 +10,5 @@ import {useHomeStore} from '../../store/home.ts'
 const homeStore = useHomeStore()
 
 await homeStore.getCategories()
+function onMouseEnter(): void {}
 </script>

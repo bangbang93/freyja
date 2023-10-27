@@ -43,6 +43,9 @@ import FreyjaAttachmentCard from '../../components/attachment-card.vue'
 
 interface IAttachment {
   _id: string
+  path: string
+  filename: string
+  createdAt: string
 }
 
 export default defineComponent({
