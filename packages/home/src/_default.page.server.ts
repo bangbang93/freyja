@@ -82,10 +82,13 @@ export async function render(pageContext: PageContext) {
       </body>
     </html>`
 
+  const state = {...pinia.state.value}
+  state.root.origin = ''
+  state.root.ssrReferer = ''
   return {
     documentHtml,
     pageContext: {
-      initialStoreState: pinia.state.value,
+      initialStoreState: state,
       // We can add some `pageContext` here,
       // which is useful if we want to do page redirection
       // https://vike.dev/page-redirection

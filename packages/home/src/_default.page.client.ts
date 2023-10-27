@@ -4,8 +4,8 @@
 'use strict'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import 'element-plus/dist/index.css'
-import 'prismjs/themes/prism-okaidia.css'
 import {StateTree} from 'pinia'
+import 'prismjs/themes/prism-okaidia.css'
 import {PageContext} from 'vike/types'
 import {createHome} from './entries'
 
