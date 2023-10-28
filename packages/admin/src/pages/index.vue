@@ -121,7 +121,7 @@ export default defineComponent({
     (async () => {
       const resp = await this.$fetch.get('/api/admin/user/login')
       if (resp.status !== 200) {
-        window.location.href = '/admin/login.html'
+        window.location.href = '/admin/login'
       }
     })()
   },
