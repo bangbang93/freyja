@@ -9,36 +9,7 @@
     <h2 v-if="keyword">
       关键字: {{ keyword }}
     </h2>
-    <div class="freyja-article-list">
-      <article
-        v-for="article in articles"
-        :key="article._id"
-      >
-        <h3 class="freyja-article-title">
-          <router-link :to="{name: 'article', params: {id: article._id}}">
-            {{ article.title }}
-          </router-link>
-        </h3>
-        <div class="freyja-article-info freyja-article-time">
-          <hr>
-          <span class="time"><i class="el-icon-time" /> {{ formatDate(article.createdAt) }}</span>
-          <span class="comments">
-            <i
-              v-if="article.commentCount === 0"
-              class="fa fa-comments"
-            >并没有评论</i>
-            <i
-              v-else
-              class="fa fa-comments"
-            >有{{ article.commentCount }}条评论</i>
-          </span>
-        </div>
-        <div class="freyja-article-summary freyja-article-content">
-          <div v-html="article.summary" />
-        </div>
-        <hr>
-      </article>
-    </div>
+    <article-list :articles="articles" />
     <div class="freyja-article-pager">
       <router-link :to="{query: {page: page-1}}">
         <el-button
@@ -62,10 +33,9 @@
 </template>
 <script lang="ts" setup>
 import {ElButton} from 'element-plus'
-import lozad from 'lozad'
-import prismjs from 'prismjs'
-import {computed, onMounted, onUpdated, ref, watch} from 'vue'
+import {computed, ref, watch} from 'vue'
 import {useRoute} from 'vue-router'
+import ArticleList from '../../components/home/article/article-list.vue'
 import {IArticle, useHomeStore} from '../../store/home.ts'
 
 const route = useRoute()
@@ -108,26 +78,6 @@ watch(route, async () => {
 const canGoBackward = computed(() => page > 1)
 const canGoForward = computed(() => homeStore.articles.length === 20)
 
-onMounted(() => {
-  highlight()
-  const observer = lozad()
-  observer.observe()
-})
-
-onUpdated(() => {
-  highlight()
-})
-
-function highlight(): void {
-  prismjs.highlightAll()
-}
-
-function formatDate(date: Date | string): string {
-  if (typeof date === 'string') {
-    date = new Date(date)
-  }
-  return date.toLocaleString()
-}
 </script>
 <style lang="scss">
   .freyja-article-pager-prev {
