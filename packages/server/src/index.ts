@@ -79,7 +79,7 @@ export async function bootstrap(): Promise<void> {
       '/article/**': 3600,
     }))
     eApp.use('/admin', express.static(path.join(adminRoot, 'dist')))
-    eApp.use('*', express.static(path.join(homeRoot, 'dist', 'client')))
+    eApp.use(express.static(path.join(homeRoot, 'dist', 'client')))
   } else {
     const vite = await import('vite')
     const homeViteDevMiddleware = (
