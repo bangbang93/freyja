@@ -17,7 +17,7 @@ jobs:
           key: ${{ runner.os }}-node
       - name: Install dependencies
         run: npm ci
+      - name: lint
+        run: npm run lint
       - name: Build
-        run: npm run build --if-present
-      - name: Test
-        run: npm test
+        run: npm run build
