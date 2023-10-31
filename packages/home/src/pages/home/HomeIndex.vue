@@ -11,7 +11,7 @@
     </h2>
     <div class="freyja-article-list">
       <article
-        v-for="article in homeStore.articles"
+        v-for="article in articles"
         :key="article._id"
       >
         <h3 class="freyja-article-title">
@@ -64,43 +64,46 @@
 import {ElButton} from 'element-plus'
 import lozad from 'lozad'
 import prismjs from 'prismjs'
-import {computed, onMounted, onUpdated} from 'vue'
+import {computed, onMounted, onUpdated, ref, watch} from 'vue'
 import {useRoute} from 'vue-router'
-import {useHomeStore} from '../../store/home.ts'
+import {IArticle, useHomeStore} from '../../store/home.ts'
 
 const route = useRoute()
 const homeStore = useHomeStore()
+const articles = ref([] as IArticle[])
 
 const page = typeof route.query.page === 'string' ? parseInt(route.query.page, 10) : 1
 const tag = route.params.tag as string | undefined
 const category = route.params.category as string | undefined
 const keyword = route.params.keyword as string | undefined
 
-switch (route.name) {
-  case 'home':
-    await homeStore.getArticles({page})
-    break
-  case 'category':
-    await homeStore.getArticles({
-      page,
-      category,
-    })
-    break
-  case 'tag':
-    await homeStore.getArticles({
-      page,
-      tag,
-    })
-    break
-  case 'search':
-    await homeStore.search({
-      keyword: keyword ?? '',
-      page,
-    })
-    break
-  default:
-    // no default
-}
+watch(route, async () => {
+  switch (route.name) {
+    case 'home':
+      articles.value = await homeStore.getArticles({page})
+      break
+    case 'category':
+      articles.value = await homeStore.getArticles({
+        page,
+        category,
+      })
+      break
+    case 'tag':
+      articles.value = await homeStore.getArticles({
+        page,
+        tag,
+      })
+      break
+    case 'search':
+      articles.value = await homeStore.search({
+        keyword: keyword ?? '',
+        page,
+      })
+      break
+    default:
+      // no default
+  }
+}, {immediate: true})
 
 const canGoBackward = computed(() => page > 1)
 const canGoForward = computed(() => homeStore.articles.length === 20)

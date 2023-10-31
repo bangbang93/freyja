@@ -7,18 +7,20 @@ import {Fetch} from '../utils/fetch.js'
 import {useRootStore} from './index.ts'
 
 export interface HomeState {
-  articles: {
-    _id: string
-    title: string
-    summary: string
-    tags: string[]
-    author: {
-      username: string
-    }
-    createdAt: string
-    commentCount: number
-  }[]
+  articles: IArticle[]
   categories: []
+}
+
+export interface IArticle {
+  _id: string
+  title: string
+  summary: string
+  tags: string[]
+  author: {
+    username: string
+  }
+  createdAt: string
+  commentCount: number
 }
 
 interface IGetArticleParams {
@@ -73,6 +75,7 @@ export const useHomeStore = defineStore('home', {
         page,
       })
       this.articles = await resp.json() as HomeState['articles']
+      return this.articles
     },
   },
 })
