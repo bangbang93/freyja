@@ -99,8 +99,14 @@ export async function bootstrap(): Promise<void> {
   }
 
   const serverRender = await createServerRender(port, configService.get('NODE_ENV'))
-  eApp.get(/^(?!\/api|admin\/)./, (req, res, next) => {
-    serverRender(req, res, next).catch(next)
+
+  const notSsrPrefix = ['/api', '/admin', '/feed']
+  eApp.use((req, res, next) => {
+    if (req.method !== 'GET' || notSsrPrefix.some((prefix) => req.path.startsWith(prefix))) {
+      return next()
+    } else {
+      serverRender(req, res, next).catch(next)
+    }
   })
 
   app.use(express.static(publicRoot))
