@@ -33,14 +33,12 @@
 <script lang="ts" setup>
 import lozad from 'lozad'
 import prismjs from 'prismjs'
-import {onMounted, onUpdated, ref} from 'vue'
+import {onMounted, onUpdated} from 'vue'
 import {IArticle} from '../../../store/home.ts'
 
-const props = defineProps<{
+defineProps<{
   articles: IArticle[]
 }>()
-
-const articles = ref(props.articles)
 
 
 onMounted(() => {

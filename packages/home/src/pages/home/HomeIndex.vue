@@ -48,6 +48,14 @@ const category = route.params.category as string | undefined
 const keyword = route.params.keyword as string | undefined
 
 watch(route, async () => {
+  await loadArticle()
+})
+await loadArticle()
+
+const canGoBackward = computed(() => page > 1)
+const canGoForward = computed(() => homeStore.articles.length === 20)
+
+async function loadArticle(): Promise<void> {
   switch (route.name) {
     case 'home':
       articles.value = await homeStore.getArticles({page})
@@ -73,10 +81,7 @@ watch(route, async () => {
     default:
       // no default
   }
-}, {immediate: true})
-
-const canGoBackward = computed(() => page > 1)
-const canGoForward = computed(() => homeStore.articles.length === 20)
+}
 
 </script>
 <style lang="scss">
