@@ -28,17 +28,17 @@ export function createHomeRouter(): Router {
     },
     {
       path: '/tag/:tag',
-      component: () => import('../pages/home/HomeIndex.vue'),
+      component: () => import('../pages/home/home-tag.vue'),
       name: 'tag',
     },
     {
       path: '/category/:category',
-      component: () => import('../pages/home/HomeIndex.vue'),
+      component: () => import('../pages/home/HomeCategory.vue'),
       name: 'category',
     },
     {
       path: '/search',
-      component: () => import('../pages/home/HomeIndex.vue'),
+      component: () => import('../pages/home/home-search.vue'),
       name: 'search',
     },
   ]

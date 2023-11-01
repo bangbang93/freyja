@@ -1,5 +1,8 @@
 <template>
   <div>
+    <h2>
+      关键字: {{ keyword }}
+    </h2>
     <article-list :articles="articles" />
     <article-pager
       :articles="articles"
@@ -19,7 +22,12 @@ const homeStore = useHomeStore()
 const articles = ref([] as IArticle[])
 
 const page = typeof route.query.page === 'string' ? parseInt(route.query.page, 10) : 1
-articles.value = await homeStore.getArticles({page})
+const keyword = route.query.keyword?.toString() ?? ''
 
+
+articles.value = await homeStore.search({
+  keyword,
+  page,
+})
 
 </script>
