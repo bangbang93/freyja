@@ -4,7 +4,7 @@
 'use strict'
 import {renderToString} from '@vue/server-renderer'
 import devalue from '@nuxt/devalue'
-import * as HttpErrors from 'http-errors'
+import HttpErrors from 'http-errors'
 import {dangerouslySkipEscape, escapeInject} from 'vike/server'
 import {PageContext} from 'vike/types'
 import {createHome} from './entries'
