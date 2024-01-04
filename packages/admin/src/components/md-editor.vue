@@ -17,13 +17,13 @@ import {ref, unref} from 'vue'
 
 const MavonEditor = VueMavonEditor.mavonEditor
 const props = defineProps({
-  value: {
+  modelValue: {
     type: String,
     default: '',
   },
 })
 const emit = defineEmits(['update:modelValue', 'attachAdd'])
-const content = ref(props.value)
+const content = ref(props.modelValue)
 // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-assignment
 const editor = ref<any>(null)
 
