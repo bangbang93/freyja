@@ -71,7 +71,7 @@ export default defineComponent({
       cb(
         (this.tags as string[])
           .filter((tag: string) => tag.includes(query))
-          .map((tag) => ({modelValue: tag})),
+          .map((tag) => ({value: tag})),
       )
     },
     onClose(tag: string) {
