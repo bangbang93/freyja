@@ -3,7 +3,7 @@ import {InjectModel} from '@bangbang93/utils/nest-mongo'
 import {Injectable, NotFoundException} from '@nestjs/common'
 import Bluebird from 'bluebird'
 import htmlSubstring from 'html-substring'
-import {compact} from 'lodash'
+import {compact, pick} from 'lodash'
 import {ObjectId} from 'mongoose-typescript'
 import {CategoryModel} from '../category/category.model'
 import {CommentModel} from '../comment/comment.model'
@@ -27,12 +27,15 @@ interface ICreate {
   content: string
   tags: string[]
   slug: string
+  categories: string[]
 }
 
 interface IUpdate {
   title: string
   content: string
   tags: string[]
+  slug: string
+  categories: string[]
 }
 
 const SUMMARY_LENGTH = 200
@@ -50,6 +53,7 @@ export class ArticleService {
     const summary = htmlSubstring(html, SUMMARY_LENGTH)
     const article = await this.articleModel.create({
       title: data.title, content: data.content, tags: data.tags, author: data.author, summary, html,
+      categories: data.categories,
     })
     await this.articleSearchService.add(article.toObject())
     return article
@@ -130,6 +134,7 @@ export class ArticleService {
     const summary = htmlSubstring(html, SUMMARY_LENGTH)
     article.html = html
     article.summary = summary
+    article.set(pick(data, 'title', 'slug', 'categories'))
     await article.save()
     await this.articleSearchService.update(article.toObject())
     return article
