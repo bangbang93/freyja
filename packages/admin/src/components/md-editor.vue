@@ -13,7 +13,7 @@
 import ky from 'ky'
 import VueMavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
-import {ref, unref} from 'vue'
+import {computed, ref, unref} from 'vue'
 
 const MavonEditor = VueMavonEditor.mavonEditor
 const props = defineProps({
@@ -23,7 +23,14 @@ const props = defineProps({
   },
 })
 const emit = defineEmits(['update:modelValue', 'attachAdd'])
-const content = ref(props.modelValue)
+const content = computed({
+  get() {
+    return props.modelValue
+  },
+  set(val: string) {
+    emit('update:modelValue', val)
+  },
+})
 // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-assignment
 const editor = ref<any>(null)
 
