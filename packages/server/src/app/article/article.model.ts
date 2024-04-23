@@ -89,7 +89,7 @@ export class Article implements IArticleSchema {
     this: IArticleModel,
     id: ObjectId,
   ): Promise<void> {
-    await this.remove({_id: id})
+    await this.deleteOne({_id: id})
   }
 
   @statics()

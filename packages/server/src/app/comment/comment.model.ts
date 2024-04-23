@@ -135,14 +135,14 @@ export class Comment implements ICommentSchema {
 
   @statics()
   public static async deleteById(this: ICommentModel, id: string) {
-    return this.remove({
+    return this.deleteOne({
       _id: id,
     })
   }
 
   @statics()
   public static async addReply(this: ICommentModel, commentId: ObjectId, replyId: ObjectId) {
-    return this.update({
+    return this.updateOne({
       _id: commentId,
     }, {
       $push: {
