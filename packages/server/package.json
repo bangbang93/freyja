@@ -41,7 +41,7 @@
     "meilisearch": "^0.32.3",
     "moment": "^2.29.4",
     "mongoose": "^7.6.11",
-    "mongoose-typescript": "^2.3.3",
+    "mongoose-typescript": "^3.3.0",
     "morgan": "^1.10.0",
     "ms": "^2.1.2",
     "nestjs-bunyan": "^3.0.2",
