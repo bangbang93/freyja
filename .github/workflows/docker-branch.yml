@@ -2,8 +2,6 @@ name: build docker
 
 on:
   push:
-    tags-ignore:
-      - *
 
 concurrency:
   group: ${{ github.ref }}
