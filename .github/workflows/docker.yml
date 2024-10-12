@@ -33,7 +33,7 @@ jobs:
         uses: docker/build-push-action@v4
         env:
           IMAGE_TAG: ${{ env.GIT_TAG }}
-          IMAGE_NAME: bangbang93-docker.pkg.coding.net/mirrors/bangbang93/freyja
+          IMAGE_NAME: bangbang93-docker.pkg.coding.net/registry/bangbang93/freyja
         with:
           push: true
           cache-from: type=gha
