@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=node:18.18.0-alpine
+ARG BASE_IMAGE=node:20.18.0
 FROM $BASE_IMAGE AS build
 
 WORKDIR /app
@@ -7,7 +7,7 @@ COPY package.json package-lock.json ./
 COPY packages/server/package.json packages/server ./packages/server/
 COPY packages/home/package.json packages/home ./packages/home/
 COPY packages/admin/package.json packages/admin ./packages/admin/
-RUN npm ci
+RUN --mount=type=cache,dst=/root/.npm npm ci
 
 ENV NODE_ENV=production
 
@@ -23,11 +23,15 @@ COPY package.json package-lock.json ./
 COPY packages/server/package.json packages/server ./packages/server/
 COPY packages/home/package.json packages/home ./packages/home/
 COPY packages/admin/package.json packages/admin ./packages/admin/
-RUN npm ci --omit=dev
+RUN --mount=type=cache,dst=/root/.npm npm ci --omit=dev
 
 FROM $BASE_IMAGE AS release
 
-RUN apk add --no-cache tini
+RUN apt-get update &&  \
+    apt-get install -y \
+    tini && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
