@@ -119,9 +119,10 @@ const edit = reactive({id: ''})
 const categories = ref<InstanceType<typeof ElTree> | null>(null)
 const categoryItems = ref<CategoryResDto[]>([])
 const autoSlug = ref(true)
+const submitted = ref(false)
 
 onBeforeRouteLeave((_, __, next) => {
-  if (article.title || article.content) {
+  if (!submitted.value && article.title || article.content) {
     ElMessageBox.confirm('文章没有保存，是否离开')
       .then(() => next())
       .catch(() => next(false))
@@ -193,6 +194,7 @@ async function submit(): Promise<void> {
   }
   if (resp.status === 201 || resp.status === 200) {
     await ElMessageBox.alert('保存成功', 'Freyja')
+    submitted.value = true
     await router.push({name: 'article.list'})
   } else {
     const body = await resp.json() as { message?: string; msg?: string }
