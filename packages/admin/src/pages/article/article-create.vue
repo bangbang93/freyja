@@ -224,9 +224,8 @@ function onTitleBlur(): void {
 }
 
 function onSlugBlur(): void {
-  if (article.slug) {
-    autoSlug.value = false
-  }
+  autoSlug.value = !article.slug
+  onTitleBlur()
 }
 
 onMounted(async () => {
