@@ -13,7 +13,7 @@ const AdminRoutes: RouteRecordRaw[] = [
   },
   {
     path: '/article/create',
-    component: () => import('./pages/article/create.vue'),
+    component: () => import('./pages/article/article-create.vue'),
     name: 'article.create',
   },
   {
@@ -23,7 +23,7 @@ const AdminRoutes: RouteRecordRaw[] = [
   },
   {
     path: '/article/:id',
-    component: () => import('./pages/article/create.vue'),
+    component: () => import('./pages/article/article-create.vue'),
     name: 'article.edit',
   },
   {
