@@ -52,8 +52,8 @@ export class ArticleService {
     const html = this.markdownService.render(data.content)
     const summary = htmlSubstring(html, SUMMARY_LENGTH)
     const article = await this.articleModel.create({
-      title: data.title, content: data.content, tags: data.tags, author: data.author, summary, html,
-      categories: data.categories,
+      ...data,
+      summary, html,
     })
     await this.articleSearchService.add(article.toObject())
     return article
