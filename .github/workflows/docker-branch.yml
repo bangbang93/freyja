@@ -1,7 +1,9 @@
-name: build docker
+name: build docker branch image
 
 on:
   push:
+    branches:
+      - '*'
 
 concurrency:
   group: ${{ github.ref }}
