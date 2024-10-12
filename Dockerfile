@@ -44,5 +44,4 @@ COPY --from=build /app/packages/server/dist ./packages/server/dist
 COPY --from=build /app/packages/home/dist ./packages/home/dist
 COPY --from=build /app/packages/admin/dist ./packages/admin/dist
 
-ENTRYPOINT ["/sbin/tini", "--"]
-CMD ["node", "--enable-source-maps", "packages/server/dist/main.js"]
+CMD ["tini", "--", "node", "--enable-source-maps", "packages/server/dist/main.js"]
