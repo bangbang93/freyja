@@ -3,7 +3,7 @@
   "version": "1.1.8",
   "private": true,
   "engines": {
-    "node": ">=16.0.0 <21.0.0"
+    "node": ">=18.0.0 <23.0.0"
   },
   "scripts": {
     "start": "node packages/server/dist/main.js",
