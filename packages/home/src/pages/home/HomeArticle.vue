@@ -36,7 +36,7 @@
 <script lang="ts" setup>
 import lozad from 'lozad'
 import prismjs from 'prismjs'
-import {PageContext} from 'vike/types'
+import type {PageContext} from 'vike/types'
 import {inject, onMounted, ref} from 'vue'
 import {useRoute} from 'vue-router'
 import FreyjaArticleComment from '../../components/home/article-comment.vue'
