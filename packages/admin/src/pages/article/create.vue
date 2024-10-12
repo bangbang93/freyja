@@ -10,6 +10,7 @@
             <el-input
               v-model="article.title"
               placeholder="请输入标题"
+              @blur="onTitleBlur"
             />
           </el-form-item>
         </el-col>
@@ -18,6 +19,7 @@
             <el-input
               v-model="article.slug"
               placeholder="请输入别名"
+              @blur="onSlugBlur"
             />
           </el-form-item>
         </el-col>
@@ -75,6 +77,7 @@ import {defineComponent} from 'vue'
 import {RouteParams} from 'vue-router'
 import FreyjaMdEditor from '../../components/md-editor.vue'
 import FreyjaTagEditor from '../../components/tag-editor.vue'
+import limax from 'limax'
 
 interface Tree {
   id: string
@@ -135,6 +138,7 @@ export default defineComponent({
         id: '',
       },
       categories: [] as CategoryResDto[],
+      autoSlug: true,
     }
   },
   computed: {
@@ -213,6 +217,16 @@ export default defineComponent({
         await ElMessageBox.alert('添加tag失败', 'Freyja', {type: 'error'})
       }
       this.article.tags.push(value)
+    },
+    onTitleBlur() {
+      if (this.autoSlug) {
+        this.article.slug = limax(this.article.title)
+      }
+    },
+    onSlugBlur() {
+      if (this.article.slug) {
+        this.autoSlug = false
+      }
     },
   },
 })
