@@ -2,8 +2,8 @@ import {MongoIdParam} from '@bangbang93/utils/nest-mongo'
 import {PagedDto} from '@bangbang93/utils/nestjs'
 import {Body, Controller, Get, Headers, Ip, Post, Query} from '@nestjs/common'
 import {AdminId} from '../admin/admin.decorator'
-import {CommentCreateBodyDto} from './comment.dto'
-import {ICommentSchema} from './comment.model'
+import {CommentCreateBodyDto, CommentTreeDto} from './comment.dto'
+import {ICommentDocument, ICommentSchema} from './comment.model'
 import {CommentService} from './comment.service'
 
 @Controller('api/comment')
@@ -13,20 +13,25 @@ export class CommentController {
   ) {}
 
   @Get('article/:id(\\w{24})')
-  public async getArticleComments(@MongoIdParam('id') id: string, @Query() query: PagedDto): Promise<ICommentSchema[]> {
+  public async getArticleComments(@MongoIdParam('id') id: string, @Query() query: PagedDto): Promise<CommentTreeDto[]> {
     const list = await this.commentService.listByArticle(id, query.page, query.limit)
-    removeEmail(list.map((e) => e.toObject()))
-    return list
+    return removeEmail(list)
 
-    function removeEmail(comments: ICommentSchema[]): void {
-      for (const comment of comments) {
-        delete comment.publisher.email
-        delete comment.publisher.agent
-        delete comment.publisher.ip
-        if (comment.replies) {
-          removeEmail(comment.replies as ICommentSchema[])
-        }
-      }
+
+    function removeEmail(comments: ICommentDocument[]): CommentTreeDto[] {
+      return comments.map((comment) => {
+        const doc = comment.toObject()
+        return {
+          ...doc,
+          publisher: {
+            ...doc.publisher,
+            email: undefined,
+            ip: undefined,
+            agent: undefined,
+          },
+          replies: doc.replies ? removeEmail(doc.replies as ICommentDocument[]) : [],
+        } as CommentTreeDto
+      })
     }
   }
 
