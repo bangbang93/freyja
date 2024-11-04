@@ -1,6 +1,6 @@
 import {MongoIdParam} from '@bangbang93/utils/nest-mongo'
 import {PagedDto} from '@bangbang93/utils/nestjs'
-import {Controller, Delete, Get, Query, UseGuards} from '@nestjs/common'
+import {Controller, Delete, Get, HttpCode, HttpStatus, Query, UseGuards} from '@nestjs/common'
 import {AdminGuard} from '../admin/admin.guard'
 import {ICommentSchema} from './comment.model'
 import {CommentService} from './comment.service'
@@ -18,6 +18,7 @@ export class CommentAdminController {
   }
 
   @Delete(':id(\\w{24})')
+  @HttpCode(HttpStatus.NO_CONTENT)
   public async delete(@MongoIdParam('id') id: string): Promise<void> {
     return this.commentService.delete(id)
   }
