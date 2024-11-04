@@ -76,7 +76,7 @@ export class CommentService {
     }
 
     if (!data.replyTo) {
-      await this.mailService.comment({article})
+      await this.mailService.comment(article, author)
     }
 
     return commentDoc

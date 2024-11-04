@@ -6,6 +6,7 @@ import {Injectable} from '@nestjs/common'
 import {ConfigService} from '@nestjs/config'
 import {createTransport, Transporter} from 'nodemailer'
 import SMTPTransport from 'nodemailer/lib/smtp-transport'
+import {IAdminSchema} from '../admin/admin.model'
 import {IArticleSchema} from '../article/article.model'
 import {MarkdownService} from './markdown.service'
 
@@ -29,17 +30,17 @@ bangbang93.forum()
 `
     const html = this.markdownService.render(content)
     return this.transporter.sendMail({
-      from: 'Config.freyja.mail.from',
+      from: 'blog@noti.933.moe',
       to,
-      subject: 'bangbang93.forum() 通知',
+      subject: `您在bangbang93.forum()的文章《${article.title}》收到了新的回复`,
       html,
     })
   }
 
 
-  public async comment({article}: {article: IArticleSchema}): Promise<SMTPTransport> {
+  public async comment(article: IArticleSchema, author: IAdminSchema): Promise<SMTPTransport> {
     const content = `
-bangbang93.form()
+bangbang93.forum()
 ---
 文章《${article.title}》有新评论
 查看链接
@@ -47,9 +48,9 @@ bangbang93.form()
 `
     const html = this.markdownService.render(content)
     return this.transporter.sendMail({
-      from: 'Config.freyja.mail.from',
-      to: 'Config.freyja.commentTo',
-      subject: 'bangbang93.forum() 评论',
+      from: 'blog@noti.933.moe',
+      to: author.email,
+      subject: `文章《${article.title}》有新评论`,
       html,
     })
   }
