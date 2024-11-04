@@ -7,7 +7,7 @@
       />
       <el-table-column
         label="内容"
-        prop="html"
+        prop="content"
       />
       <el-table-column
         label="发布时间"
@@ -34,6 +34,7 @@
 </template>
 
 <script lang="ts">
+import {ElButton, ElPagination, ElTable, ElTableColumn} from 'element-plus'
 import {defineComponent} from 'vue'
 
 interface IComment {
@@ -43,6 +44,12 @@ interface IComment {
 
 export default defineComponent({
   name: 'FreyjaCommentList',
+  components: {
+    ElTable,
+    ElTableColumn,
+    ElPagination,
+    ElButton,
+  },
   data() {
     return {
       comments: [] as IComment[],
