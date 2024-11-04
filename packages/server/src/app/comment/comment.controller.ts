@@ -15,21 +15,20 @@ export class CommentController {
   @Get('article/:id(\\w{24})')
   public async getArticleComments(@MongoIdParam('id') id: string, @Query() query: PagedDto): Promise<CommentTreeDto[]> {
     const list = await this.commentService.listByArticle(id, query.page, query.limit)
-    return removeEmail(list)
+    return removeEmail(list.map((e) => e.toObject()))
 
 
-    function removeEmail(comments: ICommentDocument[]): CommentTreeDto[] {
+    function removeEmail(comments: ICommentSchema[]): CommentTreeDto[] {
       return comments.map((comment) => {
-        const doc = comment.toObject()
         return {
-          ...doc,
+          ...comment,
           publisher: {
-            ...doc.publisher,
+            ...comment.publisher,
             email: undefined,
             ip: undefined,
             agent: undefined,
           },
-          replies: doc.replies ? removeEmail(doc.replies as ICommentDocument[]) : [],
+          replies: comment.replies ? removeEmail(comment.replies as ICommentDocument[]) : [],
         } as CommentTreeDto
       })
     }
