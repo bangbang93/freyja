@@ -12,7 +12,7 @@
     "@vitejs/plugin-vue": "^4.4.0",
     "sass": "^1.69.4",
     "vite": "^4.5.3",
-    "vue-tsc": "^1.8.20"
+    "vue-tsc": "^2.1.10"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.1.0",
