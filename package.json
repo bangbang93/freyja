@@ -17,7 +17,7 @@
     "update-browserlist-db": "npx update-browserslist-db@latest"
   },
   "dependencies": {
-    "snyk": "^1.1064.0"
+    "snyk": "^1.1294.2"
   },
   "devDependencies": {
     "@bangbang93/eslint-config-recommended": "^1.1.1",
