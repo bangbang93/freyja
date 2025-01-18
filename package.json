@@ -17,6 +17,7 @@
     "update-browserlist-db": "npx update-browserslist-db@latest"
   },
   "dependencies": {
+    "mongoose": "^7.8.4",
     "snyk": "^1.1064.0"
   },
   "devDependencies": {
