@@ -36,7 +36,7 @@
     "markdown-it-lozad": "^0.2.0",
     "mavon-editor": "^3.0.0-beta",
     "pinia": "^2.1.7",
-    "prismjs": "^1.29.0",
+    "prismjs": "^1.30.0",
     "type-fest": "^4.6.0",
     "vite-plugin-prismjs": "^0.0.11",
     "vue": "^3.2.45",
