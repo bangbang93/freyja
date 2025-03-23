@@ -9,6 +9,10 @@ export default defineConfig({
   plugins: [
     vuePlugin(),
     vike(),
-    prismjs(),
+    prismjs({
+      languages: 'all',
+      theme: 'okaidia',
+      css: true,
+    }),
   ],
 })
