@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common'
 import {FileInterceptor} from '@nestjs/platform-express'
 import {Request} from 'express'
-import {copy} from 'fs-extra'
+import {outputFile} from 'fs-extra'
 import {extname, join, sep} from 'path'
 import {AdminGuard} from '../admin/admin.guard'
 import {AttachmentCreateResDto} from './attachment.dto'
@@ -36,7 +36,7 @@ export class AttachmentAdminController {
     const filename = `${Date.now()}${ext}`
     const savePath = join(this.uploadPath, datePath, filename)
 
-    await copy(file.path, savePath)
+    await outputFile(savePath, file.buffer)
 
     const attachment = await this.attachmentService.create({
       filename: file.originalname,

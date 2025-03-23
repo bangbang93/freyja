@@ -10,6 +10,7 @@
   </div>
 </template>
 <script setup lang="ts">
+import {ElMessage} from 'element-plus'
 import ky from 'ky'
 import VueMavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
@@ -42,22 +43,26 @@ async function onImgAdd(filename: string, file: File): Promise<void> {
   const formData = new FormData()
   formData.append('filename', filename)
   formData.append('file', file)
-  const resp = await ky.post('/api/admin/attachment', {
-    body: formData,
-  })
-  const body = await resp.json<{path: string;_id: string}>()
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-  editor?.value?.$img2Url(filename, body.path)
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-  unref(editor)?.$refs['toolbar_left'].$imgUpdateByFilename(
-    filename,
-    body.path,
-  )
-  emit('attachAdd', {
-    id: body._id,
-    path: body.path,
-    filename: file.name,
-  })
+  try {
+    const resp = await ky.post('/api/admin/attachment', {
+      body: formData,
+    })
+    const body = await resp.json<{path: string;_id: string}>()
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
+    editor?.value?.$img2Url(filename, body.path)
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
+    unref(editor)?.$refs['toolbar_left'].$imgUpdateByFilename(
+      filename,
+      body.path,
+    )
+    emit('attachAdd', {
+      id: body._id,
+      path: body.path,
+      filename: file.name,
+    })
+  } catch (e) {
+    ElMessage.error((e as Error).message)
+  }
 }
 
 </script>
