@@ -15,7 +15,7 @@ import {AttachmentService} from './attachment.service'
 @Controller('api/admin/attachment')
 @UseGuards(AdminGuard)
 export class AttachmentAdminController {
-  private readonly uploadPath = join(__dirname, '../../../public/uploads')
+  private readonly uploadPath = join(__dirname, '../../../../../public/uploads')
   constructor(
     private readonly attachmentService: AttachmentService,
   ) {}
