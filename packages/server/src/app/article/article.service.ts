@@ -132,6 +132,7 @@ export class ArticleService {
     if (!article) throw new NotFoundException('article not found')
     const html = this.markdownService.render(data.content)
     const summary = htmlSubstring(html, SUMMARY_LENGTH)
+    article.content = data.content
     article.html = html
     article.summary = summary
     article.set(pick(data, 'title', 'slug', 'categories'))
