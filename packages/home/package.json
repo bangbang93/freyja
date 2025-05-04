@@ -15,7 +15,7 @@
     "sass": "^1.69.4",
     "unplugin-element-plus": "^0.7.0",
     "vike": "^0.4.144",
-    "vite": "^4.5.6",
+    "vite": "^4.5.14",
     "vue-tsc": "^2.1.10"
   },
   "dependencies": {
