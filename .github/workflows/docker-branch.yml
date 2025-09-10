@@ -21,9 +21,9 @@ jobs:
       - name: Login to coding registry
         uses: docker/login-action@v2
         with:
-          registry: bangbang93-docker.pkg.coding.net
-          username: ${{ secrets.DOCKER_USER }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          registry: registry.cn-hangzhou.aliyuncs.com
+          username: ${{ secrets.ACR_USER }}
+          password: ${{ secrets.ACR_PASSWORD }}
 
       - name: Extract Git Branch
         run: echo "GIT_BRANCH=${GITHUB_REF/refs\/heads\//}" >> $GITHUB_ENV
@@ -33,7 +33,7 @@ jobs:
         uses: docker/build-push-action@v4
         env:
           IMAGE_TAG: ${{ env.GIT_BRANCH }}
-          IMAGE_NAME: bangbang93-docker.pkg.coding.net/registry/bangbang93/freyja
+          IMAGE_NAME: registry.cn-hangzhou.aliyuncs.com/bangbang93/freyja
         with:
           push: true
           cache-from: type=gha
