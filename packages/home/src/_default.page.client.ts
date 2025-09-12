@@ -6,6 +6,7 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import 'element-plus/dist/index.css'
 import {StateTree} from 'pinia'
 import {PageContext} from 'vike/types'
+import {Component} from 'vue'
 import {createHome} from './entries'
 
 import './utils/prism.ts'
@@ -46,7 +47,7 @@ export async function render(pageContext: PageContext & {initialStoreState: Reco
   })
 
   for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-    app.component(key, component)
+    app.component(key, component as Component)
   }
 
   app.mount('#app')
