@@ -38,7 +38,7 @@
 
 <script lang="ts">
 import {Upload as ElIconUpload} from '@element-plus/icons-vue'
-import {defineComponent} from 'vue'
+import {Component, defineComponent} from 'vue'
 import FreyjaAttachmentCard from '../../components/attachment-card.vue'
 
 interface IAttachment {
@@ -52,7 +52,7 @@ export default defineComponent({
   name: 'FreyjaAttachmentList',
   components: {
     FreyjaAttachmentCard,
-    ElIconUpload,
+    ElIconUpload: ElIconUpload as Component,
   },
   data() {
     return {

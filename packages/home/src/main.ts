@@ -2,7 +2,7 @@
  * Created by bangbang93 on 2017/8/25.
  */
 'use strict'
-import {App} from 'vue'
+import {App, Component} from 'vue'
 import {createHome} from './entries'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
@@ -41,7 +41,7 @@ export async function createClient(): Promise<App> {
   })
 
   for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-    app.component(key, component)
+    app.component(key, component as Component)
   }
 
   app.mount('app')

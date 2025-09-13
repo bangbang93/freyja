@@ -26,7 +26,7 @@
     "@vue/shared": "^3.3.4",
     "animate.css": "^3.7.2",
     "core-js": "^3.8.3",
-    "element-plus": "^2.4.1",
+    "element-plus": "^2.11.0",
     "font-awesome": "^4.7.0",
     "http-errors": "^2.0.0",
     "ky": "^0.33.0",
