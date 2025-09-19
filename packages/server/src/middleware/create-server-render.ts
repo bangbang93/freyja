@@ -3,7 +3,7 @@ import {NextFunction, Request, Response} from 'express'
 import {NotFound} from 'http-errors'
 import LRU from 'lru-cache'
 import ms from 'ms'
-import {HttpResponse} from 'vike/dist/esm/node/runtime/renderPage/createHttpResponseObject'
+import type {HttpResponse} from 'vike/dist/esm/node/runtime/renderPage/createHttpResponse'
 import {renderPage} from 'vike/server'
 
 const microCache = new LRU<string, HttpResponse>({
