@@ -9,18 +9,18 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^6.0.1",
     "sass": "^1.69.4",
-    "vite": "^7.1.7",
     "vue-tsc": "^2.1.10"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.1.0",
+    "@vitejs/plugin-vue": "^6.0.1",
     "element-plus": "^2.11.0",
     "font-awesome": "^4.7.0",
     "ky": "^1.1.0",
     "limax": "^4.1.0",
     "mavon-editor": "^3.0.1",
+    "vite": "^7.1.7",
     "vue": "^3.3.6",
     "vue-fetch": "^3.0.0-2",
     "vue-router": "^4.2.5"
