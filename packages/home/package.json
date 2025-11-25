@@ -11,17 +11,17 @@
   "devDependencies": {
     "@types/lozad": "^1.16.1",
     "@types/prismjs": "^1.26.0",
-    "@vitejs/plugin-vue": "^6.0.1",
     "sass": "^1.69.4",
     "unplugin-element-plus": "^0.7.0",
     "vike": "^0.4.144",
-    "vite": "^7.1.6",
+    "vite": "^7.2.4",
     "vue-tsc": "^2.1.10"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.1.0",
     "@nuxt/devalue": "^2.0.2",
     "@sindresorhus/is": "^6.0.1",
+    "@vitejs/plugin-vue": "^6.0.2",
     "@vue/server-renderer": "^3.2.45",
     "@vue/shared": "^3.3.4",
     "animate.css": "^3.7.2",
