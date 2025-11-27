@@ -1,8 +1,8 @@
 <template>
   <div class="tag-container">
     <el-tag
-      v-for="tag in selectedTags"
-      :key="tag"
+      v-for="(tag, index) in selectedTags"
+      :key="index"
       :closable="true"
       :close-transition="true"
       class="tag"

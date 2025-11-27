@@ -11,7 +11,7 @@ const microCache = new LRU<string, HttpResponse>({
   maxAge: ms('30s'),
 })
 
-// eslint-disable-next-line @typescript-eslint/require-await
+
 export async function createServerRender(
   port: number,
   env?: string,

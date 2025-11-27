@@ -62,7 +62,7 @@ export default defineComponent({
   },
   methods: {
     async onSearch() {
-      return this.$router.push({
+      return await this.$router.push({
         name: 'search',
         query: {
           keyword: this.keyword,

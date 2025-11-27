@@ -64,7 +64,7 @@ export class Article implements IArticleSchema {
         },
       })
     }
-    return query.sort({_id: -1})
+    return await query.sort({_id: -1})
       .select(select)
       .limit(limit)
   }
@@ -77,7 +77,7 @@ export class Article implements IArticleSchema {
     if (!skip) {
       skip = (page - 1) * limit
     }
-    return this.find({})
+    return await this.find({})
       .select({content: 0, html: 0})
       .sort({_id: -1})
       .skip(skip)
@@ -100,7 +100,7 @@ export class Article implements IArticleSchema {
       value = key[keys[0]]
       key = keys[0]
     }
-    return this.findOne({
+    return await this.findOne({
       [`wordpress.${key}`]: value,
     })
   }
@@ -110,7 +110,7 @@ export class Article implements IArticleSchema {
     this: IArticleModel,
     {tag, skip = 0, limit = 20}: {tag: string; skip?: number; limit?: number},
   ): Promise<IArticleDocument[]> {
-    return this.find({
+    return await this.find({
       tags: tag,
     })
       .skip(skip)
@@ -123,7 +123,7 @@ export class Article implements IArticleSchema {
     this: IArticleModel,
     {categoryId, skip, limit}: {categoryId: IdType; skip: number; limit: number},
   ): Promise<IArticleDocument[]> {
-    return this.find({
+    return await this.find({
       category: categoryId,
     })
       .skip(skip)

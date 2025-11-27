@@ -12,7 +12,7 @@ import {FreyjaModule} from './app/freyja.module'
       isGlobal: true,
       envFilePath: '.env',
       load: [() => {
-        // eslint-disable-next-line no-useless-concat,@typescript-eslint/no-unsafe-return
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         return require('../../../config')
       }],
     }),

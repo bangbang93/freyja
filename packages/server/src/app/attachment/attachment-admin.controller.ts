@@ -52,7 +52,7 @@ export class AttachmentAdminController {
 
   @Get()
   public async list(@Query() query: PagedDto): Promise<IAttachmentSchema[]> {
-    return this.attachmentService.listByPage(query.page, query.limit)
+    return await this.attachmentService.listByPage(query.page, query.limit)
   }
 
   @Get('count')
@@ -64,6 +64,6 @@ export class AttachmentAdminController {
 
   @Get(':id(\\w{24})')
   public async getById(@MongoIdParam('id') id: string): Promise<IAttachmentSchema | null> {
-    return this.attachmentService.getById(id)
+    return await this.attachmentService.getById(id)
   }
 }

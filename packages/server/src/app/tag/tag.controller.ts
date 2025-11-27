@@ -11,6 +11,6 @@ export class TagController {
 
   @Get(':tag')
   public async listByTag(@Param('tag') tag: string, @Query() query: PagedDto): Promise<IArticleSchema[]> {
-    return this.articleService.findByTag(tag, query.page, query.limit)
+    return await this.articleService.findByTag(tag, query.page, query.limit)
   }
 }

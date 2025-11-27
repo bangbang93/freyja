@@ -16,24 +16,24 @@ export class ArticleAdminController {
 
   @Post()
   public async create(@Body() body: ArticleCreateBody, @AdminId() adminId: string): Promise<IArticleDocument> {
-    return this.articleService.create({
+    return await this.articleService.create({
       ...body, author: adminId,
     })
   }
 
   @Get()
   public async list(@Query() query: PagedDto): Promise<IArticleSchema[]> {
-    return this.articleService.listByPage(query.page, query.limit)
+    return await this.articleService.listByPage(query.page, query.limit)
   }
 
   @Get(':id(\\w{24})')
   public async getById(@MongoIdParam('id') id: string): Promise<IArticleDocument | null> {
-    return this.articleService.getById(id)
+    return await this.articleService.getById(id)
   }
 
   @Put(':id(\\w{24})')
   public async update(@MongoIdParam('id') id: string, @Body() body: ArticleCreateBody): Promise<IArticleDocument> {
-    return this.articleService.update(id, body)
+    return await this.articleService.update(id, body)
   }
 
   @Delete(':id(\\w{24})')

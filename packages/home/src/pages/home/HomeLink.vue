@@ -2,8 +2,8 @@
   <div>
     <ul>
       <li
-        v-for="link in linkStore.links"
-        :key="link.name"
+        v-for="(link, index) in linkStore.links"
+        :key="index"
         class="no-link link-item"
       >
         <a

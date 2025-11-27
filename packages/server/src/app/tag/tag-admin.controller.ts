@@ -12,11 +12,11 @@ export class TagAdminController {
 
   @Get()
   public async listAll(): Promise<ITagSchema[]> {
-    return this.tagService.listAll()
+    return await this.tagService.listAll()
   }
 
   @Put(':title')
   public async create(title: string): Promise<ITagSchema> {
-    return this.tagService.create(title)
+    return await this.tagService.create(title)
   }
 }

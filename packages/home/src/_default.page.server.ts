@@ -46,7 +46,7 @@ export async function render(pageContext: PageContext) {
     matchedComponents.map(async (component) => {
       if (!component) return null
       if ('asyncData' in component && component.asyncData) {
-        return component.asyncData({
+        return await component.asyncData({
           store,
           route: router.currentRoute.value,
         })

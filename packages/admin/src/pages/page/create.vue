@@ -7,7 +7,7 @@
       <el-form-item class="editor-container">
         <freyja-md-editor
           v-model="page.content"
-          @attachAdd="onAttachAdd"
+          @attach-add="onAttachAdd"
         />
       </el-form-item>
       <el-form-item label="名称">

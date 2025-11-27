@@ -63,20 +63,20 @@ export class Category implements ICategorySchema {
 
   @statics()
   public static async getByName(this: ICategoryModel, name: string): Promise<ICategoryDocument | null> {
-    return this.findOne({
+    return await this.findOne({
       name,
     })
   }
 
   @statics()
   public static async listRoot(this: ICategoryModel): Promise<ICategoryDocument[]> {
-    return this.find({parent: null})
+    return await this.find({parent: null})
   }
 
   @statics()
   public static async getByWordpress(this: ICategoryModel, key: string,
     value: string): Promise<ICategoryDocument | null> {
-    return this.findOne({
+    return await this.findOne({
       [`wordpress.${key}`]: value,
     })
   }

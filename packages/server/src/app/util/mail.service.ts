@@ -29,7 +29,7 @@ bangbang93.forum()
 <https://blog.bangbang93.com/article/${article._id.toString()}>
 `
     const html = this.markdownService.render(content)
-    return this.transporter.sendMail({
+    return await this.transporter.sendMail({
       from: 'blog@noti.933.moe',
       to,
       subject: `您在bangbang93.forum()的文章《${article.title}》收到了新的回复`,
@@ -47,7 +47,7 @@ bangbang93.forum()
 <https://blog.bangbang93.com/article/${article._id.toString()}>
 `
     const html = this.markdownService.render(content)
-    return this.transporter.sendMail({
+    return await this.transporter.sendMail({
       from: 'blog@noti.933.moe',
       to: author.email,
       subject: `文章《${article.title}》有新评论`,

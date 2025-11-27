@@ -20,13 +20,13 @@ export class ArticleApiController {
 
   @Get()
   public async list(@Query('page', ParseIntPipe) page: number): Promise<IArticleSchema[]> {
-    return this.articleService.list(page)
+    return await this.articleService.list(page)
   }
 
   @Get('search')
   public async search(@Query('keyword') keyword: string,
     @Query('page', ParseIntPipe) page: number): Promise<IArticleSchema[]> {
-    return this.articleService.search(keyword, page)
+    return await this.articleService.search(keyword, page)
   }
 
   @Get(':slug')

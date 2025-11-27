@@ -13,7 +13,7 @@ export class ArticleSearchService {
   }
 
   public async search(keyword: string, skip : number, limit: number): Promise<SearchResponse<IArticleSchema>> {
-    return this.index.search(keyword, {
+    return await this.index.search(keyword, {
       offset: skip, limit,
       sort: [
         'createdAt:desc',

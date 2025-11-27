@@ -10,15 +10,15 @@ export class CategoryService {
   ) {}
 
   public async getById(id: IdType): Promise<ICategoryDocument | null> {
-    return this.categoryModel.findById(id)
+    return await this.categoryModel.findById(id)
   }
 
   public async create(name: string, parentId?: IdType): Promise<ICategoryDocument> {
-    return this.categoryModel.add({name, parentId})
+    return await this.categoryModel.add({name, parentId})
   }
 
   public async listAll(): Promise<ICategoryDocument[]> {
-    return this.categoryModel.find()
+    return await this.categoryModel.find()
   }
 
   public async listTree(): Promise<ICategoryDocument[]> {

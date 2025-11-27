@@ -22,10 +22,10 @@ export class TagService {
   }
 
   public async listAll(): Promise<ITagDocument[]> {
-    return this.tagModel.find({})
+    return await this.tagModel.find({})
   }
 
   public async getById(id: IdType): Promise<ITagDocument | null> {
-    return this.tagModel.findById(id)
+    return await this.tagModel.findById(id)
   }
 }

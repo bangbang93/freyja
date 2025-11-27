@@ -27,7 +27,7 @@ export class Admin implements IAdminSchema {
 
   @statics()
   public static async getByName(this: IAdminModel, username: string): Promise<IAdminDocument | null> {
-    return this.findOne({
+    return await this.findOne({
       username,
     })
   }

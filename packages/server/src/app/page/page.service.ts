@@ -26,7 +26,7 @@ export class PageService {
 
   public async create(data: ICreate): Promise<IPageSchema> {
     const html = this.markdownService.render(data.content)
-    return this.pageModel.create({
+    return await this.pageModel.create({
       ...data,
       html,
     })
@@ -43,7 +43,7 @@ export class PageService {
         },
       })
     }
-    return query.sort({_id: -1})
+    return await query.sort({_id: -1})
       .select({content: 0, html: 0})
       .populate('author')
       .limit(limit)
@@ -52,7 +52,7 @@ export class PageService {
 
   public async listByPage(page: number, limit: number): Promise<IPageDocument[]> {
     const skip = (page - 1) * limit
-    return this.pageModel.find({})
+    return await this.pageModel.find({})
       .select({content: 0, html: 0})
       .populate('author')
       .sort({_id: -1})
@@ -62,11 +62,11 @@ export class PageService {
   }
 
   public async getById(id: IdType): Promise<IPageDocument | null> {
-    return this.pageModel.findById(id)
+    return await this.pageModel.findById(id)
   }
 
   public async getByName(name: string): Promise<IPageDocument | null> {
-    return this.pageModel.findOne({name})
+    return await this.pageModel.findOne({name})
   }
 
   public async update(id: IdType, update: IUpdate): Promise<IPageDocument> {
@@ -79,7 +79,7 @@ export class PageService {
     page.content = update.content
     page.name = update.name
     page.html = html
-    return page.save()
+    return await page.save()
   }
 
   public async renderAll(): Promise<void> {
@@ -95,6 +95,6 @@ export class PageService {
   }
 
   public async count(): Promise<number> {
-    return this.pageModel.countDocuments()
+    return await this.pageModel.countDocuments()
   }
 }

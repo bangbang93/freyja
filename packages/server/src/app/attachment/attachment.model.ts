@@ -36,7 +36,7 @@ export class Attachment implements IAttachmentSchema {
     if (!skip) {
       skip = (page - 1) * limit
     }
-    return this.find({})
+    return await this.find({})
       .sort({_id: -1})
       .skip(skip)
       .limit(limit)

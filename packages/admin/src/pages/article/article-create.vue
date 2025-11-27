@@ -26,7 +26,7 @@
           <el-form-item class="editor-container">
             <freyja-md-editor
               v-model="article.content"
-              @attachAdd="onAttachAdd"
+              @attach-add="onAttachAdd"
             />
           </el-form-item>
         </el-col>

@@ -60,17 +60,17 @@ export class ArticleService {
   }
 
   public async getById(id: IdType): Promise<IArticleDocument | null> {
-    return this.articleModel.findById(id)
+    return await this.articleModel.findById(id)
   }
 
   public async getBySlug(slug: string): Promise<IArticleDocument | null> {
-    return this.articleModel.findOne({slug})
+    return await this.articleModel.findOne({slug})
   }
 
   public async list(page: number, limit = 20): Promise<IArticleListItem[]> {
     const skip = (page - 1) * limit
     const articles = await this.articleModel.listByPage({skip, limit})
-    return Bluebird.map(articles, async (article) => {
+    return await Bluebird.map(articles, async (article) => {
       return {
         ...article.toJSON(),
         categories: article.categories as ObjectId[],
@@ -84,26 +84,26 @@ export class ArticleService {
   public async listByPage(page: number, limit = 20): Promise<IArticleDocument[]> {
     const skip = (page - 1) * limit
     const articles = await this.articleModel.listByPage({skip, limit})
-    return Bluebird.map(articles, async (article) => article.populate('author'))
+    return await Bluebird.map(articles, async (article) => await article.populate('author'))
   }
 
   public async getByWordpress(options: IArticleWordpressOptions): Promise<IArticleDocument | null> {
     if (options.id) {
-      return this.articleModel.getByWordpress({id: options.id})
+      return await this.articleModel.getByWordpress({id: options.id})
     }
     if (options.postName) {
-      return this.articleModel.getByWordpress('postName', encodeURIComponent(options.postName).toLowerCase())
+      return await this.articleModel.getByWordpress('postName', encodeURIComponent(options.postName).toLowerCase())
     }
     if (options.guid) {
       const url = new URL(options.guid)
-      return this.articleModel.getByWordpress('guid', new RegExp(url.pathname))
+      return await this.articleModel.getByWordpress('guid', new RegExp(url.pathname))
     }
     return null
   }
 
   public async findByTag(tag: string, page: number, limit = 20): Promise<IArticleDocument[]> {
     const skip = (page - 1) * limit
-    return this.articleModel.findByTag({tag, skip, limit})
+    return await this.articleModel.findByTag({tag, skip, limit})
   }
 
   public async findByCategory(categoryName: string, page: number, limit = 20): Promise<IArticleDocument[]> {
@@ -111,12 +111,12 @@ export class ArticleService {
     if (!category) {
       throw new NotFoundException('category not found')
     }
-    return this.findByCategoryId(category._id, page, limit)
+    return await this.findByCategoryId(category._id, page, limit)
   }
 
   public async findByCategoryId(categoryId: IdType, page: number, limit = 20): Promise<IArticleDocument[]> {
     const skip = (page - 1) * limit
-    return this.articleModel.findByCategoryId({categoryId, skip, limit})
+    return await this.articleModel.findByCategoryId({categoryId, skip, limit})
   }
 
   public async search(keyword: string, page: number, limit = 20): Promise<IArticleDocument[]> {
@@ -147,7 +147,7 @@ export class ArticleService {
   }
 
   public async count(): Promise<number> {
-    return this.articleModel.countDocuments()
+    return await this.articleModel.countDocuments()
   }
 
   public async renderAll(): Promise<void> {

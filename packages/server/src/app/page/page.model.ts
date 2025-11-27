@@ -2,7 +2,7 @@
  * Created by bangbang93 on 2017/9/20.
  */
 'use strict'
-// eslint-disable-next-line @typescript-eslint/no-require-imports
+
 import {
   array, DocumentType, id, index, model, ObjectId, prop, RichModelType, subModel, unique,
 } from 'mongoose-typescript'

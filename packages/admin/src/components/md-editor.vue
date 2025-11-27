@@ -5,7 +5,7 @@
       v-model="content"
       :ishljs="true"
       @change="onChange"
-      @imgAdd="onImgAdd"
+      @img-add="onImgAdd"
     />
   </div>
 </template>

@@ -14,12 +14,12 @@ export class CommentAdminController {
 
   @Get()
   public async list(@Query() query: PagedDto): Promise<ICommentSchema[]> {
-    return this.commentService.list(query.page, query.limit)
+    return await this.commentService.list(query.page, query.limit)
   }
 
   @Delete(':id(\\w{24})')
   @HttpCode(HttpStatus.NO_CONTENT)
   public async delete(@MongoIdParam('id') id: string): Promise<void> {
-    return this.commentService.delete(id)
+    return await this.commentService.delete(id)
   }
 }

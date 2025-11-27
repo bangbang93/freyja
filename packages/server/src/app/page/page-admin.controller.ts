@@ -16,7 +16,7 @@ export class PageAdminController {
 
   @Post()
   public async create(@Body() body: PageCreateBodyDto, @AdminId() adminId: string): Promise<IPageSchema> {
-    return this.pageService.create({
+    return await this.pageService.create({
       ...body,
       author: adminId,
     })
@@ -24,7 +24,7 @@ export class PageAdminController {
 
   @Get()
   public async list(@Query() query: PagedDto): Promise<IPageSchema[]> {
-    return this.pageService.listByPage(query.page, query.limit)
+    return await this.pageService.listByPage(query.page, query.limit)
   }
 
   @Get(':id(\\w{24})')
@@ -42,7 +42,7 @@ export class PageAdminController {
     if (!page) {
       throw new NotFoundException('page not found')
     }
-    return this.pageService.update(id, {
+    return await this.pageService.update(id, {
       ...body,
     })
   }
@@ -53,7 +53,7 @@ export class PageAdminController {
     if (!page) {
       throw new NotFoundException('page not found')
     }
-    return this.pageService.delete(id)
+    return await this.pageService.delete(id)
   }
 
   @Get('count')
@@ -65,6 +65,6 @@ export class PageAdminController {
 
   @Get('rerender-all')
   public async rerenderAll(): Promise<void> {
-    return this.pageService.renderAll()
+    return await this.pageService.renderAll()
   }
 }

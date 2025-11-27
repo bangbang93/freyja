@@ -16,8 +16,8 @@
     </div>
     <div class="freyja-article-tag no-link">
       <span
-        v-for="tag in article.tags"
-        :key="tag"
+        v-for="(tag, index) in article.tags"
+        :key="index"
       >
         <router-link :to="{name: 'tag', params: {tag}}">
           <i class="fa fa-tag" /> {{ tag }}

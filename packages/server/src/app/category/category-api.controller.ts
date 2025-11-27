@@ -14,17 +14,17 @@ export class CategoryApiController {
 
   @Get()
   public async listAll(): Promise<ICategorySchema[]> {
-    return this.categoryService.listAll()
+    return await this.categoryService.listAll()
   }
 
   @Get('tree')
   public async listTree(): Promise<ICategorySchema[]> {
-    return this.categoryService.listTree()
+    return await this.categoryService.listTree()
   }
 
   @Get(':category')
   public async listArticlesByCategory(@Param('category') category: string,
     @Query() query: PagedDto): Promise<IArticleSchema[]> {
-    return this.articleService.findByCategory(category, query.page)
+    return await this.articleService.findByCategory(category, query.page)
   }
 }

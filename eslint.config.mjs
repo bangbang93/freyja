@@ -2,6 +2,7 @@ import tsParser from '@typescript-eslint/parser'
 import vueParser from 'vue-eslint-parser'
 import baseConfig from '@bangbang93/eslint-config-recommended'
 import pluginVue from 'eslint-plugin-vue'
+import tseslint from 'typescript-eslint'
 
 export default [
   {
@@ -25,6 +26,37 @@ export default [
     },
   },
   {
+    files: ['packages/admin/**/*.ts', 'packages/admin/**/*.vue', 'packages/home/**/*.ts', 'packages/home/**/*.vue'],
+    languageOptions: {
+      globals: {
+        window: 'readonly',
+        document: 'readonly',
+        FormData: 'readonly',
+        File: 'readonly',
+        fetch: 'readonly',
+      },
+    },
+    rules: {
+      'n/no-unsupported-features/node-builtins': 'off',
+      '@typescript-eslint/prefer-nullish-coalescing': 'warn',
+      '@typescript-eslint/no-unsafe-assignment': 'warn',
+      '@typescript-eslint/no-unsafe-member-access': 'warn',
+      '@typescript-eslint/no-unsafe-call': 'warn',
+      '@typescript-eslint/no-unsafe-return': 'warn',
+      '@typescript-eslint/no-unsafe-argument': 'warn',
+      '@typescript-eslint/await-thenable': 'warn',
+    },
+  },
+  {
+    files: ['packages/server/**/*.ts'],
+    rules: {
+      '@typescript-eslint/no-magic-numbers': 'off',
+      '@typescript-eslint/no-require-imports': 'off',
+      '@typescript-eslint/prefer-nullish-coalescing': 'warn',
+      '@typescript-eslint/explicit-function-return-type': 'warn',
+    },
+  },
+  {
     files: ['**/*.vue'],
     languageOptions: {
       parser: vueParser,
@@ -34,29 +66,37 @@ export default [
         tsconfigRootDir: import.meta.dirname,
         extraFileExtensions: ['.vue'],
       },
+      globals: {
+        window: 'readonly',
+        document: 'readonly',
+        FormData: 'readonly',
+        File: 'readonly',
+        fetch: 'readonly',
+      },
+    },
+    rules: {
+      'n/no-unsupported-features/node-builtins': 'off',
+      '@typescript-eslint/no-unused-vars': 'off',
+      '@typescript-eslint/no-magic-numbers': 'off',
+      '@typescript-eslint/no-floating-promises': 'warn',
+      '@typescript-eslint/prefer-nullish-coalescing': 'warn',
+      '@typescript-eslint/explicit-function-return-type': 'off',
+      'vue/no-v-html': 'warn',
+      'vue/valid-v-for': 'off',
     },
   },
   {
     files: ['**/*.js', '**/*.mjs', '**/*.cjs'],
     languageOptions: {
       parserOptions: {
-        projectService: {
-          allowDefaultProject: ['**/*.js', '**/*.mjs', '**/*.cjs'],
-        },
+        projectService: false,
+        project: false,
       },
     },
     rules: {
-      '@typescript-eslint/no-unsafe-assignment': 'off',
-      '@typescript-eslint/no-unsafe-member-access': 'off',
-      '@typescript-eslint/no-unsafe-call': 'off',
-      '@typescript-eslint/no-unsafe-return': 'off',
-      '@typescript-eslint/no-unsafe-argument': 'off',
+      ...tseslint.configs.disableTypeChecked.rules,
       '@typescript-eslint/no-var-requires': 'off',
-    },
-  },
-  {
-    files: ['eslint.config.mjs'],
-    rules: {
+      '@typescript-eslint/no-require-imports': 'off',
       'n/no-unsupported-features/node-builtins': 'off',
     },
   },

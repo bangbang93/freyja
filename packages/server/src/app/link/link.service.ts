@@ -9,6 +9,6 @@ export class LinkService {
   ) {}
 
   public async listAll(): Promise<ILinkDocument[]> {
-    return this.linkModel.find({})
+    return await this.linkModel.find({})
   }
 }

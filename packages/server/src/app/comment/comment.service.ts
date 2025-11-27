@@ -85,7 +85,7 @@ export class CommentService {
   public async listByArticle(article: IdType, page: number, limit: number): Promise<ICommentDocument[]> {
     const skip = (page - 1) * limit
     const list = await this.commentModel.listByArticle(article, {skip, limit})
-    return walkComments(list)
+    return await walkComments(list)
     async function walkComments(comments: ICommentDocument[]): Promise<ICommentDocument[]> {
       for (const comment of comments) {
         if (comment.replies) {
@@ -99,7 +99,7 @@ export class CommentService {
 
   public async list(page: number, limit: number): Promise<ICommentDocument[]> {
     const skip = (page - 1) * limit
-    return this.commentModel.list({skip, limit})
+    return await this.commentModel.list({skip, limit})
   }
 
   public async delete(id: IdType): Promise<void> {

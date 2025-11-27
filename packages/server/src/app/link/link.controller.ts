@@ -10,6 +10,6 @@ export class LinkController {
 
   @Get()
   public async listAll(): Promise<ILinkSchema[]> {
-    return this.linkService.listAll()
+    return await this.linkService.listAll()
   }
 }

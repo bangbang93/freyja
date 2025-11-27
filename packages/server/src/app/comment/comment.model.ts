@@ -90,7 +90,7 @@ export class Comment implements ICommentSchema {
     if (!comment.createdAt) {
       comment.createdAt = new Date()
     }
-    return this.create(comment)
+    return await this.create(comment)
   }
 
   @statics()
@@ -99,7 +99,7 @@ export class Comment implements ICommentSchema {
     articleId: IdType,
     {skip, limit}: { skip: number; limit: number },
   ): Promise<ICommentDocument[]> {
-    return this.find({
+    return await this.find({
       article: articleId,
       reply: null,
     })
@@ -112,14 +112,14 @@ export class Comment implements ICommentSchema {
   @statics()
   public static async getByWordpress(this: ICommentModel, key: string,
     value: unknown): Promise<ICommentDocument | null> {
-    return this.findOne({
+    return await this.findOne({
       [`wordpress.${key}`]: value,
     })
   }
 
   @statics()
   public static async countByArticle(this: ICommentModel, articleId: ObjectId): Promise<number> {
-    return this.count({
+    return await this.count({
       article: articleId,
     })
   }
@@ -127,7 +127,7 @@ export class Comment implements ICommentSchema {
   @statics()
   public static async list(this: ICommentModel,
     {skip, limit}: {skip: number; limit: number}): Promise<ICommentDocument[]> {
-    return this.find({})
+    return await this.find({})
       .sort({_id: -1})
       .skip(skip)
       .limit(limit)
@@ -135,14 +135,14 @@ export class Comment implements ICommentSchema {
 
   @statics()
   public static async deleteById(this: ICommentModel, id: string) {
-    return this.deleteOne({
+    return await this.deleteOne({
       _id: id,
     })
   }
 
   @statics()
   public static async addReply(this: ICommentModel, commentId: ObjectId, replyId: ObjectId) {
-    return this.updateOne({
+    return await this.updateOne({
       _id: commentId,
     }, {
       $push: {

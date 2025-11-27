@@ -30,6 +30,6 @@ export class PageController {
 
   @Get()
   public async list(@Query() query: PagedDto): Promise<IPageSchema[]> {
-    return this.pageService.listByPage(query.page, query.limit)
+    return await this.pageService.listByPage(query.page, query.limit)
   }
 }

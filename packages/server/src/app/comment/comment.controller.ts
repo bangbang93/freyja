@@ -41,7 +41,7 @@ export class CommentController {
       @Ip() ip: string,
       @Headers('user-agent') ua: string,
   ): Promise<ICommentSchema> {
-    return this.commentService.create(adminId, {
+    return await this.commentService.create(adminId, {
       content: body.content, article: id, replyTo: body.reply,
       publisher: {
         ...body.publisher,

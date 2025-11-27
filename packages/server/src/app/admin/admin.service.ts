@@ -10,6 +10,6 @@ export class AdminService {
   ) {}
 
   public async getById(id: IdType): Promise<IAdminDocument | null> {
-    return this.adminModel.findById(id)
+    return await this.adminModel.findById(id)
   }
 }
