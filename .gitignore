@@ -83,6 +83,8 @@ jspm_packages
 # Optional REPL history
 .node_repl_history
 
+.eslintcache
+
 public/
 !public/favicon.ico
 !public/assets

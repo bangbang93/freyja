@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.eslint.json",
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "strict": true
+  },
+  "include": [
+    "**/*.ts"
+  ]
+}
