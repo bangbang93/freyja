@@ -122,7 +122,7 @@ const autoSlug = ref(true)
 const submitted = ref(false)
 
 onBeforeRouteLeave((_, __, next) => {
-  if (!submitted.value && article.title || article.content) {
+  if (!submitted.value && (article.title || article.content)) {
     ElMessageBox.confirm('文章没有保存，是否离开')
       .then(() => next())
       .catch(() => next(false))
