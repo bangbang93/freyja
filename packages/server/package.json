@@ -35,7 +35,7 @@
     "html-substring": "^1.8.1",
     "http-errors": "^1.7.3",
     "ioredis": "^5.2.4",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "lru-cache": "^5.1.1",
     "markdown-it": "^12.3.2",
     "markdown-it-lozad": "^0.2.0",
