@@ -15,7 +15,7 @@
     "unplugin-element-plus": "^0.7.0",
     "vike": "^0.4.144",
     "vite": "^7.2.4",
-    "vue-tsc": "^2.1.10"
+    "vue-tsc": "^3.2.5"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.1.0",

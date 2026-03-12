@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "sass": "^1.69.4",
-    "vue-tsc": "^2.1.10"
+    "vue-tsc": "^3.2.5"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.1.0",
