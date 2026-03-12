@@ -81,12 +81,13 @@ export async function bootstrap(): Promise<void> {
     eApp.use(express.static(path.join(homeRoot, 'dist', 'client')))
   } else {
     const vite = await import('vite')
-    const homeViteDevMiddleware = (
-      await vite.createServer({
-        root: homeRoot,
-        server: {middlewareMode: true},
-      })
-    ).middlewares
+    const originalCwd = process.cwd()
+    process.chdir(homeRoot)
+    const homeViteServer = await vite.createServer({
+      server: {middlewareMode: true},
+    })
+    process.chdir(originalCwd)
+    const homeViteDevMiddleware = homeViteServer.middlewares
     // const adminViteDevMiddleware = (
     //   await vite.createServer({
     //     root: adminRoot,

@@ -1,5 +1,5 @@
 import {NextFunction, Request, Response} from 'express'
-import {NotFound} from 'http-errors'
+import createHttpError from 'http-errors'
 import LRU from 'lru-cache'
 import ms from 'ms'
 import {renderPage} from 'vike'
@@ -52,7 +52,7 @@ export async function createServerRender(
         return sendResponse(req, res, httpResponse, cacheable, s)
       }
     } catch (err) {
-      if (err instanceof NotFound) {
+      if (createHttpError.isHttpError(err) && err.status === 404) {
         return next()
       }
       const time = Date.now() - s
