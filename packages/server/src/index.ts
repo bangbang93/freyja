@@ -18,7 +18,6 @@ import morgan from 'morgan'
 import path, {join} from 'path'
 import favicon from 'serve-favicon'
 import {AppModule} from './app.module'
-import {createServerRender} from './middleware/create-server-render'
 
 export async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule)
@@ -98,6 +97,7 @@ export async function bootstrap(): Promise<void> {
     app.use(homeViteDevMiddleware)
   }
 
+  const {createServerRender} = await import('./middleware/create-server-render.mjs')
   const serverRender = await createServerRender(port, configService.get('NODE_ENV'))
 
   const notSsrPrefix = ['/api', '/admin', '/feed']

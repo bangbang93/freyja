@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@bangbang93/eslint-config-recommended": "^2.0.0",
-    "@tsconfig/node16": "^1.0.3",
+    "@tsconfig/node20": "^20.1.9",
     "@types/node": "^18.11.9",
     "@typescript-eslint/parser": "^8.0.0",
     "eslint": "^9.0.0",

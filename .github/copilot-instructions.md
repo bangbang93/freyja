@@ -75,7 +75,7 @@ npm run lint  # 使用 ESLint flat config (v9+)
    - 使用 `@MongoIdParam('id')` 装饰器自动验证 MongoDB ObjectId
    - 路由参数使用正则约束: `@Get(':id(\\w{24})')`
 
-4. **SSR 渲染**: 在 `src/middleware/create-server-render.ts` 中实现
+4. **SSR 渲染**: 在 `src/middleware/create-server-render.mts` 中实现
    - 使用 LRU 缓存策略 (30s, max 1000 items)
    - 通过 `x-ssr-cache` header 标识缓存命中
    - 排除 `/api`, `/admin`, `/feed` 路径

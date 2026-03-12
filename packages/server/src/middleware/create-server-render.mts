@@ -1,10 +1,10 @@
-import is from '@sindresorhus/is'
 import {NextFunction, Request, Response} from 'express'
 import {NotFound} from 'http-errors'
 import LRU from 'lru-cache'
 import ms from 'ms'
-import type {HttpResponse} from 'vike/dist/esm/node/runtime/renderPage/createHttpResponse'
-import {renderPage} from 'vike/server'
+import {renderPage} from 'vike'
+
+type HttpResponse = Awaited<ReturnType<typeof renderPage>>['httpResponse']
 
 const microCache = new LRU<string, HttpResponse>({
   max: 1000,
@@ -57,7 +57,7 @@ export async function createServerRender(
       }
       const time = Date.now() - s
       res.set('x-ssr-time', time.toString())
-      if (is.object(err) && err !== null && 'url' in err) {
+      if (typeof err === 'object' && err !== null && 'url' in err) {
         if (err.url) {
           res.redirect(err.url as string)
         } else if ('code' in err && err.code === 404) {
