@@ -12,7 +12,7 @@ export class CommentController {
     private readonly commentService: CommentService,
   ) {}
 
-  @Get('article/:id(\\w{24})')
+  @Get('article/:id')
   public async getArticleComments(@MongoIdParam('id') id: string, @Query() query: PagedDto): Promise<CommentTreeDto[]> {
     const list = await this.commentService.listByArticle(id, query.page, query.limit)
     return removeEmail(list.map((e) => e.toObject()))
@@ -34,7 +34,7 @@ export class CommentController {
     }
   }
 
-  @Post('article/:id(\\w{24})')
+  @Post('article/:id')
   public async createArticleComment(
     @MongoIdParam('id') id: string, @Body() body: CommentCreateBodyDto,
       @AdminId() adminId: string | undefined,

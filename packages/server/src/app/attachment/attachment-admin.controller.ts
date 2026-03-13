@@ -62,7 +62,7 @@ export class AttachmentAdminController {
     }
   }
 
-  @Get(':id(\\w{24})')
+  @Get(':id')
   public async getById(@MongoIdParam('id') id: string): Promise<IAttachmentSchema | null> {
     return await this.attachmentService.getById(id)
   }

@@ -3,10 +3,9 @@ import {ValidationPipe} from '@nestjs/common'
 import {ConfigService} from '@nestjs/config'
 import {NestFactory} from '@nestjs/core'
 import {NestExpressApplication} from '@nestjs/platform-express'
-import bodyParser from 'body-parser'
 import cacheControl from 'cache-control'
 import historyApiFallback from 'connect-history-api-fallback'
-import connectRedis from 'connect-redis'
+import RedisStore from 'connect-redis'
 import cookieParser from 'cookie-parser'
 import * as express from 'express'
 import {Application} from 'express'
@@ -44,13 +43,12 @@ export async function bootstrap(): Promise<void> {
   } else {
     app.use(morgan('combined'))
   }
-  const redisStore = connectRedis(session)
 
   app.use(cookieParser())
   const sessionConfig = configService.get('session') as Record<string, string>
   app.use(session({
     name: 'freyja.sid',
-    store: new redisStore({
+    store: new RedisStore({
       client: redis,
       prefix: 'freyja:session:',
     }),
@@ -58,8 +56,8 @@ export async function bootstrap(): Promise<void> {
   }))
 
   app.use(favicon(path.join(__dirname, '../../../public', 'favicon.ico')))
-  app.use(bodyParser.json())
-  app.use(bodyParser.urlencoded({extended: false}))
+  app.use(express.json())
+  app.use(express.urlencoded({extended: false}))
   app.use(helmet({
     contentSecurityPolicy: false,
   }))

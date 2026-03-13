@@ -5,22 +5,21 @@
 import {Injectable} from '@nestjs/common'
 import {ConfigService} from '@nestjs/config'
 import {createTransport, Transporter} from 'nodemailer'
-import SMTPTransport from 'nodemailer/lib/smtp-transport'
 import {IAdminSchema} from '../admin/admin.model'
 import {IArticleSchema} from '../article/article.model'
 import {MarkdownService} from './markdown.service'
 
 @Injectable()
 export class MailService {
-  private readonly transporter: Transporter<SMTPTransport>
+  private readonly transporter: Transporter
   constructor(
     configService: ConfigService,
     private readonly markdownService: MarkdownService,
   ) {
-    this.transporter = createTransport<SMTPTransport>(configService.getOrThrow('freyja.mail'))
+    this.transporter = createTransport(configService.getOrThrow('freyja.mail'))
   }
 
-  public async commentReply({to, article}: {to: string; article: IArticleSchema}): Promise<SMTPTransport> {
+  public async commentReply({to, article}: {to: string; article: IArticleSchema}) {
     const content = `
 bangbang93.forum()
 ---
@@ -38,7 +37,7 @@ bangbang93.forum()
   }
 
 
-  public async comment(article: IArticleSchema, author: IAdminSchema): Promise<SMTPTransport> {
+  public async comment(article: IArticleSchema, author: IAdminSchema) {
     const content = `
 bangbang93.forum()
 ---

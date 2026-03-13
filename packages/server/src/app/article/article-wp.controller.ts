@@ -9,9 +9,19 @@ export class ArticleWpController {
     private readonly articleService: ArticleService,
   ) {}
 
-  @Get('/:year(\\d+)/:mouth(\\d+)/:day(\\d+)/:postName.:suffix')
-  public async postName(@Param('postname') postName: string, @Next() next: NextFunction,
-    @Res() res: Response): Promise<void> {
+  @Get('/:year/:month/:day/:postName\\::suffix')
+  public async postName(
+    @Param('year') year: string,
+    @Param('month') month: string,
+    @Param('day') day: string,
+    @Param('postName') postName: string,
+    @Param('suffix') suffix: string,
+    @Next() next: NextFunction,
+    @Res() res: Response,
+  ): Promise<void> {
+    if (!/^\d{4}$/.test(year) || !/^\d{2}$/.test(month) || !/^\d{2}$/.test(day)) {
+      return next()
+    }
     const article = await this.articleService.getByWordpress({postName})
     if (!article) return next()
     res.redirect(HttpStatus.PERMANENT_REDIRECT, `/article/${article._id.toString()}`)

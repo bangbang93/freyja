@@ -26,21 +26,6 @@ export class ArticleAdminController {
     return await this.articleService.listByPage(query.page, query.limit)
   }
 
-  @Get(':id(\\w{24})')
-  public async getById(@MongoIdParam('id') id: string): Promise<IArticleDocument | null> {
-    return await this.articleService.getById(id)
-  }
-
-  @Put(':id(\\w{24})')
-  public async update(@MongoIdParam('id') id: string, @Body() body: ArticleCreateBody): Promise<IArticleDocument> {
-    return await this.articleService.update(id, body)
-  }
-
-  @Delete(':id(\\w{24})')
-  public async delete(@MongoIdParam('id') id: string): Promise<void> {
-    await this.articleService.delete(id)
-  }
-
   @Get('count')
   public async count(): Promise<{ count: number }> {
     return {
@@ -51,5 +36,20 @@ export class ArticleAdminController {
   @Get('rerender-all')
   public async rerenderAll(): Promise<void> {
     await this.articleService.renderAll()
+  }
+
+  @Get(':id')
+  public async getById(@MongoIdParam('id') id: string): Promise<IArticleDocument | null> {
+    return await this.articleService.getById(id)
+  }
+
+  @Put(':id')
+  public async update(@MongoIdParam('id') id: string, @Body() body: ArticleCreateBody): Promise<IArticleDocument> {
+    return await this.articleService.update(id, body)
+  }
+
+  @Delete(':id')
+  public async delete(@MongoIdParam('id') id: string): Promise<void> {
+    await this.articleService.delete(id)
   }
 }

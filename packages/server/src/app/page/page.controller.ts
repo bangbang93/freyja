@@ -10,7 +10,12 @@ export class PageController {
     private readonly pageService: PageService,
   ) {}
 
-  @Get(':id(\\w{24})')
+  @Get()
+  public async list(@Query() query: PagedDto): Promise<IPageSchema[]> {
+    return await this.pageService.listByPage(query.page, query.limit)
+  }
+
+  @Get(':id')
   public async getById(@MongoIdParam('id') id: string): Promise<IPageSchema> {
     const page = await this.pageService.getById(id)
     if (!page) {
@@ -26,10 +31,5 @@ export class PageController {
       throw new NotFoundException('page not found')
     }
     return page
-  }
-
-  @Get()
-  public async list(@Query() query: PagedDto): Promise<IPageSchema[]> {
-    return await this.pageService.listByPage(query.page, query.limit)
   }
 }

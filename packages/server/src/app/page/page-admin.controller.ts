@@ -27,35 +27,6 @@ export class PageAdminController {
     return await this.pageService.listByPage(query.page, query.limit)
   }
 
-  @Get(':id(\\w{24})')
-  public async getById(@MongoIdParam('id') id: string): Promise<IPageSchema> {
-    const page = await this.pageService.getById(id)
-    if (!page) {
-      throw new NotFoundException('page not found')
-    }
-    return page
-  }
-
-  @Put(':id(\\w{24})')
-  public async update(@MongoIdParam('id') id: string, @Body() body: PageCreateBodyDto): Promise<IPageSchema> {
-    const page = await this.pageService.getById(id)
-    if (!page) {
-      throw new NotFoundException('page not found')
-    }
-    return await this.pageService.update(id, {
-      ...body,
-    })
-  }
-
-  @Delete(':id(\\w{24})')
-  public async delete(@MongoIdParam('id') id: string): Promise<void> {
-    const page = await this.pageService.getById(id)
-    if (!page) {
-      throw new NotFoundException('page not found')
-    }
-    return await this.pageService.delete(id)
-  }
-
   @Get('count')
   public async count(): Promise<{ count: number }> {
     return {
@@ -66,5 +37,34 @@ export class PageAdminController {
   @Get('rerender-all')
   public async rerenderAll(): Promise<void> {
     return await this.pageService.renderAll()
+  }
+
+  @Get(':id')
+  public async getById(@MongoIdParam('id') id: string): Promise<IPageSchema> {
+    const page = await this.pageService.getById(id)
+    if (!page) {
+      throw new NotFoundException('page not found')
+    }
+    return page
+  }
+
+  @Put(':id')
+  public async update(@MongoIdParam('id') id: string, @Body() body: PageCreateBodyDto): Promise<IPageSchema> {
+    const page = await this.pageService.getById(id)
+    if (!page) {
+      throw new NotFoundException('page not found')
+    }
+    return await this.pageService.update(id, {
+      ...body,
+    })
+  }
+
+  @Delete(':id')
+  public async delete(@MongoIdParam('id') id: string): Promise<void> {
+    const page = await this.pageService.getById(id)
+    if (!page) {
+      throw new NotFoundException('page not found')
+    }
+    return await this.pageService.delete(id)
   }
 }

@@ -9,7 +9,7 @@ export class ArticleApiController {
     private readonly articleService: ArticleService,
   ) {}
 
-  @Get(':id(\\w{24})')
+  @Get(':id')
   public async getById(@MongoIdParam('id') id: string): Promise<IArticleDocument> {
     const article = await this.articleService.getById(id)
     if (!article) {

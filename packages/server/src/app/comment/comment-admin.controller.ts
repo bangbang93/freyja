@@ -17,7 +17,7 @@ export class CommentAdminController {
     return await this.commentService.list(query.page, query.limit)
   }
 
-  @Delete(':id(\\w{24})')
+  @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   public async delete(@MongoIdParam('id') id: string): Promise<void> {
     return await this.commentService.delete(id)
