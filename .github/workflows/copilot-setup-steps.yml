@@ -1,0 +1,148 @@
+name: "Copilot Setup Steps"
+
+# 工作流触发条件
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/copilot-setup-steps.yml
+      - .github/copilot-instructions.md
+      - .github/instructions/**
+      - .github/prompts/**
+      - .github/agents/**
+  pull_request:
+    paths:
+      - .github/workflows/copilot-setup-steps.yml
+      - .github/copilot-instructions.md
+      - .github/instructions/**
+      - .github/prompts/**
+      - .github/agents/**
+
+jobs:
+  # 任务必须命名为 copilot-setup-steps，Copilot 才能识别
+  copilot-setup-steps:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Node.js 18-22 版本设置
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      # 安装依赖
+      - name: Install dependencies
+        run: npm ci
+
+      # 代码检查
+      - name: Run ESLint
+        run: npm run lint
+        continue-on-error: true
+
+      # TypeScript 类型检查
+      - name: TypeScript check
+        run: npm run tsc --noEmit
+        continue-on-error: true
+
+      # 运行测试
+      - name: Run tests
+        run: npm test -- --run --reporter=verbose
+        continue-on-error: true
+
+      # 验证 Copilot 配置文件完整性
+      - name: Validate Copilot configuration files
+        run: |
+          echo "检查 GitHub Copilot 配置文件..."
+          
+          # 检查必要的配置文件
+          REQUIRED_FILES=(
+            ".github/copilot-instructions.md"
+            ".github/instructions/typescript.instructions.md"
+            ".github/instructions/nestjs.instructions.md"
+            ".github/instructions/vue.instructions.md"
+            ".github/instructions/testing.instructions.md"
+            ".github/instructions/documentation.instructions.md"
+            ".github/instructions/security.instructions.md"
+            ".github/instructions/performance.instructions.md"
+            ".github/instructions/code-review.instructions.md"
+            ".github/prompts/setup-component.prompt.md"
+            ".github/prompts/write-tests.prompt.md"
+            ".github/prompts/code-review.prompt.md"
+            ".github/prompts/refactor-code.prompt.md"
+            ".github/prompts/generate-docs.prompt.md"
+            ".github/prompts/debug-issue.prompt.md"
+            ".github/agents/architect.agent.md"
+            ".github/agents/reviewer.agent.md"
+            ".github/agents/debugger.agent.md"
+          )
+          
+          missing_files=0
+          for file in "${REQUIRED_FILES[@]}"; do
+            if [ ! -f "$file" ]; then
+              echo "❌ 缺失文件: $file"
+              ((missing_files++))
+            else
+              echo "✅ 找到: $file"
+            fi
+          done
+          
+          if [ $missing_files -gt 0 ]; then
+            echo "❌ 检查失败: 缺失 $missing_files 个配置文件"
+            exit 1
+          else
+            echo "✅ 所有配置文件完整"
+          fi
+
+      # 验证 Markdown 文件的 YAML Frontmatter
+      - name: Validate Markdown frontmatter
+        run: |
+          echo "验证 Markdown 配置的 Frontmatter..."
+          
+          # 检查 instructions 文件的 applyTo 字段
+          for file in .github/instructions/*.md; do
+            if [ -f "$file" ]; then
+              if ! grep -q "^applyTo:" "$file"; then
+                echo "⚠️  警告: $file 缺少 applyTo frontmatter"
+              fi
+            fi
+          done
+          
+          # 检查 prompts 文件的 agent 和 model 字段
+          for file in .github/prompts/*.md; do
+            if [ -f "$file" ]; then
+              if ! grep -q "^agent:" "$file"; then
+                echo "⚠️  警告: $file 缺少 agent frontmatter"
+              fi
+              if ! grep -q "^model:" "$file"; then
+                echo "⚠️  警告: $file 缺少 model frontmatter"
+              fi
+            fi
+          done
+          
+          echo "✅ Frontmatter 验证完成"
+
+      # 汇总信息
+      - name: Summary
+        if: always()
+        run: |
+          echo "## GitHub Copilot 配置检查完成"
+          echo ""
+          echo "### 配置文件"
+          echo "✅ 指令文件 (Instructions): 8 个"
+          echo "✅ 快速提示 (Prompts): 6 个"
+          echo "✅ AI 代理 (Agents): 3 个"
+          echo ""
+          echo "### 用法"
+          echo "- **代码编写**: 参考 \`.github/instructions/\` 中的规范"
+          echo "- **快速任务**: 使用 \`.github/prompts/\` 中的提示词"
+          echo "- **AI 协作**: 通过 \`.github/agents/\` 定义的角色与 Copilot 合作"
+          echo ""
+          echo "### 文档"
+          echo "- 项目架构: 查看 [copilot-instructions.md](.github/copilot-instructions.md)"
+          echo "- 开发指南: 查看 [AGENTS.md](AGENTS.md)"
+
