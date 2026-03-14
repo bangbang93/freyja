@@ -22,7 +22,7 @@
     "mavon-editor": "^3.0.1",
     "vite": "^7.2.4",
     "vue": "^3.3.6",
-    "vue-fetch": "^3.0.0-2",
+    "vue-fetch": "^3.0.1-0",
     "vue-router": "^4.2.5"
   }
 }
