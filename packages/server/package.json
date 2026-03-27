@@ -45,7 +45,7 @@
     "morgan": "^1.10.0",
     "ms": "^2.1.2",
     "nestjs-bunyan": "^3.0.2",
-    "nodemailer": "^7.0.11",
+    "nodemailer": "^8.0.4",
     "randomstring": "^1.1.5",
     "serve-favicon": "^2.5.0",
     "tslib": "^2.4.1",
