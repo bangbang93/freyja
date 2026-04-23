@@ -9,7 +9,7 @@
   "dependencies": {
     "@bangbang93/service-errors": "^1.1.1",
     "@bangbang93/utils": "^6.10.0",
-    "@nestjs/common": "^11.0.0",
+    "@nestjs/common": "^11.1.19",
     "@nestjs/config": "^4.0.3",
     "@nestjs/core": "^11.0.0",
     "@nestjs/mongoose": "^11.0.4",
