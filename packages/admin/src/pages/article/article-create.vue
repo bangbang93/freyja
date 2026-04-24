@@ -198,7 +198,7 @@ async function submit(): Promise<void> {
     await router.push({name: 'article.list'})
   } else {
     const body = await resp.json() as { message?: string; msg?: string }
-    await ElMessageBox.alert(body.msg || body.message, 'Freyja')
+    await ElMessageBox.alert(body.msg ?? body.message, 'Freyja')
   }
 }
 

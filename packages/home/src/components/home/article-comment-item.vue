@@ -18,10 +18,12 @@
           {{ comment.publisher.name }}
         </div>
       </div>
+      <!-- eslint-disable vue/no-v-html -->
       <div
         class="freyja-comment-content freyja-article-content"
         v-html="comment.html"
       />
+      <!-- eslint-enable vue/no-v-html -->
       <div
         v-for="reply in comment.replies"
         :key="reply._id"

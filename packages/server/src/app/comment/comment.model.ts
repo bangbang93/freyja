@@ -87,9 +87,7 @@ export class Comment implements ICommentSchema {
     if (!comment.reply && reply) {
       comment.reply = toObjectId(reply)
     }
-    if (!comment.createdAt) {
-      comment.createdAt = new Date()
-    }
+    comment.createdAt ??= new Date()
     return await this.create(comment)
   }
 
@@ -134,6 +132,7 @@ export class Comment implements ICommentSchema {
   }
 
   @statics()
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   public static async deleteById(this: ICommentModel, id: string) {
     return await this.deleteOne({
       _id: id,
@@ -141,6 +140,7 @@ export class Comment implements ICommentSchema {
   }
 
   @statics()
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   public static async addReply(this: ICommentModel, commentId: ObjectId, replyId: ObjectId) {
     return await this.updateOne({
       _id: commentId,

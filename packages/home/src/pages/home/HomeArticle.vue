@@ -8,11 +8,13 @@
     </div>
     <hr class="split-line">
     <div class="freyja-article-content">
+      <!-- eslint-disable vue/no-v-html -->
       <div
         ref="articleContent"
         class="freyja-article-content"
         v-html="article.html"
       />
+      <!-- eslint-enable vue/no-v-html -->
     </div>
     <div class="freyja-article-tag no-link">
       <span

@@ -1,5 +1,5 @@
 import {IdType} from '@bangbang93/utils/mongodb'
-import {createParamDecorator, ExecutionContext} from '@nestjs/common'
+import {createParamDecorator} from '@nestjs/common'
 import {Request} from 'express'
 
 export const AdminId = createParamDecorator<IdType | undefined>((data, context) => {

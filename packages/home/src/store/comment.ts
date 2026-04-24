@@ -6,6 +6,9 @@
 import {defineStore} from 'pinia'
 import {Fetch} from '../utils/fetch'
 
+const HTTP_OK = 200
+const HTTP_CREATED = 201
+
 
 export interface IComment {
   _id: string
@@ -48,7 +51,7 @@ export const useCommentStore = defineStore('comment', {
         publisher: this.publisher,
         reply: replyId,
       })
-      if (resp.status !== 201) {
+      if (resp.status !== HTTP_CREATED) {
         throw new Error('add commit failed')
       }
 
@@ -65,7 +68,7 @@ export const useCommentStore = defineStore('comment', {
       const resp = await Fetch.get(`/api/comment/article/${articleId}`, {
         page,
       })
-      if (resp.status !== 200) {
+      if (resp.status !== HTTP_OK) {
         throw new Error('fetch comments failed')
       }
 

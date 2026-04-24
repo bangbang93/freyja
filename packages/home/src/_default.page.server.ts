@@ -22,7 +22,9 @@ declare global {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export async function render(pageContext: PageContext) {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const {app, router, store, pinia} = createHome()
   app.provide('pageContext', pageContext)
   app.config.globalProperties.$pageContext = pageContext
@@ -46,15 +48,18 @@ export async function render(pageContext: PageContext) {
     matchedComponents.map(async (component) => {
       if (!component) return null
       if ('asyncData' in component && component.asyncData) {
+        /* eslint-disable @typescript-eslint/no-unsafe-assignment */
         return await component.asyncData({
           store,
           route: router.currentRoute.value,
         })
+        /* eslint-enable @typescript-eslint/no-unsafe-assignment */
       }
       return null
     }),
   )
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
   pageContext.state = store.state
   if (router.currentRoute.value.meta.status) {
     pageContext.status = router.currentRoute.value.meta.status
@@ -62,8 +67,8 @@ export async function render(pageContext: PageContext) {
 
   const appHtml = await renderToString(app)
   const documentProps = pageContext.exports.documentProps as Record<string, string | undefined>
-  const title = documentProps?.title || 'bangbang93.blog()'
-  const desc = documentProps?.description || 'bangbang93.blog()'
+  const title = documentProps?.title ?? 'bangbang93.blog()'
+  const desc = documentProps?.description ?? 'bangbang93.blog()'
 
   const documentHtml = escapeInject`<!DOCTYPE html>
     <html lang="en">

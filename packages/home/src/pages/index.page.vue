@@ -83,6 +83,7 @@ export default defineComponent({
     mq.addEventListener('change', this.onWidthChange.bind(this))
     this.onWidthChange(mq)
     this.isShowMenu = true
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     this.$store.state.origin = ''
   },
   methods: {

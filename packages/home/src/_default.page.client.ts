@@ -12,6 +12,7 @@ import {createHome} from './entries'
 import './utils/prism.ts'
 
 export async function render(pageContext: PageContext & {initialStoreState: Record<string, StateTree>}): Promise<void> {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const {app, router, store, pinia} = createHome()
   app.provide('pageContext', pageContext)
   if (pageContext.initialStoreState) {
@@ -20,6 +21,7 @@ export async function render(pageContext: PageContext & {initialStoreState: Reco
   app.config.globalProperties.$pageContext = pageContext
   if (window.__INITIAL_STATE__) {
     // We initialize the store state with the data injected from the server
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
     store.replaceState(window.__INITIAL_STATE__)
   }
   await router.isReady()
@@ -31,12 +33,13 @@ export async function render(pageContext: PageContext & {initialStoreState: Reco
       return []
     })
     // 这里如果有加载指示器(loading indicator)，就触发
-    Promise.all(
+    void Promise.all(
       matched.map((c) => {
         if ('asyncData' in c && c?.asyncData) {
-          return c.asyncData({store, route: to})
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          return c.asyncData({store, route: to}) as Promise<void>
         }
-        return null
+        return Promise.resolve()
       }),
     )
       .then(() => {

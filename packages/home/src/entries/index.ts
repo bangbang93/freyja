@@ -22,13 +22,17 @@ interface ICreateHome {
 export function createHome(): ICreateHome {
   const router = createHomeRouter()
   const pinia = createPinia()
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const store = createRootStore()
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   const app = createSSRApp(App)
   app.use(router)
   app.use(pinia)
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   app.use(store)
 
   app.use(VueFetch)
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   return {app, router, store, pinia}
 }

@@ -66,7 +66,7 @@ export default defineComponent({
   },
   mounted() {
     if (this.$route.name === 'page.edit') {
-      this.initEdit(this.$route.params as {id: string})
+      void this.initEdit(this.$route.params as {id: string})
     }
   },
   methods: {
@@ -86,7 +86,7 @@ export default defineComponent({
       }
       if (resp.status === 201 || resp.status === 200) {
         await ElMessageBox.alert('保存成功', 'Freyja')
-        this.$router.push({name: 'page.list'})
+        void this.$router.push({name: 'page.list'})
       } else {
         const body = await resp.json() as Record<string, string>
         await ElMessageBox.alert(body.msg, 'Freyja')

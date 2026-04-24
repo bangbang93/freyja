@@ -32,7 +32,7 @@ const content = computed({
     emit('update:modelValue', val)
   },
 })
-// eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-assignment
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const editor = ref<any>(null)
 
 function onChange(val: string): void {

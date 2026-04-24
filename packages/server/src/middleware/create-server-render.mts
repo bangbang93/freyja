@@ -6,6 +6,8 @@ import {renderPage} from 'vike'
 
 type HttpResponse = Awaited<ReturnType<typeof renderPage>>['httpResponse']
 
+const HTTP_NOT_FOUND = 404
+
 const microCache = new LRU<string, HttpResponse>({
   max: 1000,
   maxAge: ms('30s'),
@@ -52,7 +54,7 @@ export async function createServerRender(
         return sendResponse(req, res, httpResponse, cacheable, s)
       }
     } catch (err) {
-      if (createHttpError.isHttpError(err) && err.status === 404) {
+      if (createHttpError.isHttpError(err) && err.status === HTTP_NOT_FOUND) {
         return next()
       }
       const time = Date.now() - s
@@ -60,7 +62,7 @@ export async function createServerRender(
       if (typeof err === 'object' && err !== null && 'url' in err) {
         if (err.url) {
           res.redirect(err.url as string)
-        } else if ('code' in err && err.code === 404) {
+        } else if ('code' in err && err.code === HTTP_NOT_FOUND) {
           return next()
         } else {
           // Render Error Page or Redirect

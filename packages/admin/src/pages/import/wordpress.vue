@@ -59,7 +59,7 @@ export default defineComponent({
       })
       if (resp.status === 200) {
         await ElMessageBox.alert('导入成功')
-        this.$router.push({name: 'article.list'})
+        void this.$router.push({name: 'article.list'})
       } else {
         const body = await resp.json() as Record<string, string>
         await ElMessageBox.alert(body.msg || body.message)

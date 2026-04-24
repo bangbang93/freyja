@@ -29,7 +29,9 @@ export const useRootStore = defineStore('root', {
   },
 })
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function createRootStore() {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
   return createStore({
     state: {},
     modules: {

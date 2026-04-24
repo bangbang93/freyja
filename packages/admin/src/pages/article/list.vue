@@ -63,7 +63,7 @@ export default defineComponent({
     }
   },
   mounted() {
-    this.initData()
+    void this.initData()
   },
   methods: {
     async initData() {
@@ -80,7 +80,7 @@ export default defineComponent({
       this.total = body1.count
     },
     handleEdit(_: number, row: IArticle) {
-      this.$router.push({
+      void this.$router.push({
         name: 'article.edit',
         params: {
           id: row._id,

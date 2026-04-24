@@ -24,6 +24,7 @@
         </span>
       </div>
       <div class="freyja-article-summary freyja-article-content">
+        <!-- eslint-disable-next-line vue/no-v-html -->
         <div v-html="article.summary" />
       </div>
       <hr>

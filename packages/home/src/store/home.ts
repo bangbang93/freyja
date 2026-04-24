@@ -6,6 +6,8 @@ import {defineStore} from 'pinia'
 import {Fetch} from '../utils/fetch.js'
 import {useRootStore} from './index.ts'
 
+const HTTP_OK = 200
+
 export interface HomeState {
   articles: IArticle[]
   categories: []
@@ -56,7 +58,7 @@ export const useHomeStore = defineStore('home', {
       } else {
         resp = await Fetch.get(`${rootState.origin}/api/article`, {page})
       }
-      if (resp.status !== 200) {
+      if (resp.status !== HTTP_OK) {
         throw new Error('fetch article list failed')
       }
 

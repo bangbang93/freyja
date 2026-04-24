@@ -7,6 +7,8 @@ import {defineStore} from 'pinia'
 import {Fetch} from '../utils/fetch'
 import {useRootStore} from './index.ts'
 
+const HTTP_OK = 200
+
 export interface IPageState {
   page: {
     title: string
@@ -39,7 +41,7 @@ export const usePageStore = defineStore('page', {
       const resp = await Fetch.get(
         `${rootState.origin}/api/page/${encodeURIComponent(name)}`,
       )
-      if (resp.status !== 200) {
+      if (resp.status !== HTTP_OK) {
         throw new Error('fetch page failed')
       }
 

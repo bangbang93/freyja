@@ -59,7 +59,7 @@ export default defineComponent({
     }
   },
   mounted() {
-    this.initData()
+    void this.initData()
   },
   methods: {
     async initData() {
