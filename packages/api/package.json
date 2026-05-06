@@ -3,6 +3,6 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "vite": "^7.2.4"
+    "vite": "^7.3.2"
   }
 }
