@@ -42,7 +42,7 @@
     "moment": "^2.29.4",
     "mongoose": "^7.6.11",
     "mongoose-typescript": "^3.3.0",
-    "morgan": "^1.10.0",
+    "morgan": "^1.11.0",
     "ms": "^2.1.2",
     "nestjs-bunyan": "^3.0.2",
     "nodemailer": "^9.0.1",
