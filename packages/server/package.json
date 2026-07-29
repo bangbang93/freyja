@@ -36,7 +36,7 @@
     "ioredis": "^5.2.4",
     "lodash": "^4.18.1",
     "lru-cache": "^5.1.1",
-    "markdown-it": "^12.3.2",
+    "markdown-it": "^14.3.0",
     "markdown-it-lozad": "^0.2.0",
     "meilisearch": "^0.32.3",
     "moment": "^2.29.4",
