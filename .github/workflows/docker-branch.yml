@@ -36,6 +36,8 @@ jobs:
           IMAGE_NAME: registry.cn-hangzhou.aliyuncs.com/bangbang93/freyja
         with:
           push: true
+          provenance: false
+          sbom: false
           cache-from: type=gha
           cache-to: type=gha,mode=max
           tags: |
