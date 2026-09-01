@@ -95,3 +95,4 @@ config/development
 .idea/
 apidoc/
 dist/
+.omo/
