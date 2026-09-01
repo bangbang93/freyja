@@ -41,7 +41,7 @@ description: '代码审查和 GitHub Pull Request 评论指导'
 
 ### 代码质量（必审）
 
-- [ ] 代码通过了 `npm run lint`（无 ESLint 错误）？
+- [ ] 代码通过了 `pnpm run lint`（无 ESLint 错误）？
 - [ ] TypeScript 类型标注完整，无 `any` 类型（必要情况除外）？
 - [ ] 变量和函数命名是否清晰、遵循 camelCase？
 - [ ] 复杂逻辑是否有清晰的注释或使用了自解释的代码？

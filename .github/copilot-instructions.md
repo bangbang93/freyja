@@ -2,9 +2,9 @@
 
 ## 项目架构
 
-Freyja 是一个使用 Vue SSR + NestJS 的博客系统，采用 npm workspaces 的 monorepo 结构：
+Freyja 是一个使用 Vue SSR + NestJS 的博客系统，采用 pnpm workspaces 的 monorepo 结构：
 
-- **packages/server**: NestJS 后端服务器（Node.js 18-22）
+- **packages/server**: NestJS 后端服务器（Node.js 18+）
   - 处理 API 请求、SSR 渲染、数据库操作
   - 使用 mongoose-typescript 进行 MongoDB ORM
   - 集成 Vike (原 vite-plugin-ssr) 实现 Vue SSR
@@ -24,23 +24,23 @@ Freyja 是一个使用 Vue SSR + NestJS 的博客系统，采用 npm workspaces 
 ### 启动开发服务器
 
 ```bash
-npm run dev  # 仅启动 server (带 Vite HMR)
-# Admin 前端需单独启动: npm -w @bangbang93/freyja-admin run dev
+pnpm run dev  # 仅启动 server (带 Vite HMR)
+# Admin 前端需单独启动: pnpm --filter @bangbang93/freyja-admin run dev
 ```
 
 ### 构建与部署
 
 ```bash
-npm run build      # 构建所有 workspaces
-npm start          # 生产环境启动
-npm run pm2        # 使用 PM2 部署
-npm run migrate    # 运行数据库迁移
+pnpm run build      # 构建所有 workspaces
+pnpm start          # 生产环境启动
+pnpm run pm2        # 使用 PM2 部署
+pnpm run migrate    # 运行数据库迁移
 ```
 
 ### Linting
 
 ```bash
-npm run lint  # 使用 ESLint flat config (v9+)
+pnpm run lint  # 使用 ESLint flat config (v9+)
 ```
 
 ## 代码约定
@@ -119,7 +119,7 @@ npm run lint  # 使用 ESLint flat config (v9+)
 
 ## 特别注意
 
-- **Node 版本**: 严格要求 18-22 (见 package.json engines)
+- **Node 版本**: 严格要求 18+ (见 package.json engines)，已验证支持到 Node 26
 - **TypeScript**: 不要在 `.vue` 文件中使用 `@typescript-eslint/no-unused-vars` (已禁用)
 - **SSR**: `/admin` 路径不参与 SSR，直接返回 SPA 入口
 - **迁移**: 使用 umzug，迁移文件位于 `packages/server/src/migrations/`

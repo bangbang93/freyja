@@ -88,7 +88,7 @@ model: Claude Sonnet 4
 #### 2. 代码规范与质量（必审）
 
 **检查项**：
-- [ ] 代码通过 `npm run lint` 无错误？
+- [ ] 代码通过 `pnpm run lint` 无错误？
 - [ ] TypeScript 类型标注完整（无 any）？
 - [ ] 命名清晰、遵循 camelCase？
 - [ ] 函数/模块职责单一？

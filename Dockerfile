@@ -3,27 +3,27 @@ FROM $BASE_IMAGE AS build
 
 WORKDIR /app
 
-COPY package.json package-lock.json ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY packages/server/package.json packages/server ./packages/server/
 COPY packages/home/package.json packages/home ./packages/home/
 COPY packages/admin/package.json packages/admin ./packages/admin/
-RUN --mount=type=cache,dst=/root/.npm npm ci
+RUN --mount=type=cache,dst=/root/.local/share/pnpm/store corepack enable && pnpm install --frozen-lockfile
 
 ENV NODE_ENV=production
 
 COPY packages packages
-RUN npm run build
+RUN pnpm -r run build
 
 
 FROM $BASE_IMAGE AS dependencies
 
 WORKDIR /app
 
-COPY package.json package-lock.json ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY packages/server/package.json packages/server ./packages/server/
 COPY packages/home/package.json packages/home ./packages/home/
 COPY packages/admin/package.json packages/admin ./packages/admin/
-RUN --mount=type=cache,dst=/root/.npm npm ci --omit=dev
+RUN --mount=type=cache,dst=/root/.local/share/pnpm/store corepack enable && pnpm install --prod --frozen-lockfile
 
 FROM $BASE_IMAGE AS release
 

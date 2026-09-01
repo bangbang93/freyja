@@ -201,7 +201,7 @@ import ArticleCard from './ArticleCard.vue'
 ### 通用问题
 
 #### 构建或启动错误
-**症状**：`npm run build` 或 `npm start` 失败
+**症状**：`pnpm run build` 或 `pnpm start` 失败
 **常见原因**：
 - 依赖版本冲突或缺失
 - TypeScript 编译错误
@@ -211,11 +211,11 @@ import ArticleCard from './ArticleCard.vue'
 1. 清理并重新安装依赖：
    ```bash
    rm -rf node_modules package-lock.json
-   npm install
+   pnpm install
    ```
 2. 检查错误信息中的具体文件和行号
 3. 验证环境变量配置：`.env` 或 `config/` 目录
-4. 运行 TypeScript 检查：`npm run tsc --noEmit`
+4. 运行 TypeScript 检查：`pnpm run tsc --noEmit`
 
 #### Git 冲突或 PR 合并问题
 **症状**：PR 显示 conflicting changes
@@ -235,13 +235,13 @@ import ArticleCard from './ArticleCard.vue'
 **启用详细日志**：
 ```bash
 # Mongoose debug
-DEBUG=mongoose npm run dev
+DEBUG=mongoose pnpm run dev
 
 # NestJS 日志
-LOG_LEVEL=debug npm run dev
+LOG_LEVEL=debug pnpm run dev
 
 # 特定模块日志
-DEBUG=article:* npm run dev
+DEBUG=article:* pnpm run dev
 ```
 
 **使用 Node.js 调试器**：

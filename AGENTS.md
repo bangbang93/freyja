@@ -1,6 +1,6 @@
 # Freyja AI Agent Guide
 
-Freyja 是一个基于 Vue SSR + NestJS 的轻量级博客系统，采用 npm workspaces monorepo 结构。本指南帮助 AI Agent 快速掌握核心架构和开发模式。
+Freyja 是一个基于 Vue SSR + NestJS 的轻量级博客系统，采用 pnpm workspaces monorepo 结构。本指南帮助 AI Agent 快速掌握核心架构和开发模式。
 
 ## 核心架构
 
@@ -90,25 +90,25 @@ export default {
 
 ```bash
 # 启动后端 server + home SSR（带 Vite HMR）
-npm run dev
+pnpm run dev
 
 # 单独启动 admin SPA 开发服务器（另一个终端）
-npm -w @bangbang93/freyja-admin run dev
+pnpm --filter @bangbang93/freyja-admin run dev
 ```
 
 ### 构建与部署
 
 ```bash
-npm run build      # 构建所有 workspaces（server + home + admin）
-npm start          # 生产环境启动 server
-npm run pm2        # 通过 PM2 部署（process.json 配置）
-npm run migrate    # 执行数据库迁移（umzug）
-npm run lint       # ESLint flat config (v9+)
+pnpm run build      # 构建所有 workspaces（server + home + admin）
+pnpm start          # 生产环境启动 server
+pnpm run pm2        # 通过 PM2 部署（process.json 配置）
+pnpm run migrate    # 执行数据库迁移（umzug）
+pnpm run lint       # ESLint flat config (v9+)
 ```
 
 ### Node 版本要求
 
-严格要求 Node 18-22（package.json `engines` 字段），不支持 23+。
+严格要求 Node 18+（package.json `engines` 字段），已验证支持到 Node 26。
 
 ## 集成与外部服务
 
@@ -144,7 +144,7 @@ npm run lint       # ESLint flat config (v9+)
 
 1. 编辑 `model.ts` 中的装饰器定义
 2. 创建迁移脚本：`packages/server/src/migrations/{timestamp}-{描述}.ts`（umzug 格式）
-3. 执行 `npm run migrate` 应用变更
+3. 执行 `pnpm run migrate` 应用变更
 
 ### 前端页面 SSR 集成
 
@@ -162,7 +162,7 @@ npm run lint       # ESLint flat config (v9+)
 ## 调试提示
 
 1. **SSR 缓存问题**：生产环境 SSR 使用 30s LRU 缓存，修改模板后需清缓存或等待 TTL 过期
-2. **环境配置**：设置 `CONFIG_ENV=production npm start` 强制使用 production 配置
+2. **环境配置**：设置 `CONFIG_ENV=production pnpm start` 强制使用 production 配置
 3. **MongoDB 调试**：开发环境自动启用 mongoose debug（见 app.module.ts）
 4. **前端日志**：检查浏览器控制台的 Pinia DevTools（开发模式）
 5. **API 请求**：frontend 使用原生 fetch API（不依赖 axios）

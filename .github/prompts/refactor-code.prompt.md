@@ -246,19 +246,19 @@ await store.createArticle(newArticle)
 ### 1. 测试验证
 ```bash
 # 运行现有测试确保功能未变
-npm test
+pnpm test
 
 # 生成覆盖率报告
-npm run test:cov
+pnpm run test:cov
 
 # 如需要，补充新测试
-npm test -- setup-refactored-feature.spec.ts
+pnpm test -- setup-refactored-feature.spec.ts
 ```
 
 ### 2. 性能验证
 - 对于数据库查询优化：比较重构前后的查询次数和耗时
 - 对于前端：使用 Chrome DevTools 检查渲染性能和内存使用
-- 使用 `npm run build` 对比构建体积和时间
+- 使用 `pnpm run build` 对比构建体积和时间
 
 ### 3. 手动验证
 - 在开发环境运行功能，确保行为无变化
@@ -290,7 +290,7 @@ git commit -m "feat(article): 支持自定义 slug 长度"
 - 创建 UtilService 作为共用工具库
 
 ## 验证方法
-- [x] 所有现有测试通过 (`npm test`)
+- [x] 所有现有测试通过 (`pnpm test`)
 - [x] 新增测试覆盖提取的逻辑
 - [x] 手动测试关键功能
 

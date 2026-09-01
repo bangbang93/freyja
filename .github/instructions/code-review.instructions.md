@@ -11,7 +11,7 @@ description: "代码审查标准和 GitHub Pull Request 指南"
 
 ## 提交 PR 前的自查清单
 
-- [ ] 代码通过 `npm run lint` 和类型检查，无 ESLint 警告
+- [ ] 代码通过 `pnpm run lint` 和类型检查，无 ESLint 警告
 - [ ] 为新功能或重大改动编写了测试，覆盖率 >70%
 - [ ] 提交信息清晰，遵循 `type(scope): subject` 格式
   - 示例：`feat(article): 添加文章搜索功能`

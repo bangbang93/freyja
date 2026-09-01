@@ -3,14 +3,14 @@
   "version": "1.2.7",
   "private": true,
   "engines": {
-    "node": ">=18.0.0 <23.0.0"
+    "node": ">=18.0.0 <27.0.0"
   },
   "scripts": {
     "start": "node packages/server/dist/main.js",
-    "dev": "npm -w @bangbang93/freyja-server run dev",
+    "dev": "pnpm --filter @bangbang93/freyja-server run dev",
     "pm2": "pm2 startOrReload process.json",
-    "build": "npm -ws run build --if-present",
-    "test": "npm run lint && npm run build",
+    "build": "pnpm -r run build",
+    "test": "pnpm run lint && pnpm run build",
     "lint": "eslint .",
     "snyk-protect": "snyk protect",
     "migrate": "node packages/server/dist/script/migrate.js",
@@ -33,8 +33,5 @@
     "typescript-eslint": "^8.0.0",
     "vue-eslint-parser": "^10.2.0"
   },
-  "snyk": true,
-  "workspaces": [
-    "packages/*"
-  ]
+  "snyk": true
 }

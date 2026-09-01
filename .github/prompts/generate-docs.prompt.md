@@ -151,7 +151,7 @@ description: '生成和更新项目文档'
 
 ### 为什么使用 monorepo？
 - 促进代码共享（packages/api）
-- 简化开发工作流（统一的 npm scripts）
+- 简化开发工作流（统一的 pnpm scripts）
 - 便于应用级的变更跟踪
 
 ### 为什么同时使用 SSR 和 SPA？
@@ -196,7 +196,7 @@ description: '生成和更新项目文档'
 \`\`\`bash
 git clone https://github.com/bangbang93/freyja.git
 cd freyja
-npm install
+pnpm install
 \`\`\`
 
 ### 2. 配置环境
@@ -208,16 +208,16 @@ cp .env.example .env.local
 
 ### 3. 运行迁移
 \`\`\`bash
-npm run migrate
+pnpm run migrate
 \`\`\`
 
 ### 4. 启动开发服务器
 \`\`\`bash
 # 终端 1：启动 server + home SSR
-npm run dev
+pnpm run dev
 
 # 终端 2：启动 admin SPA（可选）
-npm -w @bangbang93/freyja-admin run dev
+ppnpm --filter @bangbang93/freyja-admin run dev
 \`\`\`
 
 访问：
@@ -234,19 +234,19 @@ npm -w @bangbang93/freyja-admin run dev
 
 ### 运行测试
 \`\`\`bash
-npm test
-npm run test:cov  # 覆盖率报告
+pnpm test
+pnpm run test:cov  # 覆盖率报告
 \`\`\`
 
 ### 代码检查
 \`\`\`bash
-npm run lint
+pnpm run lint
 \`\`\`
 
 ### 生产构建
 \`\`\`bash
-npm run build
-npm start  # 启动生产服务器
+pnpm run build
+pnpm start  # 启动生产服务器
 \`\`\`
 
 ## 遇到问题？
@@ -279,11 +279,11 @@ npm start  # 启动生产服务器
 ## 关键命令
 
 \`\`\`bash
-npm run dev         # 开发服务器
-npm test            # 运行测试
-npm run lint        # 代码检查
-npm run build       # 生产构建
-npm run migrate     # 数据库迁移
+pnpm run dev         # 开发服务器
+pnpm test            # 运行测试
+pnpm run lint        # 代码检查
+pnpm run build       # 生产构建
+pnpm run migrate     # 数据库迁移
 \`\`\`
 
 ## 文档与规范

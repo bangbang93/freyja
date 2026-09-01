@@ -41,7 +41,7 @@ mongo "mongodb://localhost:27017"
 
 # 4. 检查 NestJS 日志
 # 在 logger.js 配置 debug 级别查看连接细节
-NODE_ENV=development npm run dev | grep -i mongo
+NODE_ENV=development pnpm run dev | grep -i mongo
 ```
 
 **解决方案**：
@@ -116,7 +116,7 @@ const mongooseModule = MongooseModule.forRoot(
 )
 
 # 观察日志中的查询语句
-npm run dev | grep "Mongoose: "
+pnpm run dev | grep "Mongoose: "
 ```
 
 **解决方案**：
@@ -343,10 +343,10 @@ console.timeEnd('operation')
 
 ```bash
 # 开启详细日志
-DEBUG=* npm run dev
+DEBUG=* pnpm run dev
 
 # 针对特定模块的日志
-DEBUG=article:* npm run dev
+DEBUG=article:* pnpm run dev
 
 # 使用 Node.js 调试器
 node --inspect=9229 packages/server/dist/main.js
@@ -375,7 +375,7 @@ node --expose-gc packages/server/dist/main.js
 
 ### 通用
 - [ ] 检查环境变量配置（.env 文件）
-- [ ] 清理 node_modules 和 dist（`rm -rf node_modules && npm install`）
+- [ ] 清理 node_modules 和 dist（`rm -rf node_modules && pnpm install`）
 - [ ] 检查依赖版本（package-lock.json）
 - [ ] 查看最近的代码变更
 - [ ] 隔离问题：禁用或注释可疑代码
