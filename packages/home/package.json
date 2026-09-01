@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@types/http-errors": "^1.6.3",
+    "@types/lodash-es": "^4.17.12",
     "@types/lozad": "^1.16.1",
     "@types/prismjs": "^1.26.0",
     "sass": "^1.69.4",
