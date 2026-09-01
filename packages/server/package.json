@@ -14,7 +14,7 @@
     "@nestjs/core": "^11.1.18",
     "@nestjs/mongoose": "^11.0.4",
     "@nestjs/platform-express": "^11.1.28",
-    "@nestjs/swagger": "^11.4.5",
+    "@nestjs/swagger": "^11.4.6",
     "@sindresorhus/is": "^4.6.0",
     "bcrypt": "^6.0.0",
     "bluebird": "^3.7.2",
