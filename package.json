@@ -18,20 +18,20 @@
   },
   "dependencies": {
     "mongoose": "^7.8.11",
-    "snyk": "^1.1297.3"
+    "snyk": "^1.1303.1"
   },
   "devDependencies": {
     "@bangbang93/eslint-config-recommended": "^2.0.0",
     "@tsconfig/node20": "^20.1.9",
-    "@types/node": "^18.11.9",
-    "@typescript-eslint/parser": "^8.0.0",
-    "eslint": "^9.0.0",
-    "eslint-plugin-vue": "^10.0.0",
+    "@types/node": "^18.19.130",
+    "@typescript-eslint/parser": "^8.57.0",
+    "eslint": "^9.39.4",
+    "eslint-plugin-vue": "^10.8.0",
     "release-it": "^21.0.1",
     "shelljs": "^0.8.5",
-    "typescript": "^5.2.2",
-    "typescript-eslint": "^8.0.0",
-    "vue-eslint-parser": "^10.2.0"
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.57.0",
+    "vue-eslint-parser": "^10.4.0"
   },
   "snyk": true
 }
