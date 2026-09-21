@@ -312,8 +312,8 @@ importers:
         specifier: ^3.3.0
         version: 3.4.0(mongoose@7.8.11(supports-color@8.1.1))
       morgan:
-        specifier: ^1.11.0
-        version: 1.11.0(supports-color@8.1.1)
+        specifier: ^1.12.0
+        version: 1.12.0(supports-color@8.1.1)
       ms:
         specifier: ^2.1.2
         version: 2.1.3
@@ -1947,6 +1947,11 @@ packages:
 
   '@volar/typescript@2.4.28':
     resolution: {integrity: sha512-Ja6yvWrbis2QtN4ClAKreeUZPVYMARDYZl9LMEv1iQ1QdepB6wn0jTRxA9MftYmYa4DQ4k/DaSZpFPUfxl8giw==}
+    peerDependencies:
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
 
   '@vue/compiler-core@3.5.30':
     resolution: {integrity: sha512-s3DfdZkcu/qExZ+td75015ljzHc6vE+30cFMGRPROYjqkroYI5NV2X1yAMX9UeyBNWB9MxCfPcsjpLS11nzkkw==}
@@ -3520,8 +3525,8 @@ packages:
     resolution: {integrity: sha512-ZONFEna6npklSbhDGvCRAdeGMvYwLnVUGfvgZv01zzYoxh5BOsvftROtFl5iozqss5UL8wgJsken6ze7VuHVQg==}
     engines: {node: '>=14.20.1'}
 
-  morgan@1.11.0:
-    resolution: {integrity: sha512-zSkVu3t18r39pw4ixfBKvfZi3y2UOqr7d4WYwcj3m8nXpEQK4rPO6GLzs/CExoRgmX3y9EjmmcXqv6jq0SK46g==}
+  morgan@1.12.0:
+    resolution: {integrity: sha512-OHpTRQwn2ezasILW8iKe+Yww1XsfWsZIpUOLF7RDb2g5GwO3trPaRwi7+8BDiJ7HFx2Kg2mfUdCBcVhwYlOz2g==}
     engines: {node: '>= 0.8.0'}
 
   mpath@0.9.0:
@@ -6028,11 +6033,13 @@ snapshots:
 
   '@volar/source-map@2.4.28': {}
 
-  '@volar/typescript@2.4.28':
+  '@volar/typescript@2.4.28(typescript@5.9.3)':
     dependencies:
       '@volar/language-core': 2.4.28
       path-browserify: 1.0.1
       vscode-uri: 3.1.0
+    optionalDependencies:
+      typescript: 5.9.3
 
   '@vue/compiler-core@3.5.30':
     dependencies:
@@ -7683,7 +7690,7 @@ snapshots:
       - snappy
       - supports-color
 
-  morgan@1.11.0(supports-color@8.1.1):
+  morgan@1.12.0(supports-color@8.1.1):
     dependencies:
       basic-auth: 2.0.1
       debug: 2.6.9(supports-color@8.1.1)
@@ -8675,7 +8682,7 @@ snapshots:
 
   vue-tsc@3.2.5(typescript@5.9.3):
     dependencies:
-      '@volar/typescript': 2.4.28
+      '@volar/typescript': 2.4.28(typescript@5.9.3)
       '@vue/language-core': 3.2.5
       typescript: 5.9.3
 
