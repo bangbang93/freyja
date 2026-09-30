@@ -39,7 +39,7 @@
     "markdown-it": "^14.3.0",
     "markdown-it-lozad": "^0.2.0",
     "meilisearch": "^0.32.5",
-    "moment": "^2.30.1",
+    "moment": "^2.31.0",
     "mongoose": "^7.8.11",
     "mongoose-typescript": "^3.4.0",
     "morgan": "^1.12.0",
