@@ -24,7 +24,7 @@
     "@nuxt/devalue": "^2.0.2",
     "@sindresorhus/is": "^6.3.1",
     "@vitejs/plugin-vue": "^6.0.5",
-    "@vue/server-renderer": "^3.5.30",
+    "@vue/server-renderer": "^3.5.42",
     "@vue/shared": "^3.5.30",
     "animate.css": "^3.7.2",
     "core-js": "^3.48.0",
