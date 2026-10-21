@@ -143,8 +143,8 @@ importers:
         specifier: ^1.16.0
         version: 1.16.0
       markdown-it:
-        specifier: ^14.3.0
-        version: 14.3.0
+        specifier: ^14.3.3
+        version: 14.3.3
       markdown-it-lozad:
         specifier: ^0.2.0
         version: 0.2.0
@@ -294,8 +294,8 @@ importers:
         specifier: ^5.1.1
         version: 5.1.1
       markdown-it:
-        specifier: ^14.3.0
-        version: 14.3.0
+        specifier: ^14.3.3
+        version: 14.3.3
       markdown-it-lozad:
         specifier: ^0.2.0
         version: 0.2.0
@@ -3404,8 +3404,8 @@ packages:
   markdown-it-lozad@0.2.0:
     resolution: {integrity: sha512-4aH937bnFASplFjjbIE4xOVpmxcTNWNyaVeweezSjXS6mkR5658QhCoxiURGcB3tJFk8QpJsELrcxc8ZYGY93g==}
 
-  markdown-it@14.3.0:
-    resolution: {integrity: sha512-RCEsPjR+sr0x+AuYp601tKTkgFG4YEPLCzHST3cQ/fhlJkqAkz1L2/Qbp1j9qw5SBwQHFBoW8+hoN5xssOF0Tw==}
+  markdown-it@14.3.3:
+    resolution: {integrity: sha512-L//tDAkjTjJCU6pBUSBTgs3Kg4InVaZuUZog/b6V12UKhcDQ7S78877ibbCanRExwPuYP1CZD7Gd2dxSy1GXRg==}
     hasBin: true
 
   matcher@3.0.0:
@@ -7583,7 +7583,7 @@ snapshots:
 
   markdown-it-lozad@0.2.0: {}
 
-  markdown-it@14.3.0:
+  markdown-it@14.3.3:
     dependencies:
       argparse: 2.0.1
       entities: 4.5.0
