@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       mongoose:
-        specifier: ^7.8.11
-        version: 7.8.11(supports-color@8.1.1)
+        specifier: ^7.8.13
+        version: 7.8.13(supports-color@8.1.1)
       snyk:
         specifier: ^1.1303.1
         version: 1.1303.1
@@ -211,7 +211,7 @@ importers:
         version: 1.1.3
       '@bangbang93/utils':
         specifier: ^6.13.0
-        version: 6.13.0(@bangbang93/service-errors@1.1.3)(@nestjs/common@11.1.19(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.1)(supports-color@8.1.1))(@nestjs/core@11.1.18)(@nestjs/mongoose@11.0.4(@nestjs/common@11.1.19(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.1)(supports-color@8.1.1))(@nestjs/core@11.1.18)(mongoose@7.8.11(supports-color@8.1.1))(rxjs@7.8.1))(class-transformer@0.5.1)(class-validator@0.14.4)(mongoose-typescript@3.4.0(mongoose@7.8.11(supports-color@8.1.1)))(mongoose@7.8.11(supports-color@8.1.1))(rxjs@7.8.1)
+        version: 6.13.0(@bangbang93/service-errors@1.1.3)(@nestjs/common@11.1.19(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.1)(supports-color@8.1.1))(@nestjs/core@11.1.18)(@nestjs/mongoose@11.0.4(@nestjs/common@11.1.19(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.1)(supports-color@8.1.1))(@nestjs/core@11.1.18)(mongoose@7.8.13(supports-color@8.1.1))(rxjs@7.8.1))(class-transformer@0.5.1)(class-validator@0.14.4)(mongoose-typescript@3.4.0(mongoose@7.8.13(supports-color@8.1.1)))(mongoose@7.8.13(supports-color@8.1.1))(rxjs@7.8.1)
       '@nestjs/common':
         specifier: ^11.1.19
         version: 11.1.19(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.1)(supports-color@8.1.1)
@@ -223,7 +223,7 @@ importers:
         version: 11.1.18(@nestjs/common@11.1.19(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.1)(supports-color@8.1.1))(@nestjs/platform-express@11.1.28)(reflect-metadata@0.2.2)(rxjs@7.8.1)
       '@nestjs/mongoose':
         specifier: ^11.0.4
-        version: 11.0.4(@nestjs/common@11.1.19(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.1)(supports-color@8.1.1))(@nestjs/core@11.1.18)(mongoose@7.8.11(supports-color@8.1.1))(rxjs@7.8.1)
+        version: 11.0.4(@nestjs/common@11.1.19(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.1)(supports-color@8.1.1))(@nestjs/core@11.1.18)(mongoose@7.8.13(supports-color@8.1.1))(rxjs@7.8.1)
       '@nestjs/platform-express':
         specifier: ^11.1.28
         version: 11.1.28(@nestjs/common@11.1.19(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.1)(supports-color@8.1.1))(@nestjs/core@11.1.18)(supports-color@8.1.1)
@@ -306,11 +306,11 @@ importers:
         specifier: ^2.30.1
         version: 2.30.1
       mongoose:
-        specifier: ^7.8.11
-        version: 7.8.11(supports-color@8.1.1)
+        specifier: ^7.8.13
+        version: 7.8.13(supports-color@8.1.1)
       mongoose-typescript:
         specifier: ^3.4.0
-        version: 3.4.0(mongoose@7.8.11(supports-color@8.1.1))
+        version: 3.4.0(mongoose@7.8.13(supports-color@8.1.1))
       morgan:
         specifier: ^1.12.0
         version: 1.12.0(supports-color@8.1.1)
@@ -3525,8 +3525,8 @@ packages:
     peerDependencies:
       mongoose: '>=6.2.1 <10.0.0'
 
-  mongoose@7.8.11:
-    resolution: {integrity: sha512-ZONFEna6npklSbhDGvCRAdeGMvYwLnVUGfvgZv01zzYoxh5BOsvftROtFl5iozqss5UL8wgJsken6ze7VuHVQg==}
+  mongoose@7.8.13:
+    resolution: {integrity: sha512-Fd3yPwXQElXRmclX8ypcGcCT/JZtoLcn0GOj6g7FKIw6qngr1vz+QTBCTC4GuwQT9aKxE4SD24nIeujRbWjWNA==}
     engines: {node: '>=14.20.1'}
 
   morgan@1.12.0:
@@ -3537,8 +3537,8 @@ packages:
     resolution: {integrity: sha512-ikJRQTk8hw5DEoFVxHG1Gn9T/xcjtdnOKIU1JTmGjZZlg9LST2mBLmcX3/ICIbgJydT2GOc15RnNy5mHmzfSew==}
     engines: {node: '>=4.0.0'}
 
-  mquery@5.0.0:
-    resolution: {integrity: sha512-iQMncpmEK8R8ncT8HJGsGc9Dsp8xcgYMVSbs5jgnm1lFHTZqMJTUWTDx1LBO8+mK3tPNZWFLBghQEIOULSTHZg==}
+  mquery@5.0.1:
+    resolution: {integrity: sha512-C99lWV0TFI34pS008jBsi3JrE2xZPnTgUw5yApQR71nRP0hxLy8D5m1Lbbk83c8AQWJwdJ0329HzFtZ1MRTUIw==}
     engines: {node: '>=14.0.0'}
 
   mrmime@2.0.1:
@@ -3608,6 +3608,7 @@ packages:
 
   node-abort-controller@3.1.1:
     resolution: {integrity: sha512-AGK2yQKIjRuqnc6VkX2Xj5d+QW8xZ87pa1UK6yA6ouUyuxfHuMP6umE5QK7UmTeOAymo+Zx1Fxiuw9rVx8taHQ==}
+    deprecated: This package is no longer needed on supported Node.js versions. Node.js 16+ includes AbortController and AbortSignal as built-in globals. All Node.js versions requiring this polyfill are end-of-life. Use the built-in globals instead.
 
   node-addon-api@7.1.1:
     resolution: {integrity: sha512-5m3bsyrjFWE1xf7nz7YXdN4udnVtXK6/Yfgn5qnahL6bCkf2yKt4k3nuTKAtT4r3IG8JNR2ncsIMdZuAzJjHQQ==}
@@ -4808,7 +4809,7 @@ snapshots:
       lodash: 4.18.1
       pony-cause: 2.1.11
 
-  '@bangbang93/utils@6.13.0(@bangbang93/service-errors@1.1.3)(@nestjs/common@11.1.19(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.1)(supports-color@8.1.1))(@nestjs/core@11.1.18)(@nestjs/mongoose@11.0.4(@nestjs/common@11.1.19(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.1)(supports-color@8.1.1))(@nestjs/core@11.1.18)(mongoose@7.8.11(supports-color@8.1.1))(rxjs@7.8.1))(class-transformer@0.5.1)(class-validator@0.14.4)(mongoose-typescript@3.4.0(mongoose@7.8.11(supports-color@8.1.1)))(mongoose@7.8.11(supports-color@8.1.1))(rxjs@7.8.1)':
+  '@bangbang93/utils@6.13.0(@bangbang93/service-errors@1.1.3)(@nestjs/common@11.1.19(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.1)(supports-color@8.1.1))(@nestjs/core@11.1.18)(@nestjs/mongoose@11.0.4(@nestjs/common@11.1.19(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.1)(supports-color@8.1.1))(@nestjs/core@11.1.18)(mongoose@7.8.13(supports-color@8.1.1))(rxjs@7.8.1))(class-transformer@0.5.1)(class-validator@0.14.4)(mongoose-typescript@3.4.0(mongoose@7.8.13(supports-color@8.1.1)))(mongoose@7.8.13(supports-color@8.1.1))(rxjs@7.8.1)':
     dependencies:
       '@sindresorhus/is': 4.6.0
       json-stringify-safe: 5.0.1
@@ -4822,11 +4823,11 @@ snapshots:
       '@bangbang93/service-errors': 1.1.3
       '@nestjs/common': 11.1.19(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.1)(supports-color@8.1.1)
       '@nestjs/core': 11.1.18(@nestjs/common@11.1.19(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.1)(supports-color@8.1.1))(@nestjs/platform-express@11.1.28)(reflect-metadata@0.2.2)(rxjs@7.8.1)
-      '@nestjs/mongoose': 11.0.4(@nestjs/common@11.1.19(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.1)(supports-color@8.1.1))(@nestjs/core@11.1.18)(mongoose@7.8.11(supports-color@8.1.1))(rxjs@7.8.1)
+      '@nestjs/mongoose': 11.0.4(@nestjs/common@11.1.19(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.1)(supports-color@8.1.1))(@nestjs/core@11.1.18)(mongoose@7.8.13(supports-color@8.1.1))(rxjs@7.8.1)
       class-transformer: 0.5.1
       class-validator: 0.14.4
-      mongoose: 7.8.11(supports-color@8.1.1)
-      mongoose-typescript: 3.4.0(mongoose@7.8.11(supports-color@8.1.1))
+      mongoose: 7.8.13(supports-color@8.1.1)
+      mongoose-typescript: 3.4.0(mongoose@7.8.13(supports-color@8.1.1))
       rxjs: 7.8.1
 
   '@borewit/text-codec@0.2.2': {}
@@ -5462,11 +5463,11 @@ snapshots:
       class-transformer: 0.5.1
       class-validator: 0.14.4
 
-  '@nestjs/mongoose@11.0.4(@nestjs/common@11.1.19(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.1)(supports-color@8.1.1))(@nestjs/core@11.1.18)(mongoose@7.8.11(supports-color@8.1.1))(rxjs@7.8.1)':
+  '@nestjs/mongoose@11.0.4(@nestjs/common@11.1.19(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.1)(supports-color@8.1.1))(@nestjs/core@11.1.18)(mongoose@7.8.13(supports-color@8.1.1))(rxjs@7.8.1)':
     dependencies:
       '@nestjs/common': 11.1.19(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.1)(supports-color@8.1.1)
       '@nestjs/core': 11.1.18(@nestjs/common@11.1.19(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.1)(supports-color@8.1.1))(@nestjs/platform-express@11.1.28)(reflect-metadata@0.2.2)(rxjs@7.8.1)
-      mongoose: 7.8.11(supports-color@8.1.1)
+      mongoose: 7.8.13(supports-color@8.1.1)
       rxjs: 7.8.1
 
   '@nestjs/platform-express@11.1.28(@nestjs/common@11.1.19(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.1)(supports-color@8.1.1))(@nestjs/core@11.1.18)(supports-color@8.1.1)':
@@ -7675,21 +7676,21 @@ snapshots:
     optionalDependencies:
       '@mongodb-js/saslprep': 1.4.6
 
-  mongoose-typescript@3.4.0(mongoose@7.8.11(supports-color@8.1.1)):
+  mongoose-typescript@3.4.0(mongoose@7.8.13(supports-color@8.1.1)):
     dependencies:
       '@sindresorhus/is': 4.6.0
       lodash: 4.18.1
-      mongoose: 7.8.11(supports-color@8.1.1)
+      mongoose: 7.8.13(supports-color@8.1.1)
       reflect-metadata: 0.1.14
       type-fest: 2.19.0
 
-  mongoose@7.8.11(supports-color@8.1.1):
+  mongoose@7.8.13(supports-color@8.1.1):
     dependencies:
       bson: 5.5.1
       kareem: 2.5.1
       mongodb: 5.9.2
       mpath: 0.9.0
-      mquery: 5.0.0(supports-color@8.1.1)
+      mquery: 5.0.1(supports-color@8.1.1)
       ms: 2.1.3
       sift: 16.0.1
     transitivePeerDependencies:
@@ -7712,7 +7713,7 @@ snapshots:
 
   mpath@0.9.0: {}
 
-  mquery@5.0.0(supports-color@8.1.1):
+  mquery@5.0.1(supports-color@8.1.1):
     dependencies:
       debug: 4.4.3(supports-color@8.1.1)
     transitivePeerDependencies:
