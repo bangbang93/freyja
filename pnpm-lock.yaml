@@ -303,8 +303,8 @@ importers:
         specifier: ^0.32.5
         version: 0.32.5
       moment:
-        specifier: ^2.30.1
-        version: 2.30.1
+        specifier: ^2.31.0
+        version: 2.31.0
       mongoose:
         specifier: ^7.8.11
         version: 7.8.11(supports-color@8.1.1)
@@ -3492,8 +3492,8 @@ packages:
     resolution: {integrity: sha512-FP+p8RB8OWpF3YZBCrP5gtADmtXApB5AMLn+vdyA+PyxCjrCs00mjyUozssO33cwDeT3wNGdLxJ5M//YqtHAJw==}
     hasBin: true
 
-  moment@2.30.1:
-    resolution: {integrity: sha512-uEmtNhbDOrWPFS+hdjFCBfy9f2YoyzRpwcl+DqpC6taX21FzsTLQVbMV/W7PzNSX6x/bhC1zA3c2UQ5NzH6how==}
+  moment@2.31.0:
+    resolution: {integrity: sha512-0acOTfMiWOheYS4eoWb80yYMb/JLvVv9SHbs2PehaDzfUG0Bw855SKyk0IKTnPGa5+U2bmi3W68l1+sGLX/pvw==}
 
   mongodb-connection-string-url@2.6.0:
     resolution: {integrity: sha512-WvTZlI9ab0QYtTYnuMLgobULWhokRjtC7db9LtcVfJ+Hsnyr5eo6ZtNAt3Ly24XZScGMelOcGtm7lSn0332tPQ==}
@@ -6389,7 +6389,7 @@ snapshots:
   bunyan@1.8.15:
     optionalDependencies:
       dtrace-provider: 0.8.8
-      moment: 2.30.1
+      moment: 2.31.0
       mv: 2.1.1
       safe-json-stringify: 1.2.0
 
@@ -7660,7 +7660,7 @@ snapshots:
       minimist: 1.2.8
     optional: true
 
-  moment@2.30.1: {}
+  moment@2.31.0: {}
 
   mongodb-connection-string-url@2.6.0:
     dependencies:
