@@ -71,6 +71,6 @@
     "@types/multer": "^1.4.13",
     "@types/nodemailer": "^6.4.23",
     "@types/serve-favicon": "^2.5.7",
-    "vite": "^7.3.6"
+    "vite": "^7.3.7"
   }
 }
