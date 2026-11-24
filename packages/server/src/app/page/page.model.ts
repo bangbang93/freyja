@@ -4,8 +4,9 @@
 'use strict'
 
 import {
-  array, DocumentType, id, index, model, ObjectId, prop, RichModelType, subModel, unique,
+  array, DocumentType, id, index, model, ObjectId, prop, Ref, ref, RichModelType, subModel, unique,
 } from 'mongoose-typescript'
+import {Admin} from '../admin/admin.model'
 
 
 export interface IPageSchema {
@@ -13,7 +14,7 @@ export interface IPageSchema {
   title: string
   content: string
   html: string
-  author: ObjectId
+  author: Ref<Admin>
   createdAt: Date
   attachments: ObjectId[]
   wordpress: PageWordpress
@@ -35,7 +36,7 @@ export class Page implements IPageSchema {
   @prop() public title!: string
   @prop() public content!: string
   @prop() public html!: string
-  @prop() public author!: ObjectId
+  @prop() @ref(Admin) public author!: Ref<Admin>
   @array(ObjectId) public attachments!: ObjectId[]
   @prop() public wordpress!: PageWordpress
   public createdAt!: Date
