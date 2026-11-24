@@ -21,7 +21,7 @@ export async function createServerRender(
 ): Promise<(req: Request, res: Response, next: NextFunction) => Promise<void | Response>> {
   if (env === 'production') {
     // eslint-disable-next-line no-useless-concat
-    await import('../../../home/dist/server/importBuild.cjs' + '')
+    await import('../../../home/dist/server/entry.mjs' + '')
   }
   return async function render(req, res, next): Promise<void | Response> {
     const s = Date.now()

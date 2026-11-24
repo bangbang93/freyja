@@ -80,6 +80,11 @@ export default {
 - 用户手动修改 slug 后，`autoSlug` 标志自动停用自动转换
 - 离开页面前使用 `onBeforeRouteLeave` + `ElMessageBox.confirm` 提示未保存修改
 
+### 生产模式 SSR 入口（packages/server/src/middleware/create-server-render.mts）
+
+- 生产模式下 server 不经 Vite 构建，启动时手动加载 vike 的服务端构建入口 `packages/home/dist/server/entry.mjs`，之后才能调用 `renderPage`
+- 入口文件名由 vike 决定，升级 vike 后若变动需同步这里；路径以字符串拼接避免被 tsc 解析，失配在编译期查不出来
+
 ### SSR 缓存策略（packages/server/src/middleware/create-server-render.mts）
 
 - 生产环境使用 **LRU 缓存**：最多 1000 条，单条 30s TTL
