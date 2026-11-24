@@ -96,3 +96,4 @@ config/development
 apidoc/
 dist/
 .omo/
+.codegraph/

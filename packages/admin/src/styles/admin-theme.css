@@ -1,0 +1,175 @@
+:root {
+  --fj-pine-950: #102923;
+  --fj-pine-900: #17352f;
+  --fj-pine-800: #24493f;
+  --fj-pine-100: #e5eee9;
+  --fj-clay-700: #a93e2c;
+  --fj-clay-600: #b94732;
+  --fj-clay-500: #cb5b43;
+  --fj-clay-100: #f7e8e2;
+  --fj-brand-accent: #e2785f;
+  --fj-brand-accent-light: #e9a18e;
+  --fj-bg-canvas: #f4f3ee;
+  --fj-bg-surface: #fff;
+  --fj-bg-subtle: #f8f8f5;
+  --fj-bg-hover: #f0f2ed;
+  --fj-text-primary: #202a26;
+  --fj-text-regular: #3e4944;
+  --fj-text-secondary: #66716b;
+  --fj-text-tertiary: #8b948f;
+  --fj-text-inverse: #f7f8f4;
+  --fj-border: #dde2dc;
+  --fj-border-strong: #c8d0c9;
+  --fj-focus: #b94732;
+  --fj-success: #2f7256;
+  --fj-success-bg: #e8f3ed;
+  --fj-warning: #956116;
+  --fj-warning-bg: #fbf1dc;
+  --fj-danger: #b63a3a;
+  --fj-danger-bg: #fbeaea;
+  --fj-info: #316b83;
+  --fj-info-bg: #e8f2f6;
+  --fj-font-display: "Noto Serif CJK SC", "Source Han Serif SC", "Songti SC", "STSong", serif;
+  --fj-font-body: "Noto Sans CJK SC", "Source Han Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --fj-font-mono: "SFMono-Regular", "Cascadia Code", "JetBrains Mono", monospace;
+  --fj-radius-sm: 6px;
+  --fj-radius-md: 10px;
+  --fj-radius-lg: 14px;
+  --fj-shadow-sm: 0 1px 2px rgb(16 41 35 / 4%), 0 4px 12px rgb(16 41 35 / 3%);
+  --fj-shadow-md: 0 12px 32px rgb(16 41 35 / 10%);
+  --fj-duration-fast: 120ms;
+  --fj-duration-base: 180ms;
+  --fj-duration-slow: 240ms;
+  --fj-ease-standard: cubic-bezier(.2, 0, 0, 1);
+  --fj-sidebar-width: 224px;
+  --fj-topbar-height: 64px;
+  --el-color-primary: var(--fj-clay-600);
+  --el-color-primary-light-3: #ce7561;
+  --el-color-primary-light-5: #dda090;
+  --el-color-primary-light-7: #ecc9bf;
+  --el-color-primary-light-8: #f3ddd6;
+  --el-color-primary-light-9: #f8eeea;
+  --el-color-primary-dark-2: var(--fj-clay-700);
+  --el-color-success: var(--fj-success);
+  --el-color-warning: var(--fj-warning);
+  --el-color-danger: var(--fj-danger);
+  --el-color-error: var(--fj-danger);
+  --el-color-info: var(--fj-info);
+  --el-text-color-primary: var(--fj-text-primary);
+  --el-text-color-regular: var(--fj-text-regular);
+  --el-text-color-secondary: var(--fj-text-secondary);
+  --el-text-color-placeholder: var(--fj-text-tertiary);
+  --el-border-color: var(--fj-border);
+  --el-border-color-light: var(--fj-border);
+  --el-border-color-lighter: #e8ebe6;
+  --el-fill-color-light: var(--fj-bg-subtle);
+  --el-fill-color-blank: var(--fj-bg-surface);
+  --el-bg-color: var(--fj-bg-surface);
+  --el-bg-color-overlay: var(--fj-bg-surface);
+  --el-border-radius-base: var(--fj-radius-sm);
+  --el-border-radius-small: 4px;
+  --el-font-family: var(--fj-font-body);
+  --el-font-size-base: 14px;
+  --el-box-shadow-light: var(--fj-shadow-md);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--fj-bg-canvas);
+  color: var(--fj-text-primary);
+  font-family: var(--fj-font-body);
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+textarea {
+  font-family: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--fj-focus);
+  outline-offset: 3px;
+}
+
+.el-button {
+  font-weight: 500;
+  transition: background-color var(--fj-duration-fast), border-color var(--fj-duration-fast), color var(--fj-duration-fast);
+}
+
+.el-button--primary {
+  box-shadow: 0 4px 12px rgb(185 71 50 / 12%);
+}
+
+.el-input__wrapper,
+.el-textarea__inner {
+  border-radius: var(--fj-radius-sm);
+  box-shadow: 0 0 0 1px var(--fj-border-strong) inset;
+}
+
+.el-input__wrapper.is-focus,
+.el-textarea__inner:focus {
+  box-shadow: 0 0 0 1px var(--fj-clay-600) inset, 0 0 0 3px rgb(185 71 50 / 8%);
+}
+
+.el-pagination.is-background .el-pager li.is-active {
+  background: var(--fj-clay-600);
+}
+
+.el-message-box {
+  border-radius: var(--fj-radius-lg);
+  box-shadow: var(--fj-shadow-md);
+}
+
+.el-message {
+  border-radius: var(--fj-radius-md);
+}
+
+.el-tree {
+  --el-tree-node-hover-bg-color: var(--fj-bg-hover);
+  --el-tree-text-color: var(--fj-text-regular);
+  background: transparent;
+}
+
+.el-tree-node__content {
+  height: 32px;
+  border-radius: var(--fj-radius-sm);
+}
+
+.el-checkbox__inner {
+  border-radius: 4px;
+}
+
+.el-loading-mask {
+  background-color: rgb(244 243 238 / 76%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0ms !important;
+    animation-duration: 0ms !important;
+  }
+}

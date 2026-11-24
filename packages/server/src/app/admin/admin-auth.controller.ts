@@ -24,4 +24,18 @@ export class AdminAuthController {
   public checkLogin(@Req() req: Request): Partial<IAdminSchema> | undefined {
     return req.session.user
   }
+
+  @Post('logout')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  public async logout(@Req() req: Request): Promise<void> {
+    await new Promise<void>((resolve, reject) => {
+      req.session.destroy((err: Error | undefined) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve()
+        }
+      })
+    })
+  }
 }
