@@ -46,7 +46,7 @@ export class PageService {
     const skip = (page - 1) * limit
     return await this.pageModel.find({})
       .select({content: 0, html: 0})
-      .populate('author')
+      .populate('author', '_id username')
       .sort({_id: -1})
       .skip(skip)
       .limit(limit)

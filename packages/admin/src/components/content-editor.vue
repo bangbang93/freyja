@@ -87,6 +87,9 @@
       <aside
         v-if="hasSettings"
         class="editor-settings"
+        :class="{ 'is-loading': loading }"
+        :aria-disabled="loading"
+        :inert="loading"
       >
         <slot name="settings" />
       </aside>
@@ -252,6 +255,13 @@ function onNameInput(event: Event): void {
   border-radius: 12px;
   background: #fff;
   box-shadow: 0 1px 2px rgb(16 41 35 / 2%);
+}
+
+.editor-settings.is-loading {
+  cursor: wait;
+  opacity: .55;
+  pointer-events: none;
+  user-select: none;
 }
 
 .editor-title-block {

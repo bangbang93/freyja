@@ -84,7 +84,10 @@ export class ArticleService {
   public async listByPage(page: number, limit = 20): Promise<IArticleDocument[]> {
     const skip = (page - 1) * limit
     const articles = await this.articleModel.listByPage({skip, limit})
-    return await Bluebird.map(articles, async (article) => await article.populate('author'))
+    return await Bluebird.map(articles, async (article) => await article.populate({
+      path: 'author',
+      select: '_id username',
+    }))
   }
 
   public async getByWordpress(options: IArticleWordpressOptions): Promise<IArticleDocument | null> {
