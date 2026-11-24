@@ -96,6 +96,7 @@ defineOptions({name: 'FreyjaCommentList'})
 const comments = ref<Comment[]>([])
 const currentPage = ref(0)
 const pageSize = 20
+const currentLimit = ref(pageSize)
 const hasMore = ref(false)
 const initialLoading = ref(true)
 const loadingMore = ref(false)
@@ -106,6 +107,7 @@ onMounted(() => loadComments(false))
 
 async function loadComments(append: boolean): Promise<void> {
   const targetPage = append ? currentPage.value + 1 : 1
+  const limit = append ? currentLimit.value : pageSize
   if (append) {
     loadingMore.value = true
   } else {
@@ -113,12 +115,13 @@ async function loadComments(append: boolean): Promise<void> {
   }
   loadError.value = ''
   try {
-    const resp = await fetch(`/api/admin/comment?page=${targetPage}&limit=${pageSize}`)
+    const resp = await fetch(`/api/admin/comment?page=${targetPage}&limit=${limit}`)
     if (!resp.ok) throw new Error('comment request failed')
     const list = await resp.json() as Comment[]
     comments.value = append ? [...comments.value, ...list] : list
     currentPage.value = targetPage
-    hasMore.value = list.length === pageSize
+    currentLimit.value = limit
+    hasMore.value = list.length === limit
   } catch {
     loadError.value = '暂时无法加载评论。'
   } finally {
@@ -140,6 +143,14 @@ async function deleteComment(comment: Comment): Promise<void> {
     const resp = await fetch(`/api/admin/comment/${comment._id}`, {method: 'DELETE'})
     if (resp.status !== 204) throw new Error('delete failed')
     comments.value = comments.value.filter((item) => item._id !== comment._id)
+    const limit = comments.value.length || pageSize
+    const listResp = await fetch(`/api/admin/comment?page=1&limit=${limit}`)
+    if (!listResp.ok) throw new Error('comment request failed')
+    const list = await listResp.json() as Comment[]
+    comments.value = list
+    currentPage.value = 1
+    currentLimit.value = limit
+    hasMore.value = list.length === limit
     ElMessage.success('删除成功')
   } catch {
     ElMessage.error('删除失败')
