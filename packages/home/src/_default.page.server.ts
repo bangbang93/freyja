@@ -4,8 +4,8 @@
 'use strict'
 import {renderToString} from '@vue/server-renderer'
 import devalue from '@nuxt/devalue'
-import HttpErrors from 'http-errors'
 import {dangerouslySkipEscape, escapeInject} from 'vike/server'
+import {render as renderAbort} from 'vike/abort'
 import {PageContext} from 'vike/types'
 import {createHome} from './entries'
 import {useRootStore} from './store'
@@ -39,7 +39,7 @@ export async function render(pageContext: PageContext) {
     return []
   })
   if (!matchedComponents.length) {
-    throw new HttpErrors.NotFound('no such route')
+    throw renderAbort(404, 'no such route')
   }
   const rootState = useRootStore(pinia)
   rootState.setOrigin(pageContext.origin)

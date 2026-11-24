@@ -53,17 +53,18 @@ const articleId = route.params.id as string
 
 const comments = ref<IComment[]>([])
 
-onMounted(async () => {
-  prismjs.highlightAll()
-  lozad().observe()
-  comments.value = await commentStore.list(articleId, 1)
-})
-
 const pageContext = inject<PageContext>('pageContext')
 const article = await articleStore.get(articleId)
 if (pageContext) {
-  pageContext.exports.title = article.title
+  pageContext.exports.documentProps = {title: article.title}
 }
+
+onMounted(async () => {
+  prismjs.highlightAll()
+  lozad().observe()
+  document.title = article.title
+  comments.value = await commentStore.list(articleId, 1)
+})
 
 function formatDate(date: Date | string): string {
   if (typeof date === 'string') {

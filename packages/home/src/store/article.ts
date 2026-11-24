@@ -4,10 +4,12 @@
 'use strict'
 
 import {defineStore} from 'pinia'
+import {render as renderAbort} from 'vike/abort'
 import {Fetch} from '../utils/fetch'
 import {useRootStore} from './index.ts'
 
 const HTTP_OK = 200
+const HTTP_NOT_FOUND = 404
 
 interface IArticleState {
   article: {
@@ -41,6 +43,9 @@ export const useArticleStore = defineStore('article', {
     async get(id: string) {
       const rootState = useRootStore()
       const resp = await Fetch.get(`${rootState.origin}/api/article/${id}`)
+      if (resp.status === HTTP_NOT_FOUND) {
+        throw renderAbort(HTTP_NOT_FOUND)
+      }
       if (resp.status !== HTTP_OK) {
         throw new Error('fetch article failed')
       }

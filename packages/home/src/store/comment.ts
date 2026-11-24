@@ -36,7 +36,14 @@ export const useCommentStore = defineStore('comment', {
     if (typeof localStorage !== 'undefined') {
       const item = localStorage.getItem('freyja:publisher')
       if (item) {
-        publisher = JSON.parse(item) as ICommentState['publisher']
+        try {
+          const parsed = JSON.parse(item) as unknown
+          if (parsed && typeof parsed === 'object') {
+            publisher = parsed as ICommentState['publisher']
+          }
+        } catch {
+          publisher = {name: '', email: '', website: ''}
+        }
       }
     }
     return {

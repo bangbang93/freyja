@@ -22,7 +22,7 @@ export interface IArticle {
     username: string
   }
   createdAt: string
-  commentCount: number
+  commentCount?: number
 }
 
 interface IGetArticleParams {

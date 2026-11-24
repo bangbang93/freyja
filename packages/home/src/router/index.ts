@@ -49,7 +49,7 @@ export function createHomeRouter(): Router {
   //   component: () => import('../components/home/not-found.vue'),
   // })
 
-  return createRouter({
+  const router = createRouter({
     history: typeof window === 'undefined' ? createMemoryHistory('/') : createWebHistory('/'),
     routes,
     scrollBehavior(_, __, savedPosition) {
@@ -59,4 +59,11 @@ export function createHomeRouter(): Router {
       return {left: 0, top: 0}
     },
   })
+  // 客户端离开文章页后恢复默认标题；文章页在 onMounted 中自行设置标题
+  router.afterEach(() => {
+    if (typeof document !== 'undefined') {
+      document.title = 'bangbang93.blog()'
+    }
+  })
+  return router
 }

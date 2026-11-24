@@ -34,6 +34,7 @@
         v-if="showEditor"
         :publisher="publisher"
         :reply="replying"
+        :submitting="submitting"
         @close="onCloseEditor"
         @submit="onSubmitComment"
       />
@@ -63,6 +64,7 @@ const publisher = reactive<IPublisher>({
   name: '', email: '', website: '',
 })
 const replying = ref<IComment | null>(null)
+const submitting = ref(false)
 
 function toggleEditor(): void {
   showEditor.value = !showEditor.value
@@ -77,19 +79,13 @@ function onCloseEditor(): void {
 }
 
 async function onSubmitComment({publisher, content}: {publisher: IPublisher;content: string}): Promise<void> {
-  const data = {
-    content,
-    articleId: props.articleId,
-    publisher,
-    reply: null as string | null,
-  }
-  if (replying.value) {
-    data.reply = replying.value._id
-  }
+  if (submitting.value) return
+  submitting.value = true
   try {
     commentStore.savePublisher(publisher)
     await commentStore.create(props.articleId, content, replying.value?._id)
     showEditor.value = false
+    replying.value = null
   } catch (e) {
     if (e instanceof Error) {
       switch ('status' in e && e.status) {
@@ -108,6 +104,8 @@ async function onSubmitComment({publisher, content}: {publisher: IPublisher;cont
           })
       }
     }
+  } finally {
+    submitting.value = false
   }
 }
 

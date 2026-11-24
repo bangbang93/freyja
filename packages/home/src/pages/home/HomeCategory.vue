@@ -16,12 +16,13 @@ import {useRoute} from 'vue-router'
 import ArticleList from '../../components/home/article/article-list.vue'
 import ArticlePager from '../../components/home/article/article-pager.vue'
 import {IArticle, useHomeStore} from '../../store/home.ts'
+import {sanitizePage} from '../../utils/page.ts'
 
 const route = useRoute()
 const homeStore = useHomeStore()
 const articles = ref([] as IArticle[])
 
-const page = typeof route.query.page === 'string' ? parseInt(route.query.page, 10) : 1
+const page = sanitizePage(route.query.page)
 const category = route.params.category.toString() ?? ''
 
 articles.value = await homeStore.getArticles({

@@ -4,10 +4,12 @@
 'use strict'
 
 import {defineStore} from 'pinia'
+import {render as renderAbort} from 'vike/abort'
 import {Fetch} from '../utils/fetch'
 import {useRootStore} from './index.ts'
 
 const HTTP_OK = 200
+const HTTP_NOT_FOUND = 404
 
 export interface IPageState {
   page: {
@@ -41,6 +43,9 @@ export const usePageStore = defineStore('page', {
       const resp = await Fetch.get(
         `${rootState.origin}/api/page/${encodeURIComponent(name)}`,
       )
+      if (resp.status === HTTP_NOT_FOUND) {
+        throw renderAbort(HTTP_NOT_FOUND)
+      }
       if (resp.status !== HTTP_OK) {
         throw new Error('fetch page failed')
       }

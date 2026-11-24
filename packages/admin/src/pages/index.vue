@@ -121,7 +121,7 @@
         </div>
       </header>
       <div class="admin-content">
-        <router-view />
+        <router-view :key="route.path" />
       </div>
     </main>
   </div>

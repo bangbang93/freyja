@@ -16,6 +16,7 @@
     <el-button
       type="success"
       class="btn-editor"
+      :disabled="props.submitting"
       @click="onSubmit"
     >
       <el-icon><el-icon-check /></el-icon>
@@ -83,6 +84,7 @@ const emits = defineEmits(['submit', 'close'])
 const props = defineProps<{
   publisher: IPublisher
   reply: {publisher: {name: string; email: string; website: string}; content: string} | null
+  submitting?: boolean
 }>()
 
 const defaultHeight = 300

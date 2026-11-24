@@ -176,6 +176,7 @@ async function initEdit(id: string): Promise<void> {
   article.categories = data.categories ?? []
   attachments.value = data.attachments ?? []
   edit.id = data._id
+  autoSlug.value = !data.slug
   await nextTick()
   categories.value?.setCheckedKeys(article.categories)
 }

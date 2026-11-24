@@ -1,6 +1,6 @@
 <template>
   <div class="freyja-article-pager">
-    <router-link :to="{query: {page: page-1}}">
+    <router-link :to="{query: {...route.query, page: page - 1}}">
       <el-button
         class="freyja-article-pager-prev"
         :disabled="!canGoBackward"
@@ -8,7 +8,7 @@
         <i class="el-icon-arrow-left" />
       </el-button>
     </router-link>
-    <router-link :to="{query: {page: page+1}}">
+    <router-link :to="{query: {...route.query, page: page + 1}}">
       <el-button
         class="freyja-article-pager-next"
         :disabled="!canGoForward"
@@ -23,6 +23,7 @@
 <script setup lang="ts">
 import {ElButton} from 'element-plus'
 import {computed} from 'vue'
+import {useRoute} from 'vue-router'
 import {IArticle} from '../../../store/home.ts'
 
 const PAGE_SIZE = 20
@@ -31,6 +32,8 @@ const props = defineProps<{
   page: number
   articles: IArticle[]
 }>()
+
+const route = useRoute()
 
 const canGoBackward = computed(() => props.page > 1)
 const canGoForward = computed(() => props.articles.length === PAGE_SIZE)

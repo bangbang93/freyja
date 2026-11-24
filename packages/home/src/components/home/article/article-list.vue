@@ -12,7 +12,10 @@
       <div class="freyja-article-info freyja-article-time">
         <hr>
         <span class="time"><i class="el-icon-time" /> {{ formatDate(article.createdAt) }}</span>
-        <span class="comments">
+        <span
+          v-if="article.commentCount != null"
+          class="comments"
+        >
           <i
             v-if="article.commentCount === 0"
             class="fa fa-comments"
