@@ -21,13 +21,16 @@ admin (Vue 3 SPA) → Element Plus UI
 
 **关键流程**：服务端接收请求 → 路由匹配 home 页面 → 调用匹配组件的 `asyncData()` 方法 → 序列化状态到 HTML → 客户端水合 → 后续导航由 Vue Router 处理
 
-### 配置系统（config/index.js）
+### 配置系统（packages/server/src/config）
 
-配置分三层加载，后面覆盖前面：
-1. `config/default/{database,freyja,jwt,logger}.{js,json}`
-2. `config/{development,production}/*` (按 `NODE_ENV` 或 `CONFIG_ENV` 选择)
+加载逻辑（`packages/server/src/config/index.ts`）和内置默认值（`packages/server/src/config/defaults.ts`）都在 server 源码里、随 `dist` 发布；仓库根目录的 `config/` 只放覆盖值，整目录挂载进容器也不受其中旧文件影响。
 
-MongoDB URI、JWT 密钥与有效期、日志级别等通过此系统配置。环境文件对大多数配置段整段替换，仅 jwt 段按键合并（环境只需注入 secret）。
+生效值 = 内置默认值 深合并 `config/<env>/<段>.{js,json}`（`<env>` 取 `CONFIG_ENV`，其次 `NODE_ENV`，默认 `development`）：
+
+- 覆盖文件只替换它写到的键，数组整体替换；环境文件可以只注入 `jwt.secret`
+- 段固定为 `database`、`jwt`、`freyja`，其它文件忽略；同名时 `.js` 优先于 `.json`
+- 覆盖文件不存在就跳过；存在但解析失败，启动时报错并在信息里带文件路径
+- 新增配置键先在 `defaults.ts` 给出默认值
 
 ## 关键代码模式
 
@@ -114,8 +117,8 @@ pnpm run lint       # ESLint flat config (v9+)
 
 | 组件 | 库/服务 | 用途 | 配置 |
 |------|--------|------|------|
-| ORM | mongoose-typescript | MongoDB 数据建模 | `config/*/database.json` |
-| 后台认证 | jsonwebtoken | HttpOnly Cookie 携带 JWT（7 天滑动续期） | `config/*/jwt.json` |
+| ORM | mongoose-typescript | MongoDB 数据建模 | `config/<env>/database.json` |
+| 后台认证 | jsonwebtoken | HttpOnly Cookie 携带 JWT（7 天滑动续期） | `config/<env>/jwt.json` |
 | 全文搜索 | MeiliSearch | 文章全文索引 | `packages/server/src/app/meilisearch` |
 | 动态渲染 | markdown-it + markdown-it-lozad | Markdown 解析 + 图片懒加载 | `packages/home` |
 | 代码高亮 | Prism.js | 代码块着色 | vite-plugin-prismjs |
@@ -174,6 +177,6 @@ pnpm run lint       # ESLint flat config (v9+)
 **关键文件导航**：
 - 架构入口：`packages/server/src/main.ts`、`packages/home/src/entries/index.ts`
 - SSR 渲染管道：`packages/server/src/middleware/create-server-render.mts`
-- 全局配置：`config/index.js`
+- 配置加载：`packages/server/src/config/index.ts`
 - 类型定义：`packages/api/`
 

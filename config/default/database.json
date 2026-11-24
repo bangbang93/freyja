@@ -1,9 +1,0 @@
-{
-  "mongodb": {
-    "uri": "mongodb://localhost:27017/freyja"
-  },
-  "meilisearch": {
-    "host": "localhost",
-    "apiKey": "apiKey"
-  }
-}

@@ -103,11 +103,10 @@ pnpm run lint  # 使用 ESLint flat config (v9+)
 
 ## 配置系统
 
-配置通过 `config/index.js` 加载，支持按环境覆盖：
+配置由 `packages/server/src/config` 加载（随 dist 发布），内置默认值在 `packages/server/src/config/defaults.ts`，仓库根目录 `config/` 只放覆盖值，按键深合并：
 
-- 基础配置: `config/default/*.{js,json}`
-- 环境配置: `config/{development,production}/*.{js,json}`
-- 通过 `NODE_ENV` 或 `CONFIG_ENV` 环境变量选择
+- 环境配置: `config/{development,production}/*.{js,json}`（可选，只写要覆盖的键）
+- 通过 `CONFIG_ENV` 或 `NODE_ENV` 环境变量选择，默认 development
 
 ## 集成点
 

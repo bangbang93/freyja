@@ -5,16 +5,14 @@ import {MongooseModule} from '@nestjs/mongoose'
 import * as Mongoose from 'mongoose'
 import {BunyanLoggerModule} from 'nestjs-bunyan'
 import {FreyjaModule} from './app/freyja.module'
+import {loadConfig} from './config'
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',
-      load: [() => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        return require('../../../config')
-      }],
+      load: [loadConfig],
     }),
     MongooseModule.forRootAsync({
       inject: [ConfigService],

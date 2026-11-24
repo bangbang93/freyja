@@ -32,8 +32,8 @@ mongo --version  # 确认已安装
 mongod --version
 
 # 2. 检查连接配置
-# 查看 config/default/database.json 或 config/development/database.json
-cat config/default/database.json
+# 查看 config/development/database.json（默认值见 packages/server/src/config/defaults.ts）
+cat config/development/database.json
 
 # 3. 测试连接
 # 使用 mongo client 连接测试
