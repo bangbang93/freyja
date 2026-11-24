@@ -31,31 +31,19 @@ jobs:
       # Node.js 18+ 版本设置（支持到 26）
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: 11
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
           cache: "pnpm"
 
       # 安装依赖
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      # 代码检查
-      - name: Run ESLint
-        run: pnpm run lint
-        continue-on-error: true
-
-      # TypeScript 类型检查
-      - name: TypeScript check
-        run: pnpm run tsc --noEmit
-        continue-on-error: true
-
-      # 运行测试
-      - name: Run tests
-        run: pnpm test -- --run --reporter=verbose
+      # 代码检查与构建（test = lint + 三包 build，含类型检查）
+      - name: Run lint and build
+        run: pnpm run test
         continue-on-error: true
 
       # 验证 Copilot 配置文件完整性
