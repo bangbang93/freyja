@@ -4,5 +4,5 @@ import {Request} from 'express'
 
 export const AdminId = createParamDecorator<IdType | undefined>((data, context) => {
   const request = context.switchToHttp().getRequest<Request>()
-  return request.session?.user?._id
+  return request.user?.sub
 })

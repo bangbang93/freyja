@@ -4,7 +4,7 @@
 'use strict'
 const configure = {
   database: require('./default/database'),
-  session: require('./default/session'),
+  jwt: require('./default/jwt'),
   logger: require('./default/logger'),
   freyja: require('./default/freyja'),
 }

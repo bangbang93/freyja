@@ -1,8 +1,10 @@
-import {IAdminSchema} from './app/admin/admin.model'
+export interface AdminJwtPayload {
+  sub: string
+  username: string
+}
 
-
-declare module 'express-session' {
-  interface SessionData {
-    user?: Partial<IAdminSchema>
+declare module 'express' {
+  interface Request {
+    user?: AdminJwtPayload
   }
 }

@@ -9,16 +9,12 @@ export class AdminAuthService {
     @InjectModel(Admin) private readonly adminModel: IAdminModel,
   ) {}
 
-  public async login(username: string, password: string): Promise<Partial<IAdminSchema>> {
+  public async login(username: string, password: string): Promise<Pick<IAdminSchema, '_id' | 'username'>> {
     const admin = await this.adminModel.findOne({username})
     if (!admin) throw new ForbiddenException('用户名或密码错误')
     const compareResult = await compare(password, admin.password)
     if (!compareResult) throw new ForbiddenException('用户名或密码错误')
-    return await {
-      // eslint-disable-next-line @typescript-eslint/no-misused-promises
-      ...admin.toObject(),
-      password: undefined,
-    }
+    return {_id: admin._id, username: admin.username}
   }
 
   public async create(username: string, password: string): Promise<Partial<IAdminSchema>> {

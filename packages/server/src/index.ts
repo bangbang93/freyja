@@ -5,13 +5,10 @@ import {NestFactory} from '@nestjs/core'
 import {NestExpressApplication} from '@nestjs/platform-express'
 import cacheControl from 'cache-control'
 import historyApiFallback from 'connect-history-api-fallback'
-import RedisStore from 'connect-redis'
 import cookieParser from 'cookie-parser'
 import * as express from 'express'
 import {Application} from 'express'
-import session from 'express-session'
 import helmet from 'helmet'
-import Redis, {RedisOptions} from 'ioredis'
 import mongoose from 'mongoose'
 import morgan from 'morgan'
 import path, {join} from 'path'
@@ -32,8 +29,6 @@ export async function bootstrap(): Promise<void> {
 
   await mongoose.connect(configService.getOrThrow('database.mongodb.uri'))
 
-  const redis = new Redis(configService.get('database.redis') as RedisOptions)
-
   const eApp = app.getHttpAdapter() as unknown as Application
 
   app.set('trust proxy', true)
@@ -45,15 +40,6 @@ export async function bootstrap(): Promise<void> {
   }
 
   app.use(cookieParser())
-  const sessionConfig = configService.get('session') as Record<string, string>
-  app.use(session({
-    name: 'freyja.sid',
-    store: new RedisStore({
-      client: redis,
-      prefix: 'freyja:session:',
-    }),
-    secret: sessionConfig.secret,
-  }))
 
   app.use(favicon(path.join(__dirname, '../../../public', 'favicon.ico')))
   app.use(express.json())
