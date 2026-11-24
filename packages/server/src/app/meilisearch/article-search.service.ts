@@ -22,20 +22,23 @@ export class ArticleSearchService {
   }
 
   public async add(article: IArticleSchema): Promise<void> {
-    await this.index.addDocuments([{
+    const task = await this.index.addDocuments([{
       ...article,
       createdAt: article.createdAt.getTime(),
     }])
+    await this.index.waitForTask(task.taskUid)
   }
 
   public async update(article: IArticleSchema): Promise<void> {
-    await this.index.updateDocuments([{
+    const task = await this.index.updateDocuments([{
       ...article,
       createdAt: article.createdAt.getTime(),
     }])
+    await this.index.waitForTask(task.taskUid)
   }
 
   public async delete(articleId: IdType): Promise<void> {
-    await this.index.deleteDocument(articleId.toString())
+    const task = await this.index.deleteDocument(articleId.toString())
+    await this.index.waitForTask(task.taskUid)
   }
 }

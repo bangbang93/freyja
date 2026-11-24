@@ -32,9 +32,8 @@ export class FeedService {
       },
       feedLinks: {},
     })
-    const articles = await this.articleService.listByPage(1)
+    const articles = await this.articleService.listForFeed()
     for (const article of articles) {
-      await article.populate('author')
       feed.addItem({
         title: article.title,
         id: `${baseUrl}/article/${article._id.toString()}`,

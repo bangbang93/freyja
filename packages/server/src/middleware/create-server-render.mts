@@ -7,6 +7,7 @@ import {renderPage} from 'vike'
 type HttpResponse = Awaited<ReturnType<typeof renderPage>>['httpResponse']
 
 const HTTP_NOT_FOUND = 404
+const CACHEABLE_STATUS_MAX = 399
 
 const microCache = new LRU<string, HttpResponse>({
   max: 1000,
@@ -30,7 +31,7 @@ export async function createServerRender(
       const hit = microCache.get(req.url)
       if (hit) {
         res.set('x-ssr-cache', 'hit')
-        return sendResponse(req, res, hit, cacheable, s)
+        return sendResponse(req, res, hit, cacheable, s, true)
       }
     }
     res.set('x-ssr-cache', 'miss')
@@ -76,7 +77,7 @@ export async function createServerRender(
 }
 
 function sendResponse(req: Request, res: Response, httpResponse: HttpResponse,
-  cacheable: boolean, startTime: number): void {
+  cacheable: boolean, startTime: number, fromCache = false): void {
   const {body, statusCode, headers, earlyHints} = httpResponse
 
   if (res.writeEarlyHints && process.env.ENABLE_EARLY_HINTS) {
@@ -85,7 +86,8 @@ function sendResponse(req: Request, res: Response, httpResponse: HttpResponse,
 
   headers.forEach(([name, value]) => res.setHeader(name, value))
   res.status(statusCode)
-  if (cacheable) {
+  // 只缓存成功响应；命中路径不回写，避免重置 30s TTL 导致热点页面永不过期
+  if (cacheable && !fromCache && statusCode <= CACHEABLE_STATUS_MAX) {
     microCache.set(req.url, httpResponse)
   }
   const time = Date.now() - startTime
