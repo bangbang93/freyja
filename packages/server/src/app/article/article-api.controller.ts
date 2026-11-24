@@ -1,5 +1,7 @@
-import {MongoIdParam} from '@bangbang93/utils/nest-mongo'
-import {Controller, Get, NotFoundException, Param, ParseIntPipe, Query} from '@nestjs/common'
+import {isMongoId} from 'class-validator'
+import {
+  BadRequestException, Controller, DefaultValuePipe, Get, NotFoundException, Param, ParseIntPipe, Query,
+} from '@nestjs/common'
 import {IArticleDocument, IArticleSchema} from './article.model'
 import {ArticleService} from './article.service'
 
@@ -9,29 +11,33 @@ export class ArticleApiController {
     private readonly articleService: ArticleService,
   ) {}
 
-  @Get(':id')
-  public async getById(@MongoIdParam('id') id: string): Promise<IArticleDocument> {
-    const article = await this.articleService.getById(id)
-    if (!article) {
-      throw new NotFoundException('article not found')
-    }
-    return article
-  }
+  // Express 5（path-to-regexp v8）不支持 :id(\w{24}) 内联正则；
+  // 字面量路由须先于动态路由注册，:id 与 :slug 用 isMongoId 运行时分派
 
   @Get()
-  public async list(@Query('page', ParseIntPipe) page: number): Promise<IArticleSchema[]> {
+  public async list(
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+  ): Promise<IArticleSchema[]> {
+    if (page < 1) {
+      throw new BadRequestException('page must be greater than or equal to 1')
+    }
     return await this.articleService.list(page)
   }
 
   @Get('search')
   public async search(@Query('keyword') keyword: string,
-    @Query('page', ParseIntPipe) page: number): Promise<IArticleSchema[]> {
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number): Promise<IArticleSchema[]> {
+    if (page < 1) {
+      throw new BadRequestException('page must be greater than or equal to 1')
+    }
     return await this.articleService.search(keyword, page)
   }
 
-  @Get(':slug')
-  public async getBySlug(@Param('slug') slug: string): Promise<IArticleDocument> {
-    const article = await this.articleService.getBySlug(slug)
+  @Get(':idOrSlug')
+  public async getByIdOrSlug(@Param('idOrSlug') idOrSlug: string): Promise<IArticleDocument> {
+    const article = isMongoId(idOrSlug)
+      ? await this.articleService.getById(idOrSlug)
+      : await this.articleService.getBySlug(idOrSlug)
     if (!article) {
       throw new NotFoundException('article not found')
     }

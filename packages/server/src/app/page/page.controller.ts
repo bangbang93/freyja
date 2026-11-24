@@ -1,6 +1,6 @@
-import {MongoIdParam} from '@bangbang93/utils/nest-mongo'
-import {PagedDto} from '@bangbang93/utils/nestjs'
+import {isMongoId} from 'class-validator'
 import {Controller, Get, NotFoundException, Param, Query} from '@nestjs/common'
+import {PagedDto} from '@bangbang93/utils/nestjs'
 import {IPageSchema} from './page.model'
 import {PageService} from './page.service'
 
@@ -15,18 +15,12 @@ export class PageController {
     return await this.pageService.list(query.page, query.limit)
   }
 
-  @Get(':id')
-  public async getById(@MongoIdParam('id') id: string): Promise<IPageSchema> {
-    const page = await this.pageService.getById(id)
-    if (!page) {
-      throw new NotFoundException('page not found')
-    }
-    return page
-  }
-
-  @Get(':name')
-  public async getByName(@Param('name') name: string): Promise<IPageSchema> {
-    const page = await this.pageService.getByName(name)
+  // :id 与 :name 无法用路径模式区分，用 isMongoId 运行时分派
+  @Get(':idOrName')
+  public async getByIdOrName(@Param('idOrName') idOrName: string): Promise<IPageSchema> {
+    const page = isMongoId(idOrName)
+      ? await this.pageService.getById(idOrName)
+      : await this.pageService.getByName(idOrName)
     if (!page) {
       throw new NotFoundException('page not found')
     }

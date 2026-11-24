@@ -1,6 +1,6 @@
 import {MongoIdParam} from '@bangbang93/utils/nest-mongo'
 import {PagedDto} from '@bangbang93/utils/nestjs'
-import {Body, Controller, Delete, Get, Post, Put, Query, UseGuards} from '@nestjs/common'
+import {Body, Controller, Delete, Get, HttpCode, HttpStatus, Post, Put, Query, UseGuards} from '@nestjs/common'
 import {AdminId} from '../admin/admin.decorator'
 import {AdminGuard} from '../admin/admin.guard'
 import {ArticleCreateBody} from './article.dto'
@@ -49,6 +49,7 @@ export class ArticleAdminController {
   }
 
   @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
   public async delete(@MongoIdParam('id') id: string): Promise<void> {
     await this.articleService.delete(id)
   }

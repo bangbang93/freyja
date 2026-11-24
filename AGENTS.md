@@ -50,7 +50,7 @@ article/
 **控制器约定**：
 - Admin 控制器 **必须** 使用 `@UseGuards(AdminGuard)` 保护
 - 路由参数验证使用 `@MongoIdParam('id')` 装饰器（自动验证 ObjectId）
-- ID 路由使用正则约束：`@Get(':id(\\w{24})')`
+- Express 5（path-to-regexp v8）不支持 `:id(\w{24})` 内联正则，启动时会抛 PathError；同一位置需区分 ID 与 slug/name 时用单个动态路由 + `isMongoId()` 运行时分派（见 `article-api.controller.ts` 的 `:idOrSlug`），字面量路由（如 `search`）必须注册在动态路由之前
 
 ### Vue 前端数据预取（packages/home）
 

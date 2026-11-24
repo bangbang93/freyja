@@ -1,6 +1,8 @@
 import {MongoIdParam} from '@bangbang93/utils/nest-mongo'
 import {PagedDto} from '@bangbang93/utils/nestjs'
-import {Body, Controller, Delete, Get, NotFoundException, Post, Put, Query, UseGuards} from '@nestjs/common'
+import {
+  Body, Controller, Delete, Get, HttpCode, HttpStatus, NotFoundException, Post, Put, Query, UseGuards,
+} from '@nestjs/common'
 import {AdminId} from '../admin/admin.decorator'
 import {AdminGuard} from '../admin/admin.guard'
 import {PageCreateBodyDto} from './page.dto'
@@ -60,6 +62,7 @@ export class PageAdminController {
   }
 
   @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
   public async delete(@MongoIdParam('id') id: string): Promise<void> {
     const page = await this.pageService.getById(id)
     if (!page) {

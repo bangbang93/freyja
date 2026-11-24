@@ -124,7 +124,7 @@ export class Article implements IArticleSchema {
     {categoryId, skip, limit}: {categoryId: IdType; skip: number; limit: number},
   ): Promise<IArticleDocument[]> {
     return await this.find({
-      category: categoryId,
+      categories: categoryId,
     })
       .skip(skip)
       .limit(limit)

@@ -1,4 +1,4 @@
-import {Controller, Get, Put, UseGuards} from '@nestjs/common'
+import {Controller, Get, Param, Put, UseGuards} from '@nestjs/common'
 import {AdminGuard} from '../admin/admin.guard'
 import {ITagSchema} from './tag.model'
 import {TagService} from './tag.service'
@@ -16,7 +16,7 @@ export class TagAdminController {
   }
 
   @Put(':title')
-  public async create(title: string): Promise<ITagSchema> {
+  public async create(@Param('title') title: string): Promise<ITagSchema> {
     return await this.tagService.create(title)
   }
 }
