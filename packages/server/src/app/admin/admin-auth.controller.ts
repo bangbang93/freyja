@@ -45,6 +45,7 @@ export class AdminAuthController {
     res.cookie(ADMIN_JWT_COOKIE, token, {
       httpOnly: true,
       sameSite: 'lax',
+      secure: this.configService.get('NODE_ENV') === 'production',
       path: '/api',
       maxAge: ms(expiresIn),
     })

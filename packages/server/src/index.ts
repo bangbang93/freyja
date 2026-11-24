@@ -18,6 +18,8 @@ import {AppModule} from './app.module'
 export async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule)
   const configService = app.get(ConfigService)
+  // 启动时校验，jwt.secret 缺失即拒绝启动
+  configService.getOrThrow('jwt.secret')
 
   app.useGlobalPipes(new ValidationPipe({
     transform: true,

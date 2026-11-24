@@ -1,7 +1,8 @@
 import {MongoIdParam} from '@bangbang93/utils/nest-mongo'
 import {PagedDto} from '@bangbang93/utils/nestjs'
-import {Body, Controller, Get, Headers, Ip, Post, Query} from '@nestjs/common'
+import {Body, Controller, Get, Headers, Ip, Post, Query, UseGuards} from '@nestjs/common'
 import {AdminId} from '../admin/admin.decorator'
+import {OptionalAdminGuard} from '../admin/admin.guard'
 import {CommentCreateBodyDto, CommentTreeDto} from './comment.dto'
 import {ICommentDocument, ICommentSchema} from './comment.model'
 import {CommentService} from './comment.service'
@@ -35,6 +36,7 @@ export class CommentController {
   }
 
   @Post('article/:id')
+  @UseGuards(OptionalAdminGuard)
   public async createArticleComment(
     @MongoIdParam('id') id: string, @Body() body: CommentCreateBodyDto,
       @AdminId() adminId: string | undefined,
