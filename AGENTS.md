@@ -27,7 +27,7 @@ admin (Vue 3 SPA) → Element Plus UI
 1. `config/default/{database,freyja,jwt,logger}.{js,json}`
 2. `config/{development,production}/*` (按 `NODE_ENV` 或 `CONFIG_ENV` 选择)
 
-MongoDB URI、JWT 密钥与有效期、日志级别等通过此系统配置。
+MongoDB URI、JWT 密钥与有效期、日志级别等通过此系统配置。环境文件对大多数配置段整段替换，仅 jwt 段按键合并（环境只需注入 secret）。
 
 ## 关键代码模式
 
@@ -156,8 +156,8 @@ pnpm run lint       # ESLint flat config (v9+)
 ### 管理员认证
 
 - 所有 Admin 控制器方法必须使用 `@UseGuards(AdminGuard)`
-- 登录态为 HttpOnly Cookie 携带的 JWT（`AdminGuard` 验签挂到 `req.user`，`@AdminId()` 取 `sub`）；无服务端吊销，logout 仅清 cookie
-- jwt secret 不入仓库：development 由 `config/development/jwt.json` 提供，生产由 `config/<env>/jwt.json` 注入，启动时缺失即失败；生产 cookie 附加 `Secure`
+- 登录态为 HttpOnly Cookie 携带的 JWT（`AdminGuard` 验签挂到 `req.user`，`@AdminId()` 取 `sub`，每个已认证请求滑动续签）；无服务端吊销，logout 验签通过后清 cookie
+- jwt secret 不入仓库：development 由 `config/development/jwt.json` 提供，生产由 `config/<env>/jwt.json` 注入，启动时缺失或为空即失败；生产 cookie 附加 `Secure`
 - 公开评论接口挂 `OptionalAdminGuard`：有效 token 时填 `req.user`（站长以作者身份评论），匿名评论不受影响
 - 登录页面：`packages/admin/src/pages/login.vue`
 

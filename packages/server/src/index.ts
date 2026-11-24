@@ -18,8 +18,11 @@ import {AppModule} from './app.module'
 export async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule)
   const configService = app.get(ConfigService)
-  // 启动时校验，jwt.secret 缺失即拒绝启动
-  configService.getOrThrow('jwt.secret')
+  // jwt.secret 缺失或为空时拒绝启动
+  const jwtSecret = configService.get<string>('jwt.secret')
+  if (typeof jwtSecret !== 'string' || jwtSecret.length === 0) {
+    throw new Error('jwt.secret 未配置或为空：请在 config/<env>/jwt.json 中设置非空 secret')
+  }
 
   app.useGlobalPipes(new ValidationPipe({
     transform: true,

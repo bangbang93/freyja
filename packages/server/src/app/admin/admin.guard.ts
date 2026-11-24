@@ -1,7 +1,8 @@
 import {CanActivate, ExecutionContext, Injectable, UnauthorizedException} from '@nestjs/common'
 import {ConfigService} from '@nestjs/config'
-import {Request} from 'express'
-import {verify} from 'jsonwebtoken'
+import {Request, Response} from 'express'
+import {sign, verify} from 'jsonwebtoken'
+import ms, {StringValue} from 'ms'
 import {AdminJwtPayload} from '../../types'
 
 export const ADMIN_JWT_COOKIE = 'freyja.admin.token'
@@ -16,6 +17,18 @@ export function parseAdminToken(req: Request, secret: string): AdminJwtPayload |
   }
 }
 
+export function issueAdminCookie(res: Response, configService: ConfigService, payload: AdminJwtPayload): void {
+  const expiresIn = configService.getOrThrow<string>('jwt.expiresIn') as StringValue
+  const token = sign(payload, configService.getOrThrow<string>('jwt.secret'), {expiresIn})
+  res.cookie(ADMIN_JWT_COOKIE, token, {
+    httpOnly: true,
+    sameSite: 'lax',
+    secure: configService.get('NODE_ENV') === 'production',
+    path: '/api',
+    maxAge: ms(expiresIn),
+  })
+}
+
 @Injectable()
 export class AdminGuard implements CanActivate {
   constructor(private readonly configService: ConfigService) {}
@@ -25,6 +38,9 @@ export class AdminGuard implements CanActivate {
     const user = parseAdminToken(req, this.configService.getOrThrow<string>('jwt.secret'))
     if (!user) throw new UnauthorizedException()
     req.user = user
+    // 活跃请求滑动续期
+    const res = context.switchToHttp().getResponse<Response>()
+    issueAdminCookie(res, this.configService, {sub: user.sub, username: user.username})
     return true
   }
 }
