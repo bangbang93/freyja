@@ -160,6 +160,9 @@ importers:
       type-fest:
         specifier: ^4.41.0
         version: 4.41.0
+      vike:
+        specifier: ^0.4.255
+        version: 0.4.255(supports-color@8.1.1)(vite@7.3.6(@types/node@18.19.130)(jiti@2.6.1)(sass@1.98.0)(terser@5.46.0))
       vite-plugin-prismjs:
         specifier: ^0.0.11
         version: 0.0.11(prismjs@1.30.0)(supports-color@8.1.1)
@@ -194,9 +197,6 @@ importers:
       unplugin-element-plus:
         specifier: ^0.7.2
         version: 0.7.2(rollup@4.59.0)
-      vike:
-        specifier: ^0.4.255
-        version: 0.4.255(supports-color@8.1.1)(vite@7.3.6(@types/node@18.19.130)(jiti@2.6.1)(sass@1.98.0)(terser@5.46.0))
       vite:
         specifier: ^7.3.6
         version: 7.3.6(@types/node@18.19.130)(jiti@2.6.1)(sass@1.98.0)(terser@5.46.0)

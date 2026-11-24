@@ -84,6 +84,7 @@ export default {
 
 - 生产模式下 server 不经 Vite 构建，启动时手动加载 vike 的服务端构建入口 `packages/home/dist/server/entry.mjs`，之后才能调用 `renderPage`
 - 入口文件名由 vike 决定，升级 vike 后若变动需同步这里；路径以字符串拼接避免被 tsc 解析，失配在编译期查不出来
+- home 的服务端产物在运行时直接引入 `vike`，`vike` 必须声明在 home 的 `dependencies`：镜像只安装生产依赖，放进 `devDependencies` 会导致容器启动时报 `Cannot find package 'vike'`
 
 ### SSR 缓存策略（packages/server/src/middleware/create-server-render.mts）
 
