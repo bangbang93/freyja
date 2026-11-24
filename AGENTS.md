@@ -10,7 +10,7 @@ Freyja 是一个基于 Vue SSR + NestJS 的轻量级博客系统，采用 pnpm w
 server (NestJS) ← 配置系统
   ├─ Express middleware → Vike SSR renderer → home 包
   ├─ API 路由 → 前端请求
-  └─ 数据库 (MongoDB) + Redis (sessions)
+  └─ 数据库 (MongoDB)
 
 home (Vue 3 SSR/SPA) ← Pinia store + asyncData 数据预取
 └─ 服务端渲染首屏 → Vite HMR → 客户端路由
@@ -24,10 +24,10 @@ admin (Vue 3 SPA) → Element Plus UI
 ### 配置系统（config/index.js）
 
 配置分三层加载，后面覆盖前面：
-1. `config/default/{database,freyja,logger,session}.{js,json}`
+1. `config/default/{database,freyja,jwt,logger}.{js,json}`
 2. `config/{development,production}/*` (按 `NODE_ENV` 或 `CONFIG_ENV` 选择)
 
-MongoDB URI、Redis session、日志级别等通过此系统配置。
+MongoDB URI、JWT 密钥与有效期、日志级别等通过此系统配置。环境文件对大多数配置段整段替换，仅 jwt 段按键合并（环境只需注入 secret）。
 
 ## 关键代码模式
 
@@ -115,7 +115,7 @@ pnpm run lint       # ESLint flat config (v9+)
 | 组件 | 库/服务 | 用途 | 配置 |
 |------|--------|------|------|
 | ORM | mongoose-typescript | MongoDB 数据建模 | `config/*/database.json` |
-| Session 存储 | connect-redis | Redis 会话存储 | `config/*/session.json` |
+| 后台认证 | jsonwebtoken | HttpOnly Cookie 携带 JWT（7 天滑动续期） | `config/*/jwt.json` |
 | 全文搜索 | MeiliSearch | 文章全文索引 | `packages/server/src/app/meilisearch` |
 | 动态渲染 | markdown-it + markdown-it-lozad | Markdown 解析 + 图片懒加载 | `packages/home` |
 | 代码高亮 | Prism.js | 代码块着色 | vite-plugin-prismjs |
@@ -156,7 +156,9 @@ pnpm run lint       # ESLint flat config (v9+)
 ### 管理员认证
 
 - 所有 Admin 控制器方法必须使用 `@UseGuards(AdminGuard)`
-- 会话通过 Redis 存储（connect-redis）
+- 登录态为 HttpOnly Cookie 携带的 JWT（`AdminGuard` 验签挂到 `req.user`，`@AdminId()` 取 `sub`，每个已认证请求滑动续签）；无服务端吊销，logout 验签通过后清 cookie
+- jwt secret 不入仓库：development 由 `config/development/jwt.json` 提供，生产由 `config/<env>/jwt.json` 注入，启动时缺失或为空即失败；生产 cookie 附加 `Secure`
+- 公开评论接口挂 `OptionalAdminGuard`：有效 token 时填 `req.user`（站长以作者身份评论），匿名评论不受影响
 - 登录页面：`packages/admin/src/pages/login.vue`
 
 ## 调试提示

@@ -2,10 +2,6 @@
   "mongodb": {
     "uri": "mongodb://localhost:27017/freyja"
   },
-  "redis": {
-    "host": "localhost",
-    "port": 6379
-  },
   "meilisearch": {
     "host": "localhost",
     "apiKey": "apiKey"
