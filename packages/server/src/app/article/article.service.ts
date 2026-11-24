@@ -1,6 +1,6 @@
-import {IdType} from '@bangbang93/utils/mongodb'
+import {IdType, toObjectId} from '@bangbang93/utils/mongodb'
 import {InjectModel} from '@bangbang93/utils/nest-mongo'
-import {Injectable, NotFoundException} from '@nestjs/common'
+import {Injectable, Logger, NotFoundException} from '@nestjs/common'
 import Bluebird from 'bluebird'
 import htmlSubstring from 'html-substring'
 import {compact, pick} from 'lodash'
@@ -28,6 +28,7 @@ interface ICreate {
   tags: string[]
   slug: string
   categories: string[]
+  attachments?: string[]
 }
 
 interface IUpdate {
@@ -36,12 +37,15 @@ interface IUpdate {
   tags: string[]
   slug: string
   categories: string[]
+  attachments?: string[]
 }
 
 const SUMMARY_LENGTH = 200
 
 @Injectable()
 export class ArticleService {
+  private readonly logger = new Logger(ArticleService.name)
+
   constructor(
     @InjectModel(Article) private readonly articleModel: IArticleModel,
     private readonly markdownService: MarkdownService,
@@ -53,9 +57,10 @@ export class ArticleService {
     const summary = htmlSubstring(html, SUMMARY_LENGTH)
     const article = await this.articleModel.create({
       ...data,
+      attachments: data.attachments?.filter(Boolean),
       summary, html,
     })
-    await this.articleSearchService.add(article.toObject())
+    await this.syncSearch(() => this.articleSearchService.add(article.toObject()))
     return article
   }
 
@@ -87,6 +92,14 @@ export class ArticleService {
     return await Bluebird.map(articles, async (article) => await article.populate({
       path: 'author',
       select: '_id username',
+    }))
+  }
+
+  public async listForFeed(limit = 20): Promise<IArticleDocument[]> {
+    const articles = await this.articleModel.list({limit, select: {content: 0}})
+    return await Bluebird.map(articles, async (article) => await article.populate({
+      path: 'author',
+      select: '_id username email',
     }))
   }
 
@@ -138,15 +151,18 @@ export class ArticleService {
     article.content = data.content
     article.html = html
     article.summary = summary
-    article.set(pick(data, 'title', 'slug', 'categories'))
+    article.set(pick(data, 'title', 'slug', 'categories', 'tags'))
+    if (data.attachments) {
+      article.attachments = data.attachments.filter(Boolean).map((id) => toObjectId(id))
+    }
     await article.save()
-    await this.articleSearchService.update(article.toObject())
+    await this.syncSearch(() => this.articleSearchService.update(article.toObject()))
     return article
   }
 
   public async delete(id: IdType): Promise<void> {
     await this.articleModel.deleteOne({_id: id})
-    await this.articleSearchService.delete(id)
+    await this.syncSearch(() => this.articleSearchService.delete(id))
   }
 
   public async count(): Promise<number> {
@@ -161,6 +177,15 @@ export class ArticleService {
       article.html = html
       article.summary = summary
       await article.save()
+    }
+  }
+
+  // MongoDB 写入已提交后同步搜索索引；失败只记日志，不让已成功的写接口返回错误
+  private async syncSearch(op: () => Promise<void>): Promise<void> {
+    try {
+      await op()
+    } catch (err) {
+      this.logger.error(`meilisearch sync failed: ${(err as Error).message}`, (err as Error).stack)
     }
   }
 }

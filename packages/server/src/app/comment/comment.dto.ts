@@ -1,4 +1,4 @@
-import {IsEmail, IsMongoId, IsNotEmpty, IsOptional, IsString, ValidateNested} from 'class-validator'
+import {IsEmail, IsMongoId, IsNotEmpty, IsObject, IsOptional, IsString, ValidateNested} from 'class-validator'
 import {ObjectId} from 'mongoose-typescript'
 
 class CommentCreateBodyPublisher {
@@ -12,7 +12,7 @@ class CommentCreateBodyPublisher {
 }
 export class CommentCreateBodyDto {
   @IsString() @IsNotEmpty() content!: string
-  @ValidateNested() publisher!: CommentCreateBodyPublisher
+  @IsObject() @ValidateNested() publisher!: CommentCreateBodyPublisher
   @IsMongoId() @IsOptional() reply?: string
 }
 

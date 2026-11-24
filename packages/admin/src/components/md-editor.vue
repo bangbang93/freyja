@@ -53,11 +53,11 @@ async function onImgAdd(filename: string, file: File): Promise<void> {
   formData.append('file', file)
   try {
     const resp = await ky.post('/api/admin/attachment', {body: formData})
-    const body = await resp.json<{path: string, _id: string}>()
+    const body = await resp.json<{path: string, id: string}>()
     editor.value?.$img2Url(filename, body.path)
     editor.value?.$refs.toolbar_left.$imgUpdateByFilename(filename, body.path)
     emit('attachAdd', {
-      id: body._id,
+      id: body.id,
       path: body.path,
       filename: file.name,
     })

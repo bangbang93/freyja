@@ -1,6 +1,6 @@
 import {IdType} from '@bangbang93/utils/mongodb'
 import {InjectModel} from '@bangbang93/utils/nest-mongo'
-import {BadRequestException, Injectable, NotFoundException} from '@nestjs/common'
+import {BadRequestException, Injectable, Logger, NotFoundException} from '@nestjs/common'
 import {createHash} from 'crypto'
 import {ObjectId} from 'mongoose-typescript'
 import {AdminService} from '../admin/admin.service'
@@ -23,6 +23,8 @@ interface ICreate {
 
 @Injectable()
 export class CommentService {
+  private readonly logger = new Logger(CommentService.name)
+
   constructor(
     @InjectModel(Comment) private readonly commentModel: ICommentModel,
     private readonly articleService: ArticleService,
@@ -49,6 +51,9 @@ export class CommentService {
     if (!article) {
       throw new NotFoundException('article not found')
     }
+    if (replyComment && String(replyComment.article as ObjectId) !== String(article._id)) {
+      throw new BadRequestException('reply does not belong to this article')
+    }
     const author = await this.adminService.getById(article.author as ObjectId)
     if (!author) throw new NotFoundException('author not found')
     if (author.email?.toLowerCase() === data.publisher.email.toLowerCase() && !admin) {
@@ -68,15 +73,15 @@ export class CommentService {
       await this.commentModel.addReply(replyComment._id, commentDoc._id)
 
       if (replyComment.publisher.email) {
-        await this.mailService.commentReply({
-          to: replyComment.publisher.email,
+        await this.sendMail(() => this.mailService.commentReply({
+          to: replyComment.publisher.email as string,
           article,
-        })
+        }))
       }
     }
 
     if (!data.replyTo) {
-      await this.mailService.comment(article, author)
+      await this.sendMail(() => this.mailService.comment(article, author))
     }
 
     return commentDoc
@@ -103,6 +108,27 @@ export class CommentService {
   }
 
   public async delete(id: IdType): Promise<void> {
-    await this.commentModel.deleteOne({_id: id})
+    const comment = await this.commentModel.findById(id)
+    if (!comment) return
+    // 删除整棵回复子树，并从父评论的 replies 中移除引用，避免留下不可见但被计数的孤儿
+    const ids = await this.collectDescendants([comment._id])
+    await this.commentModel.deleteMany({_id: {$in: ids}})
+    await this.commentModel.updateMany({replies: comment._id}, {$pull: {replies: comment._id}})
+  }
+
+  // 评论文档已落库，通知邮件失败不应让接口报错（客户端重试会产生重复评论）
+  private async sendMail(op: () => Promise<unknown>): Promise<void> {
+    try {
+      await op()
+    } catch (err) {
+      this.logger.warn(`comment notify mail failed: ${(err as Error).message}`)
+    }
+  }
+
+  private async collectDescendants(ids: ObjectId[]): Promise<ObjectId[]> {
+    const children = await this.commentModel.find({reply: {$in: ids}}).select({_id: 1})
+    if (!children.length) return ids
+    const childIds = children.map((child) => child._id)
+    return [...ids, ...await this.collectDescendants(childIds)]
   }
 }

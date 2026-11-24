@@ -14,4 +14,9 @@ export class ArticleCreateBody {
   @IsMongoId({each: true}) @IsArray() categories!: string[]
 
   @IsString() slug!: string
+
+  @IsMongoId({each: true})
+  @IsArray()
+  @IsOptional()
+    attachments?: string[]
 }
