@@ -29,6 +29,7 @@
         <el-button
           type="primary"
           :loading="saving"
+          :disabled="loading"
           @click="emit('save')"
         >
           <el-icon><Check /></el-icon>
@@ -56,6 +57,7 @@
             class="editor-title-input"
             :value="title"
             :placeholder="`输入${kind}标题…`"
+            :disabled="loading"
             @input="onTitleInput"
             @blur="emit('title-blur')"
           >
@@ -64,6 +66,7 @@
             <input
               id="content-name"
               :value="name"
+              :disabled="loading"
               @input="onNameInput"
               @blur="emit('name-blur')"
             >
@@ -72,6 +75,7 @@
         </div>
         <MdEditor
           :model-value="content"
+          :editable="!loading"
           @update:model-value="emit('update:content', $event)"
           @attach-add="emit('attach-add', $event)"
         />
@@ -83,6 +87,9 @@
       <aside
         v-if="hasSettings"
         class="editor-settings"
+        :class="{ 'is-loading': loading }"
+        :aria-disabled="loading"
+        :inert="loading"
       >
         <slot name="settings" />
       </aside>
@@ -106,6 +113,7 @@ const props = defineProps<{
   saveLabel: string
   dirty: boolean
   saving: boolean
+  loading: boolean
   errorMessage: string
 }>()
 
@@ -249,6 +257,13 @@ function onNameInput(event: Event): void {
   box-shadow: 0 1px 2px rgb(16 41 35 / 2%);
 }
 
+.editor-settings.is-loading {
+  cursor: wait;
+  opacity: .55;
+  pointer-events: none;
+  user-select: none;
+}
+
 .editor-title-block {
   padding: 21px 24px 15px;
 }
@@ -261,6 +276,13 @@ function onNameInput(event: Event): void {
   color: var(--fj-text-primary);
   background: transparent;
   font: 600 24px var(--fj-font-display);
+}
+
+.editor-title-input:focus-visible,
+.editor-name-row input:focus-visible {
+  border-radius: 2px;
+  outline: 2px solid var(--fj-focus);
+  outline-offset: 3px;
 }
 
 .editor-title-input::placeholder {
@@ -285,6 +307,11 @@ function onNameInput(event: Event): void {
   background: transparent;
   font: 11px var(--fj-font-mono);
   flex: 1;
+}
+
+.editor-title-input:disabled,
+.editor-name-row input:disabled {
+  cursor: wait;
 }
 
 .editor-footer {

@@ -23,6 +23,8 @@
         {{ loadError }}
         <el-button
           text
+          :loading="initialLoading"
+          :disabled="Boolean(deletingId)"
           @click="loadComments(false)"
         >
           重试
@@ -58,6 +60,7 @@
             class="comment-delete"
             title="删除评论"
             :loading="deletingId === comment._id"
+            :disabled="initialLoading || Boolean(deletingId)"
             @click="deleteComment(comment)"
           >
             <el-icon><Delete /></el-icon>
@@ -65,11 +68,12 @@
         </article>
       </div>
       <div
-        v-if="hasMore"
+        v-if="hasMore && !initialLoading && !loadError"
         class="comment-more"
       >
         <el-button
           :loading="loadingMore"
+          :disabled="Boolean(deletingId)"
           @click="loadComments(true)"
         >
           加载更多
@@ -96,53 +100,74 @@ defineOptions({name: 'FreyjaCommentList'})
 const comments = ref<Comment[]>([])
 const currentPage = ref(0)
 const pageSize = 20
+const currentLimit = ref(pageSize)
 const hasMore = ref(false)
 const initialLoading = ref(true)
 const loadingMore = ref(false)
 const loadError = ref('')
 const deletingId = ref('')
+let latestRequestId = 0
 
 onMounted(() => loadComments(false))
 
-async function loadComments(append: boolean): Promise<void> {
+async function loadComments(
+  append: boolean,
+  errorMessage = '暂时无法加载评论。',
+): Promise<boolean> {
+  if (append && (loadingMore.value || initialLoading.value || deletingId.value)) return false
+  const requestId = ++latestRequestId
   const targetPage = append ? currentPage.value + 1 : 1
+  const limit = append ? currentLimit.value : pageSize
   if (append) {
+    initialLoading.value = false
     loadingMore.value = true
   } else {
     initialLoading.value = true
+    loadingMore.value = false
   }
   loadError.value = ''
   try {
-    const resp = await fetch(`/api/admin/comment?page=${targetPage}&limit=${pageSize}`)
+    const resp = await fetch(`/api/admin/comment?page=${targetPage}&limit=${limit}`)
     if (!resp.ok) throw new Error('comment request failed')
     const list = await resp.json() as Comment[]
+    if (requestId !== latestRequestId) return false
     comments.value = append ? [...comments.value, ...list] : list
     currentPage.value = targetPage
-    hasMore.value = list.length === pageSize
+    currentLimit.value = limit
+    hasMore.value = list.length === limit
+    return true
   } catch {
-    loadError.value = '暂时无法加载评论。'
+    if (requestId === latestRequestId) loadError.value = errorMessage
+    return false
   } finally {
-    initialLoading.value = false
-    loadingMore.value = false
+    if (requestId === latestRequestId) {
+      initialLoading.value = false
+      loadingMore.value = false
+    }
   }
 }
 
 async function deleteComment(comment: Comment): Promise<void> {
+  if (deletingId.value) return
   const confirmed = await ElMessageBox.confirm(
     '确定删除这条评论吗？删除后无法恢复。',
     '删除评论',
     {confirmButtonText: '删除', cancelButtonText: '取消', type: 'warning'},
   ).then(() => true).catch(() => false)
-  if (!confirmed) return
+  if (!confirmed || deletingId.value) return
 
   deletingId.value = comment._id
   try {
-    const resp = await fetch(`/api/admin/comment/${comment._id}`, {method: 'DELETE'})
-    if (resp.status !== 204) throw new Error('delete failed')
+    try {
+      const resp = await fetch(`/api/admin/comment/${comment._id}`, {method: 'DELETE'})
+      if (resp.status !== 204) throw new Error('delete failed')
+    } catch {
+      ElMessage.error('删除失败')
+      return
+    }
     comments.value = comments.value.filter((item) => item._id !== comment._id)
-    ElMessage.success('删除成功')
-  } catch {
-    ElMessage.error('删除失败')
+    const refreshed = await loadComments(false, '评论已删除，列表刷新失败。')
+    if (refreshed) ElMessage.success('删除成功')
   } finally {
     deletingId.value = ''
   }

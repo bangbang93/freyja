@@ -10,6 +10,7 @@
     :save-label="edit.id ? '保存修改' : '发布页面'"
     :dirty="dirty"
     :saving="saving"
+    :loading="!initialized"
     :error-message="errorMessage"
     @attach-add="onAttachAdd"
     @save="submit"

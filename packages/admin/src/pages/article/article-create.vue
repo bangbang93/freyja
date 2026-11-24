@@ -10,6 +10,7 @@
     :save-label="edit.id ? '保存修改' : '发布文章'"
     :dirty="dirty"
     :saving="saving"
+    :loading="!initialized"
     :error-message="errorMessage"
     @title-blur="onTitleBlur"
     @name-blur="onSlugBlur"

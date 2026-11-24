@@ -3,6 +3,7 @@
     <div
       v-if="mobileOpen"
       class="sidebar-backdrop"
+      aria-hidden="true"
       @click="mobileOpen = false"
     />
     <aside
@@ -42,6 +43,7 @@
       <router-link
         class="sidebar-create"
         :to="{ name: 'article.create' }"
+        aria-label="新建文章"
       >
         <el-icon><Plus /></el-icon>
         <span>新建文章</span>
@@ -73,6 +75,7 @@
       <a
         class="sidebar-home"
         href="/"
+        aria-label="打开博客"
       >
         <el-icon><TopRight /></el-icon>
         <span>打开博客</span>
@@ -108,6 +111,7 @@
           <button
             class="logout-button"
             type="button"
+            aria-label="退出"
             :disabled="loggingOut"
             @click="logout"
           >
@@ -138,7 +142,7 @@ import {
 } from '@element-plus/icons-vue'
 import {ElMessage} from 'element-plus'
 import {computed, onMounted, ref, watch} from 'vue'
-import {useRoute} from 'vue-router'
+import {useRoute, useRouter} from 'vue-router'
 
 defineOptions({name: 'FreyjaAdminIndex'})
 
@@ -147,6 +151,7 @@ interface AdminUser {
 }
 
 const route = useRoute()
+const router = useRouter()
 const user = ref<AdminUser>()
 const mobileOpen = ref(false)
 const loggingOut = ref(false)
@@ -205,13 +210,18 @@ onMounted(async () => {
 async function logout(): Promise<void> {
   loggingOut.value = true
   try {
-    const resp = await fetch('/api/admin/user/logout', {method: 'POST'})
-    if (resp.status !== 204) throw new Error('logout failed')
-    window.location.href = '/admin/login'
+    const failure = await router.push('/login')
+    if (failure) return
   } catch {
-    ElMessage.error('退出失败')
+    return
   } finally {
     loggingOut.value = false
+  }
+  try {
+    const resp = await fetch('/api/admin/user/logout', {method: 'POST'})
+    if (resp.status !== 204) throw new Error('logout failed')
+  } catch {
+    ElMessage.error('退出失败')
   }
 }
 </script>
@@ -498,14 +508,17 @@ async function logout(): Promise<void> {
 
 @media (max-width: 767px) {
   .admin-sidebar {
+    visibility: hidden;
     width: 224px;
     padding: 28px 18px 20px;
     transform: translateX(-100%);
-    transition: transform var(--fj-duration-slow) var(--fj-ease-standard);
+    transition: transform var(--fj-duration-slow) var(--fj-ease-standard), visibility 0s var(--fj-duration-slow);
   }
 
   .admin-sidebar.is-open {
+    visibility: visible;
     transform: translateX(0);
+    transition: transform var(--fj-duration-slow) var(--fj-ease-standard), visibility 0s;
   }
 
   .sidebar-backdrop {

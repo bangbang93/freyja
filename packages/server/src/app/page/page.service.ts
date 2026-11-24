@@ -32,20 +32,12 @@ export class PageService {
     })
   }
 
-  public async list(lastId: IdType, limit: number): Promise<IPageDocument[]> {
-    let query
-    if (!lastId) {
-      query = this.pageModel.find({})
-    } else {
-      query = this.pageModel.find({
-        _id: {
-          $gt: lastId,
-        },
-      })
-    }
-    return await query.sort({_id: -1})
+  public async list(page: number, limit: number): Promise<IPageDocument[]> {
+    const skip = (page - 1) * limit
+    return await this.pageModel.find({})
       .select({content: 0, html: 0})
-      .populate('author')
+      .sort({_id: -1})
+      .skip(skip)
       .limit(limit)
       .exec()
   }
@@ -54,7 +46,7 @@ export class PageService {
     const skip = (page - 1) * limit
     return await this.pageModel.find({})
       .select({content: 0, html: 0})
-      .populate('author')
+      .populate('author', '_id username')
       .sort({_id: -1})
       .skip(skip)
       .limit(limit)

@@ -4,6 +4,7 @@
       ref="editor"
       v-model="content"
       :ishljs="true"
+      :editable="editable"
       @img-add="onImgAdd"
     />
   </div>
@@ -30,6 +31,10 @@ const props = defineProps({
   modelValue: {
     type: String,
     default: '',
+  },
+  editable: {
+    type: Boolean,
+    default: true,
   },
 })
 const emit = defineEmits<{
@@ -68,7 +73,7 @@ async function onImgAdd(filename: string, file: File): Promise<void> {
   min-height: 420px;
 }
 
-.freyja-md-editor .v-note-wrapper {
+.freyja-md-editor .v-note-wrapper:not(.fullscreen) {
   z-index: 1;
   height: 420px;
   min-height: 420px;
@@ -112,7 +117,7 @@ async function onImgAdd(filename: string, file: File): Promise<void> {
 
 @media (max-width: 767px) {
   .freyja-md-editor,
-  .freyja-md-editor .v-note-wrapper {
+  .freyja-md-editor .v-note-wrapper:not(.fullscreen) {
     min-height: 460px;
   }
 }
